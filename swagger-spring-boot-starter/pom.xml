@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mobaijun-spring-boot-starter</artifactId>
+        <groupId>com.mobaijun</groupId>
+        <version>2.4.13</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>swagger-spring-boot-starter</artifactId>
+    <version>2.4.13</version>
+
+    <name>swagger-spring-boot-starter</name>
+    <inceptionYear>2022</inceptionYear>
+    <description>swagger-spring-boot-starter</description>
+    <url>https://github.com/mobaijun/swagger-spring-boot-starter</url>
+
+
+    <!--  GitHub issues -->
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/mobaijun/swagger-spring-boot-starter/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/mobaijun/swagger-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/swagger-spring-boot-starter.git</connection>
+        <developerConnection>https://github.com/mobaijun</developerConnection>
+    </scm>
+
+
+    <dependencies>
+        <!--  swagger 3.0 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <!-- swagger-ui -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <!--在引用时请在maven中央仓库搜索2.X最新版本号-->
+            <version>${swagger-ui.version}</version>
+        </dependency>
+    </dependencies>
+</project>
