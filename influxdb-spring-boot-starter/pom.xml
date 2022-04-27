@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mobaijun-spring-boot-starter</artifactId>
+        <groupId>com.mobaijun</groupId>
+        <version>2.4.13</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>influxdb-spring-boot-starter</artifactId>
+    <version>2.4.13</version>
+
+    <name>influxdb-spring-boot-starter</name>
+    <description>influxdb-spring-boot-starter</description>
+    <inceptionYear>2022</inceptionYear>
+    <url>https://github.com/mobaijun/influxdb-spring-boot-starter</url>
+
+    <!--  GitHub issues -->
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/mobaijun/influxdb-spring-boot-starter/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/mobaijun/influxdb-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/influxdb-spring-boot-starter.git</connection>
+        <developerConnection>https://github.com/mobaijun</developerConnection>
+    </scm>
+
+    <dependencies>
+        <!--  influxdb 2.22 -->
+        <dependency>
+            <groupId>org.influxdb</groupId>
+            <artifactId>influxdb-java</artifactId>
+            <version>${influxdb.version}</version>
+        </dependency>
+    </dependencies>
+</project>
