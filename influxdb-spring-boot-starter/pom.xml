@@ -12,6 +12,10 @@
     <artifactId>influxdb-spring-boot-starter</artifactId>
     <version>2.4.13</version>
 
+    <properties>
+        <influxdb.version>2.22</influxdb.version>
+    </properties>
+
     <name>influxdb-spring-boot-starter</name>
     <description>influxdb-spring-boot-starter</description>
     <inceptionYear>2022</inceptionYear>

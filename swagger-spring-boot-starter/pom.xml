@@ -9,6 +9,11 @@
         <version>2.4.13</version>
     </parent>
 
+    <properties>
+        <swagger-ui.version>3.0.3</swagger-ui.version>
+        <swagger.version>3.0.0</swagger.version>
+    </properties>
+
     <modelVersion>4.0.0</modelVersion>
     <artifactId>swagger-spring-boot-starter</artifactId>
     <version>2.4.13</version>
