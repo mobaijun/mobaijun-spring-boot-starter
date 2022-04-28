@@ -20,6 +20,22 @@
     <modules>
         <module>swagger-spring-boot-starter</module>
         <module>influxdb-spring-boot-starter</module>
+        <module>mail-spring-boot-starter</module>
+        <module>sso-spring-boot-starter</module>
+        <module>iotdb-spring-boot-starter</module>
+        <module>kafka-spring-boot-starter</module>
+        <module>pay-spring-boot-starter</module>
+        <module>generator-spring-boot-starter</module>
+        <module>quartz-spring-boot-starter</module>
+        <module>spark-spring-boot-starter</module>
+        <module>file-upload-spring-boot-starter</module>
+        <module>log-spring-boot-starter</module>
+        <module>redis-spring-boot-starter</module>
+        <module>mongo-spring-boot-starter</module>
+        <module>security-spring-boot-starter</module>
+        <module>shiro-spring-boot-starter</module>
+        <module>mybatis-plus-spring-boot-starter</module>
+        <module>common-srping-boot-starter</module>
     </modules>
 
     <!--  个人信息  -->
@@ -45,6 +61,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <java.version>1.8</java.version>
+        <project.version>2.4.13</project.version>
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
