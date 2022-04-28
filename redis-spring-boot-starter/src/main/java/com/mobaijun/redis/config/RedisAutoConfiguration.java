@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mobaijun.redis.prop.RedisProperties;
 import com.mobaijun.redis.util.RedisLockUtil;
 import com.mobaijun.redis.util.RedisUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -28,6 +30,8 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 @ConditionalOnProperty(name = RedisProperties.PREFIX + ".enable", havingValue = "true", matchIfMissing = true)
 public class RedisAutoConfiguration {
 
+    private static Logger log = LoggerFactory.getLogger(RedisAutoConfiguration.class);
+
     @Bean
     public RedisSerializer<String> redisKeySerializer() {
         return RedisSerializer.string();
@@ -42,6 +46,7 @@ public class RedisAutoConfiguration {
     @Bean(name = "redisTemplate")
     @ConditionalOnClass(RedisOperations.class)
     public RedisTemplate redisTemplate(RedisConnectionFactory factory) {
+        log.info("============================ Redis 序列化成功 ============================");
         RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(factory);
         // 使用Jackson2JsonRedisSerialize 替换默认序列化(默认采用的是JDK序列化)
