@@ -21,18 +21,18 @@
     <name>swagger-spring-boot-starter</name>
     <inceptionYear>2022</inceptionYear>
     <description>swagger-spring-boot-starter</description>
-    <url>https://github.com/mobaijun/swagger-spring-boot-starter</url>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
 
 
     <!--  GitHub issues -->
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/mobaijun/swagger-spring-boot-starter/issues</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/swagger-spring-boot-starter</url>
-        <connection>https://github.com/mobaijun/swagger-spring-boot-starter.git</connection>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/swagger-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 
