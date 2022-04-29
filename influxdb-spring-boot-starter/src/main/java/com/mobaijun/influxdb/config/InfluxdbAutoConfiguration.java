@@ -25,6 +25,12 @@ public class InfluxdbAutoConfiguration {
     public InfluxdbAutoConfiguration() {
     }
 
+    @Bean
+    @ConditionalOnMissingBean(InfluxProperties.class)
+    public InfluxProperties getInfluxProperties() {
+        return new InfluxProperties();
+    }
+
     /**
      * 初始化influxdb
      *
@@ -33,7 +39,7 @@ public class InfluxdbAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean(InfluxdbConnection.class)
-    public InfluxdbConnection getInfluxDb(InfluxProperties influxProp) {
+    public InfluxdbConnection getInfluxdbConnection(InfluxProperties influxProp) {
         return new InfluxdbConnection(
                 influxProp.getUsername(),
                 influxProp.getPassword(),

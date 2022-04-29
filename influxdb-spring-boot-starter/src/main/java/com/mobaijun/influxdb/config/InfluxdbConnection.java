@@ -161,7 +161,7 @@ public class InfluxdbConnection extends InfluxdbClient {
      * @param sql 查询sql
      * @return 查询结果
      */
-    public List<Object> queryDeviceData(StringBuilder sql) {
+    public List<Object> queryList(StringBuilder sql) {
         QueryResult queryResult = influxDb.query(new Query(String.valueOf(sql), getDatabase()));
         // 对象内容是否正常
         if (ObjectUtils.isEmpty(queryResult) || ObjectUtils.isEmpty(queryResult.getError())) {
