@@ -60,10 +60,10 @@ public class InfluxdbConnection extends InfluxdbClient {
     private void initDefaultDatabase() {
         if (ObjectUtils.isEmpty(this.influxDb)) {
             this.influxDb = InfluxDBFactory.connect(this.getUrl(), this.getUsername(), this.getPassword(), CLIENT);
-            log.info("======================= Influxdb database  Created successfully ============================");
+            log.info("============================ Influxdb database  Created successfully ============================");
         }
-        if (!InfluxdbUtils.checkDatabase(execute(Constant.CREATE_DATABASE), getDatabase())) {
-            execute(Constant.SHOW_DATABASE + getDatabase());
+        if (!InfluxdbUtils.checkDatabase(execute(Constant.SHOW_DATABASE), getDatabase())) {
+            execute(Constant.CREATE_DATABASE + getDatabase() + Constant.DELIMITER);
         }
     }
 
@@ -72,6 +72,7 @@ public class InfluxdbConnection extends InfluxdbClient {
      * @param query  sql语句
      */
     public QueryResult execute(String query) {
+        log.info("The query SQL statement is: " + query);
         return influxDb.query(new Query(query, getDatabase()));
     }
 
@@ -82,6 +83,7 @@ public class InfluxdbConnection extends InfluxdbClient {
      * @param clazz 实体
      */
     public <T> List<T> selectList(String query, Class<T> clazz) {
+        log.info("The query SQL statement is: " + query);
         return InfluxdbUtils.toPojo(execute(query), clazz);
     }
 
@@ -92,6 +94,7 @@ public class InfluxdbConnection extends InfluxdbClient {
      * @param query sql语句
      */
     public long count(String query) {
+        log.info("The query SQL statement is: " + query);
         return InfluxdbUtils.count(execute(query));
     }
 
@@ -153,6 +156,7 @@ public class InfluxdbConnection extends InfluxdbClient {
      * @param query sql语句
      */
     public long delete(String query) {
+        log.info("The query SQL statement is: " + query);
         return InfluxdbUtils.delete(execute(query));
     }
 
@@ -163,6 +167,7 @@ public class InfluxdbConnection extends InfluxdbClient {
      * @return 查询结果
      */
     public List<Object> queryList(StringBuilder sql) {
+        log.info("The query SQL statement is: " + sql);
         QueryResult queryResult = influxDb.query(new Query(String.valueOf(sql), getDatabase()));
         // 对象内容是否正常
         if (ObjectUtils.isEmpty(queryResult) || ObjectUtils.isEmpty(queryResult.getError())) {

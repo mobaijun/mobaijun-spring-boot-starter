@@ -26,7 +26,7 @@ public class Delete extends BaseQuery {
     public static String build(DeleteModel model) {
         Objects.requireNonNull(model.getMeasurement(), Constant.DELETE_MEASUREMENT);
         StringBuilder delete = new StringBuilder();
-        delete.append(Constant.DELETE_DROM).append(model.getMeasurement());
+        delete.append(Constant.DELETE_DROM).append(model.getMeasurement()).append(Constant.DELIMITER);
         if (!ObjectUtils.isEmpty(model.getWhere())) {
             delete.append(Constant.WHERE).append(model.getWhere());
         } else {

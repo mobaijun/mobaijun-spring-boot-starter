@@ -14,12 +14,12 @@ public class Constant {
     /**
      * 创建数据库
      */
-    public static final String CREATE_DATABASE = "CREATE DATABASE";
+    public static final String CREATE_DATABASE = "CREATE DATABASE \"";
 
     /**
      * 查询数据库
      */
-    public static final String SHOW_DATABASE = "SHOW DATABASE";
+    public static final String SHOW_DATABASE = "SHOW DATABASES ";
 
     /**
      * enable
@@ -109,12 +109,12 @@ public class Constant {
     /**
      * 时区
      */
-    public static final String TIME_ZONE = "tz('Asia/Shanghai')";
+    public static final String TIME_ZONE = " tz('Asia/Shanghai')";
 
     /**
      * DELETE_DROM
      */
-    public static final String DELETE_DROM = "DELETE FROM";
+    public static final String DELETE_DROM = "DELETE FROM ";
 
     /**
      * DELETE_DROM
@@ -129,7 +129,7 @@ public class Constant {
     /**
      * 统计加正括号
      */
-    public static final String CONUNT_POSITIVE_BRACKETS = "count(";
+    public static final String CONUNT_POSITIVE_BRACKETS = " count(";
 
     /**
      * 统计
