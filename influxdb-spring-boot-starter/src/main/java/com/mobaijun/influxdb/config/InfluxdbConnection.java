@@ -15,11 +15,9 @@ import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -166,11 +164,11 @@ public class InfluxdbConnection extends InfluxdbClient {
      * @param sql 查询sql
      * @return 查询结果
      */
-    public List<Object> queryList(StringBuilder sql) {
-        log.info("The query SQL statement is: " + sql);
+    public List<List<Object>> queryList(StringBuilder sql) {
         QueryResult queryResult = influxDb.query(new Query(String.valueOf(sql), getDatabase()));
+        log.info("The query SQL statement is: " + sql);
         // 对象内容是否正常
-        if (ObjectUtils.isEmpty(queryResult) || ObjectUtils.isEmpty(queryResult.getError())) {
+        if (ObjectUtils.isEmpty(queryResult) || !ObjectUtils.isEmpty(queryResult.getError())) {
             return null;
         }
         // 数据集合是否正常-
@@ -182,7 +180,6 @@ public class InfluxdbConnection extends InfluxdbClient {
         if (ObjectUtils.isEmpty(values) || ObjectUtils.isEmpty(values.size())) {
             return null;
         }
-        List<Object> dataList = new LinkedList<>();
-        return values.stream().map(v -> dataList.add(v.get(0))).collect(Collectors.toCollection(LinkedList::new));
+        return values;
     }
 }

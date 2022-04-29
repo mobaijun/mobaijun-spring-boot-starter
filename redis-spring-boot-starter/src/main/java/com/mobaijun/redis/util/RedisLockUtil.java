@@ -5,7 +5,6 @@ import org.springframework.data.redis.connection.ReturnType;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
-import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,7 +15,6 @@ import java.util.concurrent.TimeUnit;
  *
  * @author MoBaiJun 2022/4/28 16:06
  */
-@Component
 public class RedisLockUtil {
 
     public RedisLockUtil(RedisTemplate<String, Object> redisTemplate) {
