@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.mobaijun.influxdb.config.InfluxDbAutoConfiguration
+com.mobaijun.influxdb.config.InfluxdbAutoConfiguration
