@@ -5,12 +5,12 @@ import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.core.model.InfluxdbClient;
 import com.mobaijun.influxdb.util.InfluxdbUtils;
 import org.influxdb.InfluxDB;
+import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
@@ -36,7 +36,6 @@ public class InfluxdbConnection extends InfluxdbClient {
     /**
      * influxDb 默认接口
      */
-    @Autowired
     private InfluxDB influxDb;
 
     /**
@@ -54,14 +53,16 @@ public class InfluxdbConnection extends InfluxdbClient {
         initDefaultDatabase();
     }
 
-
     /**
      * 初始化数据库
      */
     @PostConstruct
     private void initDefaultDatabase() {
-        if (!InfluxdbUtils.checkDatabase(execute(Constant.CREATE_DATABASE), getDatabase())) {
+        if (ObjectUtils.isEmpty(this.influxDb)) {
+            this.influxDb = InfluxDBFactory.connect(this.getUrl(), this.getUsername(), this.getPassword(), CLIENT);
             log.info("======================= Influxdb database  Created successfully ============================");
+        }
+        if (!InfluxdbUtils.checkDatabase(execute(Constant.CREATE_DATABASE), getDatabase())) {
             execute(Constant.SHOW_DATABASE + getDatabase());
         }
     }

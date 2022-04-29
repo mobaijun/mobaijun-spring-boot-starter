@@ -1,6 +1,7 @@
 package com.mobaijun.influxdb.prop;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -10,6 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author MoBaiJun 2022/4/27 8:53
  */
 @ConfigurationProperties(InfluxProperties.PREFIX)
+@EnableConfigurationProperties(value = {InfluxProperties.class})
 public class InfluxProperties {
 
     /**

@@ -2,8 +2,6 @@ package com.mobaijun.influxdb.config;
 
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.prop.InfluxProperties;
-import org.influxdb.InfluxDB;
-import org.influxdb.InfluxDBFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -25,12 +23,6 @@ public class InfluxdbAutoConfiguration {
     public InfluxdbAutoConfiguration() {
     }
 
-    @Bean
-    @ConditionalOnMissingBean(InfluxProperties.class)
-    public InfluxProperties getInfluxProperties() {
-        return new InfluxProperties();
-    }
-
     /**
      * 初始化influxdb
      *
@@ -47,14 +39,5 @@ public class InfluxdbAutoConfiguration {
                 influxProp.getDatabase(),
                 influxProp.getRetentionPolicy(),
                 influxProp.getRetentionPolicyTime());
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public InfluxDB influxdb(InfluxProperties properties) {
-        InfluxDB influxDB = InfluxDBFactory.connect(properties.getUrl(), properties.getUsername(), properties.getPassword());
-        influxDB.setDatabase(properties.getDatabase());
-        influxDB.setLogLevel(InfluxDB.LogLevel.BASIC);
-        return influxDB;
     }
 }
