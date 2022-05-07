@@ -10,7 +10,7 @@ import com.mobaijun.mybatis.plus.query.LambdaQueryWrapper;
  *
  * @author MoBaiJun 2022/5/7 16:13
  */
-public class Wrappers {
+public final class Wrappers {
 
     private Wrappers() {
     }
@@ -21,7 +21,7 @@ public class Wrappers {
      * @param <T> 实体类泛型
      * @return LambdaQueryWrapper&lt;T&gt;
      */
-    public static <T> LambdaQueryWrapper<T> lambdaQueryX() {
+    public static <T> LambdaQueryWrapper<T> lambdaQuery() {
         return new LambdaQueryWrapper<>();
     }
 
@@ -32,7 +32,7 @@ public class Wrappers {
      * @param <T>    实体类泛型
      * @return LambdaQueryWrapper&lt;T&gt;
      */
-    public static <T> LambdaQueryWrapper<T> lambdaQueryX(T entity) {
+    public static <T> LambdaQueryWrapper<T> lambdaQuery(T entity) {
         return new LambdaQueryWrapper<>(entity);
     }
 
@@ -44,7 +44,7 @@ public class Wrappers {
      * @return LambdaQueryWrapper&lt;T&gt;
      * @since 3.3.1
      */
-    public static <T> LambdaQueryWrapper<T> lambdaQueryX(Class<T> entityClass) {
+    public static <T> LambdaQueryWrapper<T> lambdaQuery(Class<T> entityClass) {
         return new LambdaQueryWrapper<>(entityClass);
     }
 
@@ -55,7 +55,7 @@ public class Wrappers {
      * @param <T>    实体类泛型
      * @return LambdaAliasQueryWrapper&lt;T&gt;
      */
-    public static <T> LambdaAliasQueryWrapper<T> lambdaAliasQueryX(T entity) {
+    public static <T> LambdaAliasQueryWrapper<T> lambdaAliasQuery(T entity) {
         return new LambdaAliasQueryWrapper<>(entity);
     }
 
@@ -67,7 +67,7 @@ public class Wrappers {
      * @return LambdaAliasQueryWrapper&lt;T&gt;
      * @since 3.3.1
      */
-    public static <T> LambdaAliasQueryWrapper<T> lambdaAliasQueryX(Class<T> entityClass) {
+    public static <T> LambdaAliasQueryWrapper<T> lambdaAliasQuery(Class<T> entityClass) {
         return new LambdaAliasQueryWrapper<>(entityClass);
     }
 }
