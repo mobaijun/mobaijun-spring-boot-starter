@@ -25,7 +25,6 @@
         <module>iotdb-spring-boot-starter</module>
         <module>kafka-spring-boot-starter</module>
         <module>pay-spring-boot-starter</module>
-        <module>generator-spring-boot-starter</module>
         <module>quartz-spring-boot-starter</module>
         <module>spark-spring-boot-starter</module>
         <module>file-upload-spring-boot-starter</module>
@@ -35,7 +34,7 @@
         <module>security-spring-boot-starter</module>
         <module>shiro-spring-boot-starter</module>
         <module>mybatis-plus-spring-boot-starter</module>
-        <module>common-srping-boot-starter</module>
+        <module>oss-spring-boot-starter</module>
     </modules>
 
     <!--  个人信息  -->
