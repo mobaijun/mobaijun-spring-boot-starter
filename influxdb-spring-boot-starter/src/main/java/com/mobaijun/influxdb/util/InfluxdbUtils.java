@@ -36,6 +36,11 @@ public class InfluxdbUtils {
      * 将queryResult 转换为实体对象List
      * influxdb-java 本身提供了 InfluxDBResultMapper.toPOJO(queryResult, clazz);
      * 上述方式得用 Instant 时间就很难受
+     *
+     * @param queryResult queryResult
+     * @param clazz       final Class<T>
+     * @param <T>         <T> List<T>
+     * @return <T> List<T>
      */
     public static <T> List<T> toPojo(final QueryResult queryResult, final Class<T> clazz) {
         Objects.requireNonNull(queryResult, Constant.QUERY_RESULT);
@@ -102,6 +107,9 @@ public class InfluxdbUtils {
 
     /**
      * 获取数据count
+     *
+     * @param queryResult QueryResult
+     * @return long
      */
     public static long count(QueryResult queryResult) {
         for (QueryResult.Result result : queryResult.getResults()) {
@@ -128,6 +136,7 @@ public class InfluxdbUtils {
      * Point.Builder.addField方法不够灵活 如果我是 BigDecimal 就傻了
      *
      * @param object 实体对象
+     * @return Point
      */
     public static Point save(Object object) {
         Class<?> clazz = object.getClass();
@@ -162,6 +171,9 @@ public class InfluxdbUtils {
      * influxdb-java 本身删除不会返回清理的条数
      * 因此这里的 1 仅为默认成功返回
      * 如果存在错误将抛出具体的错误
+     *
+     * @param queryResult QueryResult
+     * @return long
      */
     public static long delete(QueryResult queryResult) {
         for (QueryResult.Result result : queryResult.getResults()) {
@@ -177,6 +189,7 @@ public class InfluxdbUtils {
      *
      * @param queryResult  执行结果
      * @param databaseName yml默认配置中的数据库名
+     * @return boolean
      */
     public static boolean checkDatabase(QueryResult queryResult, String databaseName) {
         for (QueryResult.Result result : queryResult.getResults()) {
@@ -196,6 +209,13 @@ public class InfluxdbUtils {
 
     /**
      * 赋值
+     *
+     * @param type  type
+     * @param value value
+     * @param i     i
+     * @param obj   obj
+     * @param field field
+     * @throws IllegalAccessException IllegalAccessException
      */
     private static void setFieldValue(Class<?> type, List<Object> value, int i, Object obj, Field field) throws IllegalAccessException {
         if (type.equals(Long.class)) {
@@ -222,6 +242,11 @@ public class InfluxdbUtils {
 
     /**
      * 赋值
+     *
+     * @param obj   obj
+     * @param field field
+     * @param value value
+     * @throws IllegalAccessException IllegalAccessException
      */
     private static void setFieldValue(Object obj, Field field, Object value) throws IllegalAccessException {
         field.set(obj, value);
@@ -229,6 +254,10 @@ public class InfluxdbUtils {
 
     /**
      * 获取表名
+     *
+     * @param clazz Class<T>
+     * @param <T>   <T> String
+     * @return <T> String
      */
     public static <T> String getMeasurement(Class<T> clazz) {
         Measurement measurement = clazz.getAnnotation(Measurement.class);
@@ -237,6 +266,10 @@ public class InfluxdbUtils {
 
     /**
      * 获取count注解value 作为count查询
+     *
+     * @param clazz Class<T>
+     * @param <T>   <T> String
+     * @return <T> String
      */
     public static <T> String getCountField(Class<T> clazz) {
         Field[] fields = clazz.getDeclaredFields();
@@ -251,6 +284,10 @@ public class InfluxdbUtils {
 
     /**
      * 聚合函数查询拼接select条件
+     *
+     * @param clazz Class<T>
+     * @param <T>   <T> String
+     * @return <T> String
      */
     public static <T> String getAggregateSelect(Class<T> clazz) {
         Field[] fields = clazz.getDeclaredFields();

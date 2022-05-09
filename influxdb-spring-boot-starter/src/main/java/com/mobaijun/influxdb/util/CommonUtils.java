@@ -19,6 +19,9 @@ public class CommonUtils {
 
     /**
      * 时间转换 Instant字符串时间转 LocalDateTime
+     *
+     * @param time time
+     * @return LocalDateTime
      */
     public static LocalDateTime parseStringToLocalDateTime(String time) {
         DateTimeFormatter df = DateTimeFormatter.ISO_DATE_TIME;
@@ -27,6 +30,9 @@ public class CommonUtils {
 
     /**
      * localDateTime 转 Instant
+     *
+     * @param localDateTime localDateTime
+     * @return Instant
      */
     public static Instant parseLocalDateTimeToInstant(LocalDateTime localDateTime) {
         return localDateTime.atZone(ZoneId.systemDefault()).toInstant();
@@ -35,6 +41,9 @@ public class CommonUtils {
 
     /**
      * 下划线转驼峰
+     *
+     * @param str String
+     * @return String
      */
     public static String lineToHump(String str) {
         Matcher matcher = Constant.LINE_PATTERN.matcher(str.toLowerCase());
@@ -48,6 +57,9 @@ public class CommonUtils {
 
     /**
      * 驼峰转下划线
+     *
+     * @param str str
+     * @return String
      */
     public static String humpToLine(String str) {
         Matcher matcher = Constant.HUMP_PATTERN.matcher(str);
