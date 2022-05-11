@@ -2,7 +2,6 @@ package com.mobaijun.redis.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.dao.DataAccessException;
@@ -15,7 +14,6 @@ import org.springframework.data.redis.serializer.SerializationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import javax.annotation.Resource;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
@@ -35,11 +33,9 @@ public class RedisUtils {
 
     private static Logger log = LoggerFactory.getLogger(RedisUtils.class);
 
-    @Autowired
     @SuppressWarnings("all")
     private RedisTemplate<String, Object> redisTemplate;
 
-    @Resource
     private RedisLockUtil redisLockUtil;
 
     /**

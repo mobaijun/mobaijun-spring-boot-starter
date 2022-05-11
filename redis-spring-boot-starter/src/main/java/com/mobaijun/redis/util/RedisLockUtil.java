@@ -23,10 +23,14 @@ public class RedisLockUtil {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
-    private static final byte[] SCRIPT_RELEASE_LOCK = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end".getBytes();
+    private static final byte[] SCRIPT_RELEASE_LOCK =
+            "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end".getBytes();
 
     public synchronized Boolean tryLock(String key, String requestId, long expire) {
-        return redisTemplate.execute((RedisCallback<Boolean>) redisConnection -> redisConnection.set(key.getBytes(), requestId.getBytes(), Expiration.from(expire, TimeUnit.SECONDS), RedisStringCommands.SetOption.SET_IF_ABSENT));
+        return redisTemplate.execute((RedisCallback<Boolean>)
+                redisConnection -> redisConnection.set(key.getBytes(),
+                        requestId.getBytes(), Expiration.from(expire, TimeUnit.SECONDS),
+                        RedisStringCommands.SetOption.SET_IF_ABSENT));
     }
 
     public synchronized void releaseLock(String key, String requestId) {

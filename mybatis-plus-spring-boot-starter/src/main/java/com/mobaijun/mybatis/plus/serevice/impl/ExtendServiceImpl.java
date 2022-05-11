@@ -16,7 +16,6 @@ import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
@@ -40,7 +39,6 @@ public class ExtendServiceImpl<M extends ExtendMapper<T>, T> implements ExtendSe
 
     protected Log log = LogFactory.getLog(getClass());
 
-    @Autowired
     protected M baseMapper;
 
     @Override
