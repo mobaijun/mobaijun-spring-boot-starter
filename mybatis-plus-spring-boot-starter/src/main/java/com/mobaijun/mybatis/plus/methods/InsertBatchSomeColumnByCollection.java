@@ -39,6 +39,9 @@ public class InsertBatchSomeColumnByCollection extends AbstractMethod {
 
     /**
      * 自定义 mapper 方法名
+     *
+     * @param methodName methodName
+     * @param predicate  predicate
      */
     public InsertBatchSomeColumnByCollection(String methodName, Predicate<TableFieldInfo> predicate) {
         super(methodName);

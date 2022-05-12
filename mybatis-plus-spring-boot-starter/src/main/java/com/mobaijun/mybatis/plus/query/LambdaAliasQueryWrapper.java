@@ -15,7 +15,7 @@ public class LambdaAliasQueryWrapper<T> extends LambdaQueryWrapper<T> {
     private final String tableAlias;
 
     /**
-     * 带别名的查询列 sql 片段，默认为null，第一次使用时加载<br/>
+     * 带别名的查询列 sql 片段，默认为null，第一次使用时加载
      * eg. t.id,t.name
      */
     private String allAliasSqlSelect = null;

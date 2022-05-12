@@ -24,7 +24,7 @@ import java.util.List;
 @Configuration
 public class MybatisPlusAutoConfiguration {
     /**
-     * MybatisPlusInterceptor 插件，默认提供分页插件</br>
+     * MybatisPlusInterceptor 插件，默认提供分页插件
      * 如需其他MP内置插件，则需自定义该Bean
      *
      * @return MybatisPlusInterceptor

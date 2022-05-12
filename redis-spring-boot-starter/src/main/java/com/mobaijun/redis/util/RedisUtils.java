@@ -196,8 +196,9 @@ public class RedisUtils {
     /**
      * 普通缓存放入并设置时间
      *
-     * @param key   键
-     * @param value 值
+     * @param key     键
+     * @param value   值
+     * @param timeout 超时时间
      * @return true成功 false 失败
      */
     public Boolean set(String key, Object value, Duration timeout) {
@@ -523,8 +524,8 @@ public class RedisUtils {
      * 通过索引 获取list中的值
      *
      * @param key   键
-     * @param index 索引 index>=0时， 0 表头，1 第二个元素，依次类推；
-     *              index<0时，-1，表尾，-2倒数第二个元素，依次类推
+     * @param index 索引 index--0时， 0 表头，1 第二个元素，依次类推；
+     *              index--0时，-1，表尾，-2倒数第二个元素，依次类推
      * @return Object
      */
     public Object lGetIndex(String key, Long index) {
@@ -700,6 +701,7 @@ public class RedisUtils {
      * @param key        分布式锁key
      * @param expireTime 持有锁的最长时间 (redis过期时间) 秒为单位
      * @return 返回获取锁状态 成功失败
+     * @throws JSONException json解析异常
      */
     public boolean tryLock(String key, int expireTime) throws JSONException {
         final JSONObject lock = new JSONObject();

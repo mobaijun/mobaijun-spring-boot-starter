@@ -24,7 +24,7 @@ public class PageUtil {
      *
      * @param pageParam 分页参数
      * @param <V>       返回的 Record 对象
-     * @return IPage<V>
+     * @return IPage
      */
     public static <V> IPage<V> prodPage(PageParam pageParam) {
         Page<V> page = new Page<>(pageParam.getCurrent(), pageParam.getSize());

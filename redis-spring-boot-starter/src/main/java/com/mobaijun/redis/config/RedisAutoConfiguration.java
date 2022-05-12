@@ -41,6 +41,7 @@ public class RedisAutoConfiguration {
 
     /**
      * 如使用注解的话需要配置cacheManager
+     * @return CacheManager CacheManager
      */
     @Bean
     public CacheManager cacheManager() {
@@ -55,6 +56,7 @@ public class RedisAutoConfiguration {
 
     /**
      * 以下两种redisTemplate自由根据场景选择
+     * @return RedisTemplate RedisTemplate
      */
     @Bean
     public RedisTemplate<Object, Object> redisTemplate() {

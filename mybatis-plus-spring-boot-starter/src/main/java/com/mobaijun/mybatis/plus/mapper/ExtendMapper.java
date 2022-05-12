@@ -2,7 +2,6 @@ package com.mobaijun.mybatis.plus.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.injector.methods.InsertBatchSomeColumn;
 import com.mobaijun.mybatis.plus.model.domain.PageParam;
 import com.mobaijun.mybatis.plus.toolkit.PageUtil;
 import org.apache.ibatis.annotations.Param;
@@ -23,14 +22,14 @@ public interface ExtendMapper<T> extends BaseMapper<T> {
      *
      * @param pageParam 分页参数
      * @param <V>       返回的 Record 对象
-     * @return IPage<V>
+     * @return IPage
      */
     default <V> IPage<V> prodPage(PageParam pageParam) {
         return PageUtil.prodPage(pageParam);
     }
 
     /**
-     * 批量插入数据 实现类 {@link InsertBatchSomeColumn}
+     * 批量插入数据 实现类 InsertBatchSomeColumn
      *
      * @param list 数据列表
      * @return int 改动行

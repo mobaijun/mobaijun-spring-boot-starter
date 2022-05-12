@@ -38,6 +38,7 @@ public interface ExtendService<T> {
      * 插入（批量）
      *
      * @param entityList 实体对象集合
+     * @return boolean true 成功 false 失败
      */
     @Transactional(rollbackFor = Exception.class)
     default boolean saveBatch(Collection<T> entityList) {
@@ -49,6 +50,7 @@ public interface ExtendService<T> {
      *
      * @param entityList 实体对象集合
      * @param batchSize  插入批次数量
+     * @return boolean true 成功 false 失败
      */
     boolean saveBatch(Collection<T> entityList, int batchSize);
 
@@ -56,6 +58,7 @@ public interface ExtendService<T> {
      * 批量修改插入
      *
      * @param entityList 实体对象集合
+     * @return boolean true 成功 false 失败
      */
     @Transactional(rollbackFor = Exception.class)
     default boolean saveOrUpdateBatch(Collection<T> entityList) {
@@ -67,6 +70,7 @@ public interface ExtendService<T> {
      *
      * @param entityList 实体对象集合
      * @param batchSize  每次的数量
+     * @return boolean true 成功 false 失败
      */
     boolean saveOrUpdateBatch(Collection<T> entityList, int batchSize);
 
@@ -74,6 +78,7 @@ public interface ExtendService<T> {
      * 根据 ID 删除
      *
      * @param id 主键ID
+     * @return boolean true 成功 false 失败
      */
     default boolean removeById(Serializable id) {
         return SqlHelper.retBool(getBaseMapper().deleteById(id));
@@ -85,7 +90,6 @@ public interface ExtendService<T> {
      * @param id      主键(类型必须与实体类型字段保持一致)
      * @param useFill 是否启用填充(为true的情况,会将入参转换实体进行delete删除)
      * @return 删除结果
-     * @since 3.5.0
      */
     default boolean removeById(Serializable id, boolean useFill) {
         throw new UnsupportedOperationException("不支持的方法!");
@@ -96,7 +100,6 @@ public interface ExtendService<T> {
      *
      * @param entity 实体
      * @return 删除结果
-     * @since 3.4.4
      */
     default boolean removeById(T entity) {
         return SqlHelper.retBool(getBaseMapper().deleteById(entity));
@@ -121,7 +124,6 @@ public interface ExtendService<T> {
      * @param list    主键ID或实体列表
      * @param useFill 是否填充(为true的情况,会将入参转换实体进行delete删除)
      * @return 删除结果
-     * @since 3.5.0
      */
     @Transactional(rollbackFor = Exception.class)
     default boolean removeByIds(Collection<?> list, boolean useFill) {
@@ -139,7 +141,6 @@ public interface ExtendService<T> {
      *
      * @param list 主键ID或实体列表(主键ID类型必须与实体类型字段保持一致)
      * @return 删除结果
-     * @since 3.5.0
      */
     @Transactional(rollbackFor = Exception.class)
     default boolean removeBatchByIds(Collection<?> list) {
@@ -152,7 +153,6 @@ public interface ExtendService<T> {
      * @param list    主键ID或实体列表(主键ID类型必须与实体类型字段保持一致)
      * @param useFill 是否启用填充(为true的情况,会将入参转换实体进行delete删除)
      * @return 删除结果
-     * @since 3.5.0
      */
     @Transactional(rollbackFor = Exception.class)
     default boolean removeBatchByIds(Collection<?> list, boolean useFill) {
@@ -165,7 +165,6 @@ public interface ExtendService<T> {
      * @param list      主键ID或实体列表
      * @param batchSize 批次大小
      * @return 删除结果
-     * @since 3.5.0
      */
     default boolean removeBatchByIds(Collection<?> list, int batchSize) {
         throw new UnsupportedOperationException("不支持的方法!");
@@ -178,7 +177,6 @@ public interface ExtendService<T> {
      * @param batchSize 批次大小
      * @param useFill   是否启用填充(为true的情况,会将入参转换实体进行delete删除)
      * @return 删除结果
-     * @since 3.5.0
      */
     default boolean removeBatchByIds(Collection<?> list, int batchSize, boolean useFill) {
         throw new UnsupportedOperationException("不支持的方法!");
@@ -188,6 +186,7 @@ public interface ExtendService<T> {
      * 根据 ID 选择修改
      *
      * @param entity 实体对象
+     * @return boolean true 成功 false 失败
      */
     default boolean updateById(T entity) {
         return SqlHelper.retBool(getBaseMapper().updateById(entity));
@@ -197,6 +196,7 @@ public interface ExtendService<T> {
      * 根据ID 批量更新
      *
      * @param entityList 实体对象集合
+     * @return boolean true 成功 false 失败
      */
     @Transactional(rollbackFor = Exception.class)
     default boolean updateBatchById(Collection<T> entityList) {
@@ -208,6 +208,7 @@ public interface ExtendService<T> {
      *
      * @param entityList 实体对象集合
      * @param batchSize  更新批次数量
+     * @return boolean true 成功 false 失败
      */
     boolean updateBatchById(Collection<T> entityList, int batchSize);
 
@@ -215,6 +216,7 @@ public interface ExtendService<T> {
      * TableId 注解存在更新记录，否插入一条记录
      *
      * @param entity 实体对象
+     * @return boolean true 成功 false 失败
      */
     boolean saveOrUpdate(T entity);
 
@@ -222,6 +224,7 @@ public interface ExtendService<T> {
      * 根据 ID 查询
      *
      * @param id 主键ID
+     * @return T
      */
     default T getById(Serializable id) {
         return getBaseMapper().selectById(id);
@@ -238,6 +241,8 @@ public interface ExtendService<T> {
 
     /**
      * 查询所有
+     *
+     * @return List集合
      */
     default List<T> list() {
         return getBaseMapper().selectList(null);
@@ -253,7 +258,7 @@ public interface ExtendService<T> {
     /**
      * 获取 entity 的 class
      *
-     * @return {@link Class<T>}
+     * @return Class
      */
     Class<T> getEntityClass();
 
@@ -264,7 +269,6 @@ public interface ExtendService<T> {
      *
      * @param list 数据列表
      * @return int 改动行
-     * @author lingting 2020-08-26 22:11
      */
     @Transactional(rollbackFor = Exception.class)
     default boolean saveBatchSomeColumn(Collection<T> list) {
@@ -277,7 +281,6 @@ public interface ExtendService<T> {
      * @param list      数据列表
      * @param batchSize 批次插入数据量
      * @return int 改动行
-     * @author lingting 2020-08-26 22:11
      */
     boolean saveBatchSomeColumn(Collection<T> list, int batchSize);
 }
