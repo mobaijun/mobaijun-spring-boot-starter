@@ -26,7 +26,7 @@ public interface OssEndpointService {
     /**
      * getBuckets（）
      *
-     * @return List<Bucket>
+     * @return List
      */
     List<Bucket> getBuckets();
 
@@ -51,7 +51,7 @@ public interface OssEndpointService {
      *
      * @param bucketName bucketName
      * @param objectName objectName
-     * @return List<S3ObjectSummary>
+     * @return List S3ObjectSummary
      */
     List<S3ObjectSummary> filterObject(String bucketName,
                                        String objectName);
@@ -62,7 +62,7 @@ public interface OssEndpointService {
      * @param bucketName bucketName
      * @param objectName objectName
      * @param expires    expires
-     * @return Map<String, Object>
+     * @return Map String, Object
      */
     Map<String, Object> getObjectUrl(String bucketName,
                                      String objectName,
@@ -74,7 +74,7 @@ public interface OssEndpointService {
      * @param bucketName bucketName
      * @param objectName objectName
      * @param expires    expires
-     * @return Map<String, Object>
+     * @return MapString, Object
      */
     Map<String, Object> getPutObjectUrl(String bucketName,
                                         String objectName, Integer expires);

@@ -23,7 +23,7 @@ public class OssAutoConfiguration {
 
     /**
      * OSS操作模板
-     *
+     * @param properties properties
      * @return OSS操作模板
      */
     @Bean
