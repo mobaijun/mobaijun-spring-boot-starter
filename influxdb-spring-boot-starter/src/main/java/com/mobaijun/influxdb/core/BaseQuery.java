@@ -27,6 +27,7 @@ public abstract class BaseQuery {
      *
      * @param start 开始时间
      * @param end   结束时间
+     * @return 开始时间结束时间
      */
     public static StringBuilder time(LocalDateTime start, LocalDateTime end) {
         Instant startTime = CommonUtils.parseLocalDateTimeToInstant(start);
@@ -40,6 +41,9 @@ public abstract class BaseQuery {
     /**
      * 默认条件 为 =
      * 其他条件暂时未实现请自行构造
+     *
+     * @param model 模块
+     * @return String
      */
     public static String where(BaseModel model) {
         StringBuilder sb = new StringBuilder();

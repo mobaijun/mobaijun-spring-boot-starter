@@ -14,14 +14,14 @@ import java.util.Objects;
  * @author MoBaiJun 2022/4/29 14:04
  */
 public class Delete extends BaseQuery {
+
     /**
      * 构造条件
-     * <p>
      * 注意 where 条件中 map参数仅能是 tag
      * 这是由 influxdb 本身决定的
      *
-     * @param model
-     * @return
+     * @param model DeleteModel
+     * @return String
      */
     public static String build(DeleteModel model) {
         Objects.requireNonNull(model.getMeasurement(), Constant.DELETE_MEASUREMENT);

@@ -22,6 +22,9 @@ public class Insert extends BaseQuery {
 
     /**
      * 构造条件
+     *
+     * @param object Object
+     * @return String
      */
     public static String build(Object object) {
         Objects.requireNonNull(object, "实体不能为空");

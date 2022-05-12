@@ -20,11 +20,15 @@ public @interface Aggregate {
 
     /**
      * 字段名
+     *
+     * @return String
      */
     String value();
 
     /**
      * 字段使用的聚合函数
+     *
+     * @return Function
      */
     Function tag();
 }

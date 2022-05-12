@@ -38,9 +38,9 @@ public class InfluxdbUtils {
      * 上述方式得用 Instant 时间就很难受
      *
      * @param queryResult queryResult
-     * @param clazz       final Class<T>
-     * @param <T>         <T> List<T>
-     * @return <T> List<T>
+     * @param clazz       final Class
+     * @param <T>         List
+     * @return List
      */
     public static <T> List<T> toPojo(final QueryResult queryResult, final Class<T> clazz) {
         Objects.requireNonNull(queryResult, Constant.QUERY_RESULT);
@@ -255,9 +255,9 @@ public class InfluxdbUtils {
     /**
      * 获取表名
      *
-     * @param clazz Class<T>
-     * @param <T>   <T> String
-     * @return <T> String
+     * @param clazz Class
+     * @param <T>   String
+     * @return String
      */
     public static <T> String getMeasurement(Class<T> clazz) {
         Measurement measurement = clazz.getAnnotation(Measurement.class);
@@ -267,9 +267,9 @@ public class InfluxdbUtils {
     /**
      * 获取count注解value 作为count查询
      *
-     * @param clazz Class<T>
-     * @param <T>   <T> String
-     * @return <T> String
+     * @param clazz Class
+     * @param <T>   String
+     * @return String
      */
     public static <T> String getCountField(Class<T> clazz) {
         Field[] fields = clazz.getDeclaredFields();
@@ -285,9 +285,9 @@ public class InfluxdbUtils {
     /**
      * 聚合函数查询拼接select条件
      *
-     * @param clazz Class<T>
-     * @param <T>   <T> String
-     * @return <T> String
+     * @param clazz Class
+     * @param <T>   String
+     * @return String
      */
     public static <T> String getAggregateSelect(Class<T> clazz) {
         Field[] fields = clazz.getDeclaredFields();

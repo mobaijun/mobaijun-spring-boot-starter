@@ -17,6 +17,9 @@ public class Query extends BaseQuery {
 
     /**
      * 构造条件
+     *
+     * @param model QueryModel
+     * @return String
      */
     public static String build(QueryModel model) {
         Objects.requireNonNull(model.getMeasurement(), Constant.QUERY_MODEL_MEASUREMENT);
@@ -45,6 +48,9 @@ public class Query extends BaseQuery {
 
     /**
      * count Field 字段
+     *
+     * @param field String
+     * @return StringBuilder
      */
     public static StringBuilder count(String field) {
         return new StringBuilder()
@@ -58,6 +64,10 @@ public class Query extends BaseQuery {
 
     /**
      * 聚合函数构建
+     *
+     * @param tag   tag
+     * @param field field
+     * @return StringBuilder
      */
     public static StringBuilder funcAggregate(String tag, String field) {
         return new StringBuilder()

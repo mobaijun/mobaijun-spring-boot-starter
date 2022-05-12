@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  * Software：IntelliJ IDEA 2021.3.2
  * ClassName: influxDbConnection
  * 类描述： influxDb操作类
- * https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=199530389&focusedCommentId=199540198#influxDb%E9%80%82%E9%85%8D%E5%99%A8%E5%85%BC%E5%AE%B9%E8%BF%9B%E5%BA%A6-1.write()
+ * <a href="https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=199530389&focusedCommentId=199540198#influxDb%E9%80%82%E9%85%8D%E5%99%A8%E5%85%BC%E5%AE%B9%E8%BF%9B%E5%BA%A6-1.write()"></a>
  *
  * @author MoBaiJun 2022/4/27 8:55
  */
@@ -68,6 +68,7 @@ public class InfluxdbConnection extends InfluxdbClient {
     /***
      * 默认执行方法
      * @param query  sql语句
+     * @return QueryResult
      */
     public QueryResult execute(String query) {
         log.info("The query SQL statement is: " + query);
@@ -78,7 +79,9 @@ public class InfluxdbConnection extends InfluxdbClient {
      * 查询 返回对应实体 List
      *
      * @param query sql语句
+     * @param <T>   List
      * @param clazz 实体
+     * @return 返回对应实体List
      */
     public <T> List<T> selectList(String query, Class<T> clazz) {
         log.info("The query SQL statement is: " + query);
@@ -90,6 +93,7 @@ public class InfluxdbConnection extends InfluxdbClient {
      * 仅支持 Field 字段
      *
      * @param query sql语句
+     * @return long
      */
     public long count(String query) {
         log.info("The query SQL statement is: " + query);
@@ -138,8 +142,9 @@ public class InfluxdbConnection extends InfluxdbClient {
 
     /**
      * 插入
-     * <p>
      * 请使用 Insert 构造
+     *
+     * @param query 查询语句
      */
     public void insert(String query) {
         influxDb.write(query);
