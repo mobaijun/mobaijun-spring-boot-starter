@@ -23,6 +23,8 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.ApiKeyVehicle;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -76,6 +78,9 @@ public class SwaggerAutoConfiguration {
                 // 正则匹配请求路径，并分配至当前分组，当前所有接口
                 .paths(PathSelectors.any())
                 .build()
+                // 解决 Failed to convert value of type ‘java.lang.String’ to required type ‘java.time.LocalDate’;
+                .directModelSubstitute(LocalTime.class, String.class)
+                .directModelSubstitute(LocalDateTime.class, String.class)
                 // 分组名称
                 .groupName(swaggerProperties.getGroupName())
                 // 授权信息全局应用
