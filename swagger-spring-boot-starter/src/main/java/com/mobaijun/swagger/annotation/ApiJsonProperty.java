@@ -14,26 +14,36 @@ public @interface ApiJsonProperty {
 
     /**
      * 参数描述
+     *
+     * @return String
      */
     String value() default "";
 
     /**
      * 字段名称
+     *
+     * @return String
      */
     String name();
 
     /**
      * 数据类型 （支持string、integer、long、double、date）
+     *
+     * @return String
      */
     String dataType() default "string";
 
     /**
      * 参数是否必填
+     *
+     * @return boolean
      */
     boolean required() default false;
 
     /**
      * 示例
+     *
+     * @return String
      */
     String example() default "";
 }

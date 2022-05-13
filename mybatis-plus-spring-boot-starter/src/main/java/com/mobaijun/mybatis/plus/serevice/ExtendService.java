@@ -234,6 +234,7 @@ public interface ExtendService<T> {
      * 查询（根据ID 批量查询）
      *
      * @param idList 主键ID列表
+     * @return List
      */
     default List<T> listByIds(Collection<? extends Serializable> idList) {
         return getBaseMapper().selectBatchIds(idList);

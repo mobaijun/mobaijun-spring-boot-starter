@@ -56,6 +56,9 @@ public class SwaggerAutoConfiguration {
      * 7、@ApiIgnore：忽略接口方法
      * 8、访问地址：http://localhost:8003/swagger-ui/index.html#/
      * 9、doc文档访问地址: http://localhost:8003/doc.html
+     *
+     * @param swaggerProperties swaggerProperties
+     * @return Docket
      */
     @Bean
     public Docket createRestApi(SwaggerProperties swaggerProperties) {

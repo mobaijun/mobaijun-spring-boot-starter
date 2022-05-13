@@ -14,11 +14,15 @@ public @interface ApiJsonObject {
 
     /**
      * 对象属性值
+     *
+     * @return ApiJsonProperty
      */
     ApiJsonProperty[] value();
 
     /**
      * 对象名称
+     *
+     * @return String
      */
     String name();
 }
