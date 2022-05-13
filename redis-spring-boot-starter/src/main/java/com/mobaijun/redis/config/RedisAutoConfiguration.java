@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mobaijun.redis.prop.RedisProperties;
+import com.mobaijun.redis.util.RedisLockUtil;
+import com.mobaijun.redis.util.RedisUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -41,6 +43,7 @@ public class RedisAutoConfiguration {
 
     /**
      * 如使用注解的话需要配置cacheManager
+     *
      * @return CacheManager CacheManager
      */
     @Bean
@@ -56,6 +59,7 @@ public class RedisAutoConfiguration {
 
     /**
      * 以下两种redisTemplate自由根据场景选择
+     *
      * @return RedisTemplate RedisTemplate
      */
     @Bean
@@ -91,6 +95,15 @@ public class RedisAutoConfiguration {
         return redisTemplate;
     }
 
+    @Bean
+    public RedisUtils getRedisUtils() {
+        return new RedisUtils();
+    }
+
+    @Bean
+    public RedisLockUtil redisLockUtil() {
+        return new RedisLockUtil(redisTemplate());
+    }
 
     /**
      * 设置数据存入 redis 的序列化方式,并开启事务

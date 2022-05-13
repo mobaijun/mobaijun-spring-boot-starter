@@ -11,7 +11,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.TimeoutUtils;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationUtils;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.time.Duration;
@@ -28,7 +27,6 @@ import java.util.concurrent.TimeUnit;
  *
  * @author MoBaiJun 2022/4/28 15:53
  */
-@Component
 public class RedisUtils {
 
     private static Logger log = LoggerFactory.getLogger(RedisUtils.class);
@@ -680,7 +678,7 @@ public class RedisUtils {
         return valueSerializer.serialize(value);
     }
 
-    private List deserializeValues(List<byte[]> rawValues, RedisSerializer<Object> valueSerializer) {
+    private List<? extends Object> deserializeValues(List<byte[]> rawValues, RedisSerializer<Object> valueSerializer) {
         if (valueSerializer == null) {
             return rawValues;
         }

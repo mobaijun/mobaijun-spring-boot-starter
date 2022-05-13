@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties(RedisProperties.class)
 public class RedisProperties {
 
-    public static final String PREFIX = "spring.lettuce.redis";
+    public static final String PREFIX = "spring.redis.lettuce";
 
     /**
      * 是否启用，默认启用
