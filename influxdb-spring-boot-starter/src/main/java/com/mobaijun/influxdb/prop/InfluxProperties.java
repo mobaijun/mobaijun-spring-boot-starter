@@ -20,7 +20,7 @@ public class InfluxProperties {
     public static final String PREFIX = "spring.influxdb";
 
     /**
-     * InfluxDB http url default "http://localhost:8088"
+     * InfluxDB http url default "<a href="http://localhost:8088">http://localhost:8088</a>"
      */
     private String url = "http://localhost:8088";
 

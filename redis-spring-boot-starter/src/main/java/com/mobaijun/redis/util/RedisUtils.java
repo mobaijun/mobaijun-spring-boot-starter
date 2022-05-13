@@ -28,13 +28,17 @@ import java.util.concurrent.TimeUnit;
  * @author MoBaiJun 2022/4/28 15:53
  */
 public class RedisUtils {
-
-    private static Logger log = LoggerFactory.getLogger(RedisUtils.class);
-
+    private static final Logger log = LoggerFactory.getLogger(RedisUtils.class);
     @SuppressWarnings("all")
     private RedisTemplate<String, Object> redisTemplate;
-
     private RedisLockUtil redisLockUtil;
+
+    public RedisUtils() {
+    }
+
+    public RedisUtils(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
     /**
      * 指定缓存失效时间

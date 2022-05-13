@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  * Software：IntelliJ IDEA 2021.3.2
  * ClassName: influxDbConnection
  * 类描述： influxDb操作类
- * <a href="https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=199530389&focusedCommentId=199540198#influxDb%E9%80%82%E9%85%8D%E5%99%A8%E5%85%BC%E5%AE%B9%E8%BF%9B%E5%BA%A6-1.write()"></a>
+ *<a href="https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=199530389&focusedCommentId=199540198#influxDb%E9%80%82%E9%85%8D%E5%99%A8%E5%85%BC%E5%AE%B9%E8%BF%9B%E5%BA%A6-1.write">...</a>
  *
  * @author MoBaiJun 2022/4/27 8:55
  */

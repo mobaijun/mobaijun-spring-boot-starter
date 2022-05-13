@@ -56,8 +56,8 @@ public class SwaggerAutoConfiguration {
      * 5、@ApiImplicitParams：描述接口参数
      * 6、@ApiResponses：描述接口响应
      * 7、@ApiIgnore：忽略接口方法
-     * 8、访问地址：http://localhost:8003/swagger-ui/index.html#/
-     * 9、doc文档访问地址: http://localhost:8003/doc.html
+     * 8、访问地址：<a href="http://localhost:8003/swagger-ui/index.html#/">......</a>
+     * 9、doc文档访问地址: <a href="http://localhost:8003/doc.html">.....</a>
      *
      * @param swaggerProperties swaggerProperties
      * @return Docket

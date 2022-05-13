@@ -36,7 +36,11 @@ import java.time.Duration;
 @ConditionalOnProperty(name = RedisProperties.PREFIX + ".enable", havingValue = "true", matchIfMissing = true)
 public class RedisAutoConfiguration {
 
-    private static Logger log = LoggerFactory.getLogger(RedisAutoConfiguration.class);
+    public RedisAutoConfiguration() {
+        log.info("============================ Redis Configuration 构建成功 ============================");
+    }
+
+    private static final Logger log = LoggerFactory.getLogger(RedisAutoConfiguration.class);
 
     @Resource
     private RedisConnectionFactory connectionFactory;
@@ -108,7 +112,7 @@ public class RedisAutoConfiguration {
     /**
      * 设置数据存入 redis 的序列化方式,并开启事务
      *
-     * @param redisTemplate RedisTemplate<String, Object>
+     * @param redisTemplate RedisTemplate
      * @param factory       RedisConnectionFactory
      */
     private void initDomainRedisTemplate(RedisTemplate<String, Object> redisTemplate, RedisConnectionFactory factory) {
