@@ -16,12 +16,15 @@ import java.util.concurrent.TimeUnit;
  * @author MoBaiJun 2022/4/28 16:06
  */
 public class RedisLockUtil {
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    public RedisLockUtil(RedisTemplate<Object, Object> redisTemplate) {
+    public RedisLockUtil(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
-    private final RedisTemplate<Object, Object> redisTemplate;
+    public RedisTemplate<String, Object> getRedisTemplate() {
+        return this.redisTemplate;
+    }
 
     private static final byte[] SCRIPT_RELEASE_LOCK =
             "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end".getBytes();

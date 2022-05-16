@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  * ClassName: SwaggerProperties
  * 类描述： Swagger配置读取类
  *
- * @author MoBaiJun 2022/3/12 17:24 ---- https://www.mobaijun.com
+ * @author MoBaiJun 2022/3/12 17:24 blog:<a href="https://www.mobaijun.com">...</a>
  */
 @ConfigurationProperties(SwaggerProperties.PREFIX)
 @EnableConfigurationProperties(SwaggerProperties.class)

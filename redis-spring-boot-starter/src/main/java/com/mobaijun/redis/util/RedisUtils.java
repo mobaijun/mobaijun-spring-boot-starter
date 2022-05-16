@@ -23,21 +23,17 @@ import java.util.concurrent.TimeUnit;
 /**
  * Software：IntelliJ IDEA 2021.3.2
  * ClassName: RedisUtils
- * 类描述： Redis 工具类
+ * 类描述： Redis 操作 工具类
  *
  * @author MoBaiJun 2022/4/28 15:53
  */
 public class RedisUtils {
-    private static final Logger log = LoggerFactory.getLogger(RedisUtils.class);
-    @SuppressWarnings("all")
+    private final Logger log = LoggerFactory.getLogger(RedisUtils.class);
     private RedisTemplate<String, Object> redisTemplate;
     private RedisLockUtil redisLockUtil;
-
-    public RedisUtils() {
-    }
-
-    public RedisUtils(RedisTemplate<String, Object> redisTemplate) {
+    public RedisUtils(RedisTemplate<String, Object> redisTemplate, RedisLockUtil redisLockUtil) {
         this.redisTemplate = redisTemplate;
+        this.redisLockUtil = redisLockUtil;
     }
 
     /**

@@ -21,7 +21,6 @@
         <module>swagger-spring-boot-starter</module>
         <module>influxdb-spring-boot-starter</module>
         <module>redis-spring-boot-starter</module>
-        <module>mongo-spring-boot-starter</module>
         <module>mybatis-plus-spring-boot-starter</module>
     </modules>
 

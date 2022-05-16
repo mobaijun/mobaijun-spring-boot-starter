@@ -3,13 +3,15 @@ package com.mobaijun.redis.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mobaijun.redis.constant.RedisConstant;
 import com.mobaijun.redis.prop.RedisProperties;
 import com.mobaijun.redis.util.RedisLockUtil;
 import com.mobaijun.redis.util.RedisUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -22,7 +24,6 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import javax.annotation.Resource;
 import java.time.Duration;
 
 /**
@@ -33,17 +34,14 @@ import java.time.Duration;
  * @author MoBaiJun 2022/4/28 15:52
  */
 @Configuration
-@ConditionalOnProperty(name = RedisProperties.PREFIX + ".enable", havingValue = "true", matchIfMissing = true)
+@EnableConfigurationProperties(RedisProperties.class)
 public class RedisAutoConfiguration {
-
-    public RedisAutoConfiguration() {
-        log.info("============================ Redis Configuration 构建成功 ============================");
-    }
-
     private static final Logger log = LoggerFactory.getLogger(RedisAutoConfiguration.class);
 
-    @Resource
-    private RedisConnectionFactory connectionFactory;
+    @Bean
+    public CachingConfigurerSupport cachingConfigurerSupport() {
+        return new RedisKeyGenerator();
+    }
 
     /**
      * 如使用注解的话需要配置cacheManager
@@ -51,12 +49,15 @@ public class RedisAutoConfiguration {
      * @return CacheManager CacheManager
      */
     @Bean
-    public CacheManager cacheManager() {
+    public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         // 初始化一个RedisCacheWriter
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(connectionFactory);
+        // 生成一个默认配置，通过config对象即可对缓存进行自定义配置
         RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig();
-        // 设置默认超过期时间是1天
-        defaultCacheConfig.entryTtl(Duration.ofDays(1));
+        // 设置缓存的默认过期时间，也是使用Duration设置
+        defaultCacheConfig = defaultCacheConfig.entryTtl(Duration.ofDays(RedisConstant.DAY))
+                // 默认不缓存空值
+                .disableCachingNullValues();
         // 初始化RedisCacheManager
         return new RedisCacheManager(redisCacheWriter, defaultCacheConfig);
     }
@@ -67,7 +68,7 @@ public class RedisAutoConfiguration {
      * @return RedisTemplate RedisTemplate
      */
     @Bean
-    public RedisTemplate<Object, Object> redisTemplate() {
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
         // 使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值（默认使用JDK的序列化方式）
@@ -77,7 +78,6 @@ public class RedisAutoConfiguration {
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         serializer.setObjectMapper(mapper);
-
         template.setValueSerializer(serializer);
         // 使用StringRedisSerializer来序列化和反序列化redis的key值
         template.setKeySerializer(new StringRedisSerializer());
@@ -86,27 +86,27 @@ public class RedisAutoConfiguration {
     }
 
     @Bean
-    public StringRedisTemplate stringRedisTemplate() {
+    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory connectionFactory) {
         StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
         stringRedisTemplate.setConnectionFactory(connectionFactory);
         return stringRedisTemplate;
     }
 
     @Bean
-    public RedisTemplate<String, Object> functionDomainRedisTemplate() {
+    public RedisTemplate<String, Object> functionDomainRedisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         initDomainRedisTemplate(redisTemplate, connectionFactory);
         return redisTemplate;
     }
 
     @Bean
-    public RedisUtils getRedisUtils() {
-        return new RedisUtils();
+    public RedisUtils redisUtils(RedisTemplate<String, Object> redisTemplate, RedisLockUtil redisLockUtil) {
+        return new RedisUtils(redisTemplate, redisLockUtil);
     }
 
     @Bean
-    public RedisLockUtil redisLockUtil() {
-        return new RedisLockUtil(redisTemplate());
+    public RedisLockUtil redisLockUtil(RedisTemplate<String, Object> redisTemplate) {
+        return new RedisLockUtil(redisTemplate);
     }
 
     /**
@@ -116,6 +116,7 @@ public class RedisAutoConfiguration {
      * @param factory       RedisConnectionFactory
      */
     private void initDomainRedisTemplate(RedisTemplate<String, Object> redisTemplate, RedisConnectionFactory factory) {
+        log.info("============================ Redis Configuration 构建成功 ============================");
         // 如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to
         // String！
         redisTemplate.setKeySerializer(new StringRedisSerializer());
