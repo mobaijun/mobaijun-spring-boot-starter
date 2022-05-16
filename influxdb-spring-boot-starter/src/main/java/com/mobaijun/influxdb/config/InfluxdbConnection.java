@@ -6,6 +6,7 @@ import com.mobaijun.influxdb.core.model.InfluxdbClient;
 import com.mobaijun.influxdb.util.InfluxdbUtils;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
+import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
@@ -14,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  * Software：IntelliJ IDEA 2021.3.2
  * ClassName: influxDbConnection
  * 类描述： influxDb操作类
- *<a href="https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=199530389&focusedCommentId=199540198#influxDb%E9%80%82%E9%85%8D%E5%99%A8%E5%85%BC%E5%AE%B9%E8%BF%9B%E5%BA%A6-1.write">...</a>
+ * <a href="https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=199530389&focusedCommentId=199540198#influxDb%E9%80%82%E9%85%8D%E5%99%A8%E5%85%BC%E5%AE%B9%E8%BF%9B%E5%BA%A6-1.write">...</a>
  *
  * @author MoBaiJun 2022/4/27 8:55
  */
@@ -58,7 +58,7 @@ public class InfluxdbConnection extends InfluxdbClient {
     private void initDefaultDatabase() {
         if (ObjectUtils.isEmpty(this.influxDb)) {
             this.influxDb = InfluxDBFactory.connect(this.getUrl(), this.getUsername(), this.getPassword(), CLIENT);
-            log.info("============================ Influxdb database  Created successfully ============================");
+            log.info("============================ influxdb configured successfully ============================");
         }
         if (!InfluxdbUtils.checkDatabase(execute(Constant.SHOW_DATABASE), getDatabase())) {
             execute(Constant.CREATE_DATABASE + getDatabase() + Constant.DELIMITER);
@@ -106,11 +106,12 @@ public class InfluxdbConnection extends InfluxdbClient {
      * @param entity 实体
      */
     public void insert(List<?> entity) {
-        List<String> data = new ArrayList<>();
+        BatchPoints batchPoints = BatchPoints.database(getDatabase()).build();
         for (Object object : entity) {
-            data.add(InfluxdbUtils.save(object).lineProtocol());
+            batchPoints.point(InfluxdbUtils.save(object));
         }
-        influxDb.write(data);
+        // 批量写入
+        influxDb.write(batchPoints);
     }
 
     /**
@@ -119,7 +120,7 @@ public class InfluxdbConnection extends InfluxdbClient {
      * @param entity 实体
      */
     public void insert(Object entity) {
-        influxDb.write(InfluxdbUtils.save(entity));
+        influxDb.write(BatchPoints.database(getDatabase()).build().point(InfluxdbUtils.save(entity)));
     }
 
     /**
@@ -137,7 +138,7 @@ public class InfluxdbConnection extends InfluxdbClient {
         if (!ObjectUtils.isEmpty(time)) {
             builder.time(time, TimeUnit.SECONDS);
         }
-        influxDb.write(getDatabase(), "", builder.build());
+        influxDb.write(BatchPoints.database(getDatabase()).build().point(InfluxdbUtils.save(builder)));
     }
 
     /**
@@ -147,7 +148,7 @@ public class InfluxdbConnection extends InfluxdbClient {
      * @param query 查询语句
      */
     public void insert(String query) {
-        influxDb.write(query);
+        influxDb.write(BatchPoints.database(getDatabase()).build().point(InfluxdbUtils.save(query)));
     }
 
     /**

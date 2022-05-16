@@ -64,7 +64,7 @@ public class SwaggerAutoConfiguration {
      */
     @Bean
     public Docket createRestApi(SwaggerProperties swaggerProperties) {
-        log.info("============================ Swagger Api 构建成功 ============================");
+        log.info("============================ Swagger Api Configured Successfully ============================");
         return new Docket(DocumentationType.SWAGGER_2)
                 // 是否启用swagger / 生产环境关闭
                 .enable(swaggerProperties.getEnable())

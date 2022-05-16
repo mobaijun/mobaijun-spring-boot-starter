@@ -116,7 +116,7 @@ public class RedisAutoConfiguration {
      * @param factory       RedisConnectionFactory
      */
     private void initDomainRedisTemplate(RedisTemplate<String, Object> redisTemplate, RedisConnectionFactory factory) {
-        log.info("============================ Redis Configuration 构建成功 ============================");
+        log.info("============================ Redis configured successfully ============================");
         // 如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to
         // String！
         redisTemplate.setKeySerializer(new StringRedisSerializer());

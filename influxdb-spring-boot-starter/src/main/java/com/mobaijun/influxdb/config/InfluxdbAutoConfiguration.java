@@ -4,6 +4,7 @@ import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.prop.InfluxProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.influx.InfluxDbProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,11 @@ import org.springframework.context.annotation.Configuration;
 public class InfluxdbAutoConfiguration {
 
     public InfluxdbAutoConfiguration() {
+    }
+
+    @Bean
+    public InfluxDbProperties influxDbProperties() {
+        return new InfluxDbProperties();
     }
 
     /**

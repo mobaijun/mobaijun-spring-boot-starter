@@ -154,7 +154,7 @@ public class InfluxdbUtils {
                         if (Constant.TIME.equals(column.name())) {
                             builder.time(CommonUtils.parseLocalDateTimeToInstant((LocalDateTime) field.get(object)).getEpochSecond(), TimeUnit.SECONDS);
                         } else {
-                            builder.field(column.name(), field.get(object));
+                            builder.addField(column.name(), field.get(object).toString());
                         }
 
                     }
