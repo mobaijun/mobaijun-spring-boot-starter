@@ -10,7 +10,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>influxdb-spring-boot-starter</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
 
     <properties>
         <influxdb.version>2.22</influxdb.version>

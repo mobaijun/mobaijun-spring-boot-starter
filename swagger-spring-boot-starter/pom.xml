@@ -16,7 +16,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>swagger-spring-boot-starter</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
 
     <name>swagger-spring-boot-starter</name>
     <inceptionYear>2022</inceptionYear>
