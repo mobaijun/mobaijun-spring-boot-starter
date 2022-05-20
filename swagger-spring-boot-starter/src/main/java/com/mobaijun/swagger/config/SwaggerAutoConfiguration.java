@@ -3,12 +3,16 @@ package com.mobaijun.swagger.config;
 import com.google.common.collect.Lists;
 import com.mobaijun.swagger.prop.SwaggerProperties;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.util.ReflectionUtils;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -23,10 +27,14 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.ApiKeyVehicle;
 
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -36,8 +44,7 @@ import java.util.List;
  * @author MoBaiJun 2022/4/26 9:09
  */
 @Configuration
-@Import({SwaggerConfiguration.class})
-public class SwaggerAutoConfiguration {
+public class SwaggerAutoConfiguration implements WebMvcConfigurer {
 
     private final Logger log = LoggerFactory.getLogger(SwaggerAutoConfiguration.class);
 
@@ -65,7 +72,7 @@ public class SwaggerAutoConfiguration {
     @Bean
     public Docket createRestApi(SwaggerProperties swaggerProperties) {
         log.info("============================ Swagger Api Configured Successfully ============================");
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
                 // 是否启用swagger / 生产环境关闭
                 .enable(swaggerProperties.getEnable())
                 // 服务器地址
@@ -78,6 +85,8 @@ public class SwaggerAutoConfiguration {
                 // 正则匹配请求路径，并分配至当前分组，当前所有接口
                 .paths(PathSelectors.any())
                 .build()
+                // 支持的通讯协议集合
+                .protocols(newHashSet("https", "http"))
                 // 解决 Failed to convert value of type ‘java.lang.String’ to required type ‘java.time.LocalDate’;
                 .directModelSubstitute(LocalTime.class, String.class)
                 .directModelSubstitute(LocalDateTime.class, String.class)
@@ -145,5 +154,39 @@ public class SwaggerAutoConfiguration {
         return Collections.singletonList(SecurityReference.builder()
                 .reference(swaggerProperties().getAuthorization().getHeader())
                 .scopes(authorizationScopes).build());
+    }
+
+    /**
+     * 通用拦截器排除swagger设置，所有拦截器都会自动加swagger相关的资源排除信息
+     *
+     * @param registry InterceptorRegistry
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public void addInterceptors(InterceptorRegistry registry) {
+        try {
+            Field registrationsField = FieldUtils.getField(InterceptorRegistry.class, "registrations", true);
+            List<InterceptorRegistration> registrations =
+                    (List<InterceptorRegistration>) ReflectionUtils.getField(registrationsField, registry);
+            if (registrations != null) {
+                for (InterceptorRegistration interceptorRegistration : registrations) {
+                    interceptorRegistration
+                            .excludePathPatterns("/swagger**/**")
+                            .excludePathPatterns("/webjars/**")
+                            .excludePathPatterns("/v3/**")
+                            .excludePathPatterns("/doc.html");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @SafeVarargs
+    private final <T> Set<T> newHashSet(T... ts) {
+        if (ts.length > 0) {
+            return new LinkedHashSet<>(Arrays.asList(ts));
+        }
+        return null;
     }
 }

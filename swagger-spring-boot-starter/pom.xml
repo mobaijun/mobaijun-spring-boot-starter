@@ -12,6 +12,7 @@
     <properties>
         <swagger-ui.version>3.0.3</swagger-ui.version>
         <swagger.version>3.0.0</swagger.version>
+        <web-mvc.version>5.3.19</web-mvc.version>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
@@ -42,6 +43,16 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-models</artifactId>
+                </exclusion>
+            </exclusions>
             <version>${swagger.version}</version>
         </dependency>
         <!-- swagger-ui -->
@@ -50,6 +61,12 @@
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <!--在引用时请在maven中央仓库搜索2.X最新版本号-->
             <version>${swagger-ui.version}</version>
+        </dependency>
+        <dependency>
+            <!-- mvc -->
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${web-mvc.version}</version>
         </dependency>
     </dependencies>
 </project>

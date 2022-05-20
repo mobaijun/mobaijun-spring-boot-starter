@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.mobaijun.swagger.config.SwaggerConfiguration
+com.mobaijun.swagger.config.SwaggerAutoConfiguration
