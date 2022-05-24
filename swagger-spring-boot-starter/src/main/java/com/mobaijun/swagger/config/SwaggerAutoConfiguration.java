@@ -82,6 +82,7 @@ public class SwaggerAutoConfiguration implements WebMvcConfigurer {
                 .select()
                 // withMethodAnnotation 扫描所有包含(@ApiOperation)的API,用这种方式更加灵活
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                .apis(RequestHandlerSelectors.basePackage(swaggerProperties.getBasePackage()))
                 // 正则匹配请求路径，并分配至当前分组，当前所有接口
                 .paths(PathSelectors.any())
                 .build()

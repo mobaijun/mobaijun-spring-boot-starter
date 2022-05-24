@@ -65,6 +65,11 @@ public class SwaggerProperties {
     private String host = "";
 
     /**
+     * 包路径
+     **/
+    private String basePackage = "";
+
+    /**
      * 配置作者信息
      */
     private Contact contact = new Contact();
@@ -74,10 +79,7 @@ public class SwaggerProperties {
      **/
     private Authorization authorization = new Authorization();
 
-    public SwaggerProperties() {
-    }
-
-    public SwaggerProperties(Boolean enable, String title, String description, String license, String licenseUrl, String groupName, String termsOfServiceUrl, String version, String host, Contact contact, Authorization authorization) {
+    public SwaggerProperties(Boolean enable, String title, String description, String license, String licenseUrl, String groupName, String termsOfServiceUrl, String version, String host, String basePackage, Contact contact, Authorization authorization) {
         this.enable = enable;
         this.title = title;
         this.description = description;
@@ -87,8 +89,12 @@ public class SwaggerProperties {
         this.termsOfServiceUrl = termsOfServiceUrl;
         this.version = version;
         this.host = host;
+        this.basePackage = basePackage;
         this.contact = contact;
         this.authorization = authorization;
+    }
+
+    public SwaggerProperties() {
     }
 
     public Boolean getEnable() {
@@ -161,6 +167,14 @@ public class SwaggerProperties {
 
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public String getBasePackage() {
+        return basePackage;
+    }
+
+    public void setBasePackage(String basePackage) {
+        this.basePackage = basePackage;
     }
 
     public Contact getContact() {
