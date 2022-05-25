@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -72,9 +73,39 @@ public class SwaggerAutoConfiguration implements WebMvcConfigurer {
     @Bean
     public Docket createRestApi(SwaggerProperties swaggerProperties) {
         log.info("============================ Swagger Api Configured Successfully ============================");
-        return new Docket(DocumentationType.OAS_30)
-                // 是否启用swagger / 生产环境关闭
-                .enable(swaggerProperties.getEnable())
+        return docket(swaggerProperties);
+    }
+
+    private Docket docket(SwaggerProperties swaggerProperties) {
+        Docket docket = new Docket(DocumentationType.OAS_30);
+        // withMethodAnnotation 扫描所有包含(@ApiOperation)的API,用这种方式更加灵活
+        if (StringUtils.hasText(swaggerProperties.getBasePackage())) {
+            // 是否启用swagger / 生产环境关闭
+            return docket.enable(swaggerProperties.getEnable())
+                    // 服务器地址
+                    .host(swaggerProperties.getHost())
+                    // 设置该 docket 的名字,可以实现多个Docket,实现分组
+                    .apiInfo(apiInfo(swaggerProperties))
+                    .select()
+                    .apis(RequestHandlerSelectors.basePackage(swaggerProperties.getBasePackage()))
+                    // 正则匹配请求路径，并分配至当前分组，当前所有接口
+                    .paths(PathSelectors.any())
+                    .build()
+                    // 支持的通讯协议集合
+                    .protocols(newHashSet("https", "http"))
+                    // 解决 Failed to convert value of type ‘java.lang.String’ to required type ‘java.time.LocalDate’;
+                    .directModelSubstitute(LocalTime.class, String.class)
+                    .directModelSubstitute(LocalDateTime.class, String.class)
+                    // 分组名称
+                    .groupName(swaggerProperties.getGroupName())
+                    // 授权信息全局应用
+                    .securityContexts(securityContexts())
+                    // 授权信息设置，必要的header token等认证信息
+                    .securitySchemes(apiKeys());
+
+        }
+        // 是否启用swagger / 生产环境关闭
+        return docket.enable(swaggerProperties.getEnable())
                 // 服务器地址
                 .host(swaggerProperties.getHost())
                 // 设置该 docket 的名字,可以实现多个Docket,实现分组
@@ -82,7 +113,6 @@ public class SwaggerAutoConfiguration implements WebMvcConfigurer {
                 .select()
                 // withMethodAnnotation 扫描所有包含(@ApiOperation)的API,用这种方式更加灵活
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-                .apis(RequestHandlerSelectors.basePackage(swaggerProperties.getBasePackage()))
                 // 正则匹配请求路径，并分配至当前分组，当前所有接口
                 .paths(PathSelectors.any())
                 .build()
