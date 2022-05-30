@@ -53,6 +53,11 @@ public abstract class InfluxdbClient {
      */
     private static String DEFAULT = "default";
 
+    /**
+     * 策略存储时间，7天
+     */
+    private static String DEFAULT_PILICY_TIME = "7d";
+
     public InfluxdbClient() {
     }
 
@@ -61,8 +66,8 @@ public abstract class InfluxdbClient {
         this.password = password;
         this.url = url;
         this.database = database;
-        this.retentionPolicy = retentionPolicy;
-        this.retentionPolicyTime = retentionPolicyTime;
+        this.retentionPolicy = retentionPolicy == null || "".equals(retentionPolicy) ? DEFAULT : retentionPolicy;
+        this.retentionPolicyTime = retentionPolicyTime == null || "".equals(retentionPolicyTime) ? DEFAULT_PILICY_TIME : retentionPolicyTime;
     }
 
     public String getUsername() {

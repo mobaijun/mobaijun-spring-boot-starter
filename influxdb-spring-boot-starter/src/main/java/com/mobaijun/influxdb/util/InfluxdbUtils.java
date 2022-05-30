@@ -15,6 +15,8 @@ import org.springframework.util.ObjectUtils;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -142,10 +144,13 @@ public class InfluxdbUtils {
         Class<?> clazz = object.getClass();
         Measurement measurement = clazz.getAnnotation(Measurement.class);
         Point.Builder builder = Point.measurement(measurement.name());
-        Field[] fields = clazz.getDeclaredFields();
+        Field[] fields = getAllFields(clazz);
         for (Field field : fields) {
             try {
                 Column column = field.getAnnotation(Column.class);
+                if (ObjectUtils.isEmpty(column)) {
+                    log.error("Influxdb save error. error :{} null", column.name());
+                }
                 field.setAccessible(true);
                 if (column.tag()) {
                     builder.tag(column.name(), field.get(object).toString());
@@ -304,5 +309,20 @@ public class InfluxdbUtils {
             }
         }
         return temp.toString();
+    }
+
+    /**
+     * 通过反射获取父类属性
+     *
+     * @param clazz 对象
+     * @return 属性数组
+     */
+    public static Field[] getAllFields(Class<?> clazz) {
+        List<Field> fieldList = new ArrayList<>();
+        while (Object.class != clazz) {
+            fieldList.addAll(new ArrayList<>(Arrays.asList(clazz.getDeclaredFields())));
+            clazz = clazz.getSuperclass();
+        }
+        return fieldList.stream().toArray(Field[]::new);
     }
 }

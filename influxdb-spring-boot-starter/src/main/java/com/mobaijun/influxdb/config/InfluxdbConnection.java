@@ -8,6 +8,7 @@ import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
+import org.influxdb.dto.Pong;
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -187,5 +189,69 @@ public class InfluxdbConnection extends InfluxdbClient {
             return null;
         }
         return values;
+    }
+
+    /**
+     * 查询统计数据, 查询结果为单行
+     *
+     * @param sql 执行sql
+     * @return 结果集
+     */
+    public Map<String, Object> queryStatisticData(StringBuilder sql) {
+        QueryResult queryResult = influxDb.query(new Query(String.valueOf(sql), getDatabase()));
+        // 对象内容是否正常
+        if (ObjectUtils.isEmpty(queryResult) || !ObjectUtils.isEmpty(queryResult.getError())) {
+            return null;
+        }
+        // 数据集合是否正常-
+        List<List<Object>> values = queryResult.getResults().get(0).getSeries().get(0).getValues();
+        if (ObjectUtils.isEmpty(values) || ObjectUtils.isEmpty(values.size())) {
+            return null;
+        }
+
+        List<QueryResult.Series> series = queryResult.getResults().get(0).getSeries();
+        HashMap<String, Object> resultMap = new HashMap<>(1);
+        for (int index = 0; index < series.get(0).getColumns().size(); index++) {
+            resultMap.put(series.get(0).getColumns().get(index), values.get(0).get(index));
+        }
+        return resultMap;
+    }
+
+    /**
+     * 关闭链接
+     */
+    public void close() {
+        influxDb.close();
+    }
+
+    /**
+     * 删除表
+     *
+     * @param command 删除语句
+     * @return 返回错误信息
+     */
+    public String deleteMeasurementData(String command) {
+        QueryResult result = influxDb.query(new Query(command, getDatabase()));
+        return result.getError();
+    }
+
+    /**
+     * 测试链接是否正常
+     *
+     * @return true 正常 : false 异常
+     */
+    public boolean ping() {
+        boolean isConnected = false;
+        try {
+            Pong ping = influxDb.ping();
+            if (!ObjectUtils.isEmpty(ping)) {
+                isConnected = true;
+            }
+            // 链接超时
+        } catch (Exception e) {
+            log.error("influxdb Pong -------------- 无法链接");
+            e.printStackTrace();
+        }
+        return isConnected;
     }
 }
