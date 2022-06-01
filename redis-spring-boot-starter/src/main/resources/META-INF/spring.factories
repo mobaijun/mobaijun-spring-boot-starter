@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.mobaijun.redis.config.RedisAutoConfiguration
+  com.mobaijun.redis.config.RedisAutoConfiguration,\
+  com.mobaijun.redis.config.LocalDateTimeFormatConfig
