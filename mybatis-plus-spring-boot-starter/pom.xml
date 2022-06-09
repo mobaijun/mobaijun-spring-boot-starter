@@ -6,20 +6,20 @@
     <parent>
         <artifactId>mobaijun-spring-boot-starter</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>1.0.3-SNAPSHOT</version>
+        <version>1.0.3</version>
     </parent>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <mybatis-plus.version>3.5.1</mybatis-plus.version>
-        <kjs-common.version>1.0.1</kjs-common.version>
+        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <kjs-common.version>1.0.4</kjs-common.version>
         <p6spy.version>3.9.1</p6spy.version>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>mybatis-plus-spring-boot-starter</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
 
     <name>mybatis-plus-spring-boot-starter</name>
     <inceptionYear>2022</inceptionYear>
