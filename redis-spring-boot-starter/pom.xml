@@ -5,12 +5,11 @@
     <parent>
         <artifactId>mobaijun-spring-boot-starter</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>1.0.3</version>
+        <version>1.0.4-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>redis-spring-boot-starter</artifactId>
-    <version>1.0.3</version>
 
     <name>redis-spring-boot-starter</name>
     <inceptionYear>2022</inceptionYear>
@@ -28,9 +27,6 @@
         <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
-
-    <properties>
-    </properties>
 
     <dependencies>
         <!-- Redis -->

@@ -6,7 +6,7 @@
     <parent>
         <artifactId>mobaijun-spring-boot-starter</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>1.0.3</version>
+        <version>1.0.4-SNAPSHOT</version>
     </parent>
 
     <properties>
@@ -19,7 +19,6 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>mybatis-plus-spring-boot-starter</artifactId>
-    <version>1.0.3</version>
 
     <name>mybatis-plus-spring-boot-starter</name>
     <inceptionYear>2022</inceptionYear>

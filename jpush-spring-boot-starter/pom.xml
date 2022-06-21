@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <artifactId>mobaijun-spring-boot-starter</artifactId>
+        <groupId>com.mobaijun</groupId>
+        <version>1.0.4-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <client.version>3.6.1</client.version>
+        <common.version>1.2.0</common.version>
+    </properties>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>jpush-spring-boot-starter</artifactId>
+
+    <name>jpush-spring-boot-starter</name>
+    <inceptionYear>2022</inceptionYear>
+    <description>Simple and easy to use Jiguang push server auxiliary toolkit. Quickly integrate directly into your
+        SpringBoot project.
+    </description>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
+
+    <!--  GitHub issues -->
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/jpush-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
+        <developerConnection>https://github.com/mobaijun</developerConnection>
+    </scm>
+
+    <dependencies>
+        <!--  极光客户端 -->
+        <dependency>
+            <groupId>cn.jpush.api</groupId>
+            <artifactId>jpush-client</artifactId>
+            <version>${client.version}</version>
+        </dependency>
+        <!-- 极光推送工具类  -->
+        <dependency>
+            <groupId>cn.jpush.api</groupId>
+            <artifactId>jiguang-common</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+    </dependencies>
+</project>

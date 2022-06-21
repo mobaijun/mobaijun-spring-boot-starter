@@ -87,22 +87,17 @@ public class InfluxdbUtils {
                                     if (field != null) {
                                         setFieldValue(obj, field, entry.getValue());
                                     }
-
                                 }
                             }
-
-
                         } catch (SecurityException | InstantiationException | IllegalAccessException e) {
                             log.error("Influxdb toPOJO error :{}", e.getMessage());
                         }
                         results.add(obj);
                     }
-
                 }
             } else {
                 log.info("QueryResult.Result Is Null.");
             }
-
         }
         return results;
     }
