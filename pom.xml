@@ -23,7 +23,7 @@
         <module>redis-spring-boot-starter</module>
         <module>mybatis-plus-spring-boot-starter</module>
 <!--        <module>oss-spring-boot-starter</module>-->
-<!--        <module>auth-spring-boot-starter</module>-->
+        <module>auth-spring-boot-starter</module>
         <module>jpush-spring-boot-starter</module>
     </modules>
 
