@@ -10,7 +10,7 @@
 <dependency>
     <groupId>com.mobaijun</groupId>
     <artifactId>influxdb-spring-boot-starter</artifactId>
-    <version>2.4.13</version>
+    <version>${latest.version}</version>
 </dependency>
 ~~~
 

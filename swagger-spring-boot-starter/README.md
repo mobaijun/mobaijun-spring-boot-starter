@@ -4,7 +4,7 @@
 <dependency>
     <groupId>com.mobaijun</groupId>
     <artifactId>swagger-spring-boot-starter</artifactId>
-    <version>2.4.13</version>
+    <version>${latest.version}</version>
 </dependency>
 ~~~
 
@@ -39,7 +39,7 @@ swagger:
     email: mobaijun8@163.com
 ~~~
 
-* 配置包扫描路径
+* 开启 swagger
 
 ~~~java
 package com.example.demo;
