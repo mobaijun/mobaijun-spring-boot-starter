@@ -63,9 +63,9 @@ push:
 ### 引入依赖
 ```xml
 <dependency>
-    <groupId>com.apifan.framework</groupId>
+    <groupId>com.mobaijun</groupId>
     <artifactId>jpush-spring-boot-starter</artifactId>
-    <version>1.0.2</version>
+    <version>${latest.version}</version>
 </dependency>
 ```
 ### 注入
