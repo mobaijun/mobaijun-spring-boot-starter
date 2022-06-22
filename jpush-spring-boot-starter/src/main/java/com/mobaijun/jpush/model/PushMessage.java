@@ -32,6 +32,19 @@ public class PushMessage {
     private Map<String, String> extras;
 
     /**
+     * title
+     */
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title.trim();
+    }
+
+    /**
      * 获取 消息内容
      *
      * @return content 消息内容

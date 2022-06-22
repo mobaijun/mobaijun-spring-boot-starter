@@ -9,6 +9,7 @@ import cn.jiguang.common.utils.StringUtils;
 import cn.jpush.api.JPushClient;
 import cn.jpush.api.device.AliasDeviceListResult;
 import cn.jpush.api.push.PushResult;
+import cn.jpush.api.push.model.Message;
 import cn.jpush.api.push.model.Options;
 import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
@@ -19,9 +20,9 @@ import cn.jpush.api.push.model.notification.Notification;
 import cn.jpush.api.schedule.ScheduleResult;
 import com.mobaijun.jpush.model.PushMessage;
 import com.mobaijun.jpush.prop.PushProp;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import org.apache.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
@@ -69,7 +70,6 @@ public class PushConnection {
     private void initialization() {
         Preconditions.checkArgument(StringUtils.isNotEmpty(pushProp.getAppKey()), "appKey is empty");
         Preconditions.checkArgument(StringUtils.isNotEmpty(pushProp.getMasterSecret()), "masterSecret is empty");
-        ClientConfig clientConfig = ClientConfig.getInstance();
         HttpProxy proxy = null;
         if (pushProp.isUseProxy()) {
             Preconditions.checkArgument(StringUtils.isNotEmpty(pushProp.getProxyHost()), "Proxy server hostname or IP is empty");
@@ -84,8 +84,8 @@ public class PushConnection {
             }
         }
         // 新建连接
-        pushClient = new JPushClient(pushProp.getMasterSecret(), pushProp.getAppKey(), proxy, clientConfig);
-        log.warn("=================== Initialization of the aurora reckoning interface succeeded! ===================");
+        pushClient = new JPushClient(pushProp.getMasterSecret(), pushProp.getAppKey(), proxy, ClientConfig.getInstance());
+        log.info("=================== Initialization of the aurora reckoning interface succeeded! ===================");
     }
 
     /**
@@ -135,6 +135,17 @@ public class PushConnection {
      */
     public Long pushToAll(PushMessage pm) {
         return push(createPushPayload(pm, Audience.all()));
+    }
+
+    /**
+     * 定时发送全部用户
+     *
+     * @param pm   消息体
+     * @param time 定时时间
+     * @return 是否成功
+     */
+    public boolean pushToSchedule(PushMessage pm, LocalDateTime time) throws APIConnectionException, APIRequestException {
+        return sendToSchedule(pm, time, Audience.all());
     }
 
     /**
@@ -252,14 +263,14 @@ public class PushConnection {
      * @return 成功时返回消息ID
      */
     private Long executePush(PushPayload payload) {
-        log.warn("push message body: {}" + payload.toJSON());
+        log.warn("push message body: {}", payload.toJSON());
         try {
             PushResult result = pushClient.sendPush(payload);
             if (result == null) {
                 return null;
             }
             if (HttpStatus.SC_OK == result.getResponseCode()) {
-                log.warn("The message is pushed successfully, the message ID: {}" + result.msg_id);
+                log.warn("The message is pushed successfully, the message ID: {}", result.msg_id);
                 return result.msg_id;
             }
             log.error("Message push failed, ResponseCode={}", result.getResponseCode());
@@ -308,6 +319,7 @@ public class PushConnection {
                 // 指定要推送的平台，all代表当前应用配置了的所有平台，也可以传android等具体平台
                 .setPlatform(Platform.all())
                 // 指定推送的接收对象，all代表所有人，也可以指定已经设置成功的tag或alias或该应应用客户端调用接口获取到的registration id
+                // 注意，该用户必须存在于该appKey拥有者的服务用户下，不然会提示找不到该用户
                 .setAudience(audience)
                 // 推送设置
                 .setOptions(Options.newBuilder()
@@ -336,6 +348,14 @@ public class PushConnection {
                                 .addExtras(pm.getExtras())
                                 .build())
                         .build()
-                ).build();
+                )
+                // Platform指定了哪些平台就会像指定平台中符合推送条件的设备进行推送。 jpush的自定义消息，
+                // sdk默认不做任何处理，不会有通知提示。建议看文档
+                // [通知与自定义消息有什么区别？]了解通知和自定义消息的区别
+                .setMessage(Message.newBuilder()
+                        .setMsgContent(pm.getContent())
+                        .setTitle(pm.getTitle() != null ? pm.getTitle() : "")
+                        .build())
+                .build();
     }
 }
