@@ -72,7 +72,7 @@ public class SwaggerAutoConfiguration implements WebMvcConfigurer {
      */
     @Bean
     public Docket createRestApi(SwaggerProperties swaggerProperties) {
-        log.info("============================ Swagger Api Configured Successfully ============================");
+        log.info("============================ swagger api initialized and loaded successfully! ============================");
         return docket(swaggerProperties);
     }
 

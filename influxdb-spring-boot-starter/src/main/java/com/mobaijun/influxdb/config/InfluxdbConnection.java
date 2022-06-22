@@ -60,7 +60,7 @@ public class InfluxdbConnection extends InfluxdbClient {
     private void initDefaultDatabase() {
         if (ObjectUtils.isEmpty(this.influxDb)) {
             this.influxDb = InfluxDBFactory.connect(this.getUrl(), this.getUsername(), this.getPassword(), CLIENT);
-            log.info("============================ influxdb configured successfully ============================");
+            log.info("=================== The influxdb database was initialized successfully!  ===================");
         }
         if (!InfluxdbUtils.checkDatabase(execute(Constant.SHOW_DATABASE), getDatabase())) {
             execute(Constant.CREATE_DATABASE + getDatabase() + Constant.DELIMITER);

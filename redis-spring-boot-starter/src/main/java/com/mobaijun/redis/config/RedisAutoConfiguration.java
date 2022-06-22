@@ -43,6 +43,11 @@ public class RedisAutoConfiguration {
         return new RedisKeyGenerator();
     }
 
+    @Bean
+    public RedisConnectionFactory connectionFactory(RedisConnectionFactory redisConnectionFactory) {
+        return redisConnectionFactory;
+    }
+
     /**
      * 如使用注解的话需要配置cacheManager
      *
@@ -116,7 +121,7 @@ public class RedisAutoConfiguration {
      * @param factory       RedisConnectionFactory
      */
     private void initDomainRedisTemplate(RedisTemplate<String, Object> redisTemplate, RedisConnectionFactory factory) {
-        log.info("============================ Redis configured successfully ============================");
+        log.info("============================ The redis cache service was initialized successfully! ============================");
         // 如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to
         // String！
         redisTemplate.setKeySerializer(new StringRedisSerializer());

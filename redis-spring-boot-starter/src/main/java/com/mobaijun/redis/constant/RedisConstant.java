@@ -22,24 +22,54 @@ public class RedisConstant {
     public static final Long DAY = 1L;
 
     /**
-     * 24小时
-     */
-    public static final Duration ONE_DAY = Duration.ofDays(1);
-
-    /**
      * 一周(7天)
      */
     public static final Duration WEEK_DAY = Duration.ofDays(7);
 
     /**
-     * 30 分钟
+     * 5天
      */
-    public static final Duration THREE_MINUTES = Duration.ofMinutes(30);
+    public static final Duration FIVE_DAY = Duration.ofDays(7);
+
+    /**
+     * 三天
+     */
+    public static final Duration THREE_DAY = Duration.ofDays(3);
+
+    /**
+     * 24小时
+     */
+    public static final Duration ONE_DAY = Duration.ofHours(24);
 
     /**
      * 60 分钟
      */
-    public static final Duration SIXTS_MINUTES = Duration.ofMinutes(60);
+    public static final Duration SIXTY_MINUTES = Duration.ofMinutes(60);
+
+    /**
+     * 30 分钟
+     */
+    public static final Duration THIRTY_MINUTES = Duration.ofMinutes(30);
+
+    /**
+     * 15 分钟
+     */
+    public static final Duration FIFTEEN_MINUTES = Duration.ofMinutes(15);
+
+    /**
+     * 10 分钟
+     */
+    public static final Duration TEN_MINUTES = Duration.ofMinutes(10);
+
+    /**
+     * 5 分钟
+     */
+    public static final Duration FIVE_MINUTES = Duration.ofMinutes(5);
+
+    /**
+     * 3 分钟
+     */
+    public static final Duration THREEE_MINUTES = Duration.ofMinutes(3);
 
     /**
      * 60 秒
