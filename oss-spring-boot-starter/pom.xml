@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mobaijun-spring-boot-starter</artifactId>
+        <groupId>com.mobaijun</groupId>
+        <version>1.0.4-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <swagger-ui.version>3.0.3</swagger-ui.version>
+        <swagger.version>3.0.0</swagger.version>
+        <web-mvc.version>5.3.19</web-mvc.version>
+        <aliyun.version>3.15.0</aliyun.version>
+    </properties>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>oss-spring-boot-starter</artifactId>
+
+    <name>oss-spring-boot-starter</name>
+    <inceptionYear>2022</inceptionYear>
+    <description>oss-spring-boot-starter</description>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
+
+    <!--  GitHub issues -->
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/oss-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
+        <developerConnection>https://github.com/mobaijun</developerConnection>
+    </scm>
+
+    <dependencies>
+        <!-- aliyun oss -->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>${aliyun.version}</version>
+        </dependency>
+    </dependencies>
+</project>
