@@ -71,10 +71,6 @@
             <version>${kjs-common.version}</version>
             <exclusions>
                 <exclusion>
-                    <groupId>cn.hutool</groupId>
-                    <artifactId>hutool-all</artifactId>
-                </exclusion>
-                <exclusion>
                     <groupId>org.mapstruct</groupId>
                     <artifactId>mapstruct</artifactId>
                 </exclusion>
