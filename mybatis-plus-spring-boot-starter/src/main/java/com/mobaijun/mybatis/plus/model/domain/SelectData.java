@@ -10,8 +10,7 @@ import lombok.Data;
  * @author MoBaiJun 2022/5/7 16:01
  */
 @Data
-public class SelectData<T
-        > {
+public class SelectData<T> {
 
     /**
      * 显示的数据
