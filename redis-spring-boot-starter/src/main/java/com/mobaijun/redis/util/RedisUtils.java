@@ -29,8 +29,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class RedisUtils {
     private final Logger log = LoggerFactory.getLogger(RedisUtils.class);
-    private RedisTemplate<String, Object> redisTemplate;
-    private RedisLockUtil redisLockUtil;
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisLockUtil redisLockUtil;
+
     public RedisUtils(RedisTemplate<String, Object> redisTemplate, RedisLockUtil redisLockUtil) {
         this.redisTemplate = redisTemplate;
         this.redisLockUtil = redisLockUtil;
