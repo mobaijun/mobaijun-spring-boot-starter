@@ -15,15 +15,15 @@
     <groupId>com.mobaijun</groupId>
     <artifactId>mobaijun-spring-boot-starter</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.4</version>
 
     <modules>
         <module>swagger-spring-boot-starter</module>
         <module>influxdb-spring-boot-starter</module>
         <module>redis-spring-boot-starter</module>
         <module>mybatis-plus-spring-boot-starter</module>
-        <module>oss-spring-boot-starter</module>
-        <module>auth-spring-boot-starter</module>
+<!--        <module>oss-spring-boot-starter</module>-->
+<!--        <module>auth-spring-boot-starter</module>-->
         <module>jpush-spring-boot-starter</module>
     </modules>
 
