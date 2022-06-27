@@ -11,6 +11,7 @@ import org.influxdb.dto.QueryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -60,21 +61,20 @@ public class InfluxdbUtils {
                             for (int i = 0; i < fieldSize; i++) {
                                 String fieldName = columns.get(i);
                                 Field field = null;
-                                try {
-                                    field = clazz.getDeclaredField(CommonUtils.lineToHump(fieldName));
-                                    field.setAccessible(true);
-                                } catch (NoSuchFieldException e) {
-                                    log.error("Field :{} Not fount, error :{}", fieldName, e.getMessage());
+                                // 使用 spring 工具类获取指定字段
+                                field = ReflectionUtils.findField(clazz, CommonUtils.lineToHump(fieldName));
+                                if (field == null) {
+                                    log.error("Field :{} Not fount", fieldName);
+                                    continue;
                                 }
-                                if (field != null) {
-                                    if (value.get(i) == null) {
-                                        continue;
-                                    }
-                                    Class<?> type = field.getType();
-                                    setFieldValue(type, value, i, obj, field);
+                                field.setAccessible(true);
+                                if (value.get(i) == null) {
+                                    continue;
                                 }
+                                Class<?> type = field.getType();
+                                setFieldValue(type, value, i, obj, field);
                             }
-                            //tags 仅在group by tag 字段时使用
+                            // tags 仅在group by tag 字段时使用
                             if (series.getTags() != null && !series.getTags().isEmpty()) {
                                 for (Map.Entry<String, String> entry : series.getTags().entrySet()) {
                                     Field field = null;
