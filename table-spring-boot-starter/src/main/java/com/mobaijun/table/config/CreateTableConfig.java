@@ -60,7 +60,7 @@ public class CreateTableConfig {
                     // 执行 sql
                     finalStmt.executeUpdate(createTable.splicingSql(tableProperties.getTableConfig().getTablePrefix()));
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    log.error("Failed to create link, driver is{}:", tableProperties.getDriverClassName(), e);
                 }
             });
             log.info("Created table in given database...");

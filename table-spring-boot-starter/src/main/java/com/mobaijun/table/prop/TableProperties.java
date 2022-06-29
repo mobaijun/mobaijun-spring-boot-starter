@@ -10,6 +10,7 @@ import java.util.List;
  * software：IntelliJ IDEA 2022.1
  * class name: TableProperties
  * class description： 读取 spring 数据源配置
+ * 如果需要初始化数据，可以到本仓库提取<<a href="https://github.com/april-projects/init-data/">...</a>>
  *
  * @author MoBaiJun 2022/6/28 14:11
  */
@@ -48,9 +49,9 @@ public class TableProperties {
      */
     public static class TableConfig {
         /**
-         * Table prefix to be created
+         * Table prefix to be created，default kjs_
          */
-        private String tablePrefix;
+        private String tablePrefix = "kjs_";
 
         /**
          * Type of table to be created

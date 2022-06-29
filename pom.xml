@@ -22,9 +22,10 @@
         <module>influxdb-spring-boot-starter</module>
         <module>redis-spring-boot-starter</module>
         <module>mybatis-plus-spring-boot-starter</module>
-<!--        <module>oss-spring-boot-starter</module>-->
-<!--        <module>auth-spring-boot-starter</module>-->
+        <module>oss-spring-boot-starter</module>
+        <module>auth-spring-boot-starter</module>
         <module>jpush-spring-boot-starter</module>
+        <module>table-spring-boot-starter</module>
     </modules>
 
     <!--  个人信息  -->

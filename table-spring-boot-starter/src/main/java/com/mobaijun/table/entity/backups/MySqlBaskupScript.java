@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
  * software：IntelliJ IDEA 2022.1
  * class name: MySqlBaskupScript
  * class description： MySQL备份表
+ * 如果需要初始化数据，可以到本仓库提取<<a href="https://github.com/april-projects/init-data/">...</a>>
  *
  * @author MoBaiJun 2022/6/28 14:12
  */

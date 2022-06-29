@@ -12,7 +12,7 @@ import com.mobaijun.table.entity.second.SecondScript;
 /**
  * software：IntelliJ IDEA 2022.1
  * class name: BaseCreateTable
- * class description： 建表通用方法
+ * class description： 简单工厂和模板方法
  *
  * @author MoBaiJun 2022/6/28 15:56
  */
@@ -29,6 +29,7 @@ public class BaseCreateTable {
 
     /**
      * 获取用户选择的表类型
+     * 如果需要初始化数据，可以到本仓库提取<<a href="https://github.com/april-projects/init-data/">...</a>>
      *
      * @param typeEnum 类型
      * @return 选择的执行器

@@ -13,9 +13,4 @@ public class Constatnt {
      * 判断是否存在此表
      */
     public final static String TABLE_PREFIX = "CREATE TABLE IF NOT EXISTS  `";
-
-    /**
-     * 插入
-     */
-    public final static String INSERT_INTO = "INSERT INTO  ";
 }

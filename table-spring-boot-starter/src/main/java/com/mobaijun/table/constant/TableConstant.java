@@ -4,6 +4,7 @@ package com.mobaijun.table.constant;
  * software：IntelliJ IDEA 2022.1
  * class name: TableConstant
  * class description： table sql
+ * 如果需要初始化数据，可以到本仓库提取<<a href="https://github.com/april-projects/init-data/">...</a>>
  *
  * @author MoBaiJun 2022/6/28 16:32
  */

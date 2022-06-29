@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
  * software：IntelliJ IDEA 2022.1
  * class name: RegionScript
  * class description： 地区信息表
+ * 如果需要初始化数据，可以到本仓库提取<<a href="https://github.com/april-projects/init-data/">...</a>>
  *
  * @author MoBaiJun 2022/6/28 14:17
  */
@@ -32,7 +33,7 @@ public class RegionScript extends BaseCreateTable {
                     .append(tablePrefix)
                     .append(TableConstant.REGION);
         } else {
-            // 空的不拼接
+            // 空的不拼接前缀
             sql
                     .append(Constatnt.TABLE_PREFIX)
                     .append(TableConstant.REGION);
