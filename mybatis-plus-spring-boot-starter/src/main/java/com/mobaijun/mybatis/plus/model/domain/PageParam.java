@@ -1,6 +1,5 @@
 package com.mobaijun.mybatis.plus.model.domain;
 
-import com.mobaijun.common.page.PageParamRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
