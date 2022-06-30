@@ -7,7 +7,7 @@
     <parent>
         <artifactId>mobaijun-spring-boot-starter</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>1.0.4</version>
+        <version>1.0.5</version>
     </parent>
 
     <properties>
