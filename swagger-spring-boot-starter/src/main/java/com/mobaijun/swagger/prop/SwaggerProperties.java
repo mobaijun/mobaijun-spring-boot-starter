@@ -20,9 +20,9 @@ public class SwaggerProperties {
     public static final String PREFIX = "swagger";
 
     /**
-     * 石否开启
+     * 石否开启(默认开启)
      */
-    private Boolean enable;
+    private Boolean enable = true;
 
     /**
      * 应用标题
