@@ -12,6 +12,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>core-spring-boot-starter</artifactId>
     <name>core-spring-boot-starter</name>
+    <version>1.0.5</version>
 
     <dependencies>
         <dependency>
