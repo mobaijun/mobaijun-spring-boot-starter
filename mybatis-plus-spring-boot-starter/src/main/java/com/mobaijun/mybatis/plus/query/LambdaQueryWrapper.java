@@ -1,8 +1,5 @@
 package com.mobaijun.mybatis.plus.query;
 
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.AbstractLambdaWrapper;
 import com.baomidou.mybatisplus.core.conditions.SharedString;
 import com.baomidou.mybatisplus.core.conditions.query.Query;
@@ -11,7 +8,10 @@ import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Collection;
 import java.util.Map;
@@ -141,12 +141,12 @@ public class LambdaQueryWrapper<T> extends AbstractLambdaWrapper<T, LambdaQueryW
             return false;
         } else if (obj instanceof CharSequence) {
             // 字符串比较特殊，如果是空字符串也不行
-            return StrUtil.isNotBlank((CharSequence) obj);
+            return StringUtils.isNotBlank((CharSequence) obj);
         } else if (obj instanceof Collection) {
-            return CollectionUtil.isNotEmpty((Collection) obj);
+            return CollectionUtils.isNotEmpty((Collection) obj);
         }
         if (obj.getClass().isArray()) {
-            return ArrayUtil.isNotEmpty(obj);
+            return !ObjectUtils.isEmpty(obj);
         }
         return true;
     }

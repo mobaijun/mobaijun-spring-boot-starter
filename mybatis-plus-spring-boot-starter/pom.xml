@@ -14,11 +14,8 @@
         <maven.compiler.target>8</maven.compiler.target>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <kjs-common.version>[1.+,)</kjs-common.version>
-        <p6spy.version>3.9.1</p6spy.version>
-        <swagger-core.version>2.2.1</swagger-core.version>
         <swagger-annotation.version>1.6.6</swagger-annotation.version>
         <springdoc.version>1.6.9</springdoc.version>
-        <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <validation-api>2.0.1.Final</validation-api>
     </properties>
 
@@ -51,25 +48,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-core</artifactId>
-            <version>${mybatis-plus.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-extension</artifactId>
-            <version>${mybatis-plus.version}</version>
-        </dependency>
-
-        <!-- MybatisPlus 性能分析插件 -->
-        <dependency>
-            <groupId>p6spy</groupId>
-            <artifactId>p6spy</artifactId>
-            <version>${p6spy.version}</version>
-        </dependency>
-
-        <dependency>
             <!-- 工具类 -->
             <groupId>com.mobaijun</groupId>
             <artifactId>kjs-common</artifactId>
@@ -87,6 +65,10 @@
                     <groupId>org.apache.commons</groupId>
                     <artifactId>commons-lang3</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>cn.hutool</groupId>
+                    <artifactId>hutool-all</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -95,20 +77,9 @@
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>${swagger-core.version}</version>
-        </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-annotation</artifactId>
-            <version>${mybatis-plus.version}</version>
         </dependency>
         <dependency>
             <groupId>io.swagger</groupId>

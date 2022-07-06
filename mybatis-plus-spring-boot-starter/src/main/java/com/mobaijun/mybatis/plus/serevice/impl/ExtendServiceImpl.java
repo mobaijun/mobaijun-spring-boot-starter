@@ -1,15 +1,14 @@
 package com.mobaijun.mybatis.plus.serevice.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.enums.SqlMethod;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
+import com.mobaijun.common.util.collection.CollectionUtils;
 import com.mobaijun.mybatis.plus.mapper.ExtendMapper;
 import com.mobaijun.mybatis.plus.serevice.ExtendService;
 import org.apache.ibatis.binding.MapperMethod;
@@ -237,15 +236,14 @@ public class ExtendServiceImpl<M extends ExtendMapper<T>, T> implements ExtendSe
      * @param list      数据列表
      * @param batchSize 批次插入数据量
      * @return int 改动行
-     * @author lingting 2020-08-26 22:11
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean saveBatchSomeColumn(Collection<T> list, int batchSize) {
-        if (CollectionUtil.isEmpty(list)) {
+        if (CollectionUtils.isEmpty(list)) {
             return false;
         }
-        List<List<T>> segmentDataList = CollectionUtil.split(list, batchSize);
+        List<List<T>> segmentDataList = com.mobaijun.common.util.collection.CollectionUtils.split(list, batchSize);
         for (List<T> data : segmentDataList) {
             baseMapper.insertBatchSomeColumn(data);
         }
