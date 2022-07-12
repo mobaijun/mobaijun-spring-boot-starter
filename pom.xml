@@ -27,6 +27,7 @@
         <module>jpush-spring-boot-starter</module>
         <module>table-spring-boot-starter</module>
         <module>core-spring-boot-starter</module>
+        <module>email-spring-boot-starter</module>
     </modules>
 
     <!--  个人信息  -->
