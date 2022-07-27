@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author MoBaiJun 2022/4/28 15:53
  */
+@SuppressWarnings("all")
 public class RedisUtils {
     private final Logger log = LoggerFactory.getLogger(RedisUtils.class);
     private final RedisTemplate<String, Object> redisTemplate;
@@ -61,11 +62,11 @@ public class RedisUtils {
      * @param time     过期时间
      * @param timeUnit 过期时间单位
      */
-    public void setExpire(final String key, final Object value, final long time, final TimeUnit timeUnit) {
+    public <T> void setExpire(final String key, final T value, final long time, final TimeUnit timeUnit) {
         redisTemplate.opsForValue().set(key, value, time, timeUnit);
     }
 
-    public void setExpire(final String key, final Object value, final long time, final TimeUnit timeUnit, RedisSerializer<Object> valueSerializer) {
+    public <T> void setExpire(final String key, final T value, final long time, final TimeUnit timeUnit, RedisSerializer<T> valueSerializer) {
         byte[] rawKey = rawKey(key);
         byte[] rawValue = rawValue(value, valueSerializer);
 
@@ -140,8 +141,8 @@ public class RedisUtils {
      * @param key 键
      * @return 值
      */
-    public Object get(String key) {
-        return key == null ? null : redisTemplate.opsForValue().get(key);
+    public <T> T get(String key) {
+        return key == null ? null : (T) redisTemplate.opsForValue().get(key);
     }
 
     /**
@@ -151,9 +152,9 @@ public class RedisUtils {
      * @param valueSerializer 序列化
      * @return the string
      */
-    public Object get(final String key, RedisSerializer<Object> valueSerializer) {
+    public <T> T get(final String key, RedisSerializer<Object> valueSerializer) {
         byte[] rawKey = rawKey(key);
-        return redisTemplate.execute(connection -> deserializeValue(connection.get(rawKey), valueSerializer), true);
+        return (T) redisTemplate.execute(connection -> deserializeValue(connection.get(rawKey), valueSerializer), true);
     }
 
     /**
@@ -201,7 +202,6 @@ public class RedisUtils {
      * @return true成功 false 失败
      */
     public Boolean set(String key, Object value, Duration timeout) {
-
         try {
             Assert.notNull(timeout, "Timeout must not be null!");
             if (TimeoutUtils.hasMillis(timeout)) {
@@ -251,8 +251,8 @@ public class RedisUtils {
      * @param item 项 不能为 null
      * @return 值
      */
-    public Object hget(String key, String item) {
-        return redisTemplate.opsForHash().get(key, item);
+    public <T> T hget(String key, String item) {
+        return (T) redisTemplate.opsForHash().get(key, item);
     }
 
     /**
@@ -261,8 +261,8 @@ public class RedisUtils {
      * @param key 键
      * @return 对应的多个键值
      */
-    public Map<Object, Object> hmget(String key) {
-        return redisTemplate.opsForHash().entries(key);
+    public <K, V> Map<K, V> hmget(String key) {
+        return (Map<K, V>) redisTemplate.opsForHash().entries(key);
     }
 
     /**
@@ -272,7 +272,7 @@ public class RedisUtils {
      * @param map 对应多个键值
      * @return true 成功 false 失败
      */
-    public Boolean hmset(String key, Map<String, Object> map) {
+    public <K, V> Boolean hmset(String key, Map<K, V> map) {
         try {
             redisTemplate.opsForHash().putAll(key, map);
             return true;
@@ -290,7 +290,7 @@ public class RedisUtils {
      * @param time 时间(秒)
      * @return true成功 false失败
      */
-    public Boolean hmset(String key, Map<String, Object> map, Long time) {
+    public <K, V> Boolean hmset(String key, Map<K, V> map, Long time) {
         try {
             redisTemplate.opsForHash().putAll(key, map);
             if (time > 0) {
@@ -311,7 +311,7 @@ public class RedisUtils {
      * @param value 值
      * @return true 成功 false失败
      */
-    public Boolean hset(String key, String item, Object value) {
+    public <T> Boolean hset(String key, String item, T value) {
         try {
             redisTemplate.opsForHash().put(key, item, value);
             return true;
@@ -330,7 +330,7 @@ public class RedisUtils {
      * @param time  时间(秒) 注意:如果已存在的hash表有时间,这里将会替换原有的时间
      * @return true 成功 false失败
      */
-    public Boolean hset(String key, String item, Object value, Long time) {
+    public <T> Boolean hset(String key, String item, T value, Long time) {
         try {
             redisTemplate.opsForHash().put(key, item, value);
             if (time > 0) {
@@ -349,7 +349,7 @@ public class RedisUtils {
      * @param key  键 不能为 null
      * @param item 项 可以使多个不能为 null
      */
-    public void hdel(String key, Object... item) {
+    public <T> void hdel(String key, T... item) {
         redisTemplate.opsForHash().delete(key, item);
     }
 
@@ -394,9 +394,9 @@ public class RedisUtils {
      * @param key 键
      * @return Set
      */
-    public Set<Object> sGet(String key) {
+    public <T> Set<T> sGet(String key) {
         try {
-            return redisTemplate.opsForSet().members(key);
+            return (Set<T>) redisTemplate.opsForSet().members(key);
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
             return null;
@@ -426,7 +426,7 @@ public class RedisUtils {
      * @param values 值 可以是多个
      * @return 成功个数
      */
-    public Long sSet(String key, Object... values) {
+    public <T> Long sSet(String key, T... values) {
         try {
             return redisTemplate.opsForSet().add(key, values);
         } catch (Exception e) {
@@ -443,7 +443,7 @@ public class RedisUtils {
      * @param values 值 可以是多个
      * @return 成功个数
      */
-    public Long sSetAndTime(String key, Long time, Object... values) {
+    public <T> Long sSetAndTime(String key, Long time, T... values) {
         try {
             Long count = redisTemplate.opsForSet().add(key, values);
             if (time > 0) {
@@ -478,7 +478,7 @@ public class RedisUtils {
      * @param values 值 可以是多个
      * @return 移除的个数
      */
-    public Long setRemove(String key, Object... values) {
+    public <T> Long setRemove(String key, T... values) {
         try {
             return redisTemplate.opsForSet().remove(key, values);
         } catch (Exception e) {
@@ -495,9 +495,9 @@ public class RedisUtils {
      * @param end   结束 0 到 -1代表所有值
      * @return List
      */
-    public List<Object> lGet(String key, Long start, Long end) {
+    public <T> List<T> lGet(String key, Long start, Long end) {
         try {
-            return redisTemplate.opsForList().range(key, start, end);
+            return (List<T>) redisTemplate.opsForList().range(key, start, end);
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
             return null;
@@ -527,9 +527,9 @@ public class RedisUtils {
      *              index--0时，-1，表尾，-2倒数第二个元素，依次类推
      * @return Object
      */
-    public Object lGetIndex(String key, Long index) {
+    public <T> T lGetIndex(String key, Long index) {
         try {
-            return redisTemplate.opsForList().index(key, index);
+            return (T) redisTemplate.opsForList().index(key, index);
         } catch (Exception e) {
             log.error("Exception: {}", e.getMessage());
             return null;
@@ -543,7 +543,7 @@ public class RedisUtils {
      * @param value 值
      * @return Boolean
      */
-    public Boolean lSet(String key, Object value) {
+    public <T> Boolean lSet(String key, T value) {
         try {
             redisTemplate.opsForList().rightPush(key, value);
             return true;
@@ -561,7 +561,7 @@ public class RedisUtils {
      * @param time  时间(秒)
      * @return Boolean
      */
-    public Boolean lSet(String key, Object value, Long time) {
+    public <T> Boolean lSet(String key, T value, Long time) {
         try {
             redisTemplate.opsForList().rightPush(key, value);
             if (time > 0) {
@@ -581,7 +581,7 @@ public class RedisUtils {
      * @param value 值
      * @return Boolean
      */
-    public Boolean lSet(String key, List<Object> value) {
+    public <T> Boolean lSet(String key, List<T> value) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
             return true;
@@ -599,7 +599,7 @@ public class RedisUtils {
      * @param time  时间(秒)
      * @return Boolean
      */
-    public Boolean lSet(String key, List<Object> value, Long time) {
+    public <T> Boolean lSet(String key, List<T> value, Long time) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
             if (time > 0) {
@@ -620,7 +620,7 @@ public class RedisUtils {
      * @param value 值
      * @return Boolean
      */
-    public Boolean lUpdateIndex(String key, Long index, Object value) {
+    public <T> Boolean lUpdateIndex(String key, Long index, T value) {
         try {
             redisTemplate.opsForList().set(key, index, value);
             return true;
@@ -638,7 +638,7 @@ public class RedisUtils {
      * @param value 值
      * @return 移除的个数
      */
-    public Long lRemove(String key, Long count, Object value) {
+    public <T> Long lRemove(String key, Long count, T value) {
         try {
             return redisTemplate.opsForList().remove(key, count, value);
         } catch (Exception e) {
@@ -654,11 +654,12 @@ public class RedisUtils {
      * @param start           the start
      * @param end             the end
      * @param valueSerializer 序列化
+     * @param <T>             返回
      * @return the list
      */
-    public List getList(String key, int start, int end, RedisSerializer<Object> valueSerializer) {
+    public <T> T getList(String key, int start, int end, RedisSerializer<T> valueSerializer) {
         byte[] rawKey = rawKey(key);
-        return redisTemplate.execute(connection -> deserializeValues(connection.lRange(rawKey, start, end), valueSerializer), true);
+        return (T) redisTemplate.execute(connection -> deserializeValues(connection.lRange(rawKey, start, end), (RedisSerializer<Object>) valueSerializer), true);
     }
 
     private byte[] rawKey(Object key) {
@@ -675,7 +676,6 @@ public class RedisUtils {
         if (value instanceof byte[]) {
             return (byte[]) value;
         }
-
         return valueSerializer.serialize(value);
     }
 
