@@ -17,13 +17,12 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>swagger-spring-boot-starter</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
 
     <name>swagger-spring-boot-starter</name>
     <inceptionYear>2022</inceptionYear>
     <description>swagger-spring-boot-starter</description>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
-
 
     <!--  GitHub issues -->
     <issueManagement>
@@ -36,7 +35,6 @@
         <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
-
 
     <dependencies>
         <!--  swagger 3.0 -->
@@ -65,6 +63,12 @@
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <!--在引用时请在maven中央仓库搜索2.X最新版本号-->
             <version>${swagger-ui.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <!-- mvc -->
