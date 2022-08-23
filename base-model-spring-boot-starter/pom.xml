@@ -11,10 +11,23 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>base-model-spring-boot-starter</artifactId>
     <version>1.1.1</version>
-    <packaging>pom</packaging>
 
     <name>base-model-spring-boot-starter</name>
-    <url>https://www.mobaijun.com</url>
+    <description>base-model-spring-boot-starter</description>
+    <inceptionYear>2022</inceptionYear>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/base-model-spring-boot-starter</url>
+
+    <!--  GitHub issues -->
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/base-model-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
+        <developerConnection>https://github.com/mobaijun</developerConnection>
+    </scm>
 
     <dependencies>
         <!-- 参数校验 -->

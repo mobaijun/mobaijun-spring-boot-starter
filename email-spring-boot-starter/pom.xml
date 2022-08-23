@@ -37,4 +37,10 @@
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+    </dependencies>
 </project>
