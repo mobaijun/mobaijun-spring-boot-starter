@@ -1,5 +1,6 @@
 package com.mobaijun.influxdb.core;
 
+import cn.hutool.log.Log;
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.core.model.DeleteModel;
 import org.springframework.util.ObjectUtils;
@@ -14,6 +15,11 @@ import java.util.Objects;
  * @author MoBaiJun 2022/4/29 14:04
  */
 public class Delete extends BaseQuery {
+
+    /**
+     * tools log
+     */
+    private static final Log log = Log.get(Delete.class);
 
     /**
      * 构造条件
@@ -33,7 +39,7 @@ public class Delete extends BaseQuery {
             throw new RuntimeException("where 条件缺失");
         }
         String sql = delete.toString();
-        log.info(sql);
+        log.warn("The delete statement is:{}", sql);
         return sql;
     }
 }

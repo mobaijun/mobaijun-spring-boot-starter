@@ -4,39 +4,34 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>mobaijun-spring-boot-starter</artifactId>
+        <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>1.0.5</version>
+        <version>1.1.1</version>
     </parent>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <mybatis-plus.version>3.5.2</mybatis-plus.version>
-        <kjs-common.version>[1.+,)</kjs-common.version>
-        <swagger-annotation.version>1.6.6</swagger-annotation.version>
-        <springdoc.version>1.6.9</springdoc.version>
-        <validation-api>2.0.1.Final</validation-api>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>mybatis-plus-spring-boot-starter</artifactId>
-    <version>1.0.6</version>
+    <version>1.1.1</version>
 
     <name>mybatis-plus-spring-boot-starter</name>
     <inceptionYear>2022</inceptionYear>
     <description>mybatis-plus-spring-boot-starter</description>
-    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
 
     <!--  GitHub issues -->
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/mybatis-plus-spring-boot-starter</url>
-        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/mybatis-plus-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 
@@ -45,14 +40,12 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus.version}</version>
         </dependency>
 
         <dependency>
             <!-- 工具类 -->
             <groupId>com.mobaijun</groupId>
             <artifactId>kjs-common</artifactId>
-            <version>${kjs-common.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.mapstruct</groupId>
@@ -72,25 +65,9 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!-- 参数校验 -->
         <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>${swagger-annotation.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-common</artifactId>
-            <version>${springdoc.version}</version>
+            <groupId>com.mobaijun</groupId>
+            <artifactId>base-model-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 </project>

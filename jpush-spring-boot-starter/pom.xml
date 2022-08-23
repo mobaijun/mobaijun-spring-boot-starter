@@ -5,9 +5,9 @@
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <artifactId>mobaijun-spring-boot-starter</artifactId>
+        <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>1.0.5</version>
+        <version>1.1.1</version>
     </parent>
 
     <properties>
@@ -20,24 +20,24 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>jpush-spring-boot-starter</artifactId>
-    <version>1.0.5</version>
+    <version>1.1.1</version>
 
     <name>jpush-spring-boot-starter</name>
     <inceptionYear>2022</inceptionYear>
     <description>Simple and easy to use Jiguang push server auxiliary toolkit. Quickly integrate directly into your
         SpringBoot project.
     </description>
-    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
 
     <!--  GitHub issues -->
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/jpush-spring-boot-starter</url>
-        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/jpush-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 
@@ -47,12 +47,24 @@
             <groupId>cn.jpush.api</groupId>
             <artifactId>jpush-client</artifactId>
             <version>${client.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bouncycastle</groupId>
+                    <artifactId>bcprov-jdk15on</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- 极光推送工具类  -->
         <dependency>
             <groupId>cn.jpush.api</groupId>
             <artifactId>jiguang-common</artifactId>
             <version>${common.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bouncycastle</groupId>
+                    <artifactId>bcprov-jdk15on</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>

@@ -2,7 +2,7 @@ package com.mobaijun.mybatis.plus.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.mobaijun.mybatis.plus.model.domain.PageParam;
+import com.mobaijun.base.model.PageParam;
 import com.mobaijun.mybatis.plus.toolkit.PageUtil;
 import org.apache.ibatis.annotations.Param;
 

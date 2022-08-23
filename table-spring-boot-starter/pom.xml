@@ -5,32 +5,43 @@
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <artifactId>mobaijun-spring-boot-starter</artifactId>
+        <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>1.0.5</version>
+        <version>1.1.1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>table-spring-boot-starter</artifactId>
     <name>table-spring-boot-starter</name>
     <inceptionYear>2022</inceptionYear>
-    <version>1.0.5</version>
+    <version>1.1.1</version>
 
     <description>
         A startup aid that automatically creates a common configuration table for projects,
         which can be quickly integrated into your Spring Boot project.
     </description>
-    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
 
     <!--  GitHub issues -->
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/table-spring-boot-starter</url>
-        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/table-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+        </dependency>
+    </dependencies>
 </project>

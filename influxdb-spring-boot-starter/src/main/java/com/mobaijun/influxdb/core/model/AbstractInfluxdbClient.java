@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author MoBaiJun 2022/4/29 14:05
  */
-public abstract class InfluxdbClient {
+public abstract class AbstractInfluxdbClient {
 
     /**
      * 用户名
@@ -58,10 +58,10 @@ public abstract class InfluxdbClient {
      */
     private static String DEFAULT_PILICY_TIME = "7d";
 
-    public InfluxdbClient() {
+    public AbstractInfluxdbClient() {
     }
 
-    public InfluxdbClient(String username, String password, String url, String database, String retentionPolicy, String retentionPolicyTime) {
+    public AbstractInfluxdbClient(String username, String password, String url, String database, String retentionPolicy, String retentionPolicyTime) {
         this.username = username;
         this.password = password;
         this.url = url;
@@ -123,6 +123,6 @@ public abstract class InfluxdbClient {
     }
 
     public static void setDEFAULT(String DEFAULT) {
-        InfluxdbClient.DEFAULT = DEFAULT;
+        AbstractInfluxdbClient.DEFAULT = DEFAULT;
     }
 }

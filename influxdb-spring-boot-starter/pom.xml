@@ -4,33 +4,29 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>mobaijun-spring-boot-starter</artifactId>
+        <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>1.0.5</version>
+        <version>1.1.1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>influxdb-spring-boot-starter</artifactId>
-    <version>1.0.5</version>
-
-    <properties>
-        <influxdb.version>2.22</influxdb.version>
-    </properties>
+    <version>1.1.1</version>
 
     <name>influxdb-spring-boot-starter</name>
     <description>influxdb-spring-boot-starter</description>
     <inceptionYear>2022</inceptionYear>
-    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/influxdb-spring-boot-starter</url>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/influxdb-spring-boot-starter</url>
 
     <!--  GitHub issues -->
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/influxdb-spring-boot-starter</url>
-        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/influxdb-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 
@@ -39,7 +35,19 @@
         <dependency>
             <groupId>org.influxdb</groupId>
             <artifactId>influxdb-java</artifactId>
-            <version>${influxdb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
     </dependencies>
 </project>

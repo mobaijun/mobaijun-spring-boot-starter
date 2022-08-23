@@ -1,5 +1,6 @@
 package com.mobaijun.influxdb.util;
 
+import cn.hutool.log.Log;
 import com.mobaijun.influxdb.annotation.Aggregate;
 import com.mobaijun.influxdb.annotation.Count;
 import com.mobaijun.influxdb.core.Query;
@@ -8,8 +9,6 @@ import org.influxdb.annotation.Column;
 import org.influxdb.annotation.Measurement;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.QueryResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.ReflectionUtils;
 
@@ -33,7 +32,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class InfluxdbUtils {
 
-    private static Logger log = LoggerFactory.getLogger(InfluxdbUtils.class);
+    /**
+     * tools log
+     */
+    private static final Log log = Log.get(InfluxdbUtils.class);
 
     /**
      * 将queryResult 转换为实体对象List
@@ -48,7 +50,7 @@ public class InfluxdbUtils {
     public static <T> List<T> toPojo(final QueryResult queryResult, final Class<T> clazz) {
         Objects.requireNonNull(queryResult, Constant.QUERY_RESULT);
         Objects.requireNonNull(clazz, Constant.CLAZZ);
-        List<T> results = new LinkedList<T>();
+        List<T> results = new LinkedList<>();
         for (QueryResult.Result result : queryResult.getResults()) {
             if (result.getSeries() != null) {
                 for (QueryResult.Series series : result.getSeries()) {

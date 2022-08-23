@@ -1,4 +1,4 @@
-package com.mobaijun.mybatis.plus.model.domain;
+package com.mobaijun.base.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

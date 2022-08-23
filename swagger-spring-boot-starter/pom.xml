@@ -4,35 +4,29 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>mobaijun-spring-boot-starter</artifactId>
+        <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>1.0.5</version>
+        <version>1.1.1</version>
     </parent>
-
-    <properties>
-        <swagger-ui.version>3.0.3</swagger-ui.version>
-        <swagger.version>3.0.0</swagger.version>
-        <web-mvc.version>5.3.19</web-mvc.version>
-    </properties>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>swagger-spring-boot-starter</artifactId>
-    <version>1.0.6</version>
+    <version>1.1.1</version>
 
     <name>swagger-spring-boot-starter</name>
     <inceptionYear>2022</inceptionYear>
     <description>swagger-spring-boot-starter</description>
-    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
 
     <!--  GitHub issues -->
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/swagger-spring-boot-starter</url>
-        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/swagger-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 
@@ -55,26 +49,25 @@
                     <artifactId>mapstruct</artifactId>
                 </exclusion>
             </exclusions>
-            <version>${swagger.version}</version>
         </dependency>
         <!-- swagger-ui -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <!--在引用时请在maven中央仓库搜索2.X最新版本号-->
-            <version>${swagger-ui.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.google.guava</groupId>
-                    <artifactId>guava</artifactId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
         <dependency>
             <!-- mvc -->
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>${web-mvc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
     </dependencies>
 </project>

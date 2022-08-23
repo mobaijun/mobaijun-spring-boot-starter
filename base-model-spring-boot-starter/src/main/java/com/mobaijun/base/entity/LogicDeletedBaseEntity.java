@@ -1,4 +1,4 @@
-package com.mobaijun.mybatis.plus.model.entity;
+package com.mobaijun.base.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;

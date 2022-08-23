@@ -1,9 +1,9 @@
 package com.mobaijun.redis.util;
 
+import cn.hutool.json.JSONException;
+import cn.hutool.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
@@ -702,7 +702,7 @@ public class RedisUtils {
      * @return 返回获取锁状态 成功失败
      * @throws JSONException json解析异常
      */
-    public boolean tryLock(String key, int expireTime) throws JSONException {
+    public boolean tryLock(String key, int expireTime) {
         final JSONObject lock = new JSONObject();
         lock.put("id", key);
         // startTime

@@ -3,7 +3,7 @@ package com.mobaijun.mybatis.plus.toolkit;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.mobaijun.mybatis.plus.model.domain.PageParam;
+import com.mobaijun.base.model.PageParam;
 
 import java.util.List;
 

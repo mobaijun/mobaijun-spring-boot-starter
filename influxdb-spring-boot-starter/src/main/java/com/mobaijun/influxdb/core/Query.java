@@ -1,7 +1,8 @@
 package com.mobaijun.influxdb.core;
 
+import cn.hutool.log.Log;
 import com.mobaijun.influxdb.core.constant.Constant;
-import com.mobaijun.influxdb.core.model.QueryModel;
+import com.mobaijun.influxdb.core.model.AbstractQueryModel;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Objects;
@@ -16,12 +17,17 @@ import java.util.Objects;
 public class Query extends BaseQuery {
 
     /**
+     * tools log
+     */
+    private static final Log log = Log.get(Query.class);
+
+    /**
      * 构造条件
      *
      * @param model QueryModel
      * @return String
      */
-    public static String build(QueryModel model) {
+    public static String build(AbstractQueryModel model) {
         Objects.requireNonNull(model.getMeasurement(), Constant.QUERY_MODEL_MEASUREMENT);
         StringBuilder query = new StringBuilder();
         query.append(Constant.SELECT).append(model.getSelect());
@@ -42,7 +48,7 @@ public class Query extends BaseQuery {
             query.append(Constant.SPACE).append(model.getTimeZone());
         }
         String sql = query.toString();
-        log.info(sql);
+        log.warn("The query statement is:{}", sql);
         return sql;
     }
 

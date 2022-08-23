@@ -2,7 +2,6 @@ package com.mobaijun.influxdb.core.model;
 
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.core.enums.Order;
-import org.springframework.util.ObjectUtils;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -11,7 +10,7 @@ import org.springframework.util.ObjectUtils;
  *
  * @author MoBaiJun 2022/4/29 13:57
  */
-public abstract class QueryModel extends BaseModel {
+public abstract class AbstractQueryModel extends BaseModel {
 
     /**
      * 查询的字段
@@ -49,11 +48,11 @@ public abstract class QueryModel extends BaseModel {
      */
     private String group;
 
-    public QueryModel() {
+    public AbstractQueryModel() {
 
     }
 
-    public QueryModel(String measurement) {
+    public AbstractQueryModel(String measurement) {
         super(measurement);
     }
 
@@ -66,7 +65,7 @@ public abstract class QueryModel extends BaseModel {
     }
 
     public String getSelect() {
-        if (ObjectUtils.isEmpty(select)) {
+        if (select.isEmpty() && select.trim().isEmpty()) {
             select = Constant.ALL.trim();
         }
         return select;

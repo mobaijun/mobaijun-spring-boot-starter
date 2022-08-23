@@ -1,10 +1,9 @@
 package com.mobaijun.influxdb.core;
 
+import cn.hutool.log.Log;
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.core.model.BaseModel;
 import com.mobaijun.influxdb.util.CommonUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
 
 import java.time.Instant;
@@ -20,7 +19,10 @@ import java.util.Map;
  */
 public abstract class BaseQuery {
 
-    protected static Logger log = LoggerFactory.getLogger(BaseQuery.class);
+    /**
+     * tools log
+     */
+    private static final Log log = Log.get(BaseQuery.class);
 
     /**
      * 开始时间结束时间
@@ -78,6 +80,7 @@ public abstract class BaseQuery {
                 }
             }
         }
+        log.warn("The basic query statement is : {}", sb.toString());
         return sb.toString();
     }
 }

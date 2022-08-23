@@ -1,4 +1,4 @@
-# mobaijun-spring-boot-starter
+# mobaijun-spring-boot-dependencies
 组件化开发，抽取公共模块
 
 ```bash

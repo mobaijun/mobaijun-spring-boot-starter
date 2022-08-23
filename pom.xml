@@ -13,9 +13,9 @@
     </parent>
 
     <groupId>com.mobaijun</groupId>
-    <artifactId>mobaijun-spring-boot-starter</artifactId>
+    <artifactId>mobaijun-spring-boot-dependencies</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.5</version>
+    <version>1.1.1</version>
 
     <modules>
         <module>swagger-spring-boot-starter</module>
@@ -28,6 +28,7 @@
         <module>table-spring-boot-starter</module>
         <module>core-spring-boot-starter</module>
         <module>email-spring-boot-starter</module>
+        <module>base-model-spring-boot-starter</module>
     </modules>
 
     <!--  个人信息  -->
@@ -59,20 +60,249 @@
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
+        <spring-boot.version>2.7.1</spring-boot.version>
+        <client.version>3.6.1</client.version>
+        <common.version>1.2.0</common.version>
+        <influxdb.version>2.22</influxdb.version>
+        <validation-api>2.0.1.Final</validation-api>
+        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <kjs-common.version>[1.+,)</kjs-common.version>
+        <swagger-annotation.version>1.6.6</swagger-annotation.version>
+        <springdoc.version>1.6.9</springdoc.version>
+        <swagger-ui.version>3.0.3</swagger-ui.version>
+        <swagger.version>3.0.0</swagger.version>
+        <web-mvc.version>5.3.19</web-mvc.version>
+        <aliyun.version>3.15.0</aliyun.version>
+        <hibernate-validator.version>6.2.3.Final</hibernate-validator.version>
+        <lueetce.version>6.1.8.RELEASE</lueetce.version>
+        <validator.version>2.0.1.Final</validator.version>
+        <guava.version>29.0-jre</guava.version>
+        <hutool-all.version>5.8.5</hutool-all.version>
     </properties>
 
     <!-- 依赖管理 -->
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${spring-boot.version}</version>
+                <optional>true</optional>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- 自身子模块-->
+            <dependency>
+                <groupId>com.mobaijun</groupId>
+                <artifactId>core-spring-boot-starter</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mobaijun</groupId>
+                <artifactId>email-spring-boot-starter</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mobaijun</groupId>
+                <artifactId>influxdb-spring-boot-starter</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mobaijun</groupId>
+                <artifactId>base-model-spring-boot-starter</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mobaijun</groupId>
+                <artifactId>auth-spring-boot-starter</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mobaijun</groupId>
+                <artifactId>jpush-spring-boot-starter</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mobaijun</groupId>
+                <artifactId>mybatis-plus-spring-boot-starter</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mobaijun</groupId>
+                <artifactId>oss-spring-boot-starter</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mobaijun</groupId>
+                <artifactId>redis-spring-boot-starter</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mobaijun</groupId>
+                <artifactId>swagger-spring-boot-starter</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mobaijun</groupId>
+                <artifactId>table-spring-boot-starter</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+
+            <!-- common -->
+            <dependency>
+                <groupId>com.mobaijun</groupId>
+                <artifactId>kjs-common</artifactId>
+                <version>${kjs-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-all.version}</version>
+            </dependency>
+
+            <!-- 外部依赖版本控制 -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <groupId>io.swagger</groupId>
+                        <artifactId>swagger-annotations</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>io.swagger</groupId>
+                        <artifactId>swagger-models</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.mapstruct</groupId>
+                        <artifactId>mapstruct</artifactId>
+                    </exclusion>
+                </exclusions>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <!--在引用时请在maven中央仓库搜索2.X最新版本号-->
+                <version>${swagger-ui.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.guava</groupId>
+                        <artifactId>guava</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${web-mvc.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.lettuce</groupId>
+                <artifactId>lettuce-core</artifactId>
+                <version>${lueetce.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun.version}</version>
+            </dependency>
+
+            <!--  极光客户端 -->
+            <dependency>
+                <groupId>cn.jpush.api</groupId>
+                <artifactId>jpush-client</artifactId>
+                <version>${client.version}</version>
+            </dependency>
+            <!-- 极光推送工具类  -->
+            <dependency>
+                <groupId>cn.jpush.api</groupId>
+                <artifactId>jiguang-common</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+            <!--  influxdb 2.22 -->
+            <dependency>
+                <groupId>org.influxdb</groupId>
+                <artifactId>influxdb-java</artifactId>
+                <version>${influxdb.version}</version>
+            </dependency>
+            <!-- mybatis plus -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-annotation</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-core</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!-- 参数校验 -->
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotation.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-common</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

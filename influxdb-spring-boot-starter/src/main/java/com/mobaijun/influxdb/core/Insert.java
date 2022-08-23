@@ -1,5 +1,6 @@
 package com.mobaijun.influxdb.core;
 
+import cn.hutool.log.Log;
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.util.CommonUtils;
 import org.influxdb.annotation.Column;
@@ -9,8 +10,6 @@ import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import static com.mobaijun.influxdb.core.constant.Constant.COMMA;
-
 /**
  * Software：IntelliJ IDEA 2021.3.2
  * ClassName: Insert
@@ -19,6 +18,11 @@ import static com.mobaijun.influxdb.core.constant.Constant.COMMA;
  * @author MoBaiJun 2022/4/29 14:03
  */
 public class Insert extends BaseQuery {
+
+    /**
+     * tools log
+     */
+    private static final Log log = Log.get(Insert.class);
 
     /**
      * 构造条件
@@ -51,7 +55,7 @@ public class Insert extends BaseQuery {
                             if (i == 0) {
                                 insert.append(Constant.SPACE);
                             } else {
-                                insert.append(COMMA);
+                                insert.append(Constant.COMMA);
                             }
                             insert.append(column.name()).append(Constant.EQUAL_SIGN).append(field.get(object));
                             i++;
@@ -65,7 +69,7 @@ public class Insert extends BaseQuery {
         }
         insert.append(Constant.SPACE).append(time);
         String sql = insert.toString();
-        log.debug("insert " + sql);
+        log.warn("The new sentence is :{}" + sql);
         return sql;
     }
 }

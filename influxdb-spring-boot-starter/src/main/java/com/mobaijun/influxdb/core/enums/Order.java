@@ -9,5 +9,5 @@ package com.mobaijun.influxdb.core.enums;
  */
 public enum Order {
     DESC,
-    ASC;
+    ASC
 }
