@@ -1,6 +1,5 @@
 package com.mobaijun.influxdb.config;
 
-
 import cn.hutool.log.Log;
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.core.model.AbstractInfluxdbClient;
