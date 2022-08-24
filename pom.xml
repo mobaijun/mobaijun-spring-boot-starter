@@ -54,19 +54,21 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <java.version>1.8</java.version>
-        <project.version>1.0.4</project.version>
+        <project.version>1.1.1</project.version>
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-source-plugin.version>3.8.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
         <spring-boot.version>2.7.1</spring-boot.version>
         <client.version>3.6.1</client.version>
         <common.version>1.2.0</common.version>
         <influxdb.version>2.22</influxdb.version>
         <validation-api>2.0.1.Final</validation-api>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
-        <kjs-common.version>[1.+,)</kjs-common.version>
         <swagger-annotation.version>1.6.6</swagger-annotation.version>
         <springdoc.version>1.6.9</springdoc.version>
         <swagger-ui.version>3.0.3</swagger-ui.version>
@@ -78,7 +80,33 @@
         <validator.version>2.0.1.Final</validator.version>
         <guava.version>29.0-jre</guava.version>
         <hutool-all.version>5.8.5</hutool-all.version>
+        <jasypt.version>3.0.4</jasypt.version>
+
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <optional>true</optional>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <!-- 依赖管理 -->
     <dependencyManagement>
@@ -90,77 +118,64 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-configuration-processor</artifactId>
-                <version>${spring-boot.version}</version>
-                <optional>true</optional>
-                <scope>import</scope>
-            </dependency>
-
             <!-- 自身子模块-->
             <dependency>
                 <groupId>com.mobaijun</groupId>
                 <artifactId>core-spring-boot-starter</artifactId>
-                <version>1.1.1</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mobaijun</groupId>
                 <artifactId>email-spring-boot-starter</artifactId>
-                <version>1.1.1</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mobaijun</groupId>
                 <artifactId>influxdb-spring-boot-starter</artifactId>
-                <version>1.1.1</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mobaijun</groupId>
                 <artifactId>base-model-spring-boot-starter</artifactId>
-                <version>1.1.1</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mobaijun</groupId>
                 <artifactId>auth-spring-boot-starter</artifactId>
-                <version>1.1.1</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mobaijun</groupId>
                 <artifactId>jpush-spring-boot-starter</artifactId>
-                <version>1.1.1</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mobaijun</groupId>
                 <artifactId>mybatis-plus-spring-boot-starter</artifactId>
-                <version>1.1.1</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mobaijun</groupId>
                 <artifactId>oss-spring-boot-starter</artifactId>
-                <version>1.1.1</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mobaijun</groupId>
                 <artifactId>redis-spring-boot-starter</artifactId>
-                <version>1.1.1</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mobaijun</groupId>
                 <artifactId>swagger-spring-boot-starter</artifactId>
-                <version>1.1.1</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mobaijun</groupId>
                 <artifactId>table-spring-boot-starter</artifactId>
-                <version>1.1.1</version>
+                <version>${project.version}</version>
             </dependency>
 
-            <!-- common -->
-            <dependency>
-                <groupId>com.mobaijun</groupId>
-                <artifactId>kjs-common</artifactId>
-                <version>${kjs-common.version}</version>
-            </dependency>
+            <!-- tool -->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -280,6 +295,13 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
 
+            <!--配置文件加密-->
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt.version}</version>
+            </dependency>
+
             <!-- 参数校验 -->
             <dependency>
                 <groupId>org.hibernate.validator</groupId>
@@ -309,7 +331,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -332,7 +354,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>${maven-javadoc-plugin.version}</version>
                 <configuration>
                     <charset>UTF-8</charset>
                     <encoding>UTF-8</encoding>
@@ -364,6 +386,15 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!--  skip test -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
             </plugin>
         </plugins>
     </build>

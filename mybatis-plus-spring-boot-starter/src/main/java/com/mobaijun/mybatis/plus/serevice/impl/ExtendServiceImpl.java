@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
-import com.mobaijun.common.util.collection.CollectionUtils;
 import com.mobaijun.mybatis.plus.mapper.ExtendMapper;
 import com.mobaijun.mybatis.plus.serevice.ExtendService;
 import org.apache.ibatis.binding.MapperMethod;
@@ -16,8 +15,10 @@ import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -243,10 +244,36 @@ public class ExtendServiceImpl<M extends ExtendMapper<T>, T> implements ExtendSe
         if (CollectionUtils.isEmpty(list)) {
             return false;
         }
-        List<List<T>> segmentDataList = com.mobaijun.common.util.collection.CollectionUtils.split(list, batchSize);
+        List<List<T>> segmentDataList = split(list, batchSize);
         for (List<T> data : segmentDataList) {
             baseMapper.insertBatchSomeColumn(data);
         }
         return true;
+    }
+
+    /**
+     * 对集合按照指定长度分段，每一个段为单独的集合，返回这个集合的列表
+     *
+     * @param <T>        集合元素类型
+     * @param collection 集合
+     * @param size       每个段的长度
+     * @return 分段列表
+     */
+    private static <T> List<List<T>> split(Collection<T> collection, int size) {
+        final List<List<T>> result = new ArrayList<>();
+        if (CollectionUtils.isEmpty(collection)) {
+            return result;
+        }
+
+        ArrayList<T> subList = new ArrayList<>(size);
+        for (T t : collection) {
+            if (subList.size() >= size) {
+                result.add(subList);
+                subList = new ArrayList<>(size);
+            }
+            subList.add(t);
+        }
+        result.add(subList);
+        return result;
     }
 }

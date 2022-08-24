@@ -1,6 +1,6 @@
 package com.mobaijun.oss.core.aliyun.prop;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 /**
  * software：IntelliJ IDEA 2022.1
@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @author MoBaiJun 2022/6/16 14:09
  */
-@ConfigurationProperties(AliYunOssProperties.PREFIX)
+@ConfigurationPropertiesScan(AliYunOssProperties.PREFIX)
 public class AliYunOssProperties {
 
     public final static String PREFIX = "aliyun";
