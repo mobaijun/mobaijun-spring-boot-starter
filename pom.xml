@@ -31,7 +31,7 @@
         <module>base-model-spring-boot-starter</module>
     </modules>
 
-    <!--  个人信息  -->
+    <!--  Personal information  -->
     <developers>
         <developer>
             <name>mobaijun</name>
@@ -40,7 +40,7 @@
         </developer>
     </developers>
 
-    <!--  许可证  -->
+    <!--  license  -->
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -81,7 +81,6 @@
         <guava.version>29.0-jre</guava.version>
         <hutool-all.version>5.8.5</hutool-all.version>
         <jasypt.version>3.0.4</jasypt.version>
-
     </properties>
 
     <dependencies>
@@ -108,7 +107,7 @@
         </dependency>
     </dependencies>
 
-    <!-- 依赖管理 -->
+    <!-- dependency management -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -118,7 +117,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- 自身子模块-->
+            <!-- own submodule -->
             <dependency>
                 <groupId>com.mobaijun</groupId>
                 <artifactId>core-spring-boot-starter</artifactId>
@@ -187,7 +186,7 @@
                 <version>${hutool-all.version}</version>
             </dependency>
 
-            <!-- 外部依赖版本控制 -->
+            <!-- External dependency version control -->
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
@@ -210,7 +209,7 @@
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>
-                <!--在引用时请在maven中央仓库搜索2.X最新版本号-->
+                <!--Please search for the latest version number of 2.X in the maven central repository when referencing-->
                 <version>${swagger-ui.version}</version>
                 <exclusions>
                     <exclusion>
@@ -250,13 +249,13 @@
                 <version>${aliyun.version}</version>
             </dependency>
 
-            <!--  极光客户端 -->
+            <!--  Aurora Client  -->
             <dependency>
                 <groupId>cn.jpush.api</groupId>
                 <artifactId>jpush-client</artifactId>
                 <version>${client.version}</version>
             </dependency>
-            <!-- 极光推送工具类  -->
+            <!-- Aurora push tools  -->
             <dependency>
                 <groupId>cn.jpush.api</groupId>
                 <artifactId>jiguang-common</artifactId>
@@ -295,14 +294,14 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
 
-            <!--配置文件加密-->
+            <!-- Configuration file encryption -->
             <dependency>
                 <groupId>com.github.ulisesbocchio</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>${jasypt.version}</version>
             </dependency>
 
-            <!-- 参数校验 -->
+            <!-- parameter verification -->
             <dependency>
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
@@ -367,7 +366,7 @@
                             <goal>jar</goal>
                         </goals>
                         <configuration>
-                            <!-- 忽略注释异常 -->
+                            <!-- Ignore annotation exceptions -->
                             <additionalOptions>-Xdoclint:none</additionalOptions>
                         </configuration>
                     </execution>
@@ -399,7 +398,7 @@
         </plugins>
     </build>
 
-    <!-- 【注】snapshotRepository 与 repository 中的 id 一定要与 setting.xml 中 server 的 id 保持一致！ -->
+    <!-- [Note] The id in snapshotRepository and repository must be consistent with the id of server in setting.xml! -->
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
