@@ -56,7 +56,7 @@ public abstract class AbstractInfluxdbClient {
     /**
      * 策略存储时间，7天
      */
-    private static String DEFAULT_PILICY_TIME = "7d";
+    private static final String DEFAULT_POLICY_TIME = "7d";
 
     public AbstractInfluxdbClient() {
     }
@@ -67,7 +67,7 @@ public abstract class AbstractInfluxdbClient {
         this.url = url;
         this.database = database;
         this.retentionPolicy = retentionPolicy == null || "".equals(retentionPolicy) ? DEFAULT : retentionPolicy;
-        this.retentionPolicyTime = retentionPolicyTime == null || "".equals(retentionPolicyTime) ? DEFAULT_PILICY_TIME : retentionPolicyTime;
+        this.retentionPolicyTime = retentionPolicyTime == null || "".equals(retentionPolicyTime) ? DEFAULT_POLICY_TIME : retentionPolicyTime;
     }
 
     public String getUsername() {

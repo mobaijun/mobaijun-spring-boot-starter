@@ -87,7 +87,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
      * @return 返回对应实体List
      */
     public <T> List<T> selectList(String query, Class<T> clazz) {
-        log.info("The query SQL statement is: " + query);
+        log.debug("The query SQL statement is: " + query);
         return InfluxdbUtils.toPojo(execute(query), clazz);
     }
 
@@ -99,7 +99,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
      * @return long
      */
     public long count(String query) {
-        log.info("The query SQL statement is: " + query);
+        log.debug("The query SQL statement is: " + query);
         return InfluxdbUtils.count(execute(query));
     }
 
@@ -163,7 +163,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
      * @param query sql语句
      */
     public long delete(String query) {
-        log.info("The query SQL statement is: " + query);
+        log.debug("The query SQL statement is: " + query);
         return InfluxdbUtils.delete(execute(query));
     }
 
@@ -175,7 +175,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
      */
     public List<List<Object>> queryList(StringBuilder sql) {
         QueryResult queryResult = influxDb.query(new Query(String.valueOf(sql), getDatabase()));
-        log.info("The query SQL statement is: " + sql);
+        log.debug("The query SQL statement is: " + sql);
         // 对象内容是否正常
         if (ObjectUtils.isEmpty(queryResult) || !ObjectUtils.isEmpty(queryResult.getError())) {
             return null;
