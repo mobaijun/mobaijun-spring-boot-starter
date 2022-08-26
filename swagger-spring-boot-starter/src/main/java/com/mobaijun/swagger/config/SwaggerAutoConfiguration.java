@@ -8,6 +8,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNull;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
@@ -163,8 +164,11 @@ public class SwaggerAutoConfiguration implements WebMvcConfigurer {
      * 设置授权信息
      */
     private List<SecurityScheme> apiKeys() {
-        return CollectionUtil.newArrayList(new ApiKey(swaggerProperties().getAuthorization().getHeader(),
-                swaggerProperties().getAuthorization().getToken(), ApiKeyVehicle.HEADER.getValue()));
+        return CollectionUtil.newArrayList(new ApiKey(swaggerProperties()
+                .getAuthorization()
+                .getHeader(), swaggerProperties()
+                .getAuthorization()
+                .getToken(), ApiKeyVehicle.HEADER.getValue()));
     }
 
     /**
@@ -173,7 +177,9 @@ public class SwaggerAutoConfiguration implements WebMvcConfigurer {
     private List<SecurityContext> securityContexts() {
         return CollectionUtil.newArrayList(SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.regex(swaggerProperties().getAuthorization().getAuthRegex()))
+                .operationSelector(temp ->
+                        PathSelectors.regex(swaggerProperties().getAuthorization().getAuthRegex())
+                                .test(temp.requestMappingPattern()))
                 .build());
     }
 
@@ -184,9 +190,12 @@ public class SwaggerAutoConfiguration implements WebMvcConfigurer {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Collections.singletonList(SecurityReference.builder()
-                .reference(swaggerProperties().getAuthorization().getHeader())
-                .scopes(authorizationScopes).build());
+        return Collections
+                .singletonList(SecurityReference.builder().reference(swaggerProperties()
+                                .getAuthorization()
+                                .getHeader())
+                        .scopes(authorizationScopes)
+                        .build());
     }
 
     /**
@@ -196,11 +205,10 @@ public class SwaggerAutoConfiguration implements WebMvcConfigurer {
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(@NonNull InterceptorRegistry registry) {
         try {
             Field registrationsField = FieldUtils.getField(InterceptorRegistry.class, "registrations", true);
-            List<InterceptorRegistration> registrations =
-                    (List<InterceptorRegistration>) ReflectionUtils.getField(registrationsField, registry);
+            List<InterceptorRegistration> registrations = (List<InterceptorRegistration>) ReflectionUtils.getField(registrationsField, registry);
             if (registrations != null) {
                 for (InterceptorRegistration interceptorRegistration : registrations) {
                     interceptorRegistration
