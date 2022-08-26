@@ -52,7 +52,7 @@ public class PushConnection {
     /**
      * 极光推送配置文件
      */
-    private PushProp pushProp;
+    private final PushProp pushProp;
 
     /**
      * 初始化加载配置
