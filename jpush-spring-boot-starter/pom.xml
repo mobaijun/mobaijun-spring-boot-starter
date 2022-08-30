@@ -7,7 +7,7 @@
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>1.1.1</version>
+        <version>1.1.2</version>
     </parent>
 
     <properties>
@@ -20,7 +20,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>jpush-spring-boot-starter</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 
     <name>jpush-spring-boot-starter</name>
     <inceptionYear>2022</inceptionYear>

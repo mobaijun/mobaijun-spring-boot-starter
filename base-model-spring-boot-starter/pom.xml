@@ -5,12 +5,12 @@
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>1.1.1</version>
+        <version>1.1.2</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>base-model-spring-boot-starter</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 
     <name>base-model-spring-boot-starter</name>
     <description>base-model-spring-boot-starter</description>
