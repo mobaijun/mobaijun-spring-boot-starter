@@ -1,10 +1,11 @@
 package com.mobaijun.influxdb.core;
 
-import cn.hutool.log.Log;
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.util.CommonUtils;
 import org.influxdb.annotation.Column;
 import org.influxdb.annotation.Measurement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
@@ -20,9 +21,9 @@ import java.util.Objects;
 public class Insert extends BaseQuery {
 
     /**
-     * tools log
+     * logger
      */
-    private static final Log log = Log.get(Insert.class);
+    private static final Logger log = LoggerFactory.getLogger(Insert.class);
 
     /**
      * 构造条件

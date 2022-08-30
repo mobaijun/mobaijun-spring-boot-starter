@@ -1,8 +1,9 @@
 package com.mobaijun.influxdb.core;
 
-import cn.hutool.log.Log;
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.core.model.AbstractQueryModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Objects;
@@ -17,9 +18,9 @@ import java.util.Objects;
 public class Query extends BaseQuery {
 
     /**
-     * tools log
+     * logger
      */
-    private static final Log log = Log.get(Query.class);
+    private static final Logger log = LoggerFactory.getLogger(Query.class);
 
     /**
      * 构造条件

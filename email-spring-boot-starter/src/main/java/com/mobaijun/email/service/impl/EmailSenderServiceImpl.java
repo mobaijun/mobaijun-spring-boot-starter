@@ -4,8 +4,8 @@ import com.mobaijun.email.event.EmailSendEvent;
 import com.mobaijun.email.model.EmailDetails;
 import com.mobaijun.email.model.EmailSendInfo;
 import com.mobaijun.email.service.EmailSenderService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -23,11 +23,20 @@ import java.time.LocalDateTime;
  *
  * @author MoBaiJun 2022/7/7 16:20
  */
-@Slf4j
-@RequiredArgsConstructor
 public class EmailSenderServiceImpl implements EmailSenderService {
+
+    /**
+     * logger
+     */
+    private static final Logger log = LoggerFactory.getLogger(EmailSenderServiceImpl.class);
+
     private final JavaMailSender mailSender;
     private final ApplicationEventPublisher eventPublisher;
+
+    public EmailSenderServiceImpl(JavaMailSender mailSender, ApplicationEventPublisher eventPublisher) {
+        this.mailSender = mailSender;
+        this.eventPublisher = eventPublisher;
+    }
 
     /**
      * 配置文件中我的qq邮箱

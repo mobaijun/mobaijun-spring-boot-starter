@@ -57,10 +57,6 @@
             <!--在引用时请在maven中央仓库搜索2.X最新版本号-->
         </dependency>
         <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
-        <dependency>
             <!-- mvc -->
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>

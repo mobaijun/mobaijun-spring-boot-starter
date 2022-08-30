@@ -1,10 +1,11 @@
 package com.mobaijun.swagger.config;
 
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.log.Log;
+import com.github.xiaoymin.knife4j.core.util.CollectionUtils;
 import com.mobaijun.swagger.prop.SwaggerProperties;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,9 +49,9 @@ import java.util.Set;
 public class SwaggerAutoConfiguration implements WebMvcConfigurer {
 
     /**
-     * tools log
+     * logger
      */
-    private static final Log log = Log.get(SwaggerAutoConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(SwaggerAutoConfiguration.class);
 
     @Bean
     @ConditionalOnMissingBean
@@ -164,7 +165,7 @@ public class SwaggerAutoConfiguration implements WebMvcConfigurer {
      * 设置授权信息
      */
     private List<SecurityScheme> apiKeys() {
-        return CollectionUtil.newArrayList(new ApiKey(swaggerProperties()
+        return CollectionUtils.newArrayList(new ApiKey(swaggerProperties()
                 .getAuthorization()
                 .getHeader(), swaggerProperties()
                 .getAuthorization()
@@ -175,7 +176,7 @@ public class SwaggerAutoConfiguration implements WebMvcConfigurer {
      * 授权信息全局应用
      */
     private List<SecurityContext> securityContexts() {
-        return CollectionUtil.newArrayList(SecurityContext.builder()
+        return CollectionUtils.newArrayList(SecurityContext.builder()
                 .securityReferences(defaultAuth())
                 .operationSelector(temp ->
                         PathSelectors.regex(swaggerProperties().getAuthorization().getAuthRegex())

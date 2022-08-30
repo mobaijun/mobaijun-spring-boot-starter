@@ -1,7 +1,6 @@
 package com.mobaijun.email.event;
 
 import com.mobaijun.email.model.EmailSendInfo;
-import lombok.ToString;
 import org.springframework.context.ApplicationEvent;
 
 /**
@@ -11,9 +10,15 @@ import org.springframework.context.ApplicationEvent;
  *
  * @author MoBaiJun 2022/8/24 8:43
  */
-@ToString
 public class EmailSendEvent extends ApplicationEvent {
     public EmailSendEvent(EmailSendInfo sendInfo) {
         super(sendInfo);
+    }
+
+    @Override
+    public String toString() {
+        return "EmailSendEvent{" +
+                "source=" + source +
+                '}';
     }
 }

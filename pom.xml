@@ -29,6 +29,8 @@
         <module>core-spring-boot-starter</module>
         <module>email-spring-boot-starter</module>
         <module>base-model-spring-boot-starter</module>
+        <module>mongo-spring-boot-starter</module>
+        <module>websocket-spring-boot-starter</module>
     </modules>
 
     <!--  Personal information  -->
@@ -69,6 +71,7 @@
         <influxdb.version>2.22</influxdb.version>
         <validation-api>2.0.1.Final</validation-api>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <p6spy.version>3.9.1</p6spy.version>
         <swagger-annotation.version>1.6.6</swagger-annotation.version>
         <springdoc.version>1.6.9</springdoc.version>
         <swagger-ui.version>3.0.3</swagger-ui.version>
@@ -292,6 +295,11 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-extension</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>${p6spy.version}</version>
             </dependency>
 
             <!-- Configuration file encryption -->

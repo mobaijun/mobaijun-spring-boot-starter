@@ -1,9 +1,9 @@
 package com.mobaijun.redis.util;
 
-import cn.hutool.json.JSONException;
-import cn.hutool.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
@@ -704,11 +704,16 @@ public class RedisUtils {
      */
     public boolean tryLock(String key, int expireTime) {
         final JSONObject lock = new JSONObject();
-        lock.put("id", key);
-        // startTime
-        lock.put("st", System.currentTimeMillis());
-        // keepSeconds
-        lock.put("ks", expireTime);
+        try {
+            lock.put("id", key);
+            // startTime
+            lock.put("st", System.currentTimeMillis());
+            // keepSeconds
+            lock.put("ks", expireTime);
+        } catch (JSONException e) {
+            log.error("Redis distributed lock write exception：{}", e.getMessage());
+            return false;
+        }
         return redisLockUtil.tryLock(key, "", expireTime);
     }
 

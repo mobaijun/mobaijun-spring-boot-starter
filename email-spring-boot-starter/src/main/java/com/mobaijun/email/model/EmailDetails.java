@@ -1,8 +1,7 @@
 package com.mobaijun.email.model;
 
-import lombok.Data;
-
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * software：IntelliJ IDEA 2022.1
@@ -11,7 +10,6 @@ import java.io.File;
  *
  * @author MoBaiJun 2022/8/24 8:44
  */
-@Data
 public class EmailDetails {
     /**
      * 发件人
@@ -52,4 +50,96 @@ public class EmailDetails {
      * 附件
      */
     private File[] files;
+
+    public EmailDetails() {
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String[] getTo() {
+        return to;
+    }
+
+    public void setTo(String[] to) {
+        this.to = to;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public Boolean getShowHtml() {
+        return showHtml;
+    }
+
+    public void setShowHtml(Boolean showHtml) {
+        this.showHtml = showHtml;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String[] getCc() {
+        return cc;
+    }
+
+    public void setCc(String[] cc) {
+        this.cc = cc;
+    }
+
+    public String[] getBcc() {
+        return bcc;
+    }
+
+    public void setBcc(String[] bcc) {
+        this.bcc = bcc;
+    }
+
+    public File[] getFiles() {
+        return files;
+    }
+
+    public void setFiles(File[] files) {
+        this.files = files;
+    }
+
+    public EmailDetails(String from, String[] to, String subject, Boolean showHtml, String content, String[] cc, String[] bcc, File[] files) {
+        this.from = from;
+        this.to = to;
+        this.subject = subject;
+        this.showHtml = showHtml;
+        this.content = content;
+        this.cc = cc;
+        this.bcc = bcc;
+        this.files = files;
+    }
+
+    @Override
+    public String toString() {
+        return "EmailDetails{" +
+                "from='" + from + '\'' +
+                ", to=" + Arrays.toString(to) +
+                ", subject='" + subject + '\'' +
+                ", showHtml=" + showHtml +
+                ", content='" + content + '\'' +
+                ", cc=" + Arrays.toString(cc) +
+                ", bcc=" + Arrays.toString(bcc) +
+                ", files=" + Arrays.toString(files) +
+                '}';
+    }
 }

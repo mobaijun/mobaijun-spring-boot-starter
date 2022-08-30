@@ -1,9 +1,10 @@
 package com.mobaijun.influxdb.core;
 
-import cn.hutool.log.Log;
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.core.model.BaseModel;
 import com.mobaijun.influxdb.util.CommonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
 
 import java.time.Instant;
@@ -20,9 +21,9 @@ import java.util.Map;
 public abstract class BaseQuery {
 
     /**
-     * tools log
+     * logger
      */
-    private static final Log log = Log.get(BaseQuery.class);
+    private static final Logger log = LoggerFactory.getLogger(BaseQuery.class);
 
     /**
      * 开始时间结束时间

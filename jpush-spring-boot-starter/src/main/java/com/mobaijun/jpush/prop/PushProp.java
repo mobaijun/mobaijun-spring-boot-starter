@@ -150,4 +150,20 @@ public class PushProp {
     public void setApnsProduction(boolean apnsProduction) {
         this.apnsProduction = apnsProduction;
     }
+
+    @Override
+    public String toString() {
+        return "PushProp{" +
+                "masterSecret='" + masterSecret + '\'' +
+                ", appKey='" + appKey + '\'' +
+                ", apnsProduction=" + apnsProduction +
+                ", useProxy=" + useProxy +
+                ", proxyHost='" + proxyHost + '\'' +
+                ", proxyPort=" + proxyPort +
+                ", proxyUsername='" + proxyUsername + '\'' +
+                ", proxyPassword='" + proxyPassword + '\'' +
+                ", retryInterval=" + retryInterval +
+                ", retryMaxAttempts=" + retryMaxAttempts +
+                '}';
+    }
 }

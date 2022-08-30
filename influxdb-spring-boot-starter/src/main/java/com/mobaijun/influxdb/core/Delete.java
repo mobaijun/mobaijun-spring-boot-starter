@@ -1,8 +1,9 @@
 package com.mobaijun.influxdb.core;
 
-import cn.hutool.log.Log;
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.core.model.DeleteModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Objects;
@@ -17,9 +18,9 @@ import java.util.Objects;
 public class Delete extends BaseQuery {
 
     /**
-     * tools log
+     * logger
      */
-    private static final Log log = Log.get(Delete.class);
+    private static final Logger log = LoggerFactory.getLogger(Delete.class);
 
     /**
      * 构造条件

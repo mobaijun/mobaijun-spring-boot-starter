@@ -1,7 +1,5 @@
 package com.mobaijun.email.model;
 
-import lombok.Data;
-
 import java.time.LocalDateTime;
 
 /**
@@ -11,7 +9,6 @@ import java.time.LocalDateTime;
  *
  * @author MoBaiJun 2022/8/24 8:45
  */
-@Data
 public class EmailSendInfo {
 
     /**
@@ -36,5 +33,50 @@ public class EmailSendInfo {
 
     public EmailSendInfo(EmailDetails emailDetails) {
         this.emailDetails = emailDetails;
+    }
+
+    public EmailSendInfo(EmailDetails emailDetails, LocalDateTime sentDate, Boolean success, String errorMsg) {
+        this.emailDetails = emailDetails;
+        this.sentDate = sentDate;
+        this.success = success;
+        this.errorMsg = errorMsg;
+    }
+
+    public EmailDetails getEmailDetails() {
+        return emailDetails;
+    }
+
+    public LocalDateTime getSentDate() {
+        return sentDate;
+    }
+
+    public void setSentDate(LocalDateTime sentDate) {
+        this.sentDate = sentDate;
+    }
+
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    @Override
+    public String toString() {
+        return "EmailSendInfo{" +
+                "emailDetails=" + emailDetails +
+                ", sentDate=" + sentDate +
+                ", success=" + success +
+                ", errorMsg='" + errorMsg + '\'' +
+                '}';
     }
 }

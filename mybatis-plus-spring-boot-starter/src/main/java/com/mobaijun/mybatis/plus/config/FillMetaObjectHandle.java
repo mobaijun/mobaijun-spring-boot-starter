@@ -2,7 +2,6 @@ package com.mobaijun.mybatis.plus.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.mobaijun.mybatis.plus.model.GlobalConstants;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 
 import java.time.LocalDateTime;
@@ -14,7 +13,6 @@ import java.time.LocalDateTime;
  *
  * @author MoBaiJun 2022/5/7 16:34
  */
-@Slf4j
 public class FillMetaObjectHandle implements MetaObjectHandler {
 
     @Override
@@ -30,5 +28,4 @@ public class FillMetaObjectHandle implements MetaObjectHandler {
         // 修改时间
         this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
     }
-
 }

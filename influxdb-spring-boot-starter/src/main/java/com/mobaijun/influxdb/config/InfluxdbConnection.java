@@ -1,6 +1,5 @@
 package com.mobaijun.influxdb.config;
 
-import cn.hutool.log.Log;
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.core.model.AbstractInfluxdbClient;
 import com.mobaijun.influxdb.util.InfluxdbUtils;
@@ -11,6 +10,8 @@ import org.influxdb.dto.Point;
 import org.influxdb.dto.Pong;
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
@@ -30,9 +31,9 @@ import java.util.concurrent.TimeUnit;
 public class InfluxdbConnection extends AbstractInfluxdbClient {
 
     /**
-     * tools log
+     * logger
      */
-    private static final Log log = Log.get(InfluxdbConnection.class);
+    private static final Logger log = LoggerFactory.getLogger(InfluxdbConnection.class);
 
     /**
      * influxDb 默认接口

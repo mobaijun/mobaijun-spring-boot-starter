@@ -46,9 +46,5 @@
             <groupId>com.mobaijun</groupId>
             <artifactId>base-model-spring-boot-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
     </dependencies>
 </project>
