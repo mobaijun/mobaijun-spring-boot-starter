@@ -8,6 +8,10 @@
         <version>1.1.2</version>
     </parent>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <modelVersion>4.0.0</modelVersion>
     <artifactId>base-model-spring-boot-starter</artifactId>
     <version>1.1.2</version>

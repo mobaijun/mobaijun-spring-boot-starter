@@ -13,6 +13,10 @@
     <artifactId>redis-spring-boot-starter</artifactId>
     <version>1.1.2</version>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <name>redis-spring-boot-starter</name>
     <inceptionYear>2022</inceptionYear>
     <description>redis-spring-boot-starter</description>

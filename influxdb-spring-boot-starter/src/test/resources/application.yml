@@ -1,8 +1,0 @@
-spring:
-  influxdb:
-    url: http://192.168.1.222:8886
-    username: admin
-    password: A123qweasd!
-    database: test
-    retentionPolicy: default
-    retentionPolicyTime: 730d
