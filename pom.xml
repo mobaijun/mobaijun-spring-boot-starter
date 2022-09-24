@@ -39,8 +39,8 @@
         <module>core-spring-boot-starter</module>
         <module>email-spring-boot-starter</module>
         <module>base-model-spring-boot-starter</module>
-        <module>mongo-spring-boot-starter</module>
-        <module>websocket-spring-boot-starter</module>
+<!--        <module>mongo-spring-boot-starter</module>-->
+<!--        <module>websocket-spring-boot-starter</module>-->
         <module>minio-spring-boot-starter</module>
     </modules>
 
@@ -64,18 +64,16 @@
     </licenses>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.source>1.8</maven.source>
+        <maven.target>1.8</maven.target>
+        <project.sourceEncoding>UTF-8</project.sourceEncoding>
         <java.version>1.8</java.version>
-        <project.version>1.1.1</project.version>
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
-        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-source-plugin.version>3.8.1</maven-source-plugin.version>
+        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
+        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
         <spring-boot.version>2.7.4</spring-boot.version>
         <client.version>3.6.6</client.version>
@@ -86,6 +84,7 @@
         <dynamic.version>3.5.1</dynamic.version>
         <p6spy.version>3.9.1</p6spy.version>
         <swagger-annotation.version>2.2.2</swagger-annotation.version>
+        <swagger-models.version>2.2.2</swagger-models.version>
         <swagger-annotations.version>1.6.6</swagger-annotations.version>
         <springdoc.version>1.6.11</springdoc.version>
         <swagger-ui.version>3.0.3</swagger-ui.version>
@@ -341,6 +340,11 @@
                 <version>${swagger-annotation.version}</version>
             </dependency>
             <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger-models.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-annotations</artifactId>
                 <version>${swagger-annotations.version}</version>
@@ -393,22 +397,15 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${maven.source}</source>
+                    <target>${maven.target}</target>
+                    <encoding>${project.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <version>${maven-source-plugin.version}</version>
             </plugin>
             <!-- Javadoc -->
             <plugin>
@@ -416,16 +413,13 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>${maven-javadoc-plugin.version}</version>
                 <configuration>
-                    <charset>UTF-8</charset>
-                    <encoding>UTF-8</encoding>
-                    <docencoding>UTF-8</docencoding>
+                    <charset>${project.sourceEncoding}</charset>
+                    <encoding>${project.sourceEncoding}</encoding>
+                    <docencoding>${project.sourceEncoding}</docencoding>
                 </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
                         <configuration>
                             <!-- Ignore annotation exceptions -->
                             <additionalOptions>-Xdoclint:none</additionalOptions>
@@ -437,13 +431,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
+                <version>${maven-gpg-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>
