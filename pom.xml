@@ -41,6 +41,7 @@
         <module>base-model-spring-boot-starter</module>
         <module>mongo-spring-boot-starter</module>
         <module>websocket-spring-boot-starter</module>
+        <module>minio-spring-boot-starter</module>
     </modules>
 
     <!--  Personal information  -->
@@ -76,26 +77,32 @@
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-source-plugin.version>3.8.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
-        <spring-boot.version>2.7.3</spring-boot.version>
-        <client.version>3.6.1</client.version>
-        <common.version>1.2.0</common.version>
-        <influxdb.version>2.22</influxdb.version>
+        <spring-boot.version>2.7.4</spring-boot.version>
+        <client.version>3.6.6</client.version>
+        <common.version>1.2.2</common.version>
+        <influxdb.version>2.23</influxdb.version>
         <validation-api>2.0.1.Final</validation-api>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <dynamic.version>3.5.1</dynamic.version>
         <p6spy.version>3.9.1</p6spy.version>
-        <swagger-annotation.version>1.6.6</swagger-annotation.version>
-        <springdoc.version>1.6.9</springdoc.version>
+        <swagger-annotation.version>2.2.2</swagger-annotation.version>
+        <swagger-annotations.version>1.6.6</swagger-annotations.version>
+        <springdoc.version>1.6.11</springdoc.version>
         <swagger-ui.version>3.0.3</swagger-ui.version>
         <swagger.version>3.0.0</swagger.version>
         <web-mvc.version>5.3.19</web-mvc.version>
-        <aliyun.version>3.15.0</aliyun.version>
+        <aliyun.version>3.15.1</aliyun.version>
         <hibernate-validator.version>6.2.3.Final</hibernate-validator.version>
         <lueetce.version>6.1.8.RELEASE</lueetce.version>
         <validator.version>2.0.1.Final</validator.version>
-        <guava.version>29.0-jre</guava.version>
-        <hutool-all.version>5.8.5</hutool-all.version>
+        <guava.version>31.1-jre</guava.version>
+        <hutool-all.version>5.8.7</hutool-all.version>
         <jasypt.version>3.0.4</jasypt.version>
         <spring-redis.version>2.7.2</spring-redis.version>
+        <minio.version>8.4.4</minio.version>
+        <snakeyaml.version>1.32</snakeyaml.version>
+        <jettison.version>1.5.1</jettison.version>
+        <slf4j-api.version>2.0.2</slf4j-api.version>
     </properties>
 
     <dependencies>
@@ -267,7 +274,7 @@
                 <artifactId>jiguang-common</artifactId>
                 <version>${common.version}</version>
             </dependency>
-            <!--  influxdb 2.22 -->
+            <!--  influxdb 2.23 -->
             <dependency>
                 <groupId>org.influxdb</groupId>
                 <artifactId>influxdb-java</artifactId>
@@ -300,6 +307,11 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>p6spy</groupId>
                 <artifactId>p6spy</artifactId>
                 <version>${p6spy.version}</version>
@@ -324,14 +336,52 @@
                 <version>${validator.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.swagger</groupId>
+                <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-annotations</artifactId>
                 <version>${swagger-annotation.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-common</artifactId>
                 <version>${springdoc.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- file storage -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.guava</groupId>
+                        <artifactId>guava</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.codehaus.jettison</groupId>
+                <artifactId>jettison</artifactId>
+                <version>${jettison.version}</version>
+            </dependency>
+
+            <!-- log -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
