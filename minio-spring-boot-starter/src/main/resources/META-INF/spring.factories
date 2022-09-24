@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.mobaijun.minio.config.MinioNotificationConfiguration,\
+  com.mobaijun.minio.config.MinioAutoConfiguration
