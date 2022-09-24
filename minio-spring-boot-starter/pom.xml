@@ -11,7 +11,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>minio-spring-boot-starter</artifactId>
-    <name>${artifactId}</name>
+    <name>${project.artifactId}</name>
     <url>https://www.mobaijun.com</url>
 
     <properties>

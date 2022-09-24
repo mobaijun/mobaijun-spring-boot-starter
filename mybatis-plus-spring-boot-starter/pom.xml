@@ -19,7 +19,7 @@
     <artifactId>mybatis-plus-spring-boot-starter</artifactId>
     <version>1.1.2</version>
 
-    <name>${artifactId}</name>
+    <name>${project.artifactId}</name>
     <inceptionYear>2022</inceptionYear>
     <description>mybatis-plus-spring-boot-starter</description>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
