@@ -7,10 +7,10 @@
         <groupId>com.mobaijun</groupId>
         <version>1.1.2</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>websocket-spring-boot-starter</artifactId>
-    <name>websocket-spring-boot-starter</name>
+    <name>${artifactId}</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

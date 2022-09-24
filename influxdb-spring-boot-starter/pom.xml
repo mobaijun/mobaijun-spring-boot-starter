@@ -17,7 +17,7 @@
     <artifactId>influxdb-spring-boot-starter</artifactId>
     <version>1.1.2</version>
 
-    <name>influxdb-spring-boot-starter</name>
+    <name>${artifactId}</name>
     <description>influxdb-spring-boot-starter</description>
     <inceptionYear>2022</inceptionYear>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/influxdb-spring-boot-starter</url>
