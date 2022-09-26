@@ -39,8 +39,8 @@
         <module>core-spring-boot-starter</module>
         <module>email-spring-boot-starter</module>
         <module>base-model-spring-boot-starter</module>
-<!--        <module>mongo-spring-boot-starter</module>-->
-<!--        <module>websocket-spring-boot-starter</module>-->
+        <module>mongo-spring-boot-starter</module>
+        <module>websocket-spring-boot-starter</module>
         <module>minio-spring-boot-starter</module>
     </modules>
 
