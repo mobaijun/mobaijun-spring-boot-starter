@@ -42,6 +42,7 @@
         <module>mongo-spring-boot-starter</module>
         <module>websocket-spring-boot-starter</module>
         <module>minio-spring-boot-starter</module>
+        <module>file-spring-boot-starter</module>
     </modules>
 
     <!--  Personal information  -->

@@ -2,7 +2,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
@@ -10,11 +9,16 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>minio-spring-boot-starter</artifactId>
+    <artifactId>file-spring-boot-starter</artifactId>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <description>file-spring-boot-starter</description>
     <name>${project.artifactId}</name>
     <inceptionYear>2022</inceptionYear>
-    <description>Simple and easy to use minio image management tool</description>
-    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/file-spring-boot-starter</url>
 
     <!--  GitHub issues -->
     <issueManagement>
@@ -23,28 +27,15 @@
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/minio-spring-boot-starter</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/file-spring-boot-starter</url>
         <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
         <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
     </dependencies>
 </project>
