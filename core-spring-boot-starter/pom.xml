@@ -6,13 +6,13 @@
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>1.1.2</version>
+        <version>1.1.3</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>core-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
