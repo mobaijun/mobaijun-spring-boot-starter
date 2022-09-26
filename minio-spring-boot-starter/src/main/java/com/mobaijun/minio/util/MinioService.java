@@ -114,7 +114,8 @@ public class MinioService {
 
     /**
      * List all objects with the prefix given in parameter for the bucket.
-     * Simulate a folder hierarchy. Objects within folders (i.e. all objects which match the pattern {@code {prefix}/{objectName}/...}) are not returned
+     * Simulate a folder hierarchy. Objects within folders (i.e. all objects which match the pattern
+     * {@code {prefix}/{objectName}/...}) are not returned
      *
      * @param path Prefix of seeked list of object
      * @return List of items
