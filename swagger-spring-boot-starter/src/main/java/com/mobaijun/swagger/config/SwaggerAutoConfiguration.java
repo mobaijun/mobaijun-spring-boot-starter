@@ -3,18 +3,12 @@ package com.mobaijun.swagger.config;
 import com.github.xiaoymin.knife4j.core.util.CollectionUtils;
 import com.mobaijun.swagger.prop.SwaggerProperties;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.reflect.FieldUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.NonNull;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -29,7 +23,6 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.ApiKeyVehicle;
 
-import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -46,7 +39,7 @@ import java.util.Set;
  * @author MoBaiJun 2022/4/26 9:09
  */
 @Configuration
-public class SwaggerAutoConfiguration implements WebMvcConfigurer {
+public class SwaggerAutoConfiguration {
 
     /**
      * logger
@@ -197,31 +190,6 @@ public class SwaggerAutoConfiguration implements WebMvcConfigurer {
                                 .getHeader())
                         .scopes(authorizationScopes)
                         .build());
-    }
-
-    /**
-     * 通用拦截器排除swagger设置，所有拦截器都会自动加swagger相关的资源排除信息
-     *
-     * @param registry InterceptorRegistry
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public void addInterceptors(@NonNull InterceptorRegistry registry) {
-        try {
-            Field registrationsField = FieldUtils.getField(InterceptorRegistry.class, "registrations", true);
-            List<InterceptorRegistration> registrations = (List<InterceptorRegistration>) ReflectionUtils.getField(registrationsField, registry);
-            if (registrations != null) {
-                for (InterceptorRegistration interceptorRegistration : registrations) {
-                    interceptorRegistration
-                            .excludePathPatterns("/swagger**/**")
-                            .excludePathPatterns("/webjars/**")
-                            .excludePathPatterns("/v3/**")
-                            .excludePathPatterns("/doc.html");
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @SafeVarargs
