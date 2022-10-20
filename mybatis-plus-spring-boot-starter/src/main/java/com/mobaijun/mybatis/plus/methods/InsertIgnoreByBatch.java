@@ -3,7 +3,7 @@ package com.mobaijun.mybatis.plus.methods;
 /**
  * Software：IntelliJ IDEA 2021.3.2
  * ClassName: InsertIgnoreByBatch
- * 类描述：
+ * 类描述：批量插入忽略
  *
  * @author MoBaiJun 2022/5/7 16:28
  */

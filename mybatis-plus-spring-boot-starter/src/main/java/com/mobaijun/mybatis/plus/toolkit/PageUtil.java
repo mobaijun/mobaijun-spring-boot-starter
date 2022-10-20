@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Software：IntelliJ IDEA 2021.3.2
  * ClassName: PageUtil
- * 类描述：
+ * 类描述：分页工具
  *
  * @author MoBaiJun 2022/5/7 16:21
  */

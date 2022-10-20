@@ -11,7 +11,7 @@ import java.util.Collection;
 /**
  * Software：IntelliJ IDEA 2021.3.2
  * InterfaceName: ExtendMapper
- * 接口描述：
+ * 接口描述：扩展映射器
  *
  * @author MoBaiJun 2022/5/7 16:23
  */

@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 /**
  * Software：IntelliJ IDEA 2021.3.2
  * ClassName: InsertOrUpdateByBatch
- * 类描述：
+ * 类描述：批量插入或更新
  *
  * @author MoBaiJun 2022/5/7 16:29
  */

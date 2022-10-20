@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 /**
  * Software：IntelliJ IDEA 2021.3.2
  * ClassName: InsertOrUpdateFieldByBatch
- * 类描述：
+ * 类描述：批量插入或更新字段
  *
  * @author MoBaiJun 2022/5/7 16:29
  */

@@ -6,7 +6,7 @@ import com.mobaijun.mybatis.plus.query.LambdaQueryWrapper;
 /**
  * Software：IntelliJ IDEA 2021.3.2
  * ClassName: Wrappers
- * 类描述：
+ * 类描述：包装类
  *
  * @author MoBaiJun 2022/5/7 16:13
  */

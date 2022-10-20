@@ -21,7 +21,7 @@ import java.util.function.Predicate;
 /**
  * Software：IntelliJ IDEA 2021.3.2
  * ClassName: InsertBatchSomeColumnByCollection
- * 类描述：
+ * 类描述：通过集合批量插入一些列
  *
  * @author MoBaiJun 2022/5/7 16:27
  */
