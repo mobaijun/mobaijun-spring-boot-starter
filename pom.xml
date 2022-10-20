@@ -490,12 +490,23 @@
                     <encoding>${project.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+
+            <!-- Generate source jar package -->
             <plugin>
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
+
             <!-- Javadoc -->
             <plugin>
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
@@ -514,9 +525,13 @@
                             <!-- Ignore annotation exceptions -->
                             <additionalOptions>-Xdoclint:none</additionalOptions>
                         </configuration>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
+
             <!-- GPG -->
             <plugin>
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
