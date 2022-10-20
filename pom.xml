@@ -409,6 +409,7 @@
             <dependency>
                 <groupId>com.mobaijun</groupId>
                 <artifactId>kjs-common</artifactId>
+                <version>${kjs-common.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
