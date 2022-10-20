@@ -524,6 +524,7 @@
                         <configuration>
                             <!-- Ignore annotation exceptions -->
                             <additionalOptions>-Xdoclint:none</additionalOptions>
+                            <useStandardDocletOptions>false</useStandardDocletOptions>
                         </configuration>
                         <goals>
                             <goal>jar</goal>
