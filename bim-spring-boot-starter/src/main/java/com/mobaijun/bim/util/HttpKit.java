@@ -51,7 +51,7 @@ public class HttpKit {
             String fileName;
             fileName = multipartFile.getOriginalFilename();
             //解决中文乱码
-            ContentType contentType = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+            ContentType contentType = ContentType.create(HTTP.PLAIN_TEXT_TYPE, StandardCharsets.UTF_8);
             for (Entry<String, Object> entry : params.entrySet()) {
                 if (entry.getValue() == null) {
                     continue;
