@@ -1,5 +1,6 @@
 package com.mobaijun.mybatis.plus.toolkit;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.mobaijun.mybatis.plus.query.LambdaAliasQueryWrapper;
 import com.mobaijun.mybatis.plus.query.LambdaQueryWrapper;
 
@@ -69,5 +70,28 @@ public final class Wrappers {
      */
     public static <T> LambdaAliasQueryWrapper<T> lambdaAliasQuery(Class<T> entityClass) {
         return new LambdaAliasQueryWrapper<>(entityClass);
+    }
+
+    /**
+     * 获取 LambdaUpdateWrapper&lt;T&gt;
+     *
+     * @param entity 实体类
+     * @param <T>    实体类泛型
+     * @return LambdaUpdateWrapper&lt;T&gt;
+     */
+    public static <T> LambdaUpdateWrapper<T> lambdaUpdate(T entity) {
+        return new LambdaUpdateWrapper<>(entity);
+    }
+
+    /**
+     * 获取 LambdaUpdateWrapper&lt;T&gt;
+     *
+     * @param entityClass 实体类class
+     * @param <T>         实体类泛型
+     * @return LambdaUpdateWrapper&lt;T&gt;
+     * @since 3.3.1
+     */
+    public static <T> LambdaUpdateWrapper<T> lambdaUpdate(Class<T> entityClass) {
+        return new LambdaUpdateWrapper<>(entityClass);
     }
 }

@@ -8,7 +8,7 @@
     <groupId>com.mobaijun</groupId>
     <artifactId>mobaijun-spring-boot-dependencies</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.3</version>
+    <version>1.1.4</version>
 
     <name>mobaijun-spring-boot-dependencies</name>
     <inceptionYear>2022</inceptionYear>
@@ -139,25 +139,25 @@
                 <!--  https://mvnrepository.com/artifact/com.mobaijun/core-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>core-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.4</version>
             </dependency>
             <dependency>
                 <!-- https://mvnrepository.com/artifact/com.mobaijun/email-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>email-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.4</version>
             </dependency>
             <dependency>
                 <!-- https://mvnrepository.com/artifact/com.mobaijun/influxdb-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>influxdb-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.4</version>
             </dependency>
             <dependency>
                 <!-- https://mvnrepository.com/artifact/com.mobaijun/base-model-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>base-model-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.4</version>
             </dependency>
             <dependency>
                 <!-- https://mvnrepository.com/artifact/com.mobaijun/auth-spring-boot-starter -->
@@ -169,13 +169,13 @@
                 <!-- https://mvnrepository.com/artifact/com.mobaijun/jpush-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>jpush-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.4</version>
             </dependency>
             <dependency>
                 <!-- https://mvnrepository.com/artifact/com.mobaijun/mybatis-plus-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>mybatis-plus-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.4</version>
             </dependency>
             <dependency>
                 <!-- https://mvnrepository.com/artifact/com.mobaijun/oss-spring-boot-starter -->
@@ -187,31 +187,31 @@
                 <!--  https://mvnrepository.com/artifact/com.mobaijun/influxdb-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>redis-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.4</version>
             </dependency>
             <dependency>
                 <!-- https://mvnrepository.com/artifact/com.mobaijun/swagger-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>swagger-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.4</version>
             </dependency>
             <dependency>
                 <!-- https://mvnrepository.com/artifact/com.mobaijun/table-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>table-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.4</version>
             </dependency>
             <dependency>
                 <!-- https://mvnrepository.com/artifact/com.mobaijun/bim-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>bim-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.4</version>
             </dependency>
             <dependency>
                 <!-- https://mvnrepository.com/artifact/com.mobaijun/file-upload-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>file-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.4</version>
             </dependency>
 
             <!-- tool -->
