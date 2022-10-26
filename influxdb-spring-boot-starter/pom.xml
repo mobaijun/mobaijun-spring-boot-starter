@@ -15,7 +15,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>influxdb-spring-boot-starter</artifactId>
-    <version>1.1.4</version>
+    <version>${parent.version}</version>
 
     <name>${project.artifactId}</name>
     <description>influxdb-spring-boot-starter</description>
