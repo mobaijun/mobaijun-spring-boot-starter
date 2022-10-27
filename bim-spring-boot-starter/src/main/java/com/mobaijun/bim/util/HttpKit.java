@@ -9,7 +9,6 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +50,7 @@ public class HttpKit {
             String fileName;
             fileName = multipartFile.getOriginalFilename();
             //解决中文乱码
-            ContentType contentType = ContentType.create(HTTP.PLAIN_TEXT_TYPE, StandardCharsets.UTF_8);
+            ContentType contentType = ContentType.create(ContentType.TEXT_PLAIN.getMimeType(), StandardCharsets.UTF_8);
             for (Entry<String, Object> entry : params.entrySet()) {
                 if (entry.getValue() == null) {
                     continue;
