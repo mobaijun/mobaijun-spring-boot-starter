@@ -19,7 +19,7 @@
 
     <name>${project.artifactId}</name>
     <inceptionYear>2022</inceptionYear>
-    <description>redis-spring-boot-starter</description>
+    <description>This is a quick starter with integrated redis cache</description>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/redis-spring-boot-starter</url>
 
     <!--  GitHub issues -->

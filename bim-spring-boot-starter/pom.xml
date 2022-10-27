@@ -19,7 +19,9 @@
     <version>${parent.version}</version>
 
     <name>${project.artifactId}</name>
-    <description>${project.artifactId}</description>
+    <description>Glodon's bim operation quick launcher, which integrates operations such as uploading files,
+        previewing, deleting, etc.
+    </description>
     <inceptionYear>2022</inceptionYear>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/bim-spring-boot-starter</url>
 

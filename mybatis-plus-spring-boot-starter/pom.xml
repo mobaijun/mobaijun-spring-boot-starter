@@ -21,7 +21,7 @@
 
     <name>${project.artifactId}</name>
     <inceptionYear>2022</inceptionYear>
-    <description>mybatis-plus-spring-boot-starter</description>
+    <description>This is a quick launcher that integrates mybatis plus</description>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
 
     <!--  GitHub issues -->

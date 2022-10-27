@@ -19,7 +19,7 @@
 
     <name>${project.artifactId}</name>
     <inceptionYear>2022</inceptionYear>
-    <description>swagger-spring-boot-starter</description>
+    <description>This is a quick starter that integrates the result api</description>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
 
     <!--  GitHub issues -->

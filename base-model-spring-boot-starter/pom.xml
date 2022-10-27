@@ -17,7 +17,8 @@
     <version>${parent.version}</version>
 
     <name>${project.artifactId}</name>
-    <description>${project.artifactId}</description>
+    <description>This is a spring boot basic entity tool module, commonly used paging plug-ins,
+        MySQL operation basic classes</description>
     <inceptionYear>2022</inceptionYear>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/base-model-spring-boot-starter</url>
 

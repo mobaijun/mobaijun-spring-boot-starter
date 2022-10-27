@@ -18,7 +18,8 @@
     <version>${parent.version}</version>
 
     <name>${project.artifactId}</name>
-    <description>influxdb-spring-boot-starter</description>
+    <description>Influxdb Quick Action Launcher, which encapsulates commonly used operations such as addition,
+    deletion, modification and query</description>
     <inceptionYear>2022</inceptionYear>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/influxdb-spring-boot-starter</url>
 
