@@ -19,7 +19,7 @@
     <version>${parent.version}</version>
 
     <name>${project.artifactId}</name>
-    <description>bim-spring-boot-starter</description>
+    <description>${project.artifactId}</description>
     <inceptionYear>2022</inceptionYear>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/bim-spring-boot-starter</url>
 
