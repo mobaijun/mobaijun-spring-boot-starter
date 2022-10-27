@@ -1,9 +1,11 @@
 package com.mobaijun.redis.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
@@ -18,7 +20,6 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -45,6 +46,11 @@ public class RedisAutoConfiguration {
     private static final Logger log = LoggerFactory.getLogger(RedisAutoConfiguration.class);
 
     @Bean
+    public RedisConnectionFactory redisConnectionFactory(RedisConnectionFactory redisConnectionFactory) {
+        return redisConnectionFactory;
+    }
+
+    @Bean
     public CachingConfigurerSupport cachingConfigurerSupport() {
         return new RedisKeyGenerator();
     }
@@ -55,7 +61,6 @@ public class RedisAutoConfiguration {
      * @return CacheManager CacheManagerCould not autowire. No beans of 'RedisConnectionFactory' type found.
      */
     @Bean
-    @Lazy
     public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         // 初始化一个RedisCacheWriter
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(connectionFactory);
@@ -65,10 +70,12 @@ public class RedisAutoConfiguration {
         defaultCacheConfig = defaultCacheConfig.entryTtl(Duration.ofDays(RedisConstant.DAY))
                 // 默认不缓存空值
                 .disableCachingNullValues();
-        //解决查询缓存转换异常的问题
+        // 解决查询缓存转换异常的问题
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,
+                ObjectMapper.DefaultTyping.NON_FINAL,
+                JsonTypeInfo.As.WRAPPER_ARRAY);
         // 支持 jdk 1.8 日期
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
@@ -95,11 +102,15 @@ public class RedisAutoConfiguration {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        mapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,
+                ObjectMapper.DefaultTyping.NON_FINAL,
+                JsonTypeInfo.As.WRAPPER_ARRAY);
+
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.registerModule(new Jdk8Module())
                 .registerModule(new JavaTimeModule())
                 .registerModule(new ParameterNamesModule());
+
         serializer.setObjectMapper(mapper);
         template.setValueSerializer(serializer);
         // 使用StringRedisSerializer来序列化和反序列化redis的key值
@@ -139,7 +150,10 @@ public class RedisAutoConfiguration {
         // 解决查询缓存转换异常的问题
         om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+
+        om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,
+                ObjectMapper.DefaultTyping.NON_FINAL,
+                JsonTypeInfo.As.WRAPPER_ARRAY);
         // 支持 jdk 1.8 日期   ---- start ---
         om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         om.registerModule(new Jdk8Module())
