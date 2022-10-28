@@ -44,6 +44,7 @@
         <module>minio-spring-boot-starter</module>
         <module>file-spring-boot-starter</module>
         <module>bim-spring-boot-starter</module>
+        <module>excel-spring-boot-starter</module>
         <!-- <module>captcha-spring-boot-starter</module>-->
         <!-- <module>excel-spring-boot-starter</module>-->
     </modules>
@@ -218,6 +219,12 @@
                 <!-- https://mvnrepository.com/artifact/com.mobaijun/table-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>table-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <!-- https://mvnrepository.com/artifact/com.mobaijun/excel-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>excel-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
