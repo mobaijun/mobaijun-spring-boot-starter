@@ -157,4 +157,64 @@ public class EmailDetails {
                 ", files=" + Arrays.toString(files) +
                 '}';
     }
+
+    public static final class EmailDetailsBuilder {
+        private final EmailDetails emailDetails;
+
+        private EmailDetailsBuilder() {
+            emailDetails = new EmailDetails();
+        }
+
+        public static EmailDetailsBuilder anEmailDetails() {
+            return new EmailDetailsBuilder();
+        }
+
+        public EmailDetailsBuilder withFrom(String from) {
+            emailDetails.setFrom(from);
+            return this;
+        }
+
+        public EmailDetailsBuilder withTo(String[] to) {
+            emailDetails.setTo(to);
+            return this;
+        }
+
+        public EmailDetailsBuilder withSubject(String subject) {
+            emailDetails.setSubject(subject);
+            return this;
+        }
+
+        public EmailDetailsBuilder withShowHtml(Boolean showHtml) {
+            emailDetails.setShowHtml(showHtml);
+            return this;
+        }
+
+        public EmailDetailsBuilder withContent(String content) {
+            emailDetails.setContent(content);
+            return this;
+        }
+
+        public EmailDetailsBuilder withCc(String[] cc) {
+            emailDetails.setCc(cc);
+            return this;
+        }
+
+        public EmailDetailsBuilder withBcc(String[] bcc) {
+            emailDetails.setBcc(bcc);
+            return this;
+        }
+
+        public EmailDetailsBuilder withFiles(File[] files) {
+            emailDetails.setFiles(files);
+            return this;
+        }
+
+        public EmailDetailsBuilder but() {
+            return anEmailDetails().withFrom(emailDetails.getFrom()).withTo(emailDetails.getTo()).withSubject(emailDetails.getSubject()).withShowHtml(emailDetails.getShowHtml()).withContent(emailDetails.getContent()).withCc(emailDetails.getCc()).withBcc(emailDetails.getBcc()).withFiles(emailDetails.getFiles());
+        }
+
+        public EmailDetails build() {
+            return emailDetails;
+        }
+    }
 }

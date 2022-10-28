@@ -46,7 +46,6 @@
         <module>bim-spring-boot-starter</module>
         <module>excel-spring-boot-starter</module>
         <!-- <module>captcha-spring-boot-starter</module>-->
-        <!-- <module>excel-spring-boot-starter</module>-->
     </modules>
 
     <!--  Personal information  -->

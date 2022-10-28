@@ -16,6 +16,7 @@
 package com.mobaijun.email.service;
 
 import com.mobaijun.email.model.EmailDetails;
+import com.mobaijun.email.model.EmailDetails.EmailDetailsBuilder;
 import com.mobaijun.email.model.EmailSendInfo;
 import org.springframework.mail.MailSendException;
 import org.springframework.util.StringUtils;
@@ -50,12 +51,13 @@ public interface EmailSenderService {
      * @return EmailSendInfo
      */
     default EmailSendInfo sendMail(String subject, String content, boolean showHtml, String... to) {
-        EmailDetails emailDetails = new EmailDetails();
-        emailDetails.setShowHtml(showHtml);
-        emailDetails.setSubject(subject);
-        emailDetails.setContent(content);
-        emailDetails.setTo(to);
-        return sendMail(emailDetails);
+        return sendMail(EmailDetailsBuilder
+                .anEmailDetails()
+                .withShowHtml(showHtml)
+                .withSubject(subject)
+                .withContent(content)
+                .withTo(to)
+                .build());
     }
 
     /**
