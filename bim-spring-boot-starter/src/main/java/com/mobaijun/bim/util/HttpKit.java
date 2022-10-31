@@ -64,7 +64,7 @@ public class HttpKit {
             builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
             String fileName;
             fileName = multipartFile.getOriginalFilename();
-            //解决中文乱码
+            // 解决中文乱码
             ContentType contentType = ContentType.create(ContentType.TEXT_PLAIN.getMimeType(), StandardCharsets.UTF_8);
             for (Entry<String, Object> entry : params.entrySet()) {
                 if (entry.getValue() == null) {

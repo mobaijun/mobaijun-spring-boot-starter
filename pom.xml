@@ -99,7 +99,7 @@
         <lueetce.version>6.1.8.RELEASE</lueetce.version>
         <validator.version>2.0.1.Final</validator.version>
         <guava.version>31.1-jre</guava.version>
-        <hutool-all.version>5.8.8</hutool-all.version>
+        <hutool-all.version>5.8.9</hutool-all.version>
         <jasypt.version>3.0.4</jasypt.version>
         <spring-redis.version>2.7.3</spring-redis.version>
         <minio.version>8.4.4</minio.version>
@@ -107,7 +107,7 @@
         <jettison.version>1.5.1</jettison.version>
         <slf4j-api.version>2.0.3</slf4j-api.version>
         <easyexcel.version>3.1.1</easyexcel.version>
-        <kjs-common.version>1.1.6</kjs-common.version>
+        <kjs-common.version>1.1.7</kjs-common.version>
         <april-sensitive.version>1.0.0</april-sensitive.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
     </properties>
