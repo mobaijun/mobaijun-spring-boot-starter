@@ -17,7 +17,6 @@ package com.mobaijun.bim.service.impl;
 
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
-import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.bimface.exception.BimfaceException;
 import com.bimface.sdk.BimfaceClient;
@@ -31,7 +30,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * software：IntelliJ IDEA 2022.1
@@ -71,18 +69,10 @@ public class BimFaceClientServiceImpl implements BimFaceClientService {
 
     @Override
     public String getViewToken(String compareId, String fileId, String integrateId) {
-        Map<String, Object> map = new ConcurrentHashMap<>(10);
-        if (!compareId.isEmpty()) {
-            map.put("compareId", compareId);
-        }
-        if (!fileId.isEmpty()) {
-            map.put("fileId", fileId);
-        }
-        if (!integrateId.isEmpty()) {
-            map.put("integrateId", integrateId);
-        }
-        map.put("Authorization", getAccessToken());
-        return HttpUtil.post(BimApiConstant.VIEW_TOKEN_URL, map);
+        return JSONUtil.toBean(HttpRequest.get(BimApiConstant.VIEW_TOKEN_URL + "?fileId=" + Long.parseLong(fileId))
+                .header(Header.AUTHORIZATION.name(), "Bearer " + getAccessToken())
+                .execute()
+                .body(), Data.class).getData();
     }
 
     @Override
