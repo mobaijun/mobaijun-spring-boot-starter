@@ -110,6 +110,7 @@
         <kjs-common.version>1.1.7</kjs-common.version>
         <april-sensitive.version>1.0.0</april-sensitive.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
+        <bimface-java-sdk.version>3.2.9</bimface-java-sdk.version>
     </properties>
 
     <dependencies>

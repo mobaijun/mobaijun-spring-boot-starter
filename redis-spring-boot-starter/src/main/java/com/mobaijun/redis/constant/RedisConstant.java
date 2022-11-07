@@ -44,7 +44,7 @@ public class RedisConstant {
     /**
      * 5天
      */
-    public static final Duration FIVE_DAY = Duration.ofDays(7);
+    public static final Duration FIVE_DAY = Duration.ofDays(5);
 
     /**
      * 三天
