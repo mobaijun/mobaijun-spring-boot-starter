@@ -95,7 +95,7 @@ public class MinioService {
      */
     public void makeBucket(String bucketName) throws Exception {
         if (!bucketExists(bucketName)) {
-            MakeBucketArgs.builder().bucket(bucketName).build();
+            minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
         }
     }
 
