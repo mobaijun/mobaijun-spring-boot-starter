@@ -115,7 +115,7 @@ public class MinioService {
      */
     public List<String> listBucketNames() throws Exception {
         List<Bucket> bucketList = listBuckets();
-        return CollectionUtils.isEmpty(bucketList) ?
+        return !CollectionUtils.isEmpty(bucketList) ?
                 bucketList.stream().map(Bucket::name)
                         .collect(Collectors.toList()) : new ArrayList<>();
     }
@@ -185,9 +185,9 @@ public class MinioService {
      */
     public List<String> listFiles() {
         // Gets a list of file objects in the bucket
-        return list().stream()
+        return !CollectionUtils.isEmpty(list()) ? list().stream()
                 .map(Item::objectName)
-                .collect(Collectors.toCollection(LinkedList::new));
+                .collect(Collectors.toCollection(LinkedList::new)) : new LinkedList<>();
     }
 
     /**
@@ -558,7 +558,9 @@ public class MinioService {
     public boolean removeObject(String bucketName, String objectName) throws Exception {
         boolean flag = bucketExists(bucketName);
         if (flag) {
-            minioClient.removeObject(RemoveObjectArgs.builder().bucket(bucketName).object(objectName).build());
+            minioClient.removeObject(RemoveObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(objectName).build());
             return true;
         }
         return false;
