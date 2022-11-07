@@ -27,4 +27,8 @@ public class MinioFetchException extends RuntimeException {
     public MinioFetchException(String message, Throwable cause) {
         super(message, cause);
     }
+
+    public MinioFetchException(String message) {
+        super(message);
+    }
 }
