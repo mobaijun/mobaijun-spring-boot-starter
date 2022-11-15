@@ -15,8 +15,13 @@
  */
 package com.mobaijun.mybatis.plus.query;
 
+import com.baomidou.mybatisplus.core.conditions.SharedString;
+import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.mobaijun.mybatis.plus.alias.TableAliasHelper;
+
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -46,6 +51,14 @@ public class LambdaAliasQueryWrapper<T> extends LambdaQueryWrapper<T> {
     }
 
     /**
+     * 不建议直接 new 该实例，使用 Wrappers.lambdaQuery(...)
+     */
+    LambdaAliasQueryWrapper(T entity, Class<T> entityClass, SharedString sqlSelect, AtomicInteger paramNameSeq, Map<String, Object> paramNameValuePairs, MergeSegments mergeSegments, SharedString lastSql, SharedString sqlComment, SharedString sqlFirst) {
+        super(entity, entityClass, sqlSelect, paramNameSeq, paramNameValuePairs, mergeSegments, lastSql, sqlComment, sqlFirst);
+        this.tableAlias = TableAliasHelper.tableAlias(getEntityClass());
+    }
+
+    /**
      * 获取查询带别名的查询字段 TODO 暂时没有想到好的方法进行查询字段注入 本来的想法是 自定义注入 SqlFragment 但是目前 mybatis-plus 的
      * TableInfo 解析在 xml 解析之后进行，导致 include 标签被提前替换， 先在 wrapper 中做简单处理吧
      *
@@ -59,6 +72,17 @@ public class LambdaAliasQueryWrapper<T> extends LambdaQueryWrapper<T> {
     }
 
     /**
+     * 用于生成嵌套 sql
+     * <p>
+     * 故 sqlSelect 不向下传递
+     * </p>
+     */
+    @Override
+    protected LambdaAliasQueryWrapper<T> instance() {
+        return new LambdaAliasQueryWrapper<>(getEntity(), getEntityClass(), null, paramNameSeq, paramNameValuePairs, new MergeSegments(), SharedString.emptyString(), SharedString.emptyString(), SharedString.emptyString());
+    }
+
+    /**
      * 查询条件构造时添加上表别名
      *
      * @param column 字段Lambda
@@ -66,10 +90,10 @@ public class LambdaAliasQueryWrapper<T> extends LambdaQueryWrapper<T> {
      */
     @Override
     protected String columnToString(SFunction<T, ?> column) {
-        if (column instanceof OtherTableColumnAliasFunction) {
+        if (column instanceof ColumnFunction) {
             @SuppressWarnings("unchecked")
-            OtherTableColumnAliasFunction<T> otherTableColumnAlias = (OtherTableColumnAliasFunction<T>) column;
-            return otherTableColumnAlias.apply(null);
+            ColumnFunction<T> columnFunction = (ColumnFunction<T>) column;
+            return columnFunction.apply(null);
         }
         String columnName = super.columnToString(column, true);
         return tableAlias == null ? columnName : tableAlias + "." + columnName;
