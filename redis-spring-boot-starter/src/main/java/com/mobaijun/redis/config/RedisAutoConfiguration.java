@@ -61,11 +61,6 @@ public class RedisAutoConfiguration {
     private static final Logger log = LoggerFactory.getLogger(RedisAutoConfiguration.class);
 
     @Bean
-    public RedisConnectionFactory redisConnectionFactory(RedisConnectionFactory redisConnectionFactory) {
-        return redisConnectionFactory;
-    }
-
-    @Bean
     public CachingConfigurerSupport cachingConfigurerSupport() {
         return new RedisKeyGenerator();
     }

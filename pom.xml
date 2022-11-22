@@ -32,7 +32,7 @@
         <module>influxdb-spring-boot-starter</module>
         <module>redis-spring-boot-starter</module>
         <module>mybatis-plus-spring-boot-starter</module>
-        <!-- <module>oss-spring-boot-starter</module>-->
+        <module>oss-spring-boot-starter</module>
         <!-- <module>auth-spring-boot-starter</module>-->
         <module>jpush-spring-boot-starter</module>
         <module>table-spring-boot-starter</module>
@@ -71,9 +71,9 @@
         <maven.target>1.8</maven.target>
         <project.sourceEncoding>UTF-8</project.sourceEncoding>
         <java.version>1.8</java.version>
-        <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.12</nexus-staging-maven-plugin.version>
         <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
-        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
@@ -111,6 +111,9 @@
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <bimface-java-sdk.version>3.2.9</bimface-java-sdk.version>
         <tianai-captcha.version>1.3.3</tianai-captcha.version>
+        <cos_api.version>5.6.110</cos_api.version>
+        <qiniu-java-sdk.version>7.12.0</qiniu-java-sdk.version>
+        <swagger-parser.version>2.1.8</swagger-parser.version>
     </properties>
 
     <dependencies>
@@ -515,6 +518,27 @@
                 <artifactId>tianai-captcha-springboot-starter</artifactId>
                 <version>${tianai-captcha.version}</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.qcloud/cos_api -->
+            <dependency>
+                <groupId>com.qcloud</groupId>
+                <artifactId>cos_api</artifactId>
+                <version>${cos_api.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.qiniu/qiniu-java-sdk -->
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu-java-sdk.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/io.swagger.parser.v3/swagger-parser -->
+            <dependency>
+                <groupId>io.swagger.parser.v3</groupId>
+                <artifactId>swagger-parser</artifactId>
+                <version>${swagger-parser.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -582,6 +606,7 @@
                 <version>${maven-gpg-plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>sign-artifacts</id>
                         <phase>verify</phase>
                         <goals>
                             <goal>sign</goal>
@@ -589,6 +614,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <!--  skip test -->
             <plugin>
                 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin  -->
@@ -597,6 +623,19 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
+            <!-- automatic publishing -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${nexus-staging-maven-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>sonatype</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>
