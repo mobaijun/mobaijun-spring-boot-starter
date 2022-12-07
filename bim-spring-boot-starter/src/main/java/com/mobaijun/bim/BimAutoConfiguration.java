@@ -17,8 +17,8 @@ package com.mobaijun.bim;
 
 import com.mobaijun.bim.prop.BimProperties;
 import com.mobaijun.bim.service.impl.BimFaceClientServiceImpl;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * software：IntelliJ IDEA 2022.1
@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Bean;
  *
  * @author MoBaiJun 2022/10/18 15:27
  */
-@Configurable
+@Configuration
 public class BimAutoConfiguration {
 
     @Bean
