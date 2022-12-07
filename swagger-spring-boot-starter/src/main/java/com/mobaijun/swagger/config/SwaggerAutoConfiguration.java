@@ -67,6 +67,11 @@ public class SwaggerAutoConfiguration {
         return new SwaggerProperties();
     }
 
+    @Bean
+    public FullPathTypeNameProvider fullPathTypeNameProvider() {
+        return new FullPathTypeNameProvider();
+    }
+
     /**
      * # 常用注解说明
      * 1、@Api：用在controller类，描述API接口
