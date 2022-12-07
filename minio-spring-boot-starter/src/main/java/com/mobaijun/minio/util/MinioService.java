@@ -18,6 +18,7 @@ package com.mobaijun.minio.util;
 import com.mobaijun.minio.exception.MinioException;
 import com.mobaijun.minio.exception.MinioFetchException;
 import com.mobaijun.minio.prop.MinioConfigurationProperties;
+import com.sun.java.accessibility.util.EventID;
 import io.minio.BucketExistsArgs;
 import io.minio.DownloadObjectArgs;
 import io.minio.GetObjectArgs;
@@ -496,7 +497,7 @@ public class MinioService {
      * @return The file url
      * @throws Exception Exception
      */
-    public String getPresignedObjectUrl(String bucketName, String objectName) throws Exception {
+    public String getResignedObjectUrl(String bucketName, String objectName) throws Exception {
         GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder()
                 .bucket(bucketName)
                 .object(objectName)
@@ -542,7 +543,7 @@ public class MinioService {
                     .build();
             minioClient.putObject(args);
             // result
-            fileUrl = getPresignedObjectUrl(minioConfigurationProperties.getBucket(), source.toString());
+            fileUrl = getResignedObjectUrl(minioConfigurationProperties.getBucket(), source.toString());
         } catch (Exception e) {
             throw new MinioException("Error while fetching files in Minio", e);
         }
@@ -591,5 +592,23 @@ public class MinioService {
             }
         }
         return deleteErrorNames;
+    }
+
+    /**
+     * Get a short link to the file
+     *
+     * @param file        file
+     * @param source      source
+     * @param contentType contentType
+     * @return url
+     */
+    public String interceptUrl(InputStream file, Path source, String contentType) throws MinioException {
+        String url;
+        try {
+            url = upload(file, source, contentType);
+        } catch (MinioException e) {
+            throw new MinioException("minio.delete.object.name.can.not.empty", e);
+        }
+        return url.substring(EventID.ACTION, url.indexOf("?"));
     }
 }
