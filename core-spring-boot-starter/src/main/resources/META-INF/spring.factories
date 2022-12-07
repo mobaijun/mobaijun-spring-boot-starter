@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.mobaijun.core.config.CustomJacksonAutoConfiguration
+  com.mobaijun.core.config.CustomJacksonAutoConfiguration,\
+  com.mobaijun.core.CoreAutoConfiguration
