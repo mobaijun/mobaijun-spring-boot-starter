@@ -68,7 +68,7 @@ public class InfluxdbUtils {
         Objects.requireNonNull(clazz, Constant.CLAZZ);
         List<T> results = new LinkedList<>();
         for (QueryResult.Result result : queryResult.getResults()) {
-            if (result.getSeries() != null) {
+            if (Objects.nonNull(result.getSeries())) {
                 for (QueryResult.Series series : result.getSeries()) {
                     List<String> columns = series.getColumns();
                     int fieldSize = columns.size();
@@ -78,7 +78,7 @@ public class InfluxdbUtils {
                             obj = clazz.newInstance();
                             for (int i = 0; i < fieldSize; i++) {
                                 String fieldName = columns.get(i);
-                                Field field = null;
+                                Field field;
                                 // 使用 spring 工具类获取指定字段
                                 field = ReflectionUtils.findField(clazz, CommonUtils.lineToHump(fieldName));
                                 if (field == null) {
@@ -128,7 +128,7 @@ public class InfluxdbUtils {
      */
     public static long count(QueryResult queryResult) {
         for (QueryResult.Result result : queryResult.getResults()) {
-            if (result.getSeries() != null) {
+            if (Objects.nonNull(result.getSeries())) {
                 for (QueryResult.Series series : result.getSeries()) {
                     List<String> columns = series.getColumns();
                     int index = columns.indexOf(Constant.CONUNT);
@@ -168,7 +168,7 @@ public class InfluxdbUtils {
                 if (column.tag()) {
                     builder.tag(column.name(), field.get(object).toString());
                 } else {
-                    if (field.get(object) != null) {
+                    if (Objects.nonNull(field.get(object))) {
                         if (Constant.TIME.equals(column.name())) {
                             builder.time(CommonUtils.parseLocalDateTimeToInstant((LocalDateTime) field.get(object)).getEpochSecond(), TimeUnit.SECONDS);
                         } else {
@@ -195,7 +195,7 @@ public class InfluxdbUtils {
      */
     public static long delete(QueryResult queryResult) {
         for (QueryResult.Result result : queryResult.getResults()) {
-            if (result.getError() != null) {
+            if (Objects.nonNull(result.getError())) {
                 throw new RuntimeException(result.getError());
             }
         }
@@ -211,7 +211,7 @@ public class InfluxdbUtils {
      */
     public static boolean checkDatabase(QueryResult queryResult, String databaseName) {
         for (QueryResult.Result result : queryResult.getResults()) {
-            if (result.getSeries() != null) {
+            if (Objects.nonNull(result.getSeries())) {
                 for (QueryResult.Series series : result.getSeries()) {
                     for (List<Object> databases : series.getValues()) {
                         if (databaseName.equals(databases.get(0))) {
@@ -278,8 +278,7 @@ public class InfluxdbUtils {
      * @return String
      */
     public static <T> String getMeasurement(Class<T> clazz) {
-        Measurement measurement = clazz.getAnnotation(Measurement.class);
-        return measurement.name();
+        return clazz.getAnnotation(Measurement.class).name();
     }
 
     /**
@@ -293,7 +292,7 @@ public class InfluxdbUtils {
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
             Count count = field.getAnnotation(Count.class);
-            if (!ObjectUtils.isEmpty(count)) {
+            if (Objects.nonNull(count)) {
                 return count.value();
             }
         }
@@ -313,7 +312,7 @@ public class InfluxdbUtils {
         int i = 0;
         for (Field field : fields) {
             Aggregate aggregate = field.getAnnotation(Aggregate.class);
-            if (!ObjectUtils.isEmpty(aggregate)) {
+            if (Objects.nonNull(aggregate)) {
                 if (i != 0) {
                     temp.append(Constant.COMMA);
                 }

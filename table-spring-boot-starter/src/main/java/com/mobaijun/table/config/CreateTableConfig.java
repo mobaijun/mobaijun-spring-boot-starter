@@ -56,9 +56,9 @@ public class CreateTableConfig {
      * @param tableProperties 数据源配置
      */
     public void initializationTable(TableProperties tableProperties) {
-        Statement stmt = null;
+        Statement stmt;
         try {
-            Connection connection = null;
+            Connection connection;
             Class.forName(tableProperties.getDriverClassName());
             log.info("Connecting to a selected database...");
             connection = DriverManager.getConnection(tableProperties.getUrl(),

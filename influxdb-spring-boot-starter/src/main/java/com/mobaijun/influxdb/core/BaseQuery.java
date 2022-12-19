@@ -20,11 +20,11 @@ import com.mobaijun.influxdb.core.model.BaseModel;
 import com.mobaijun.influxdb.util.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.ObjectUtils;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -65,9 +65,9 @@ public abstract class BaseQuery {
      */
     public static String where(BaseModel model) {
         StringBuilder sb = new StringBuilder();
-        if (!ObjectUtils.isEmpty(model.getStart()) && !ObjectUtils.isEmpty(model.getEnd())) {
+        if (!Objects.isNull(model.getStart()) && !Objects.isNull(model.getEnd())) {
             sb = time(model.getStart(), model.getEnd());
-            if (!ObjectUtils.isEmpty(model.getMap())) {
+            if (!Objects.isNull(model.getMap())) {
                 for (Map.Entry<String, Object> entry : model.getMap().entrySet()) {
                     sb.append(Constant.AND).append(Constant.DELIMITER).append(entry.getKey()).append("\"").append("=");
                     Object value = entry.getValue();
@@ -79,7 +79,7 @@ public abstract class BaseQuery {
                 }
             }
         } else {
-            if (!ObjectUtils.isEmpty(model.getMap())) {
+            if (!Objects.isNull(model.getMap())) {
                 int i = 0;
                 for (Map.Entry<String, Object> entry : model.getMap().entrySet()) {
                     if (i != 0) {
@@ -96,7 +96,7 @@ public abstract class BaseQuery {
                 }
             }
         }
-        log.warn("The basic query statement is : {}", sb.toString());
+        log.warn("The basic query statement is : {}", sb);
         return sb.toString();
     }
 }

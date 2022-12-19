@@ -33,6 +33,7 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -75,7 +76,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
      */
     @PostConstruct
     private void initDefaultDatabase() {
-        if (ObjectUtils.isEmpty(this.influxDb)) {
+        if (Objects.isNull(this.influxDb)) {
             this.influxDb = InfluxDBFactory.connect(this.getUrl(), this.getUsername(), this.getPassword(), CLIENT);
             log.info("=================== The influxdb database was initialized successfully!  ===================");
         }
@@ -122,13 +123,11 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
     /**
      * 批量插入
      *
-     * @param entity 实体
+     * @param data 数据列表
      */
-    public void insert(List<?> entity) {
+    public <T> void insert(List<T> data) {
         BatchPoints batchPoints = BatchPoints.database(getDatabase()).build();
-        for (Object object : entity) {
-            batchPoints.point(InfluxdbUtils.save(object));
-        }
+        data.forEach(item -> batchPoints.point(InfluxdbUtils.save(item)));
         // 批量写入
         influxDb.write(batchPoints);
     }
@@ -136,10 +135,10 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
     /**
      * 插入
      *
-     * @param entity 实体
+     * @param data 实体
      */
-    public void insert(Object entity) {
-        influxDb.write(BatchPoints.database(getDatabase()).build().point(InfluxdbUtils.save(entity)));
+    public <T> void insert(T data) {
+        influxDb.write(BatchPoints.database(getDatabase()).build().point(InfluxdbUtils.save(data)));
     }
 
     /**
@@ -154,7 +153,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
         Point.Builder builder = Point.measurement(measurement);
         builder.tag(tags);
         builder.fields(fields);
-        if (!ObjectUtils.isEmpty(time)) {
+        if (Objects.nonNull(time)) {
             builder.time(time, TimeUnit.SECONDS);
         }
         influxDb.write(BatchPoints.database(getDatabase()).build().point(InfluxdbUtils.save(builder)));
@@ -193,16 +192,16 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
         QueryResult queryResult = influxDb.query(new Query(String.valueOf(sql), getDatabase()));
         log.debug("The query SQL statement is: " + sql);
         // 对象内容是否正常
-        if (ObjectUtils.isEmpty(queryResult) || !ObjectUtils.isEmpty(queryResult.getError())) {
+        if (Objects.isNull(queryResult) || !Objects.isNull(queryResult.getError())) {
             return null;
         }
         // 数据集合是否正常-
         List<QueryResult.Series> series = queryResult.getResults().get(0).getSeries();
-        if (series == null) {
+        if (Objects.isNull(series)) {
             return null;
         }
         List<List<Object>> values = series.get(0).getValues();
-        if (ObjectUtils.isEmpty(values) || ObjectUtils.isEmpty(values.size())) {
+        if (Objects.isNull(values) || values.size() == 0) {
             return null;
         }
         return values;
@@ -248,8 +247,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
      * @return 返回错误信息
      */
     public String deleteMeasurementData(String command) {
-        QueryResult result = influxDb.query(new Query(command, getDatabase()));
-        return result.getError();
+        return influxDb.query(new Query(command, getDatabase())).getError();
     }
 
     /**
@@ -261,7 +259,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
         boolean isConnected = false;
         try {
             Pong ping = influxDb.ping();
-            if (!ObjectUtils.isEmpty(ping)) {
+            if (Objects.nonNull(ping)) {
                 isConnected = true;
             }
             // 链接超时

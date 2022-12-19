@@ -24,8 +24,19 @@ package com.mobaijun.influxdb.core.enums;
  */
 public enum Function {
 
+    /**
+     * 累加
+     */
     SUM("sum", "累加"),
+
+    /**
+     * 最后一条数据
+     */
     LAST("last", "最后一条数据"),
+
+    /**
+     * 平均数
+     */
     MEAN("mean", "平均数");
     private final String tag;
 

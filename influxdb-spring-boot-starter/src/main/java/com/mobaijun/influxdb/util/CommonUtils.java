@@ -39,8 +39,7 @@ public class CommonUtils {
      * @return LocalDateTime
      */
     public static LocalDateTime parseStringToLocalDateTime(String time) {
-        DateTimeFormatter df = DateTimeFormatter.ISO_DATE_TIME;
-        return LocalDateTime.parse(time, df);
+        return LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
     }
 
     /**

@@ -19,7 +19,6 @@ import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.core.model.DeleteModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.ObjectUtils;
 
 import java.util.Objects;
 
@@ -49,7 +48,7 @@ public class Delete extends BaseQuery {
         Objects.requireNonNull(model.getMeasurement(), Constant.DELETE_MEASUREMENT);
         StringBuilder delete = new StringBuilder();
         delete.append(Constant.DELETE_DROM).append(model.getMeasurement()).append(Constant.DELIMITER);
-        if (!ObjectUtils.isEmpty(model.getWhere())) {
+        if (Objects.nonNull(model.getWhere())) {
             delete.append(Constant.WHERE).append(model.getWhere());
         } else {
             throw new RuntimeException("where 条件缺失");

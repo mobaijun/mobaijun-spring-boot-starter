@@ -64,7 +64,7 @@ public class Insert extends BaseQuery {
                         insert.append(Constant.COMMA).append(column.name()).append(Constant.EQUAL_SIGN).append(field.get(object));
                     }
                 } else {
-                    if (field.get(object) != null) {
+                    if (Objects.nonNull(field.get(object))) {
                         if (Constant.TIME.equals(column.name())) {
                             time = CommonUtils.parseLocalDateTimeToInstant((LocalDateTime) field.get(object)).getEpochSecond() + "000000000";
                         } else {

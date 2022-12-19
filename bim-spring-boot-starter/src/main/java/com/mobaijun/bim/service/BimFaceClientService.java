@@ -74,6 +74,7 @@ public interface BimFaceClientService {
      * 根据文件ID获取文件详细信息
      *
      * @param fileId 文件ID
+     * @return data
      */
     Data getFileInform(String fileId);
 
@@ -82,7 +83,7 @@ public interface BimFaceClientService {
      *
      * @param fileId bim 文件 id
      * @param body   FileTranslateRequest请求体
-     * @return 是否成功
+     * @return Data
      */
     Data translateBimFile(String fileId, String body);
 

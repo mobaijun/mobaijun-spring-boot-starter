@@ -19,7 +19,6 @@ import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.core.model.AbstractQueryModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.ObjectUtils;
 
 import java.util.Objects;
 
@@ -48,16 +47,16 @@ public class Query extends BaseQuery {
         StringBuilder query = new StringBuilder();
         query.append(Constant.SELECT).append(model.getSelect());
         query.append(Constant.FROM).append(model.getMeasurement());
-        if (!ObjectUtils.isEmpty(model.getWhere())) {
+        if (Objects.nonNull(model.getWhere())) {
             query.append(Constant.WHERE).append(model.getWhere());
         }
-        if (!ObjectUtils.isEmpty(model.getGroup())) {
+        if (Objects.nonNull(model.getGroup())) {
             query.append(Constant.GROUP_BY).append(model.getGroup());
         }
-        if (!ObjectUtils.isEmpty(model.getOrder())) {
+        if (Objects.nonNull(model.getOrder())) {
             query.append(Constant.ORDER_BY_TIME).append(model.getOrder());
         }
-        if (!ObjectUtils.isEmpty(model.getPageNum()) && !ObjectUtils.isEmpty(model.getPageSize())) {
+        if (Objects.nonNull(model.getPageNum()) && Objects.nonNull(model.getPageSize())) {
             query.append(Constant.SPACE).append(model.getPageQuery());
         }
         if (model.getUseTimeZone()) {

@@ -19,14 +19,14 @@ public interface ExcelService {
      *
      * @param excelExportParam Excel导出参数
      */
-    void easyExportDownload(ExcelExportParam excelExportParam);
+    <T> void easyExportDownload(ExcelExportParam<T> excelExportParam);
 
     /**
      * 简单的写入Excel文件到指定路径
      *
      * @param excelExportParam Excel导出参数
      */
-    void easyWriteToFile(ExcelExportParam excelExportParam);
+    <T> void easyWriteToFile(ExcelExportParam<T> excelExportParam);
 
     /**
      * 简单的读取Excel文件并返回实体类List集合

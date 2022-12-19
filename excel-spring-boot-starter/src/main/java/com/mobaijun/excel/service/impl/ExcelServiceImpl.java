@@ -7,13 +7,12 @@ import com.mobaijun.excel.exception.ExcelException;
 import com.mobaijun.excel.listener.SimpleDataListener;
 import com.mobaijun.excel.model.ExcelExportParam;
 import com.mobaijun.excel.service.ExcelService;
-import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,8 +25,8 @@ import java.util.List;
 public class ExcelServiceImpl implements ExcelService {
 
     @Override
-    public void easyExportDownload(ExcelExportParam excelExportParam) {
-        if (ObjectUtils.isEmpty(excelExportParam)) {
+    public <T> void easyExportDownload(ExcelExportParam<T> excelExportParam) {
+        if (excelExportParam == null) {
             return;
         }
 
@@ -65,8 +64,8 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public void easyWriteToFile(ExcelExportParam excelExportParam) {
-// 默认值
+    public <T> void easyWriteToFile(ExcelExportParam<T> excelExportParam) {
+        // 默认值
         createDefaultValue(excelExportParam);
 
         ExcelTypeEnum excelTypeEnum = excelExportParam.getExcelTypeEnum();
@@ -83,11 +82,11 @@ public class ExcelServiceImpl implements ExcelService {
     @Override
     public <T> List<T> easyReadToList(InputStream inputStream, Class<T> clazz) {
         if (inputStream == null) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
 
         // 创建一个简单的数据监听器
-        SimpleDataListener<T> readListener = new SimpleDataListener<T>();
+        SimpleDataListener<T> readListener = new SimpleDataListener<>();
 
         // 读取文件
         try {
@@ -103,11 +102,11 @@ public class ExcelServiceImpl implements ExcelService {
     @Override
     public <T> List<T> easyReadToList(InputStream inputStream, Integer rowNum, Class<T> clazz) {
         if (inputStream == null) {
-            return new ArrayList<T>();
+            return Collections.emptyList();
         }
 
         // 创建一个简单的数据监听器
-        SimpleDataListener<T> readListener = new SimpleDataListener<T>();
+        SimpleDataListener<T> readListener = new SimpleDataListener<>();
 
         // 读取文件
         try {
@@ -124,7 +123,7 @@ public class ExcelServiceImpl implements ExcelService {
      *
      * @param param Excel导出参数
      */
-    private void createDefaultValue(ExcelExportParam param) {
+    private <T> void createDefaultValue(ExcelExportParam<T> param) {
         if (param.getSheetName().isEmpty()) {
             param.setSheetName(ExcelConstants.OFFICE_EXCEL_DEFAULT_SHEET_NAME);
         }

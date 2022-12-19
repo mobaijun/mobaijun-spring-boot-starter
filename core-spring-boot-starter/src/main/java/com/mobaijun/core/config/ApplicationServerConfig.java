@@ -64,7 +64,6 @@ public class ApplicationServerConfig {
      * @return <a href="https://localhost/profile/upload/2022/03/16/123.jpg">...</a>
      */
     private static String deletePort(String url) {
-        url = url.substring(0, url.lastIndexOf(":"));
-        return url;
+        return url.substring(0, url.lastIndexOf(":"));
     }
 }

@@ -123,7 +123,7 @@ public class MinioAutoConfiguration {
     private boolean configuredProxy() {
         String httpHost = System.getProperty("http.proxyHost");
         String httpPort = System.getProperty("http.proxyPort");
-        return StringUtils.hasText(httpPort) && StringUtils.hasText(httpPort);
+        return StringUtils.hasText(httpHost) && StringUtils.hasText(httpPort);
     }
 
     /**

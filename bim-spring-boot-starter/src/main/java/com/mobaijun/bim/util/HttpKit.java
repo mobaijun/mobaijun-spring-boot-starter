@@ -25,8 +25,6 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -37,6 +35,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 /**
  * HTTP请求
@@ -44,13 +43,6 @@ import java.util.Map.Entry;
  * @author mobai
  */
 public class HttpKit {
-
-    /**
-     * logger
-     */
-    private static final Logger log = LoggerFactory.getLogger(HttpKit.class);
-    private static final CloseableHttpClient HTTPCLIENT = HttpClients.createDefault();
-    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.87 Safari/537.36";
 
     public static Map<String, String> sendMultipartFilePost(String url, MultipartFile multipartFile, String fileParName,
                                                             Map<String, Object> params, int timeout) {
@@ -67,7 +59,7 @@ public class HttpKit {
             // 解决中文乱码
             ContentType contentType = ContentType.create(ContentType.TEXT_PLAIN.getMimeType(), StandardCharsets.UTF_8);
             for (Entry<String, Object> entry : params.entrySet()) {
-                if (entry.getValue() == null) {
+                if (Objects.isNull(entry.getValue())) {
                     continue;
                 }
                 // 类似浏览器表单提交，对应input的name和value
@@ -88,7 +80,7 @@ public class HttpKit {
             HttpEntity responseEntity = response.getEntity();
             resultMap.put("scode", String.valueOf(response.getStatusLine().getStatusCode()));
             resultMap.put("data", "");
-            if (responseEntity != null) {
+            if (Objects.nonNull(responseEntity)) {
                 // 将响应内容转换为字符串
                 result = EntityUtils.toString(responseEntity, StandardCharsets.UTF_8);
                 resultMap.put("data", result);

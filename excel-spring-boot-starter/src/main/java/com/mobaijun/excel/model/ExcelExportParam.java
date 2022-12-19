@@ -12,17 +12,17 @@ import java.util.List;
  *
  * @author MoBaiJun 2022/10/28 13:36
  */
-public class ExcelExportParam {
+public class ExcelExportParam<T> {
 
     /**
      * 需要导出的数据列表
      */
-    List<?> dataList;
+    List<T> dataList;
 
     /**
      * Excel每行数据转换成的对象类
      */
-    Class<?> clazz;
+    Class<T> clazz;
 
     /**
      * 工作簿名称 导出/写入文件用
@@ -62,19 +62,19 @@ public class ExcelExportParam {
                 '}';
     }
 
-    public List<?> getDataList() {
+    public List<T> getDataList() {
         return dataList;
     }
 
-    public void setDataList(List<?> dataList) {
+    public void setDataList(List<T> dataList) {
         this.dataList = dataList;
     }
 
-    public Class<?> getClazz() {
+    public Class<T> getClazz() {
         return clazz;
     }
 
-    public void setClazz(Class<?> clazz) {
+    public void setClazz(Class<T> clazz) {
         this.clazz = clazz;
     }
 
