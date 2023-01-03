@@ -58,5 +58,5 @@ public enum TableTypeEnum {
     /**
      * 未知
      */
-    OHTER
+    OTHER
 }

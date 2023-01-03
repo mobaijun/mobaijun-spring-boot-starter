@@ -66,7 +66,7 @@ public class BaseCreateTable {
             case BACKUPS:
                 // MySQL备份表
                 return new MySqlBaskupScript();
-            case OHTER:
+            case OTHER:
                 // 其他，找不到
                 return new OtherExcpteion();
             default:
