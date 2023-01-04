@@ -18,6 +18,7 @@ package com.mobaijun.base.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,14 +45,14 @@ public class SelectData<T> {
      * 显示的数据
      */
     @ApiModelProperty(value = "显示的数据", required = true)
-    @Schema(title = "显示的数据", required = true)
+    @Schema(title = "显示的数据", requiredMode = RequiredMode.REQUIRED)
     private String name;
 
     /**
      * 选中获取的属性
      */
     @ApiModelProperty(value = "选中获取的属性", required = true)
-    @Schema(title = "选中获取的属性", required = true)
+    @Schema(title = "选中获取的属性", requiredMode = RequiredMode.REQUIRED)
     private Object value;
 
     /**

@@ -23,6 +23,7 @@ import java.lang.annotation.Target;
 /**
  * @author MoBaiJun 2022/4/26 9:25
  */
+@Deprecated
 @Target(ElementType.ANNOTATION_TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ApiJsonProperty {
