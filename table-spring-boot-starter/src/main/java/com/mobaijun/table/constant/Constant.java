@@ -17,12 +17,12 @@ package com.mobaijun.table.constant;
 
 /**
  * software：IntelliJ IDEA 2022.1
- * class name: Constatnt
+ * class name: Constant
  * class description： 通用常量
  *
  * @author MoBaiJun 2022/6/28 14:51
  */
-public class Constatnt {
+public class Constant {
 
     /**
      * 判断是否存在此表

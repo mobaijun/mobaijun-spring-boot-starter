@@ -16,7 +16,7 @@
 package com.mobaijun.table.entity.config;
 
 import com.mobaijun.table.base.BaseCreateTable;
-import com.mobaijun.table.constant.Constatnt;
+import com.mobaijun.table.constant.Constant;
 import com.mobaijun.table.constant.TableConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,12 +43,12 @@ public class ConfigScript extends BaseCreateTable {
         // 项目配置表
         if (StringUtils.hasText(tablePrefix)) {
             // 拼接表前缀
-            sql.append(Constatnt.TABLE_PREFIX)
+            sql.append(Constant.TABLE_PREFIX)
                     .append(tablePrefix)
                     .append(TableConstant.CONFIG);
         } else {
             // 空的不拼接
-            sql.append(Constatnt.TABLE_PREFIX)
+            sql.append(Constant.TABLE_PREFIX)
                     .append(TableConstant.CONFIG);
         }
         log.info("The SQL statement to create the configuration item configuration table is::{}", sql);

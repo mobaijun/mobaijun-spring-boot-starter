@@ -732,6 +732,11 @@ public class RedisUtils {
         return redisLockUtil.tryLock(key, "", expireTime);
     }
 
+    /**
+     * 给 key 添加锁
+     *
+     * @param key string
+     */
     public void unLock(String key) {
         redisLockUtil.releaseLock(key, "");
     }

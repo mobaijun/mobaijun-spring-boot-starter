@@ -16,7 +16,7 @@
 package com.mobaijun.table.entity.second;
 
 import com.mobaijun.table.base.BaseCreateTable;
-import com.mobaijun.table.constant.Constatnt;
+import com.mobaijun.table.constant.Constant;
 import com.mobaijun.table.constant.TableConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,13 +43,13 @@ public class SecondScript extends BaseCreateTable {
         if (StringUtils.hasText(tablePrefix)) {
             // 拼接表前缀
             sql
-                    .append(Constatnt.TABLE_PREFIX)
+                    .append(Constant.TABLE_PREFIX)
                     .append(tablePrefix)
                     .append(TableConstant.SECOND);
         } else {
             // 空的不拼接
             sql
-                    .append(Constatnt.TABLE_PREFIX)
+                    .append(Constant.TABLE_PREFIX)
                     .append(TableConstant.SECOND);
         }
         log.info("The SQL statement to create the configuration component configuration table is:{}", sql);

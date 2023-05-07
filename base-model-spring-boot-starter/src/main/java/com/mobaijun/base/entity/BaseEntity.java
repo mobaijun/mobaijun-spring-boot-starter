@@ -29,7 +29,7 @@ import java.time.LocalDateTime;
 /**
  * software：IntelliJ IDEA 2022.1
  * class name: BaseEntity
- * class description： 基类
+ * class description： 通用基类
  *
  * @author MoBaiJun 2022/6/30 15:05
  */

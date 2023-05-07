@@ -16,7 +16,7 @@
 package com.mobaijun.table.base;
 
 import com.mobaijun.table.constant.TableTypeEnum;
-import com.mobaijun.table.entity.backups.MySqlBaskupScript;
+import com.mobaijun.table.entity.backups.MySqlBackupScript;
 import com.mobaijun.table.entity.config.ConfigScript;
 import com.mobaijun.table.entity.defaults.DefaultAll;
 import com.mobaijun.table.entity.dict.DictAllScript;
@@ -65,7 +65,7 @@ public class BaseCreateTable {
                 return new SecondScript();
             case BACKUPS:
                 // MySQL备份表
-                return new MySqlBaskupScript();
+                return new MySqlBackupScript();
             case OTHER:
                 // 其他，找不到
                 return new OtherExcpteion();

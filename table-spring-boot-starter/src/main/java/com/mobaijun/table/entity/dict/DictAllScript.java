@@ -16,7 +16,7 @@
 package com.mobaijun.table.entity.dict;
 
 import com.mobaijun.table.base.BaseCreateTable;
-import com.mobaijun.table.constant.Constatnt;
+import com.mobaijun.table.constant.Constant;
 import com.mobaijun.table.constant.TableConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,21 +45,21 @@ public class DictAllScript extends BaseCreateTable {
             // 拼接表前缀
             sql
                     // 字典数据表
-                    .append(Constatnt.TABLE_PREFIX)
+                    .append(Constant.TABLE_PREFIX)
                     .append(tablePrefix)
                     .append(TableConstant.DICT_DATA)
                     // 字典类型表
-                    .append(Constatnt.TABLE_PREFIX)
+                    .append(Constant.TABLE_PREFIX)
                     .append(tablePrefix)
                     .append(TableConstant.DICT_TYPE);
         } else {
             // 空的不拼接
             sql
                     // 字典数据表
-                    .append(Constatnt.TABLE_PREFIX)
+                    .append(Constant.TABLE_PREFIX)
                     .append(TableConstant.DICT_DATA)
                     // 字典类型表
-                    .append(Constatnt.TABLE_PREFIX)
+                    .append(Constant.TABLE_PREFIX)
                     .append(TableConstant.DICT_TYPE);
         }
         log.info("The SQL statement to create the dictionary configuration table is:{}", sql);

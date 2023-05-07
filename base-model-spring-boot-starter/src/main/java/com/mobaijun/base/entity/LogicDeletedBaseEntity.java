@@ -26,7 +26,7 @@ import lombok.Setter;
 /**
  * software：IntelliJ IDEA 2022.1
  * class name: LogicDeletedBaseEntity
- * class description：
+ * class description：逻辑删除类
  *
  * @author MoBaiJun 2022/6/30 15:05
  */
