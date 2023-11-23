@@ -15,6 +15,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <name>${project.artifactId}</name>
@@ -35,4 +36,12 @@
         <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
+
+    <dependencies>
+        <!-- log -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+    </dependencies>
 </project>

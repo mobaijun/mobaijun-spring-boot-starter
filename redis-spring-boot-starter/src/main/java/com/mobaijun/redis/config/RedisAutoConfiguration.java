@@ -95,7 +95,7 @@ public class RedisAutoConfiguration {
                 .registerModule(new JavaTimeModule())
                 .registerModule(new ParameterNamesModule());
 
-        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(om, Object.class);
+        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         template.setValueSerializer(jackson2JsonRedisSerializer);
         // 初始化RedisCacheManager
         return new RedisCacheManager(redisCacheWriter, defaultCacheConfig);
@@ -123,7 +123,7 @@ public class RedisAutoConfiguration {
                 .registerModule(new ParameterNamesModule());
 
         // 使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值（默认使用JDK的序列化方式）
-        Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(mapper, Object.class);
+        Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
 
         template.setValueSerializer(serializer);
         // 使用StringRedisSerializer来序列化和反序列化redis的key值

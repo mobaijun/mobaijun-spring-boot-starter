@@ -75,8 +75,8 @@
     <properties>
         <maven.source>1.8</maven.source>
         <maven.target>1.8</maven.target>
-        <project.sourceEncoding>UTF-8</project.sourceEncoding>
         <java.version>1.8</java.version>
+        <project.sourceEncoding>UTF-8</project.sourceEncoding>
         <nexus-staging-maven-plugin.version>1.6.12</nexus-staging-maven-plugin.version>
         <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
@@ -106,7 +106,7 @@
         <guava.version>31.1-jre</guava.version>
         <hutool-all.version>5.8.11</hutool-all.version>
         <jasypt.version>3.0.5</jasypt.version>
-        <spring-redis.version>3.0.0</spring-redis.version>
+        <spring-redis.version>2.7.13</spring-redis.version>
         <minio.version>8.4.6</minio.version>
         <snakeyaml.version>1.33</snakeyaml.version>
         <jettison.version>1.5.3</jettison.version>
@@ -255,6 +255,13 @@
                 <artifactId>log-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <!-- https://mvnrepository.com/artifact/com.mobaijun/run-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>run-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
 
             <!-- tool -->
             <dependency>
