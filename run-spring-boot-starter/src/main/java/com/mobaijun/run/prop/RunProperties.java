@@ -17,6 +17,11 @@ public class RunProperties {
     public final static String PREFIX = "spring.run.web-server";
 
     /**
+     * 是否启用
+     */
+    private boolean enabled;
+
+    /**
      * 要打开的项目地址列表
      */
     private String projectHomeUrl;
@@ -32,6 +37,14 @@ public class RunProperties {
     private String frontEndAddress;
 
     public RunProperties() {
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getProjectHomeUrl() {
@@ -61,6 +74,7 @@ public class RunProperties {
     @Override
     public String toString() {
         return "RunProperties{" +
+                "enabled=" + enabled +
                 ", projectHomeUrl='" + projectHomeUrl + '\'' +
                 ", swaggerUrl='" + swaggerUrl + '\'' +
                 ", frontEndAddress='" + frontEndAddress + '\'' +

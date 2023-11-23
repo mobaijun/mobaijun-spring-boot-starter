@@ -5,10 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 
-import java.awt.*;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
  * Description: [运行监听器]
@@ -28,20 +25,17 @@ public class RunCommandRunner implements CommandLineRunner {
      */
     private final RunProperties runProperties;
 
-    /**
-     * 构造器注入
-     *
-     * @param runProperties 运行配置属性
-     */
     public RunCommandRunner(RunProperties runProperties) {
         this.runProperties = runProperties;
     }
 
     @Override
     public void run(String... args) {
+        logger.info("{-------------------------------------------------------------------------}");
         openUrl(runProperties.getFrontEndAddress());
         openUrl(runProperties.getSwaggerUrl());
         openUrl(runProperties.getProjectHomeUrl());
+        logger.info("{-------------------------------------------------------------------------}");
     }
 
     /**
@@ -49,19 +43,40 @@ public class RunCommandRunner implements CommandLineRunner {
      *
      * @param url 要打开的 URL
      */
-    private void openUrl(String url) {
-        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-            try {
-                if (url != null && !url.trim().isEmpty()) {
-                    Desktop.getDesktop().browse(new URI(url));
-                } else {
-                    logger.warn("URL is null or empty. Skipping.");
-                }
-            } catch (IOException | URISyntaxException e) {
-                handleException(e);
-            }
-        } else {
-            logger.warn("Desktop browsing is not supported on this platform.");
+    public void openUrl(String url) {
+        String os = System.getProperty("os.name").toLowerCase();
+        // 使用操作系统特定的命令打开 URL
+        if (os.contains("win")) {
+            openUrlWindows(url);
+        } else if (os.contains("mac")) {
+            openUrlMac(url);
+        }
+        logger.info("Successfully opened URL: {}", url);
+    }
+
+    /**
+     * Windows
+     *
+     * @param url url
+     */
+    private void openUrlWindows(String url) {
+        try {
+            Runtime.getRuntime().exec("cmd /c start " + url);
+        } catch (IOException e) {
+            handleException(e);
+        }
+    }
+
+    /**
+     * macOS
+     *
+     * @param url url
+     */
+    private void openUrlMac(String url) {
+        try {
+            Runtime.getRuntime().exec("open " + url);
+        } catch (IOException e) {
+            handleException(e);
         }
     }
 
