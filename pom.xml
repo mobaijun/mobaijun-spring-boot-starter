@@ -45,6 +45,11 @@
         <module>file-spring-boot-starter</module>
         <module>bim-spring-boot-starter</module>
         <module>excel-spring-boot-starter</module>
+        <module>jasypt-spring-boot-starter</module>
+        <module>code-generator-spring-boot-starter</module>
+        <module>transaction-spring-boot-starter</module>
+        <module>sms-spring-boot-starter</module>
+        <module>run-spring-boot-starter</module>
         <!-- <module>log-spring-boot-starter</module>-->
     </modules>
 

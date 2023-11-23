@@ -41,21 +41,21 @@ public class ConverterToJson {
     public static <T> void apiModelPropertyCoverToJson(boolean isPage, Class<T> c) {
         // 获取所有的字段
         Field[] fields = c.getDeclaredFields();
-        StringBuilder sb = new StringBuilder("{");
+        StringBuilder jsonString = new StringBuilder("{");
         String pageFieldStr = "{\"startRow\":0,\"parameter\":{\"current\":\"当前页码,从 1 开始\",\"size\":\"每页显示条数,最大值为系统设置，默认 100\",\"sorts\":\"排序规则\"},\"size\":20,\"current\":1}";
-        AtomicInteger i = new AtomicInteger();
+        AtomicInteger currentIndex = new AtomicInteger();
         Arrays.stream(fields).forEach(temp -> {
             // 判断字段注解是否存在
             boolean annotationPresent2 = temp.isAnnotationPresent(ApiModelProperty.class);
             if (annotationPresent2) {
                 ApiModelProperty name = temp.getAnnotation(ApiModelProperty.class);
                 // 获取注解值
-                stringConcAten(temp, fields, i, sb, name.value());
+                appendFieldToJsonString(temp, fields, currentIndex, jsonString, name.value());
             }
-            i.getAndIncrement();
+            currentIndex.getAndIncrement();
         });
-        sb.append("}");
-        System.out.println(isPage ? pageFieldStr.replace("parameterReplace", sb.toString()) : sb.toString());
+        jsonString.append("}");
+        System.out.println(isPage ? pageFieldStr.replace("parameterReplace", jsonString.toString()) : jsonString.toString());
     }
 
     /**
@@ -68,37 +68,37 @@ public class ConverterToJson {
     public static <T> void schemaCoverToJson(boolean isPage, Class<T> c) {
         // 获取所有的字段
         Field[] fields = c.getDeclaredFields();
-        StringBuilder sb = new StringBuilder("{");
+        StringBuilder jsonString = new StringBuilder("{");
         String pageFieldStr = "{\"startRow\":0,\"parameter\":{\"current\":\"当前页码,从 1 开始\",\"size\":\"每页显示条数,最大值为系统设置，默认 100\",\"sorts\":\"排序规则\"},\"size\":20,\"current\":1}";
-        AtomicInteger i = new AtomicInteger();
+        AtomicInteger currentIndex = new AtomicInteger();
         Arrays.stream(fields).forEach(temp -> {
             // 判断字段注解是否存在
             boolean annotationPresent2 = temp.isAnnotationPresent(Schema.class);
             if (annotationPresent2) {
                 Schema name = temp.getAnnotation(Schema.class);
                 // 获取注解值
-                stringConcAten(temp, fields, i, sb, name.title());
+                appendFieldToJsonString(temp, fields, currentIndex, jsonString, name.title());
             }
-            i.getAndIncrement();
+            currentIndex.getAndIncrement();
         });
-        sb.append("}");
-        System.out.println(isPage ? pageFieldStr.replace("parameterReplace", sb.toString()) : sb.toString());
+        jsonString.append("}");
+        System.out.println(isPage ? pageFieldStr.replace("parameterReplace", jsonString.toString()) : jsonString.toString());
     }
 
     /**
-     * 字符串拼接
+     * 将字段名和字段值拼接成JSON格式的字符串。
      *
-     * @param temp   临时变量
-     * @param fields 字段
-     * @param i      i
-     * @param sb     字符串
-     * @param value  注解值
+     * @param field        当前处理的字段
+     * @param fields       所有字段的数组
+     * @param currentIndex 当前处理字段的索引
+     * @param jsonString   用于拼接JSON字符串的StringBuilder
+     * @param value        字段值
      */
-    private static void stringConcAten(Field temp, Field[] fields, AtomicInteger i, StringBuilder sb, String value) {
-        if (i.get() == fields.length - 1) {
-            sb.append("\"").append(temp.getName()).append("\":").append("\"").append(value).append("\"");
+    private static void appendFieldToJsonString(Field field, Field[] fields, AtomicInteger currentIndex, StringBuilder jsonString, String value) {
+        if (currentIndex.get() == fields.length - 1) {
+            jsonString.append("\"").append(field.getName()).append("\":").append("\"").append(value).append("\"");
         } else {
-            sb.append("\"").append(temp.getName()).append("\":").append("\"").append(value).append("\",");
+            jsonString.append("\"").append(field.getName()).append("\":").append("\"").append(value).append("\",");
         }
     }
 }

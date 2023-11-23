@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author MoBaiJun 2022/10/28 13:39
  */
-public class SimpleDataListener<T> extends AnalysisEventListener<T> {
+public class ExcelDataListener<T> extends AnalysisEventListener<T> {
 
     /**
      * 实体类List集合

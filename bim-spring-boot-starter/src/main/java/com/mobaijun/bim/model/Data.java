@@ -25,45 +25,192 @@ import java.time.LocalDateTime;
  * @author MoBaiJun 2022/10/19 8:42
  */
 public class Data {
+
+    /**
+     * 主机地址
+     */
     private String host;
+
+    /**
+     * 策略
+     */
     private String policy;
+
+    /**
+     * 访问标识
+     */
     private String accessId;
+
+    /**
+     * 签名
+     */
     private String signature;
+
+    /**
+     * 过期时间
+     */
     private long expire;
+
+    /**
+     * 回调数据
+     */
     private String callbackBody;
+
+    /**
+     * 对象键
+     */
     private String objectKey;
+
+    /**
+     * 源标识
+     */
     private String sourceId;
 
+    /**
+     * 唯一标识
+     */
     private String id;
+
+    /**
+     * 创建时间
+     */
     private LocalDateTime createTime;
+
+    /**
+     * 文件标识
+     */
     private String etag;
+
+    /**
+     * 文件ID
+     */
     private String fileId;
+
+    /**
+     * 文件长度
+     */
     private int length;
+
+    /**
+     * 文件名
+     */
     private String name;
+
+    /**
+     * 文件状态
+     */
     private String status;
+
+    /**
+     * 文件后缀
+     */
     private String suffix;
 
+    /**
+     * 应用标识
+     */
     private String appKey;
+
+    /**
+     * 是否压缩
+     */
     private boolean compressed;
+
+    /**
+     * 花费
+     */
     private String cost;
+
+    /**
+     * 数据包标识
+     */
     private String databagId;
+
+    /**
+     * 错误码
+     */
     private String errorCode;
+
+    /**
+     * 预估花费
+     */
     private String estimatedCost;
+
+    /**
+     * 输出格式
+     */
     private String outputFormat;
+
+    /**
+     * 优先级
+     */
     private String priority;
+
+    /**
+     * 项目标识
+     */
     private String projectId;
+
+    /**
+     * 原因
+     */
     private String reason;
+
+    /**
+     * 根名称
+     */
     private String rootName;
+
+    /**
+     * 缩略图
+     */
     private String thumbnail;
+
+    /**
+     * 文件项标识
+     */
     private String fileItemId;
+
+    /**
+     * 父标识
+     */
     private String parentId;
+
+    /**
+     * 文件夹
+     */
     private String folder;
+
+    /**
+     * 存储标识
+     */
     private String storeId;
+
+    /**
+     * 版本
+     */
     private String version;
+
+    /**
+     * 物理索引
+     */
     private String physicalIndex;
+
+    /**
+     * 状态码
+     */
     private String code;
+
+    /**
+     * 消息
+     */
     private String message;
+
+    /**
+     * 数据
+     */
     private String data;
+
 
     public String getCode() {
         return code;

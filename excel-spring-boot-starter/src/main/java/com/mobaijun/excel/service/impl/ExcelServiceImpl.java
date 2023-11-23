@@ -4,7 +4,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.mobaijun.excel.constant.ExcelConstants;
 import com.mobaijun.excel.exception.ExcelException;
-import com.mobaijun.excel.listener.SimpleDataListener;
+import com.mobaijun.excel.listener.ExcelDataListener;
 import com.mobaijun.excel.model.ExcelExportParam;
 import com.mobaijun.excel.service.ExcelService;
 
@@ -86,7 +86,7 @@ public class ExcelServiceImpl implements ExcelService {
         }
 
         // 创建一个简单的数据监听器
-        SimpleDataListener<T> readListener = new SimpleDataListener<>();
+        ExcelDataListener<T> readListener = new ExcelDataListener<>();
 
         // 读取文件
         try {
@@ -106,7 +106,7 @@ public class ExcelServiceImpl implements ExcelService {
         }
 
         // 创建一个简单的数据监听器
-        SimpleDataListener<T> readListener = new SimpleDataListener<>();
+        ExcelDataListener<T> readListener = new ExcelDataListener<>();
 
         // 读取文件
         try {
