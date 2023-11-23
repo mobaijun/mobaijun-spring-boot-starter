@@ -32,7 +32,7 @@
         <module>influxdb-spring-boot-starter</module>
         <module>redis-spring-boot-starter</module>
         <module>mybatis-plus-spring-boot-starter</module>
-        <module>oss-spring-boot-starter</module>
+        <!-- <module>oss-spring-boot-starter</module>-->
         <!-- <module>auth-spring-boot-starter</module>-->
         <module>jpush-spring-boot-starter</module>
         <module>table-spring-boot-starter</module>
@@ -45,10 +45,10 @@
         <module>file-spring-boot-starter</module>
         <module>bim-spring-boot-starter</module>
         <module>excel-spring-boot-starter</module>
-        <module>jasypt-spring-boot-starter</module>
-        <module>code-generator-spring-boot-starter</module>
-        <module>transaction-spring-boot-starter</module>
-        <module>sms-spring-boot-starter</module>
+        <!-- <module>jasypt-spring-boot-starter</module>-->
+        <!-- <module>code-generator-spring-boot-starter</module>-->
+        <!-- <module>transaction-spring-boot-starter</module>-->
+        <!-- <module>sms-spring-boot-starter</module>-->
         <module>run-spring-boot-starter</module>
         <!-- <module>log-spring-boot-starter</module>-->
     </modules>
@@ -104,7 +104,7 @@
         <lueetce.version>6.2.2.RELEASE</lueetce.version>
         <validator.version>2.0.1.Final</validator.version>
         <guava.version>31.1-jre</guava.version>
-        <hutool-all.version>5.8.11</hutool-all.version>
+        <hutool-all.version>5.8.23</hutool-all.version>
         <jasypt.version>3.0.5</jasypt.version>
         <spring-redis.version>2.7.13</spring-redis.version>
         <minio.version>8.4.6</minio.version>
