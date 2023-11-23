@@ -32,9 +32,7 @@ public class RunCommandRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         logger.info("{-------------------------------------------------------------------------}");
-        openUrl(runProperties.getFrontEndAddress());
-        openUrl(runProperties.getSwaggerUrl());
-        openUrl(runProperties.getProjectHomeUrl());
+        runProperties.getUrl().forEach(this::openUrl);
         logger.info("{-------------------------------------------------------------------------}");
     }
 
