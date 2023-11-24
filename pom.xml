@@ -45,7 +45,7 @@
         <module>file-spring-boot-starter</module>
         <module>bim-spring-boot-starter</module>
         <module>excel-spring-boot-starter</module>
-        <!-- <module>jasypt-spring-boot-starter</module>-->
+        <module>jasypt-spring-boot-starter</module>
         <!-- <module>code-generator-spring-boot-starter</module>-->
         <!-- <module>transaction-spring-boot-starter</module>-->
         <!-- <module>sms-spring-boot-starter</module>-->
@@ -261,7 +261,12 @@
                 <artifactId>run-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <dependency>
+                <!-- https://mvnrepository.com/artifact/com.mobaijun/jasypt-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!-- tool -->
             <dependency>
