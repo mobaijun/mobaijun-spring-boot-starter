@@ -32,25 +32,17 @@
         <module>influxdb-spring-boot-starter</module>
         <module>redis-spring-boot-starter</module>
         <module>mybatis-plus-spring-boot-starter</module>
-        <!-- <module>oss-spring-boot-starter</module>-->
-        <!-- <module>auth-spring-boot-starter</module>-->
         <module>jpush-spring-boot-starter</module>
         <module>table-spring-boot-starter</module>
         <module>core-spring-boot-starter</module>
         <module>email-spring-boot-starter</module>
         <module>base-model-spring-boot-starter</module>
-        <!-- <module>mongo-spring-boot-starter</module>-->
-        <!-- <module>websocket-spring-boot-starter</module>-->
         <module>minio-spring-boot-starter</module>
         <module>file-spring-boot-starter</module>
         <module>bim-spring-boot-starter</module>
         <module>excel-spring-boot-starter</module>
         <module>jasypt-spring-boot-starter</module>
-        <!-- <module>code-generator-spring-boot-starter</module>-->
-        <!-- <module>transaction-spring-boot-starter</module>-->
-        <!-- <module>sms-spring-boot-starter</module>-->
         <module>run-spring-boot-starter</module>
-        <!-- <module>log-spring-boot-starter</module>-->
     </modules>
 
     <!--  Personal information  -->
@@ -90,7 +82,7 @@
         <influxdb.version>2.23</influxdb.version>
         <validation-api>2.0.1.Final</validation-api>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <dynamic.version>3.6.1</dynamic.version>
+        <dynamic.version>4.2.0</dynamic.version>
         <p6spy.version>3.9.1</p6spy.version>
         <swagger-annotation.version>2.2.7</swagger-annotation.version>
         <swagger-models.version>2.2.3</swagger-models.version>
@@ -112,14 +104,14 @@
         <jettison.version>1.5.3</jettison.version>
         <slf4j-api.version>2.0.6</slf4j-api.version>
         <easyexcel.version>3.1.4</easyexcel.version>
-        <kjs-common.version>1.1.11</kjs-common.version>
+        <kjs-common.version>1.1.16</kjs-common.version>
         <april-sensitive.version>1.0.0</april-sensitive.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <bimface-java-sdk.version>3.2.9</bimface-java-sdk.version>
-        <tianai-captcha.version>1.3.3</tianai-captcha.version>
+        <tianai-captcha.version>1.4.1</tianai-captcha.version>
         <cos_api.version>5.6.125.2</cos_api.version>
         <qiniu-java-sdk.version>7.12.1</qiniu-java-sdk.version>
-        <swagger-parser.version>2.1.9</swagger-parser.version>
+        <swagger-parser.version>2.1.19</swagger-parser.version>
     </properties>
 
     <dependencies>
@@ -148,121 +140,97 @@
 
             <!-- own submodule -->
             <dependency>
-                <!--  https://mvnrepository.com/artifact/com.mobaijun/core-spring-boot-starter -->
+                <!--  https://central.sonatype.com//artifact/com.mobaijun/core-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>core-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/email-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/email-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>email-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/influxdb-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/influxdb-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>influxdb-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/base-model-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/base-model-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>base-model-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/auth-spring-boot-starter -->
-                <groupId>com.mobaijun</groupId>
-                <artifactId>auth-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/jpush-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/jpush-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>jpush-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/mybatis-plus-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/mybatis-plus-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>mybatis-plus-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/mongo-spring-boot-starter -->
-                <groupId>com.mobaijun</groupId>
-                <artifactId>mongo-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/oss-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/oss-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>oss-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/websocket-spring-boot-starter -->
-                <groupId>com.mobaijun</groupId>
-                <artifactId>websocket-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <!--  https://mvnrepository.com/artifact/com.mobaijun/influxdb-spring-boot-starter -->
+                <!--  https://central.sonatype.com//artifact/com.mobaijun/influxdb-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>redis-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/swagger-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/swagger-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>swagger-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/table-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/table-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>table-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/excel-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/excel-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>excel-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/bim-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/bim-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>bim-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/file-upload-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/file-upload-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>file-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/minio-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/minio-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>minio-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/log-spring-boot-starter -->
-                <groupId>com.mobaijun</groupId>
-                <artifactId>log-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/run-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/run-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>run-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/jasypt-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/jasypt-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
@@ -270,13 +238,13 @@
 
             <!-- tool -->
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+                <!-- https://central.sonatype.com//artifact/com.google.guava/guava -->
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+                <!-- https://central.sonatype.com//artifact/cn.hutool/hutool-all -->
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool-all.version}</version>
@@ -284,7 +252,7 @@
 
             <!-- redis -->
             <dependency>
-                <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
+                <!-- https://central.sonatype.com//artifact/org.springframework.data/spring-data-redis -->
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-redis</artifactId>
                 <version>${spring-redis.version}</version>
@@ -293,7 +261,7 @@
 
             <!-- External dependency version control -->
             <dependency>
-                <!-- https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/io.springfox/springfox-boot-starter -->
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
                 <exclusions>
@@ -314,7 +282,7 @@
             </dependency>
 
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>
                 <!--Please search for the latest version number of 2.X in the maven central repository when referencing-->
@@ -328,14 +296,14 @@
             </dependency>
 
             <dependency>
-                <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+                <!-- https://central.sonatype.com//artifact/org.springframework/spring-webmvc -->
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc</artifactId>
                 <version>${web-mvc.version}</version>
             </dependency>
 
             <dependency>
-                <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/org.springframework.boot/spring-boot-starter -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
                 <version>${spring-boot.version}</version>
@@ -343,7 +311,7 @@
             </dependency>
 
             <dependency>
-                <!-- https://mvnrepository.com/artifact/io.lettuce/lettuce-core -->
+                <!-- https://central.sonatype.com//artifact/io.lettuce/lettuce-core -->
                 <groupId>io.lettuce</groupId>
                 <artifactId>lettuce-core</artifactId>
                 <version>${lueetce.version}</version>
@@ -351,7 +319,7 @@
             </dependency>
 
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.aliyun.oss/aliyun-sdk-oss -->
+                <!-- https://central.sonatype.com//artifact/com.aliyun.oss/aliyun-sdk-oss -->
                 <groupId>com.aliyun.oss</groupId>
                 <artifactId>aliyun-sdk-oss</artifactId>
                 <version>${aliyun.version}</version>
@@ -359,64 +327,64 @@
 
             <!--  Aurora Client  -->
             <dependency>
-                <!-- https://mvnrepository.com/artifact/cn.jpush.api/jpush-client -->
+                <!-- https://central.sonatype.com//artifact/cn.jpush.api/jpush-client -->
                 <groupId>cn.jpush.api</groupId>
                 <artifactId>jpush-client</artifactId>
                 <version>${client.version}</version>
             </dependency>
             <!-- Aurora push tools  -->
             <dependency>
-                <!-- https://mvnrepository.com/artifact/cn.jpush.api/jiguang-common -->
+                <!-- https://central.sonatype.com//artifact/cn.jpush.api/jiguang-common -->
                 <groupId>cn.jpush.api</groupId>
                 <artifactId>jiguang-common</artifactId>
                 <version>${common.version}</version>
             </dependency>
             <!--  influxdb 2.23 -->
             <dependency>
-                <!-- https://mvnrepository.com/artifact/org.influxdb/influxdb-java -->
+                <!-- https://central.sonatype.com//artifact/org.influxdb/influxdb-java -->
                 <groupId>org.influxdb</groupId>
                 <artifactId>influxdb-java</artifactId>
                 <version>${influxdb.version}</version>
             </dependency>
             <!-- mybatis plus -->
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-annotation -->
+                <!-- https://central.sonatype.com//artifact/com.baomidou/mybatis-plus-annotation -->
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-annotation</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.baomidou/mybatis-plus-boot-starter -->
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-core -->
+                <!-- https://central.sonatype.com//artifact/com.baomidou/mybatis-plus-core -->
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-core</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus -->
+                <!-- https://central.sonatype.com//artifact/com.baomidou/mybatis-plus -->
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-extension -->
+                <!-- https://central.sonatype.com//artifact/com.baomidou/mybatis-plus-extension -->
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-extension</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
                 <version>${dynamic.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/p6spy/p6spy -->
+                <!-- https://central.sonatype.com//artifact/p6spy/p6spy -->
                 <groupId>p6spy</groupId>
                 <artifactId>p6spy</artifactId>
                 <version>${p6spy.version}</version>
@@ -424,7 +392,7 @@
 
             <!-- Configuration file encryption -->
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter -->
                 <groupId>com.github.ulisesbocchio</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>${jasypt.version}</version>
@@ -432,44 +400,44 @@
 
             <!-- parameter verification -->
             <dependency>
-                <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+                <!-- https://central.sonatype.com//artifact/org.hibernate.validator/hibernate-validator -->
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+                <!-- https://central.sonatype.com//artifact/javax.validation/validation-api -->
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
                 <version>${validator.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-annotations -->
+                <!-- https://central.sonatype.com//artifact/io.swagger.core.v3/swagger-annotations -->
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-annotations</artifactId>
                 <version>${swagger-annotation.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-models -->
+                <!-- https://central.sonatype.com//artifact/io.swagger.core.v3/swagger-models -->
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-models</artifactId>
                 <version>${swagger-models.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/io.swagger/swagger-annotations -->
+                <!-- https://central.sonatype.com//artifact/io.swagger/swagger-annotations -->
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-annotations</artifactId>
                 <version>${swagger-annotations.version}</version>
             </dependency>
             <dependency>
-                <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-common -->
+                <!-- https://central.sonatype.com//artifact/org.springdoc/springdoc-openapi-common -->
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-common</artifactId>
                 <version>${springdoc.version}</version>
             </dependency>
 
             <dependency>
-                <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
+                <!-- https://central.sonatype.com//artifact/org.yaml/snakeyaml -->
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
                 <version>${snakeyaml.version}</version>
@@ -478,7 +446,7 @@
 
             <!-- file storage -->
             <dependency>
-                <!-- https://mvnrepository.com/artifact/io.minio/minio -->
+                <!-- https://central.sonatype.com//artifact/io.minio/minio -->
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
@@ -491,7 +459,7 @@
             </dependency>
 
             <dependency>
-                <!-- https://mvnrepository.com/artifact/org.codehaus.jettison/jettison -->
+                <!-- https://central.sonatype.com//artifact/org.codehaus.jettison/jettison -->
                 <groupId>org.codehaus.jettison</groupId>
                 <artifactId>jettison</artifactId>
                 <version>${jettison.version}</version>
@@ -499,7 +467,7 @@
 
             <!-- log -->
             <dependency>
-                <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+                <!-- https://central.sonatype.com//artifact/org.slf4j/slf4j-api -->
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j-api.version}</version>
@@ -507,7 +475,7 @@
 
             <!-- easyexcel -->
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
+                <!-- https://central.sonatype.com//artifact/com.alibaba/easyexcel -->
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
@@ -515,7 +483,7 @@
 
             <!-- 工具类 -->
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/kjs-common -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/kjs-common -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>kjs-common</artifactId>
                 <version>${kjs-common.version}</version>
@@ -523,41 +491,41 @@
 
             <!-- 脱敏工具类 -->
             <dependency>
-                <!-- https://mvnrepository.com/artifact/com.mobaijun/april-sensitive -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/april-sensitive -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>april-sensitive</artifactId>
                 <version>${april-sensitive.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/com.github.whvcse/easy-captcha -->
+            <!-- https://central.sonatype.com//artifact/com.github.whvcse/easy-captcha -->
             <dependency>
                 <groupId>com.github.whvcse</groupId>
                 <artifactId>easy-captcha</artifactId>
                 <version>${easy-captcha.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/cloud.tianai.captcha/tianai-captcha-springboot-starter -->
+            <!-- https://central.sonatype.com//artifact/cloud.tianai.captcha/tianai-captcha-springboot-starter -->
             <dependency>
                 <groupId>cloud.tianai.captcha</groupId>
                 <artifactId>tianai-captcha-springboot-starter</artifactId>
                 <version>${tianai-captcha.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/com.qcloud/cos_api -->
+            <!-- https://central.sonatype.com//artifact/com.qcloud/cos_api -->
             <dependency>
                 <groupId>com.qcloud</groupId>
                 <artifactId>cos_api</artifactId>
                 <version>${cos_api.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/com.qiniu/qiniu-java-sdk -->
+            <!-- https://central.sonatype.com//artifact/com.qiniu/qiniu-java-sdk -->
             <dependency>
                 <groupId>com.qiniu</groupId>
                 <artifactId>qiniu-java-sdk</artifactId>
                 <version>${qiniu-java-sdk.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/io.swagger.parser.v3/swagger-parser -->
+            <!-- https://central.sonatype.com//artifact/io.swagger.parser.v3/swagger-parser -->
             <dependency>
                 <groupId>io.swagger.parser.v3</groupId>
                 <artifactId>swagger-parser</artifactId>
@@ -569,7 +537,7 @@
     <build>
         <plugins>
             <plugin>
-                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+                <!-- https://central.sonatype.com//artifact/org.apache.maven.plugins/maven-compiler-plugin -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
@@ -582,7 +550,7 @@
 
             <!-- Generate source jar package -->
             <plugin>
-                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
+                <!-- https://central.sonatype.com//artifact/org.apache.maven.plugins/maven-source-plugin -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>${maven-source-plugin.version}</version>
@@ -598,7 +566,7 @@
 
             <!-- Javadoc -->
             <plugin>
-                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
+                <!-- https://central.sonatype.com//artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>${maven-javadoc-plugin.version}</version>
@@ -624,7 +592,7 @@
 
             <!-- GPG -->
             <plugin>
-                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
+                <!-- https://central.sonatype.com//artifact/org.apache.maven.plugins/maven-gpg-plugin -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>${maven-gpg-plugin.version}</version>
@@ -641,7 +609,7 @@
 
             <!--  skip test -->
             <plugin>
-                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin  -->
+                <!-- https://central.sonatype.com//artifact/org.apache.maven.plugins/maven-surefire-plugin  -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
