@@ -17,7 +17,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>jpush-spring-boot-starter</artifactId>
-    <version>${parent.version}</version>
+    <version>1.1.5</version>
 
     <name>${project.artifactId}</name>
     <inceptionYear>2022</inceptionYear>

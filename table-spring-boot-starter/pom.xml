@@ -14,7 +14,7 @@
     <artifactId>table-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
     <inceptionYear>2022</inceptionYear>
-    <version>${parent.version}</version>
+    <version>1.1.5</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
