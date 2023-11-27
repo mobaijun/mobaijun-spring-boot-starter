@@ -16,7 +16,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>bim-spring-boot-starter</artifactId>
-    <version>1.1.5</version>
+    <version>${parent.version}</version>
 
     <name>${project.artifactId}</name>
     <description>Glodon's bim operation quick launcher, which integrates operations such as uploading files,

@@ -16,7 +16,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>influxdb-spring-boot-starter</artifactId>
-    <version>1.1.5</version>
+    <version>${parent.version}</version>
 
     <name>${project.artifactId}</name>
     <description>Influxdb Quick Action Launcher, which encapsulates commonly used operations such as addition,
