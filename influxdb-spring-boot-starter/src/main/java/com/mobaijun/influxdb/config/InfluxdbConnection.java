@@ -18,6 +18,12 @@ package com.mobaijun.influxdb.config;
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.core.model.AbstractInfluxdbClient;
 import com.mobaijun.influxdb.util.InfluxdbUtils;
+import jakarta.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.BatchPoints;
@@ -28,13 +34,6 @@ import org.influxdb.dto.QueryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
-
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -201,7 +200,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
             return null;
         }
         List<List<Object>> values = series.get(0).getValues();
-        if (Objects.isNull(values) || values.size() == 0) {
+        if (Objects.isNull(values) || values.isEmpty()) {
             return null;
         }
         return values;
@@ -264,8 +263,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
             }
             // 链接超时
         } catch (Exception e) {
-            log.error("influxdb Pong -------------- 无法链接");
-            e.printStackTrace();
+            log.error("influxdb Pong -------------- 无法链接,{}", e.getMessage());
         }
         return isConnected;
     }

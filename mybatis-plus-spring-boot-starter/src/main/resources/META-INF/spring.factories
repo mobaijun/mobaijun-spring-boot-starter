@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.mobaijun.mybatis.plus.config.MybatisPlusAutoConfiguration

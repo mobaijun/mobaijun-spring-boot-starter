@@ -48,12 +48,16 @@ public class InsertOrUpdateFieldByBatch extends BaseInsertBatch {
                 // 如果模式为 不忽略设置的字段
                 .append("<if test=\"!columns.ignore\">")
                 .append("<foreach collection=\"columns.list\" item=\"item\" index=\"index\" separator=\",\" >")
-                .append("${item.name}=${item.val}").append("</foreach>").append("</if>");
+                .append("${item.name}=${item.val}")
+                .append("</foreach>")
+                .append("</if>");
 
         // 如果模式为 忽略设置的字段
         sql.append("<if test=\"columns.ignore\">")
                 .append("<foreach collection=\"columns.back\" item=\"item\" index=\"index\" separator=\",\" >")
-                .append("${item}=VALUES(${item})").append("</foreach>").append("</if>");
+                .append("${item}=VALUES(${item})")
+                .append("</foreach>")
+                .append("</if>");
         return sql.toString();
     }
 }

@@ -6,7 +6,7 @@
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>1.1.5</version>
+        <version>3.0.0</version>
     </parent>
 
     <properties>
@@ -16,7 +16,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>mybatis-plus-spring-boot-starter</artifactId>
-    <version>${parent.version}</version>
+    <version>3.0.0</version>
 
     <name>${project.artifactId}</name>
     <inceptionYear>2022</inceptionYear>
@@ -40,7 +40,7 @@
         <!-- MybatisPlus -->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.mobaijun</groupId>

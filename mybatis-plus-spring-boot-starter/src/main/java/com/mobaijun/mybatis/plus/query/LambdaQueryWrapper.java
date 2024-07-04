@@ -26,12 +26,12 @@ import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import org.springframework.util.ObjectUtils;
-
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
+import org.springframework.util.ObjectUtils;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -103,6 +103,11 @@ public class LambdaQueryWrapper<T> extends AbstractLambdaWrapper<T, LambdaQueryW
             this.sqlSelect.setStringValue(columnsToString(false, columns));
         }
         return typedThis;
+    }
+
+    @Override
+    public LambdaQueryWrapper<T> select(boolean condition, List<SFunction<T, ?>> columns) {
+        return null;
     }
 
 

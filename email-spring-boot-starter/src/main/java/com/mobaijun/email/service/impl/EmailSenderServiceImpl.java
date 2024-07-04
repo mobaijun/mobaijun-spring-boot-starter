@@ -19,6 +19,9 @@ import com.mobaijun.email.event.EmailSendEvent;
 import com.mobaijun.email.model.EmailDetails;
 import com.mobaijun.email.model.EmailSendInfo;
 import com.mobaijun.email.service.EmailSenderService;
+import jakarta.mail.MessagingException;
+import java.io.File;
+import java.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,10 +29,6 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.util.StringUtils;
-
-import javax.mail.MessagingException;
-import java.io.File;
-import java.time.LocalDateTime;
 
 /**
  * software：IntelliJ IDEA 2022.1

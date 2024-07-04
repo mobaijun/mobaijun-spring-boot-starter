@@ -18,9 +18,9 @@ package com.mobaijun.mybatis.plus.injector;
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.session.Configuration;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -35,9 +35,10 @@ public class CustomSqlInjector extends DefaultSqlInjector {
     private final List<AbstractMethod> methods;
 
     @Override
-    public List<AbstractMethod> getMethodList(Class<?> mapperClass, TableInfo tableInfo) {
-        List<AbstractMethod> list = super.getMethodList(mapperClass, tableInfo);
-        list.addAll(this.methods);
-        return list;
+    public List<AbstractMethod> getMethodList(Configuration configuration, Class<?> mapperClass, TableInfo tableInfo) {
+        List<AbstractMethod> methodList = super.getMethodList(configuration, mapperClass, tableInfo);
+        methodList.addAll(this.methods);
+        return methodList;
     }
+
 }

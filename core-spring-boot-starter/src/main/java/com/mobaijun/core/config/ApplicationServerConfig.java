@@ -1,8 +1,7 @@
 package com.mobaijun.core.config;
 
 import com.mobaijun.core.util.WebUtil;
-
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * software：IntelliJ IDEA 2022.2.3<br>

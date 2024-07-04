@@ -19,7 +19,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.lang.reflect.Type;
 import java.util.function.Consumer;
 
@@ -59,7 +58,7 @@ public class JacksonJsonToolAdapter implements JsonTool {
 
     @Override
     public <T> T toObj(String json, TypeReference<T> t) throws JsonProcessingException {
-        return mapper.readValue(json, new TypeReference<T>() {
+        return mapper.readValue(json, new TypeReference<>() {
             @Override
             public Type getType() {
                 return t.getType();

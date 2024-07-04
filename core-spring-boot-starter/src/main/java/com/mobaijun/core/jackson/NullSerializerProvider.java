@@ -21,9 +21,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.cfg.CacheProvider;
 import com.fasterxml.jackson.databind.ser.DefaultSerializerProvider;
 import com.fasterxml.jackson.databind.ser.SerializerFactory;
-
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Map;
 
@@ -44,6 +45,7 @@ import java.util.Map;
  */
 public class NullSerializerProvider extends DefaultSerializerProvider {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public NullSerializerProvider() {
@@ -82,6 +84,11 @@ public class NullSerializerProvider extends DefaultSerializerProvider {
     }
 
     @Override
+    public DefaultSerializerProvider withCaches(CacheProvider cacheProvider) {
+        return null;
+    }
+
+    @Override
     public NullSerializerProvider createInstance(SerializationConfig config, SerializerFactory jsf) {
         return new NullSerializerProvider(this, config, jsf);
     }
@@ -91,7 +98,7 @@ public class NullSerializerProvider extends DefaultSerializerProvider {
         JavaType propertyType = property.getType();
         if (isStringType(propertyType)) {
             return this.nullStringJsonSerializer;
-        } else if (isArrayOrCollectionTrype(propertyType)) {
+        } else if (isArrayOrCollectionType(propertyType)) {
             return this.nullArrayJsonSerializer;
         } else if (isMapType(propertyType)) {
             return this.nullMapJsonSerializer;
@@ -128,7 +135,7 @@ public class NullSerializerProvider extends DefaultSerializerProvider {
      * @param type JavaType
      * @return boolean
      */
-    private boolean isArrayOrCollectionTrype(JavaType type) {
+    private boolean isArrayOrCollectionType(JavaType type) {
         Class<?> clazz = type.getRawClass();
         return clazz.isArray() || Collection.class.isAssignableFrom(clazz);
     }

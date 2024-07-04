@@ -18,12 +18,13 @@ package com.mobaijun.base.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.util.Collections;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -35,10 +36,11 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @ApiModel(description = "分页返回结果")
 @Schema(title = "分页返回结果")
 public class PageResult<T> {
-
 
     /**
      * 查询数据列表
@@ -53,16 +55,4 @@ public class PageResult<T> {
     @Schema(title = "总数")
     @ApiModelProperty(value = "总数")
     protected Long total = 0L;
-
-    public PageResult() {
-    }
-
-    public PageResult(long total) {
-        this.total = total;
-    }
-
-    public PageResult(List<T> records, long total) {
-        this.records = records;
-        this.total = total;
-    }
 }

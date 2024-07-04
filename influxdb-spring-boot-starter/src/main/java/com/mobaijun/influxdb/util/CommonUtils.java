@@ -16,7 +16,6 @@
 package com.mobaijun.influxdb.util;
 
 import com.mobaijun.influxdb.core.constant.Constant;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -61,7 +60,7 @@ public class CommonUtils {
      */
     public static String lineToHump(String str) {
         Matcher matcher = Constant.LINE_PATTERN.matcher(str.toLowerCase());
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             matcher.appendReplacement(sb, matcher.group(1).toUpperCase());
         }
@@ -77,7 +76,7 @@ public class CommonUtils {
      */
     public static String humpToLine(String str) {
         Matcher matcher = Constant.HUMP_PATTERN.matcher(str);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             matcher.appendReplacement(sb, Constant.UNDERSCORE + matcher.group(0).toLowerCase());
         }

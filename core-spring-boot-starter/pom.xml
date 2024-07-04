@@ -6,12 +6,12 @@
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>1.1.5</version>
+        <version>3.0.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>core-spring-boot-starter</artifactId>
-    <version>${parent.version}</version>
+    <version>3.0.0</version>
 
     <description>This is a spring boot common component tool class</description>
     <name>${project.artifactId}</name>
@@ -37,8 +37,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
 
         <dependency>

@@ -50,28 +50,28 @@ public class BaseCreateTable {
      * @return 选择的执行器
      */
     public static BaseCreateTable typeEnum(TableTypeEnum typeEnum) {
-        switch (typeEnum) {
-            case DICT:
+        return switch (typeEnum) {
+            case DICT ->
                 // 字典
-                return new DictAllScript();
-            case CONFIG:
+                    new DictAllScript();
+            case CONFIG ->
                 // 系统配置类
-                return new ConfigScript();
-            case REGION:
+                    new ConfigScript();
+            case REGION ->
                 // 全国地区表
-                return new RegionScript();
-            case SECOND:
+                    new RegionScript();
+            case SECOND ->
                 // 组件配置表
-                return new SecondScript();
-            case BACKUPS:
+                    new SecondScript();
+            case BACKUPS ->
                 // MySQL备份表
-                return new MySqlBackupScript();
-            case OTHER:
+                    new MySqlBackupScript();
+            case OTHER ->
                 // 其他，找不到
-                return new OtherExcpteion();
-            default:
+                    new OtherExcpteion();
+            default ->
                 // 默认全部表
-                return new DefaultAll();
-        }
+                    new DefaultAll();
+        };
     }
 }

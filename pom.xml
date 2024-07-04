@@ -8,7 +8,7 @@
     <groupId>com.mobaijun</groupId>
     <artifactId>mobaijun-spring-boot-dependencies</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.5</version>
+    <version>3.0.0</version>
 
     <name>mobaijun-spring-boot-dependencies</name>
     <inceptionYear>2022</inceptionYear>
@@ -28,9 +28,9 @@
     </scm>
 
     <modules>
-        <module>swagger-spring-boot-starter</module>
+        <!--<module>swagger-spring-boot-starter</module>-->
         <module>influxdb-spring-boot-starter</module>
-        <module>redis-spring-boot-starter</module>
+        <!--<module>redis-spring-boot-starter</module>-->
         <module>mybatis-plus-spring-boot-starter</module>
         <module>jpush-spring-boot-starter</module>
         <module>table-spring-boot-starter</module>
@@ -65,24 +65,31 @@
     </licenses>
 
     <properties>
-        <maven.source>1.8</maven.source>
-        <maven.target>1.8</maven.target>
-        <java.version>1.8</java.version>
+        <!-- 基础配置和版本定义 -->
+        <maven.source>17</maven.source>
+        <maven.target>17</maven.target>
+        <java.version>17</java.version>
+        <project.version>3.0.0</project.version>
         <project.sourceEncoding>UTF-8</project.sourceEncoding>
-        <nexus-staging-maven-plugin.version>1.6.12</nexus-staging-maven-plugin.version>
-        <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
-        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
-        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
-        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
-        <spring-boot.version>2.7.7</spring-boot.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- 插件版本 -->
+        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+        <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
+        <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
+        <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+        <maven-gpg-plugin.version>3.2.4</maven-gpg-plugin.version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+
+        <!-- 依赖版本 -->
+        <spring-boot.version>3.3.1</spring-boot.version>
         <client.version>3.6.6</client.version>
-        <common.version>1.2.2</common.version>
+        <common.version>1.2.7</common.version>
         <influxdb.version>2.23</influxdb.version>
         <validation-api>2.0.1.Final</validation-api>
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <dynamic.version>4.2.0</dynamic.version>
+        <mybatis-plus.version>3.5.7</mybatis-plus.version>
+        <dynamic.version>4.3.1</dynamic.version>
         <p6spy.version>3.9.1</p6spy.version>
         <swagger-annotation.version>2.2.7</swagger-annotation.version>
         <swagger-models.version>2.2.3</swagger-models.version>
@@ -90,28 +97,31 @@
         <springdoc.version>1.6.12</springdoc.version>
         <swagger-ui.version>3.0.3</swagger-ui.version>
         <swagger.version>3.0.0</swagger.version>
-        <web-mvc.version>6.0.3</web-mvc.version>
-        <aliyun.version>3.16.0</aliyun.version>
+        <web-mvc.version>6.1.10</web-mvc.version>
+        <aliyun.version>3.17.4</aliyun.version>
         <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
         <lueetce.version>6.2.2.RELEASE</lueetce.version>
         <validator.version>2.0.1.Final</validator.version>
-        <guava.version>31.1-jre</guava.version>
-        <hutool-all.version>5.8.23</hutool-all.version>
+        <guava.version>33.2.1-jre</guava.version>
+        <hutool-all.version>5.8.28</hutool-all.version>
         <jasypt.version>3.0.5</jasypt.version>
-        <spring-redis.version>2.7.13</spring-redis.version>
-        <minio.version>8.4.6</minio.version>
+        <spring-redis.version>3.3.1</spring-redis.version>
+        <minio.version>8.5.11</minio.version>
         <snakeyaml.version>1.33</snakeyaml.version>
-        <jettison.version>1.5.3</jettison.version>
+        <jettison.version>1.5.4</jettison.version>
         <slf4j-api.version>2.0.6</slf4j-api.version>
         <easyexcel.version>3.1.4</easyexcel.version>
-        <kjs-common.version>1.1.16</kjs-common.version>
-        <april-sensitive.version>1.0.0</april-sensitive.version>
+        <kjs-common.version>[2.0.1]</kjs-common.version>
+        <april-sensitive.version>2.0.0</april-sensitive.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <bimface-java-sdk.version>3.2.9</bimface-java-sdk.version>
         <tianai-captcha.version>1.4.1</tianai-captcha.version>
-        <cos_api.version>5.6.125.2</cos_api.version>
-        <qiniu-java-sdk.version>7.12.1</qiniu-java-sdk.version>
-        <swagger-parser.version>2.1.19</swagger-parser.version>
+        <cos_api.version>5.6.219.1</cos_api.version>
+        <qiniu-java-sdk.version>7.15.1</qiniu-java-sdk.version>
+        <swagger-parser.version>2.1.22</swagger-parser.version>
+        <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
+        <httpclient.version>4.5.14</httpclient.version>
+        <httpmime.version>4.5.14</httpmime.version>
     </properties>
 
     <dependencies>
@@ -143,37 +153,38 @@
                 <!--  https://central.sonatype.com//artifact/com.mobaijun/core-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>core-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/email-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>email-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/influxdb-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>influxdb-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/base-model-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>base-model-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
+
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/jpush-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>jpush-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/mybatis-plus-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>mybatis-plus-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/oss-spring-boot-starter -->
@@ -185,55 +196,55 @@
                 <!--  https://central.sonatype.com//artifact/com.mobaijun/influxdb-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>redis-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/swagger-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>swagger-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/table-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>table-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/excel-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>excel-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/bim-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>bim-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/file-upload-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>file-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/minio-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>minio-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/run-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>run-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/jasypt-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
-                <version>1.1.5</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- tool -->
@@ -356,7 +367,7 @@
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.baomidou/mybatis-plus-boot-starter -->
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
@@ -531,6 +542,28 @@
                 <artifactId>swagger-parser</artifactId>
                 <version>${swagger-parser.version}</version>
             </dependency>
+
+            <!-- https://central.sonatype.com/artifact/javax.servlet/javax.servlet-api -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet-api.version}</version>
+                <optional>true</optional>
+            </dependency>
+
+            <!-- https://central.sonatype.com/artifact/org.apache.httpcomponents/httpclient -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+
+            <!-- https://central.sonatype.com/artifact/org.apache.httpcomponents/httpmime -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpmime</artifactId>
+                <version>${httpmime.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -590,9 +623,8 @@
                 </executions>
             </plugin>
 
-            <!-- GPG -->
+            <!-- mvn clean deploy -P release -->
             <plugin>
-                <!-- https://central.sonatype.com//artifact/org.apache.maven.plugins/maven-gpg-plugin -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>${maven-gpg-plugin.version}</version>
@@ -617,38 +649,25 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-
-            <!-- automatic publishing -->
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>${nexus-staging-maven-plugin.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
+    <!-- osr -->
     <repositories>
         <repository>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <id>spring-milestones</id>
+            <id>osr</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
     </repositories>
 
     <!-- [Note] The id in snapshotRepository and repository must be consistent with the id of server in setting.xml! -->
     <distributionManagement>
         <snapshotRepository>
-            <id>ossrh</id>
+            <id>osr</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
         <repository>
-            <id>ossrh</id>
+            <id>osr</id>
             <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>

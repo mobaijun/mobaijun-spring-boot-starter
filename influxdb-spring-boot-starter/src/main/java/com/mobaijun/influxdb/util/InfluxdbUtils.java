@@ -19,16 +19,8 @@ import com.mobaijun.influxdb.annotation.Aggregate;
 import com.mobaijun.influxdb.annotation.Count;
 import com.mobaijun.influxdb.core.Query;
 import com.mobaijun.influxdb.core.constant.Constant;
-import org.influxdb.annotation.Column;
-import org.influxdb.annotation.Measurement;
-import org.influxdb.dto.Point;
-import org.influxdb.dto.QueryResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.ReflectionUtils;
-
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -38,6 +30,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import org.influxdb.annotation.Column;
+import org.influxdb.annotation.Measurement;
+import org.influxdb.dto.Point;
+import org.influxdb.dto.QueryResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.ReflectionUtils;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -75,7 +75,11 @@ public class InfluxdbUtils {
                     for (List<Object> value : series.getValues()) {
                         T obj = null;
                         try {
-                            obj = clazz.newInstance();
+                            try {
+                                obj = clazz.getDeclaredConstructor().newInstance();
+                            } catch (InvocationTargetException | NoSuchMethodException e) {
+                                throw new RuntimeException(e);
+                            }
                             for (int i = 0; i < fieldSize; i++) {
                                 String fieldName = columns.get(i);
                                 Field field;

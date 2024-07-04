@@ -17,9 +17,9 @@ package com.mobaijun.influxdb.config;
 
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.prop.InfluxProperties;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.influx.InfluxDbProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,8 +40,8 @@ public class InfluxdbAutoConfiguration {
     }
 
     @Bean
-    public InfluxDbProperties influxDbProperties() {
-        return new InfluxDbProperties();
+    public InfluxProperties influxDbProperties() {
+        return new InfluxProperties();
     }
 
     /**
@@ -52,7 +52,7 @@ public class InfluxdbAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean(InfluxdbConnection.class)
-    public InfluxdbConnection getInfluxdbConnection(InfluxProperties influxProp) {
+    public InfluxdbConnection getInfluxdbConnection(@Qualifier("influxDbProperties") InfluxProperties influxProp) {
         return new InfluxdbConnection(
                 influxProp.getUsername(),
                 influxProp.getPassword(),

@@ -18,8 +18,8 @@ package com.mobaijun.core.jackson;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-
 import java.io.IOException;
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -31,6 +31,7 @@ import java.io.Serializable;
  */
 public class NullStringJsonSerializer extends JsonSerializer<Object> implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Override

@@ -7,13 +7,12 @@ import com.mobaijun.excel.exception.ExcelException;
 import com.mobaijun.excel.listener.ExcelDataListener;
 import com.mobaijun.excel.model.ExcelExportParam;
 import com.mobaijun.excel.service.ExcelService;
-
-import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * software：IntelliJ IDEA 2022.1
@@ -47,7 +46,7 @@ public class ExcelServiceImpl implements ExcelService {
 
             response.setContentType("application/vnd.ms-excel");
             response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-            String fileName = URLEncoder.encode(excelExportParam.getFileName(), StandardCharsets.UTF_8.name()).replaceAll("\\+", "%20");
+            String fileName = URLEncoder.encode(excelExportParam.getFileName(), StandardCharsets.UTF_8).replaceAll("\\+", "%20");
             response.setHeader("Content-disposition", String.format("%s%s%s", "attachment;filename*=utf-8''", fileName, excelTypeEnum.getValue()));
 
             EasyExcel.write(response.getOutputStream(), excelExportParam

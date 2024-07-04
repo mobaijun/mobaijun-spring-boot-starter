@@ -17,10 +17,9 @@ package com.mobaijun.mybatis.plus.methods;
 
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
+import java.util.function.Predicate;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import java.util.function.Predicate;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -29,6 +28,7 @@ import java.util.function.Predicate;
  *
  * @author MoBaiJun 2022/5/7 16:29
  */
+@Setter
 public class InsertOrUpdateByBatch extends BaseInsertBatch {
 
     protected InsertOrUpdateByBatch() {
@@ -42,7 +42,6 @@ public class InsertOrUpdateByBatch extends BaseInsertBatch {
     /**
      * 字段筛选条件
      */
-    @Setter
     @Accessors(chain = true)
     private Predicate<TableFieldInfo> predicate;
 
@@ -56,11 +55,12 @@ public class InsertOrUpdateByBatch extends BaseInsertBatch {
         StringBuilder sql = super.prepareValuesBuildSqlForMysqlBatch(tableInfo);
         sql.append(" ON DUPLICATE KEY UPDATE ");
         StringBuilder ignore = new StringBuilder();
+
         tableInfo.getFieldList().forEach(field -> {
             // 默认忽略逻辑删除字段
             if (!field.isLogicDelete()) {
                 // 默认忽略字段
-                if (!predicate.test(field)) {
+                if (!this.predicate.test(field)) {
                     sql.append(field.getColumn()).append("=").append("VALUES(").append(field.getColumn()).append("),");
                 } else {
                     ignore.append(",").append(field.getColumn()).append("=").append("VALUES(").append(field.getColumn())

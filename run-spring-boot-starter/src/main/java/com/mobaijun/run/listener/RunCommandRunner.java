@@ -1,11 +1,10 @@
 package com.mobaijun.run.listener;
 
 import com.mobaijun.run.prop.RunProperties;
+import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
-
-import java.io.IOException;
 
 /**
  * Description: [运行监听器]
@@ -31,6 +30,16 @@ public class RunCommandRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        // 判断是否启用
+        if (runProperties.isEnabled()) {
+            logUrls();
+        }
+    }
+
+    /**
+     * 记录日志
+     */
+    private void logUrls() {
         logger.info("{-------------------------------------------------------------------------}");
         runProperties.getUrl().forEach(this::openUrl);
         logger.info("{-------------------------------------------------------------------------}");
