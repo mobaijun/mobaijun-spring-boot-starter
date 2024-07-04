@@ -111,7 +111,7 @@
         <jettison.version>1.5.4</jettison.version>
         <slf4j-api.version>2.0.6</slf4j-api.version>
         <easyexcel.version>3.1.4</easyexcel.version>
-        <kjs-common.version>[2.0.1]</kjs-common.version>
+        <kjs-common.version>[2.+,)</kjs-common.version>
         <april-sensitive.version>2.0.0</april-sensitive.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <bimface-java-sdk.version>3.2.9</bimface-java-sdk.version>
