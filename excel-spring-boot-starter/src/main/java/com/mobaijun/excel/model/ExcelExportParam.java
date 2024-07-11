@@ -1,8 +1,7 @@
 package com.mobaijun.excel.model;
 
 import com.alibaba.excel.support.ExcelTypeEnum;
-
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
