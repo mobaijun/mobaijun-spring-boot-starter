@@ -107,7 +107,7 @@
         <jasypt.version>3.0.5</jasypt.version>
         <spring-redis.version>3.3.1</spring-redis.version>
         <minio.version>8.5.11</minio.version>
-        <snakeyaml.version>1.33</snakeyaml.version>
+        <snakeyaml.version>2.0</snakeyaml.version>
         <jettison.version>1.5.4</jettison.version>
         <slf4j-api.version>2.0.6</slf4j-api.version>
         <easyexcel.version>3.1.4</easyexcel.version>
