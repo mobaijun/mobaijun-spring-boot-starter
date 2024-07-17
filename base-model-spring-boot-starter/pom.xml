@@ -19,7 +19,8 @@
 
     <name>${project.artifactId}</name>
     <description>This is a spring boot basic entity tool module, commonly used paging plug-ins,
-        MySQL operation basic classes</description>
+        MySQL operation basic classes
+    </description>
     <inceptionYear>2022</inceptionYear>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/base-model-spring-boot-starter</url>
 
@@ -37,78 +38,45 @@
     </scm>
 
     <dependencies>
-        <!-- 参数校验 -->
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>jakarta.validation</groupId>
-                    <artifactId>jakarta.validation-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.jboss.logging</groupId>
-                    <artifactId>jboss-logging</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml</groupId>
-                    <artifactId>classmate</artifactId>
-                </exclusion>
-            </exclusions>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-common</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.swagger.core.v3</groupId>
-                    <artifactId>swagger-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-autoconfigure</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
+        <!-- Swagger 注解库，用于自动生成 API 文档。
+             注意：这里重复了 swagger-annotations 依赖，通常你只需要一个，
+             并且根据你的项目需求（是否由容器提供）来设置作用域。
+             这里我移除了带有 provided 作用域的那个，因为它通常不是由容器提供的。
+        -->
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
+            <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-models</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-annotations</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
+        <!-- Lombok 库，用于减少 Java 代码的冗余，如自动生成 getter/setter 等。
+             设置为 provided 作用域通常不是必要的，因为 Lombok 主要在编译时工作，
+             但它不会由 JDK 或容器提供，所以这里可能是个错误。
+             通常，Lombok 的作用域应为 compile（默认）。
+        -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>compile</scope>
         </dependency>
+
+        <!-- MyBatis-Plus 的注解库，用于简化 MyBatis 的使用。
+             同样，设置为 provided 作用域可能不是必要的，除非你的运行环境已经包含了这些注解。
+        -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-annotation</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JSR 303 Bean Validation API，用于校验 JavaBeans。
+             设置为 provided 作用域可能适用于某些特定环境，如 Java EE 容器，
+             但在大多数独立应用程序中，它应该是 compile 作用域。
+        -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

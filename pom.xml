@@ -127,15 +127,35 @@
     </properties>
 
     <dependencies>
+        <!-- Spring Boot 自动配置依赖项。
+             这个依赖项包含了Spring Boot的自动配置类，用于根据添加的jar依赖、类路径设置和其他bean来自动配置Spring应用程序。
+             设置为<scope>provided</scope>通常意味着这个依赖项将由运行时的环境（如Java EE服务器或特定的Spring Boot运行环境）提供，
+             但在大多数Spring Boot独立应用程序中，这个依赖项应该是编译时必需的，因此可能需要将作用域更改为compile（或删除作用域标签，因为compile是默认值）。
+             然而，在某些情况下，如果你确定这个库将由外部环境提供，保持provided作用域是可以的。
+
+             <optional>true</optional>表示这个依赖项是可选的，意味着这个依赖项不会被传递性地包含在依赖这个项目的其他项目中。
+             这通常用于避免不必要的依赖传递，但在这个特定的Spring Boot依赖项上，它的实际影响可能较小，因为Spring Boot的自动配置通常需要在编译时可用。
+        -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-            <scope>compile</scope>
+            <optional>true</optional>
+            <scope>provided</scope>
         </dependency>
+
+        <!-- Spring Boot 配置处理器依赖项。
+             这个依赖项是一个用于生成额外元数据的注解处理器，主要用于Spring Boot的配置属性（在application.properties或application.yml中）。
+             它可以在编译时生成元数据，这些元数据在IDE中提供关于配置属性的自动完成和其他帮助。
+             同样，<scope>provided</scope>表示这个依赖项在运行时可能由环境提供，但在开发Spring Boot应用程序时，这个依赖项通常是编译时必需的。
+             因此，你可能想要根据你的项目设置调整这个作用域。
+
+             <optional>true</optional>的含义与上述相同，表示这个依赖项是可选的，但在这种情况下，由于它是用于开发时的辅助工具，所以设置为可选可能是合理的。
+        -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

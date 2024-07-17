@@ -18,7 +18,6 @@ package com.mobaijun.base.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +39,5 @@ public class LogicDeletedBaseEntity extends BaseEntity {
     @TableLogic
     @TableField(fill = FieldFill.INSERT)
     @Schema(title = "逻辑删除标识，1已删除: 删除时间戳，未删除: 0")
-    @ApiModelProperty(value = "逻辑删除标识，1已删除: 删除时间戳，未删除: 0")
     private Long deleted;
 }

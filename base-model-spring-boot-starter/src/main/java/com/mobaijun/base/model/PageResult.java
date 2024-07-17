@@ -15,8 +15,6 @@
  */
 package com.mobaijun.base.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +36,6 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "分页返回结果")
 @Schema(title = "分页返回结果")
 public class PageResult<T> {
 
@@ -46,13 +43,11 @@ public class PageResult<T> {
      * 查询数据列表
      */
     @Schema(title = "查询数据列表")
-    @ApiModelProperty(value = "查询数据列表")
     protected List<T> records = Collections.emptyList();
 
     /**
      * 总数
      */
     @Schema(title = "总数")
-    @ApiModelProperty(value = "总数")
     protected Long total = 0L;
 }
