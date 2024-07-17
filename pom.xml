@@ -84,12 +84,14 @@
 
         <!-- 依赖版本 -->
         <spring-boot.version>3.3.1</spring-boot.version>
+        <spring-cloud.version>2023.0.2</spring-cloud.version>
+        <spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
         <client.version>3.6.6</client.version>
         <common.version>1.2.7</common.version>
         <influxdb.version>2.23</influxdb.version>
         <validation-api>2.0.1.Final</validation-api>
         <mybatis-plus.version>3.5.7</mybatis-plus.version>
-        <dynamic.version>4.3.1</dynamic.version>
+        <dynamic.version>[4.+,)</dynamic.version>
         <p6spy.version>3.9.1</p6spy.version>
         <swagger-annotation.version>2.2.7</swagger-annotation.version>
         <swagger-models.version>2.2.3</swagger-models.version>
@@ -124,6 +126,10 @@
         <httpmime.version>4.5.14</httpmime.version>
         <april-json-util.version>1.0.0</april-json-util.version>
         <easyexcel-core.version>4.0.1</easyexcel-core.version>
+        <commons-compress.version>[1.+,)</commons-compress.version>
+        <knife4j-openapi3.version>[4.+,)</knife4j-openapi3.version>
+        <knife4j-gateway.version>[4.+,)</knife4j-gateway.version>
+        <mapstruct.version>[1.+,)</mapstruct.version>
     </properties>
 
     <dependencies>
@@ -162,12 +168,32 @@
     <!-- dependency management -->
     <dependencyManagement>
         <dependencies>
+            <!-- spring boot-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
-                <type>pom</type>
                 <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!-- spring cloud -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!-- spring cloud Alibaba -->
+            <dependency>
+                <!-- https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-alibaba-dependencies -->
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
 
             <!-- own submodule -->
@@ -599,6 +625,40 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel-core</artifactId>
                 <version>${easyexcel-core.version}</version>
+            </dependency>
+
+            <!-- https://central.sonatype.com/artifact/org.apache.commons/commons-compress -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons-compress.version}</version>
+            </dependency>
+
+            <!-- https://central.sonatype.com/artifact/com.github.xiaoymin/knife4j-openapi3-jakarta-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+                <version>${knife4j-openapi3.version}</version>
+            </dependency>
+
+            <!-- https://central.sonatype.com/artifact/com.github.xiaoymin/knife4j-gateway-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
+                <version>${knife4j-gateway.version}</version>
+            </dependency>
+
+            <!-- https://central.sonatype.com/artifact/org.mapstruct/mapstruct -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <!-- https://central.sonatype.com/artifact/org.mapstruct/mapstruct-processor -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
