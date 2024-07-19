@@ -8,7 +8,7 @@
     <groupId>com.mobaijun</groupId>
     <artifactId>mobaijun-spring-boot-dependencies</artifactId>
     <packaging>pom</packaging>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
 
     <name>mobaijun-spring-boot-dependencies</name>
     <inceptionYear>2022</inceptionYear>
@@ -28,7 +28,7 @@
     </scm>
 
     <modules>
-        <!--<module>swagger-spring-boot-starter</module>-->
+        <module>swagger-spring-boot-starter</module>
         <module>influxdb-spring-boot-starter</module>
         <!--<module>redis-spring-boot-starter</module>-->
         <module>mybatis-plus-spring-boot-starter</module>
@@ -69,7 +69,7 @@
         <maven.source>17</maven.source>
         <maven.target>17</maven.target>
         <java.version>17</java.version>
-        <project.version>3.0.0</project.version>
+        <project.version>3.0.1</project.version>
         <project.sourceEncoding>UTF-8</project.sourceEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -101,9 +101,7 @@
         <swagger.version>3.0.0</swagger.version>
         <web-mvc.version>6.1.10</web-mvc.version>
         <aliyun.version>3.17.4</aliyun.version>
-        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
         <lueetce.version>6.2.2.RELEASE</lueetce.version>
-        <validator.version>2.0.1.Final</validator.version>
         <guava.version>33.2.1-jre</guava.version>
         <hutool-all.version>5.8.28</hutool-all.version>
         <jasypt.version>3.0.5</jasypt.version>
@@ -130,6 +128,7 @@
         <knife4j-openapi3.version>[4.+,)</knife4j-openapi3.version>
         <knife4j-gateway.version>[4.+,)</knife4j-gateway.version>
         <mapstruct.version>[1.+,)</mapstruct.version>
+        <validation-api.version>[3.+,)</validation-api.version>
     </properties>
 
     <dependencies>
@@ -442,6 +441,12 @@
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
                 <version>${dynamic.version}</version>
             </dependency>
+            <!-- https://central.sonatype.com//artifact/com.baomidou/dynamic-datasource-spring-boot3-starter -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
+                <version>${dynamic.version}</version>
+            </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/p6spy/p6spy -->
                 <groupId>p6spy</groupId>
@@ -455,20 +460,6 @@
                 <groupId>com.github.ulisesbocchio</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>${jasypt.version}</version>
-            </dependency>
-
-            <!-- parameter verification -->
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/org.hibernate.validator/hibernate-validator -->
-                <groupId>org.hibernate.validator</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>${hibernate-validator.version}</version>
-            </dependency>
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/javax.validation/validation-api -->
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>${validator.version}</version>
             </dependency>
             <dependency>
                 <!-- https://central.sonatype.com//artifact/io.swagger.core.v3/swagger-annotations -->
@@ -659,6 +650,14 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct.version}</version>
+            </dependency>
+
+            <!-- https://central.sonatype.com/artifact/jakarta.validation/validation-api -->
+            <dependency>
+                <!-- parameter verification -->
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>${validation-api.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

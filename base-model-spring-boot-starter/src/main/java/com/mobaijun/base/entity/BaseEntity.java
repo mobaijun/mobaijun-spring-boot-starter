@@ -20,8 +20,12 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * software：IntelliJ IDEA 2022.1
@@ -32,6 +36,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(title = "通用基类")
 public class BaseEntity implements Serializable {
 

@@ -18,12 +18,10 @@ package com.mobaijun.base.model;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
 import java.util.List;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -32,9 +30,7 @@ import lombok.Setter;
  *
  * @author MoBaiJun 2022/5/7 15:56
  */
-@Valid
-@Getter
-@Setter
+@Data
 @Schema(title = "分页查询入参")
 public class PageParamRequest {
 

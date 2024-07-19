@@ -19,8 +19,12 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * software：IntelliJ IDEA 2022.1
@@ -31,6 +35,11 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+@AllArgsConstructor
+@Schema(title = "逻辑删除类")
 public class LogicDeletedBaseEntity extends BaseEntity {
 
     /**

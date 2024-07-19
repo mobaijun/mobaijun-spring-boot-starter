@@ -20,19 +20,19 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
- * ClassName: SwaggerProperties
+ * ClassName: OpenAPIProperties
  * 类描述： Swagger配置读取类
  *
  * @author MoBaiJun 2022/3/12 17:24 blog:<a href="https://www.mobaijun.com">...</a>
  */
-@ConfigurationProperties(SwaggerProperties.PREFIX)
-@EnableConfigurationProperties(SwaggerProperties.class)
-public class SwaggerProperties {
+@ConfigurationProperties(OpenAPIProperties.PREFIX)
+@EnableConfigurationProperties(OpenAPIProperties.class)
+public class OpenAPIProperties {
 
     /**
      * 标识
      */
-    public static final String PREFIX = "swagger";
+    public static final String PREFIX = "openapi";
 
     /**
      * 石否开启(默认开启)
@@ -85,31 +85,17 @@ public class SwaggerProperties {
     private String basePackage = "";
 
     /**
+     * 概述信息
+     */
+    private String summary;
+
+    /**
      * 配置作者信息
      */
     private Contact contact = new Contact();
 
-    /**
-     * 全局统一鉴权配置
-     **/
-    private Authorization authorization = new Authorization();
 
-    public SwaggerProperties(Boolean enable, String title, String description, String license, String licenseUrl, String groupName, String termsOfServiceUrl, String version, String host, String basePackage, Contact contact, Authorization authorization) {
-        this.enable = enable;
-        this.title = title;
-        this.description = description;
-        this.license = license;
-        this.licenseUrl = licenseUrl;
-        this.groupName = groupName;
-        this.termsOfServiceUrl = termsOfServiceUrl;
-        this.version = version;
-        this.host = host;
-        this.basePackage = basePackage;
-        this.contact = contact;
-        this.authorization = authorization;
-    }
-
-    public SwaggerProperties() {
+    public OpenAPIProperties() {
     }
 
     public Boolean getEnable() {
@@ -164,6 +150,14 @@ public class SwaggerProperties {
         return termsOfServiceUrl;
     }
 
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
     public void setTermsOfServiceUrl(String termsOfServiceUrl) {
         this.termsOfServiceUrl = termsOfServiceUrl;
     }
@@ -200,14 +194,6 @@ public class SwaggerProperties {
         this.contact = contact;
     }
 
-    public Authorization getAuthorization() {
-        return authorization;
-    }
-
-    public void setAuthorization(Authorization authorization) {
-        this.authorization = authorization;
-    }
-
     public static class Contact {
 
         /**
@@ -226,12 +212,6 @@ public class SwaggerProperties {
         private String email = "mobaijun8@163.com";
 
         public Contact() {
-        }
-
-        public Contact(String author, String url, String email) {
-            this.author = author;
-            this.url = url;
-            this.email = email;
         }
 
         public String getAuthor() {
@@ -256,60 +236,6 @@ public class SwaggerProperties {
 
         public void setEmail(String email) {
             this.email = email;
-        }
-    }
-
-    /**
-     * 鉴权内部类
-     */
-    public static class Authorization {
-
-        /**
-         * 鉴权策略ID，对应 SecurityReferences ID
-         */
-        private String header = "Authorization";
-
-        /**
-         * 鉴权传递的Header参数
-         */
-        private String token = "TOKEN";
-
-        /**
-         * 需要开启鉴权URL的正则
-         */
-        private String authRegex = "^.*$";
-
-        public Authorization() {
-        }
-
-        public Authorization(String header, String token, String authRegex) {
-            this.header = header;
-            this.token = token;
-            this.authRegex = authRegex;
-        }
-
-        public String getHeader() {
-            return header;
-        }
-
-        public void setHeader(String header) {
-            this.header = header;
-        }
-
-        public String getToken() {
-            return token;
-        }
-
-        public void setToken(String token) {
-            this.token = token;
-        }
-
-        public String getAuthRegex() {
-            return authRegex;
-        }
-
-        public void setAuthRegex(String authRegex) {
-            this.authRegex = authRegex;
         }
     }
 }

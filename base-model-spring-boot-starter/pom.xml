@@ -5,7 +5,7 @@
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>3.0.0</version>
+        <version>3.0.1</version>
     </parent>
 
     <properties>
@@ -15,7 +15,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>base-model-spring-boot-starter</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
 
     <name>${project.artifactId}</name>
     <description>This is a spring boot basic entity tool module, commonly used paging plug-ins,
@@ -74,8 +74,8 @@
              但在大多数独立应用程序中，它应该是 compile 作用域。
         -->
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>
