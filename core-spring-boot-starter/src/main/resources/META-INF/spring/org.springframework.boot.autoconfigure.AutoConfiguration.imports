@@ -1,2 +1,4 @@
-com.mobaijun.core.config.CustomJacksonAutoConfiguration
 com.mobaijun.core.CoreAutoConfiguration
+com.mobaijun.core.config.ApplicationConfig
+com.mobaijun.core.config.AsyncConfig
+com.mobaijun.core.spring.SpringContextUtils

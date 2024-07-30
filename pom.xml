@@ -28,9 +28,9 @@
     </scm>
 
     <modules>
-        <module>swagger-spring-boot-starter</module>
+        <module>openapi-spring-boot-starter</module>
         <module>influxdb-spring-boot-starter</module>
-        <!--<module>redis-spring-boot-starter</module>-->
+        <module>redis-spring-boot-starter</module>
         <module>mybatis-plus-spring-boot-starter</module>
         <module>jpush-spring-boot-starter</module>
         <module>table-spring-boot-starter</module>
@@ -43,6 +43,8 @@
         <module>excel-spring-boot-starter</module>
         <module>jasypt-spring-boot-starter</module>
         <module>run-spring-boot-starter</module>
+        <module>json-spring-boot-starter</module>
+        <module>sensitive-spring-boot-starter</module>
     </modules>
 
     <!--  Personal information  -->
@@ -107,7 +109,7 @@
         <jasypt.version>3.0.5</jasypt.version>
         <spring-redis.version>3.3.1</spring-redis.version>
         <minio.version>8.5.11</minio.version>
-        <snakeyaml.version>[2.0,)</snakeyaml.version>
+        <snakeyaml.version>[2.+,)</snakeyaml.version>
         <jettison.version>1.5.4</jettison.version>
         <slf4j-api.version>2.0.6</slf4j-api.version>
         <easyexcel.version>3.1.4</easyexcel.version>
@@ -129,6 +131,7 @@
         <knife4j-gateway.version>[4.+,)</knife4j-gateway.version>
         <mapstruct.version>[1.+,)</mapstruct.version>
         <validation-api.version>[3.+,)</validation-api.version>
+        <redisson.version>3.33.0</redisson.version>
     </properties>
 
     <dependencies>
@@ -248,7 +251,7 @@
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/swagger-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
-                <artifactId>swagger-spring-boot-starter</artifactId>
+                <artifactId>openapi-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -293,7 +296,12 @@
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <!-- https://central.sonatype.com//artifact/com.mobaijun/json-spring-boot-starter -->
+            <dependency>
+                <groupId>com.mobaijun</groupId>
+                <artifactId>json-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- tool -->
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.google.guava/guava -->
@@ -658,6 +666,20 @@
                 <groupId>jakarta.validation</groupId>
                 <artifactId>jakarta.validation-api</artifactId>
                 <version>${validation-api.version}</version>
+            </dependency>
+
+            <!-- https://central.sonatype.com/artifact/org.redisson/redisson-spring-boot-starter -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
+            <!-- https://central.sonatype.com/artifact/cn.hutool/hutool-core -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>${hutool-all.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

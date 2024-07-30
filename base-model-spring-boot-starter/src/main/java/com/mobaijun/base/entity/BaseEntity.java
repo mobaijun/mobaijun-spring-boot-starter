@@ -48,14 +48,14 @@ public class BaseEntity implements Serializable {
      */
     @Schema(title = "创建者")
     @TableField(fill = FieldFill.INSERT)
-    private Integer createBy;
+    private String createBy;
 
     /**
      * 更新者
      */
     @Schema(title = "更新者")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Integer updateBy;
+    private String updateBy;
 
     /**
      * 创建时间

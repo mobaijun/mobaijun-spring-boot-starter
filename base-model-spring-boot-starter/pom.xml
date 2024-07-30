@@ -39,7 +39,7 @@
 
     <dependencies>
         <!-- Swagger 注解库，用于自动生成 API 文档。
-             注意：这里重复了 swagger-annotations 依赖，通常你只需要一个，
+             注意：这里重复了 openapi-annotations 依赖，通常你只需要一个，
              并且根据你的项目需求（是否由容器提供）来设置作用域。
              这里我移除了带有 provided 作用域的那个，因为它通常不是由容器提供的。
         -->

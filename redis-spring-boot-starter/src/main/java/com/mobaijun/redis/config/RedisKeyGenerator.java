@@ -15,7 +15,7 @@
  */
 package com.mobaijun.redis.config;
 
-import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.interceptor.KeyGenerator;
 
 /**
@@ -25,7 +25,7 @@ import org.springframework.cache.interceptor.KeyGenerator;
  *
  * @author MoBaiJun 2022/5/16 13:21
  */
-public class RedisKeyGenerator extends CachingConfigurerSupport {
+public class RedisKeyGenerator implements CachingConfigurer {
 
     @Override
     public KeyGenerator keyGenerator() {

@@ -1,16 +1,17 @@
 package com.mobaijun.core.spring;
 
+import java.util.Arrays;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.boot.autoconfigure.thread.Threading;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.env.Environment;
 import org.springframework.lang.NonNull;
 import org.springframework.util.StringUtils;
-
-import java.util.Arrays;
 
 /**
  * software：IntelliJ IDEA 2022.2.3<br>
@@ -136,5 +137,9 @@ public class SpringContextUtils implements ApplicationContextAware, BeanFactoryP
     public static String getActiveProfile() {
         final String[] activeProfiles = getActiveProfiles();
         return !StringUtils.hasText(Arrays.toString(activeProfiles)) ? activeProfiles[0] : null;
+    }
+
+    public static boolean isVirtual() {
+        return Threading.VIRTUAL.isActive(getBean(Environment.class));
     }
 }

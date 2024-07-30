@@ -21,18 +21,18 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import com.mobaijun.json.core.JacksonJavaTimeModule;
 import com.mobaijun.redis.constant.RedisConstant;
 import com.mobaijun.redis.prop.RedisProperties;
 import com.mobaijun.redis.util.RedisLockUtil;
 import com.mobaijun.redis.util.RedisUtils;
+import java.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -45,8 +45,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
-import java.time.Duration;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -61,7 +59,7 @@ public class RedisAutoConfiguration {
     private static final Logger log = LoggerFactory.getLogger(RedisAutoConfiguration.class);
 
     @Bean
-    public CachingConfigurerSupport cachingConfigurerSupport() {
+    public CachingConfigurer cachingConfigurerSupport() {
         return new RedisKeyGenerator();
     }
 
@@ -91,9 +89,8 @@ public class RedisAutoConfiguration {
         // 支持 jdk 1.8 日期
         om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         om.registerModule(new JavaTimeModule());
-        om.registerModule(new Jdk8Module())
-                .registerModule(new JavaTimeModule())
-                .registerModule(new ParameterNamesModule());
+        om.registerModule(new JacksonJavaTimeModule())
+                .registerModule(new JavaTimeModule());
 
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         template.setValueSerializer(jackson2JsonRedisSerializer);
@@ -118,9 +115,8 @@ public class RedisAutoConfiguration {
                 JsonTypeInfo.As.WRAPPER_ARRAY);
 
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        mapper.registerModule(new Jdk8Module())
-                .registerModule(new JavaTimeModule())
-                .registerModule(new ParameterNamesModule());
+        mapper.registerModule(new JacksonJavaTimeModule())
+                .registerModule(new JavaTimeModule());
 
         // 使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值（默认使用JDK的序列化方式）
         Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
@@ -169,9 +165,8 @@ public class RedisAutoConfiguration {
                 JsonTypeInfo.As.WRAPPER_ARRAY);
         // 支持 jdk 1.8 日期   ---- start ---
         om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        om.registerModule(new Jdk8Module())
-                .registerModule(new JavaTimeModule())
-                .registerModule(new ParameterNamesModule());
+        om.registerModule(new JacksonJavaTimeModule())
+                .registerModule(new JavaTimeModule());
         // --end --
         return new GenericJackson2JsonRedisSerializer(om);
     }
