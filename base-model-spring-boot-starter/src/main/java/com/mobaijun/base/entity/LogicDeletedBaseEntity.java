@@ -36,10 +36,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(title = "逻辑删除类")
+@EqualsAndHashCode(callSuper = false)
 public class LogicDeletedBaseEntity extends BaseEntity {
 
     /**
