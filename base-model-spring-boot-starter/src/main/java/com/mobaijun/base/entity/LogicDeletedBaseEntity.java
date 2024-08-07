@@ -48,5 +48,5 @@ public class LogicDeletedBaseEntity extends BaseEntity {
     @TableLogic
     @TableField(fill = FieldFill.INSERT)
     @Schema(title = "逻辑删除标识，1已删除: 删除时间戳，未删除: 0")
-    private String deleted;
+    private Integer deleted;
 }

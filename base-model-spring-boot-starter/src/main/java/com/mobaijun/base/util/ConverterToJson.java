@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mobaijun.base.json;
+package com.mobaijun.base.util;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.lang.reflect.Field;
@@ -23,14 +23,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * software：IntelliJ IDEA 2022.1
  * class name: ConverterToJson
- * class description：对象转 json 字符串
+ * class description：对象转 util 字符串
  *
  * @author MoBaiJun 2022/10/17 8:47
  */
 public class ConverterToJson {
 
     /**
-     * Schema注解对象转 json 格式数据
+     * Schema注解对象转 util 格式数据
      *
      * @param isPage 是否分页
      * @param c      对象
