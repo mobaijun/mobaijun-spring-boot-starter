@@ -1,0 +1,99 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+          http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.mobaijun</groupId>
+        <artifactId>mobaijun-spring-boot-dependencies</artifactId>
+        <version>3.0.1</version>
+    </parent>
+
+    <artifactId>dubbo-spring-boot-starter</artifactId>
+    <version>3.0.1</version>
+
+    <description>This is a spring boot common component tool class</description>
+    <name>${project.artifactId}</name>
+    <inceptionYear>2024</inceptionYear>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/dubbo-spring-boot-starter</url>
+
+    <!--  GitHub issues -->
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/dubbo-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
+        <developerConnection>https://github.com/mobaijun</developerConnection>
+    </scm>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <dependencies>
+        <!-- JSON 支持的 Spring Boot Starter -->
+        <dependency>
+            <groupId>com.mobaijun</groupId>
+            <artifactId>json-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- Spring Cloud 上下文支持 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-context</artifactId>
+        </dependency>
+
+        <!-- Apache Dubbo 的 Spring Boot Starter -->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- Dubbo Spring Boot Actuator 支持 -->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-actuator</artifactId>
+        </dependency>
+
+        <!-- Dubbo 使用 Redis 进行元数据报告，排除默认的 Jedis 依赖 -->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-metadata-report-redis</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>redis.clients</groupId>
+                    <artifactId>jedis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Redis 客户端 Jedis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Lombok 插件，用于简化 Java 代码 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Spring Cloud 通用依赖 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mobaijun</groupId>
+            <artifactId>core-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
+</project>
