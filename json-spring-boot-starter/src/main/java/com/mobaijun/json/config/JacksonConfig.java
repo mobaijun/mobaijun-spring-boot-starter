@@ -17,7 +17,7 @@ import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
 /**
- * Description: [json 配置类]
+ * Description: [util 配置类]
  * Author: [mobaijun]
  * Date: [2024/7/25 10:15]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]

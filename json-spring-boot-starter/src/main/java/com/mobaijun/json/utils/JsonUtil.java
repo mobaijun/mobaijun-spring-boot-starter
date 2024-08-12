@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
-import com.mobaijun.core.spring.SpringContextUtils;
+import com.mobaijun.core.spring.SpringUtil;
 import io.micrometer.common.util.StringUtils;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import org.springframework.util.ObjectUtils;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JsonUtil {
 
-    private static final ObjectMapper OBJECT_MAPPER = SpringContextUtils.getBean(ObjectMapper.class);
+    private static final ObjectMapper OBJECT_MAPPER = SpringUtil.getBean(ObjectMapper.class);
 
     public static ObjectMapper getObjectMapper() {
         return OBJECT_MAPPER;
