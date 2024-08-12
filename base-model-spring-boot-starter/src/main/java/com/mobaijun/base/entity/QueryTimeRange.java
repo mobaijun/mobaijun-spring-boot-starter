@@ -46,7 +46,6 @@ public class QueryTimeRange implements Serializable {
      *
      * @return 如果开始时间和结束时间都不为空且结束时间不早于开始时间，则返回true；否则返回false。
      */
-    @Schema(title = "验证时间间隔是否有效")
     public boolean isValid() {
         return startTime != null && endTime != null && !endTime.isBefore(startTime);
     }
@@ -57,7 +56,6 @@ public class QueryTimeRange implements Serializable {
      * @param dateTime 需要检查的时间
      * @return 如果给定时间在时间范围内，则返回true；否则返回false。
      */
-    @Schema(title = "检查给定时间是否在范围内")
     public boolean contains(LocalDateTime dateTime) {
         return dateTime != null && (dateTime.isEqual(startTime) || dateTime.isAfter(startTime)) &&
                 (dateTime.isEqual(endTime) || dateTime.isBefore(endTime));
@@ -69,7 +67,6 @@ public class QueryTimeRange implements Serializable {
      * @param unit 持续时间的单位，如ChronoUnit.DAYS、ChronoUnit.HOURS等
      * @return 持续时间的数值
      */
-    @Schema(title = "计算时间范围的持续时间")
     public long getDuration(ChronoUnit unit) {
         if (startTime != null && endTime != null) {
             return unit.between(startTime, endTime);
@@ -83,7 +80,6 @@ public class QueryTimeRange implements Serializable {
      * @param pattern 格式化的模式，如"yyyy-MM-dd HH:mm:ss"
      * @return 格式化后的时间范围字符串
      */
-    @Schema(title = "获取格式化后的时间范围字符串")
     public String getFormattedRange(String pattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         return String.format("%s - %s",

@@ -42,12 +42,12 @@ public class PageResult<T> {
     /**
      * 查询数据列表
      */
-    @Schema(title = "查询数据列表")
+    @Schema(title = "查询数据列表", description = "查询数据列表")
     protected List<T> records = Collections.emptyList();
 
     /**
      * 总数
      */
-    @Schema(title = "总数")
+    @Schema(title = "总数", description = "总数")
     protected Long total = 0L;
 }

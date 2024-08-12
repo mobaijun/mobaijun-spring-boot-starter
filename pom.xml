@@ -45,6 +45,19 @@
         <module>run-spring-boot-starter</module>
         <module>json-spring-boot-starter</module>
         <module>sensitive-spring-boot-starter</module>
+        <module>dubbo-spring-boot-starter</module>
+        <module>idempotent-spring-boot-starter</module>
+        <module>encrypt-spring-boot-starter</module>
+        <module>translation-spring-boot-starter</module>
+        <module>tenant-spring-boot-starter</module>
+        <module>sms-spring-boot-starter</module>
+        <module>satoken-spring-boot-starter</module>
+        <module>feign-spring-boot-starter</module>
+        <module>oss-spring-boot-starter</module>
+        <module>seata-spring-boot-starter</module>
+        <module>xss-spring-boot-starter</module>
+        <module>captcha-spring-boot-starter</module>
+        <module>jwt-spring-boot-starter</module>
     </modules>
 
     <!--  Personal information  -->
@@ -132,6 +145,8 @@
         <mapstruct.version>[1.+,)</mapstruct.version>
         <validation-api.version>[3.+,)</validation-api.version>
         <redisson.version>3.33.0</redisson.version>
+        <dubbo.version>3.2.14</dubbo.version>
+        <spring.context.support.version>1.0.11</spring.context.support.version>
     </properties>
 
     <dependencies>
@@ -680,6 +695,36 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-core</artifactId>
                 <version>${hutool-all.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-actuator</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-metadata-report-redis</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.spring</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${spring.context.support.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
