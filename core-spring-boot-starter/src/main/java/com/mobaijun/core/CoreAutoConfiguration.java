@@ -1,7 +1,7 @@
 package com.mobaijun.core;
 
 import com.mobaijun.core.config.ApplicationServerConfig;
-import com.mobaijun.core.spring.SpringContextUtils;
+import com.mobaijun.core.spring.SpringUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,10 +28,10 @@ public class CoreAutoConfiguration {
     /**
      * Spring 上下文工具类
      *
-     * @return SpringContextUtils
+     * @return SpringUtil
      */
     @Bean
-    public SpringContextUtils springContextUtils() {
-        return new SpringContextUtils();
+    public SpringUtil springContextUtils() {
+        return new SpringUtil();
     }
 }

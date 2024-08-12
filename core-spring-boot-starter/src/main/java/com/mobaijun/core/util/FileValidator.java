@@ -11,15 +11,15 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileValidator {
 
     /**
-     * Supported Excel file extensions.
+     * 支持的 Excel 文件扩展名
      */
     private static final String[] SUPPORTED_EXTENSIONS = {".xls", ".xlsx"};
 
     /**
-     * Validates if the given file is a non-empty Excel file.
+     * 验证给定的文件是否为非空的 Excel 文件
      *
-     * @param file the file to be validated
-     * @throws IllegalArgumentException if the file is null, empty, or not an Excel file
+     * @param file 要验证的文件
+     * @throws IllegalArgumentException 如果文件为空或不是 Excel 文件
      */
     public static void validateExcelFile(MultipartFile file) {
         if (file == null || file.isEmpty()) {
@@ -33,10 +33,10 @@ public class FileValidator {
     }
 
     /**
-     * Checks if the given file name has a supported Excel extension.
+     * 检查给定的文件名是否具有支持的 Excel 扩展名
      *
-     * @param fileName the name of the file
-     * @return true if the file has a supported Excel extension, false otherwise
+     * @param fileName 文件名
+     * @return 如果文件具有支持的 Excel 扩展名，则返回 true；否则返回 false
      */
     private static boolean isSupportedExtension(String fileName) {
         for (String extension : SUPPORTED_EXTENSIONS) {

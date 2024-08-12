@@ -1,9 +1,11 @@
 package com.mobaijun.core.config;
 
 import com.mobaijun.core.exception.ServiceException;
-import com.mobaijun.core.spring.SpringContextUtils;
+import com.mobaijun.core.spring.SpringUtil;
 import java.util.Arrays;
 import java.util.concurrent.Executor;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.core.task.VirtualThreadTaskExecutor;
@@ -19,14 +21,19 @@ import org.springframework.scheduling.annotation.AsyncConfigurer;
 public class AsyncConfig implements AsyncConfigurer {
 
     /**
+     * 日志
+     */
+    private static final Log log = LogFactory.getLog(AsyncConfig.class);
+
+    /**
      * 自定义 @Async 注解使用系统线程池
      */
     @Override
     public Executor getAsyncExecutor() {
-        if (SpringContextUtils.isVirtual()) {
+        if (SpringUtil.isVirtual()) {
             return new VirtualThreadTaskExecutor("async-");
         }
-        return SpringContextUtils.getBean("scheduledExecutorService");
+        return SpringUtil.getBean("scheduledExecutorService");
     }
 
     /**
@@ -35,7 +42,7 @@ public class AsyncConfig implements AsyncConfigurer {
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return (throwable, method, objects) -> {
-            throwable.printStackTrace();
+            log.error("Async exception message - " + throwable.getMessage());
             StringBuilder sb = new StringBuilder();
             sb.append("Exception message - ").append(throwable.getMessage())
                     .append(", Method name - ").append(method.getName());

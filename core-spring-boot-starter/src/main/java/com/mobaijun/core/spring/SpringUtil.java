@@ -22,12 +22,12 @@ import org.springframework.lang.NonNull;
 
 /**
  * software：IntelliJ IDEA 2022.2.3<br>
- * class name: SpringContextUtils<br>
+ * class name: SpringUtil<br>
  * class description: spring 工具类<br>
  *
  * @author MoBaiJun 2022/12/7 14:23
  */
-public class SpringContextUtils implements ApplicationContextAware, BeanFactoryPostProcessor {
+public class SpringUtil implements ApplicationContextAware, BeanFactoryPostProcessor {
 
     /**
      * ConfigurableListableBeanFactory
@@ -39,16 +39,28 @@ public class SpringContextUtils implements ApplicationContextAware, BeanFactoryP
      */
     private static ApplicationContext applicationContext;
 
-    @Override
-    public void setApplicationContext(@NonNull ApplicationContext applicationContext)
-            throws BeansException {
-        SpringContextUtils.applicationContext = applicationContext;
+    /**
+     * 发布自定义事件
+     * <p>
+     * Spring 4.2+ 版本起，发布的事件不再局限于 {@link ApplicationEvent} 子类。
+     * 此方法将事件发布到当前 Spring 应用程序上下文。
+     *
+     * @param event 待发布的事件
+     */
+    public static void publishEvent(Object event) {
+        if (null != applicationContext) {
+            applicationContext.publishEvent(event);
+        }
     }
 
-    @Override
-    public void postProcessBeanFactory(@NonNull ConfigurableListableBeanFactory beanFactory)
-            throws BeansException {
-        SpringContextUtils.beanFactory = beanFactory;
+    /**
+     * 检查 Bean 是否存在
+     *
+     * @param name Bean 的名称
+     * @return 如果 BeanFactory 中存在该 Bean，则返回 true；否则返回 false
+     */
+    public static boolean containsBean(String name) {
+        return getBeanFactory().containsBean(name);
     }
 
     /**
@@ -284,48 +296,44 @@ public class SpringContextUtils implements ApplicationContextAware, BeanFactoryP
     }
 
     /**
-     * 发布事件
-     * Spring 4.2+ 版本事件可以不再是{@link ApplicationEvent}的子类
+     * 判断 Bean 的作用域
      *
-     * @param event 待发布的事件
-     */
-    public static void publishEvent(Object event) {
-        if (null != applicationContext) {
-            applicationContext.publishEvent(event);
-        }
-    }
-
-    /**
-     * 如果BeanFactory包含一个与所给名称匹配的bean定义，则返回true
-     */
-    public static boolean containsBean(String name) {
-        return getBeanFactory().containsBean(name);
-    }
-
-    /**
-     * 判断以给定名字注册的bean定义是一个singleton还是一个prototype。
-     * 如果与给定名字相应的bean定义没有被找到，将会抛出一个异常（NoSuchBeanDefinitionException）
+     * @param name Bean 的名称
+     * @return 如果 Bean 是单例，则返回 true；否则返回 false
+     * @throws NoSuchBeanDefinitionException 如果找不到指定的 Bean
      */
     public static boolean isSingleton(String name) throws NoSuchBeanDefinitionException {
         return getBeanFactory().isSingleton(name);
     }
 
     /**
-     * @return Class 注册对象的类型
+     * 获取 Bean 的类型
+     *
+     * @param name Bean 的名称
+     * @return Bean 的 Class 对象
+     * @throws NoSuchBeanDefinitionException 如果找不到指定的 Bean
      */
     public static Class<?> getType(String name) throws NoSuchBeanDefinitionException {
         return getBeanFactory().getType(name);
     }
 
     /**
-     * 如果给定的bean名字在bean定义中有别名，则返回这些别名
+     * 获取 Bean 的别名
+     *
+     * @param name Bean 的名称
+     * @return Bean 的所有别名，如果不存在别名，则返回空数组
+     * @throws NoSuchBeanDefinitionException 如果找不到指定的 Bean
      */
     public static String[] getAliases(String name) throws NoSuchBeanDefinitionException {
         return getBeanFactory().getAliases(name);
     }
 
     /**
-     * 获取aop代理对象
+     * 获取 AOP 代理对象
+     *
+     * @param invoker 目标对象
+     * @param <T>     目标对象的类型
+     * @return AOP 代理对象
      */
     @SuppressWarnings("unchecked")
     public static <T> T getAopProxy(T invoker) {
@@ -333,13 +341,32 @@ public class SpringContextUtils implements ApplicationContextAware, BeanFactoryP
     }
 
     /**
-     * 获取spring上下文
+     * 获取 Spring 应用程序上下文
+     *
+     * @return 当前 Spring 应用程序上下文
      */
     public static ApplicationContext context() {
         return getApplicationContext();
     }
 
+    /**
+     * 判断当前环境是否为虚拟环境
+     *
+     * @return 如果当前环境为虚拟环境，则返回 true；否则返回 false
+     */
     public static boolean isVirtual() {
         return Threading.VIRTUAL.isActive(getBean(Environment.class));
+    }
+
+    @Override
+    public void setApplicationContext(@NonNull ApplicationContext applicationContext)
+            throws BeansException {
+        SpringUtil.applicationContext = applicationContext;
+    }
+
+    @Override
+    public void postProcessBeanFactory(@NonNull ConfigurableListableBeanFactory beanFactory)
+            throws BeansException {
+        SpringUtil.beanFactory = beanFactory;
     }
 }

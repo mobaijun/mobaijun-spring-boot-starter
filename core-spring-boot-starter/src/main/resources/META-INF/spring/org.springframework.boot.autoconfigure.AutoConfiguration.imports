@@ -1,4 +1,6 @@
 com.mobaijun.core.CoreAutoConfiguration
 com.mobaijun.core.config.ApplicationConfig
 com.mobaijun.core.config.AsyncConfig
-com.mobaijun.core.spring.SpringContextUtils
+com.mobaijun.core.spring.SpringUtil
+com.mobaijun.core.config.ThreadPoolConfig
+com.mobaijun.core.config.ValidatorConfig

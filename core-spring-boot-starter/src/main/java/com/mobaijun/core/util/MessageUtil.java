@@ -1,6 +1,6 @@
 package com.mobaijun.core.util;
 
-import com.mobaijun.core.spring.SpringContextUtils;
+import com.mobaijun.core.spring.SpringUtil;
 import java.util.Locale;
 import org.springframework.context.MessageSource;
 
@@ -10,7 +10,7 @@ import org.springframework.context.MessageSource;
  * Date: [2024/7/30 14:41]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-public class MessageUtils {
+public class MessageUtil {
 
     /**
      * 通过错误代码获取中文错误信息
@@ -20,7 +20,7 @@ public class MessageUtils {
      */
     public static String getMessage(String code) {
         // 获取 messageSource bean
-        MessageSource messageSource = SpringContextUtils.getBean("messageSource");
+        MessageSource messageSource = SpringUtil.getBean("messageSource");
         // 获取错误信息，使用默认的中国区域
         return messageSource.getMessage(code, null, Locale.CHINA);
     }
@@ -34,7 +34,7 @@ public class MessageUtils {
      */
     public static String getMessage(String code, Object... objects) {
         // 获取 messageSource bean
-        MessageSource messageSource = SpringContextUtils.getBean("messageSource");
+        MessageSource messageSource = SpringUtil.getBean("messageSource");
         // 获取错误信息，使用默认的中国区域
         return messageSource.getMessage(code, objects, Locale.CHINA);
     }
@@ -48,7 +48,7 @@ public class MessageUtils {
      */
     public static String getSecurityMessage(String code, Object... objects) {
         // 获取 securityMessageSource bean
-        MessageSource messageSource = SpringContextUtils.getBean("securityMessageSource");
+        MessageSource messageSource = SpringUtil.getBean("securityMessageSource");
         // 获取错误信息，使用默认的中国区域
         return messageSource.getMessage(code, objects, Locale.CHINA);
     }

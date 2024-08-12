@@ -19,32 +19,39 @@ import org.springframework.web.util.WebUtils;
 public class WebUtil extends WebUtils {
 
     /**
-     * 获取 HttpServletRequest
+     * 获取当前 HTTP 请求对象
+     *
+     * @return 当前 HTTP 请求对象
      */
     public static HttpServletRequest getRequest() {
         return getRequestAttributes().getRequest();
     }
 
     /**
-     * 获取 HttpServletResponse
+     * 获取当前 HTTP 响应对象
+     *
+     * @return 当前 HTTP 响应对象
      */
     public static HttpServletResponse getResponse() {
         return getRequestAttributes().getResponse();
     }
 
     /**
-     * 获取 HttpSession
+     * 获取当前 HTTP 会话对象
+     *
+     * @return 当前 HTTP 会话对象
      */
     public static HttpSession getSession() {
         return getRequest().getSession();
     }
 
     /**
-     * 获取 ServletRequestAttributes
+     * 获取当前 Servlet 请求属性对象
      *
-     * @return ServletRequestAttributes
+     * @return 当前 Servlet 请求属性对象
      */
     public static ServletRequestAttributes getRequestAttributes() {
-        return (ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes());
+        return (ServletRequestAttributes)
+                Objects.requireNonNull(RequestContextHolder.getRequestAttributes());
     }
 }
