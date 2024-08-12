@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
-import com.mobaijun.core.spring.SpringContextUtils;
+import com.mobaijun.core.spring.SpringUtil;
 import com.mobaijun.sensitive.annotation.Sensitive;
 import com.mobaijun.sensitive.core.SensitiveService;
 import com.mobaijun.sensitive.core.SensitiveStrategy;
@@ -52,7 +52,7 @@ public class SensitiveHandler extends JsonSerializer<String> implements Contextu
     @Override
     public void serialize(String value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         try {
-            SensitiveService sensitiveService = SpringContextUtils.getBean(SensitiveService.class);
+            SensitiveService sensitiveService = SpringUtil.getBean(SensitiveService.class);
             if (ObjectUtil.isNotNull(sensitiveService) && sensitiveService.isSensitive(roleKey, perms)) {
                 gen.writeString(strategy.desensitize().apply(value));
             } else {
