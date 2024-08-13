@@ -3,9 +3,11 @@ package com.mobaijun.core.config;
 import jakarta.validation.Validator;
 import java.util.Properties;
 import org.hibernate.validator.HibernateValidator;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 /**
@@ -14,13 +16,14 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  * Date: [2024/8/12 9:49]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-@AutoConfiguration
+@Configuration
 public class ValidatorConfig {
 
     /**
      * 配置校验框架 快速返回模式
      */
     @Bean
+    @ConditionalOnClass(ResourceBundleLocator.class)
     public Validator validator(MessageSource messageSource) {
         try (LocalValidatorFactoryBean factoryBean = new LocalValidatorFactoryBean()) {
             // 国际化
