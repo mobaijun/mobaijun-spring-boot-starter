@@ -1,8 +1,6 @@
 package com.mobaijun.core.util;
 
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
 /**
  * software：IntelliJ IDEA 2022.2.3<br>
@@ -11,7 +9,6 @@ import lombok.NoArgsConstructor;
  *
  * @author MoBaiJun 2022/12/7 14:13
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ServerUtil {
 
     /**

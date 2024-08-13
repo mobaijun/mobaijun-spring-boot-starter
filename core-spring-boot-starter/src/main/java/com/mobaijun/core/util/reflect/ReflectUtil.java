@@ -2,8 +2,6 @@ package com.mobaijun.core.util.reflect;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
 
 /**
@@ -12,7 +10,6 @@ import org.springframework.util.StringUtils;
  * Date: [2024/8/12 9:55]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReflectUtil extends cn.hutool.core.util.ReflectUtil {
 
     private static final String SETTER_PREFIX = "set";

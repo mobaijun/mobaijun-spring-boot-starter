@@ -2,8 +2,6 @@ package com.mobaijun.core.util;
 
 import com.mobaijun.core.spring.SpringUtil;
 import java.util.Locale;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -14,7 +12,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
  * Date: [2024/7/30 14:41]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MessageUtil {
 
     private static final MessageSource MESSAGE_SOURCE = SpringUtil.getBean(MessageSource.class);

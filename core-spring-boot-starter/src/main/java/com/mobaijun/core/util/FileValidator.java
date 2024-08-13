@@ -1,7 +1,5 @@
 package com.mobaijun.core.util;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -10,7 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
  * Date: [2024/7/11 12:00]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileValidator {
 
     /**
