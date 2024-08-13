@@ -46,6 +46,7 @@
         <dependency>
             <groupId>com.mobaijun</groupId>
             <artifactId>json-spring-boot-starter</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

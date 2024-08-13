@@ -3,16 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <version>3.0.2</version>
     </parent>
 
-    <artifactId>json-spring-boot-starter</artifactId>
-    <version>3.0.2</version>
+    <artifactId>loadbalancer-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
+    <version>3.0.2</version>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
 
     <properties>
@@ -21,7 +20,7 @@
     </properties>
 
     <inceptionYear>2024</inceptionYear>
-    <description>Simple Jackson tool class, easy to use</description>
+    <description>User-defined load balancing policies for dubbo</description>
 
     <!--  GitHub issues -->
     <issueManagement>
@@ -30,45 +29,32 @@
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/json-spring-boot-starter</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/loadbalancer-spring-boot-starter
+        </url>
         <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 
     <dependencies>
-        <!-- JSON工具类 -->
         <dependency>
-            <groupId>com.mobaijun</groupId>
-            <artifactId>core-spring-boot-starter</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!-- JSON工具类 -->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo</artifactId>
+            <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-core</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>
