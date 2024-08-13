@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.util.WebUtils;
@@ -16,6 +18,7 @@ import org.springframework.web.util.WebUtils;
  *
  * @author MoBaiJun 2022/12/7 14:14
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class WebUtil extends WebUtils {
 
     /**

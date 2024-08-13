@@ -20,8 +20,14 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -30,9 +36,16 @@ import lombok.Data;
  *
  * @author MoBaiJun 2022/5/7 15:56
  */
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(title = "分页查询入参")
-public class PageParamRequest {
+public class PageParamRequest implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Parameter(description = "当前页码, 从 1 开始", schema = @Schema(minimum = "1", defaultValue = "1", example = "1"))
     @Min(value = 1, message = "当前页不能小于 1")

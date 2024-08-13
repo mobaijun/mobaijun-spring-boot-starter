@@ -1,7 +1,7 @@
 package com.mobaijun.core;
 
-import com.mobaijun.core.config.ApplicationServerConfig;
 import com.mobaijun.core.spring.SpringUtil;
+import com.mobaijun.core.util.ServerUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,8 +21,8 @@ public class CoreAutoConfiguration {
      * @return ApplicationConfig
      */
     @Bean
-    public ApplicationServerConfig applicationConfig() {
-        return new ApplicationServerConfig();
+    public ServerUtil applicationConfig() {
+        return new ServerUtil();
     }
 
     /**

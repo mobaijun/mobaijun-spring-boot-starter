@@ -16,6 +16,8 @@
 package com.mobaijun.base.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -37,7 +39,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(title = "分页返回结果")
-public class PageResult<T> {
+public class PageResult<T> implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * 查询数据列表

@@ -5,6 +5,8 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
 import java.util.Set;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * Description: [Validator 校验框架工具]
@@ -12,6 +14,7 @@ import java.util.Set;
  * Date: [2024/8/12 10:08]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ValidatorUtil {
 
     /**

@@ -3,6 +3,8 @@ package com.mobaijun.core.util.file;
 import jakarta.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * Description: [文件处理工具类]
@@ -10,6 +12,7 @@ import java.nio.charset.StandardCharsets;
  * Date: [2024/8/12 9:52]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileUtil extends cn.hutool.core.io.FileUtil {
 
     /**

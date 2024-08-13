@@ -17,6 +17,8 @@ package com.mobaijun.base.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
+import java.io.Serial;
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +38,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(title = "下拉框数据")
-public class SelectData<T> {
+public class SelectData<T> implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * 显示的数据

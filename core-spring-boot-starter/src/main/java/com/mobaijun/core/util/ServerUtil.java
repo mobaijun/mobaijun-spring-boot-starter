@@ -1,7 +1,8 @@
-package com.mobaijun.core.config;
+package com.mobaijun.core.util;
 
-import com.mobaijun.core.util.WebUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * software：IntelliJ IDEA 2022.2.3<br>
@@ -10,7 +11,8 @@ import jakarta.servlet.http.HttpServletRequest;
  *
  * @author MoBaiJun 2022/12/7 14:13
  */
-public class ApplicationServerConfig {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class ServerUtil {
 
     /**
      * 获取完整的请求路径，包括：域名，端口，上下文访问路径

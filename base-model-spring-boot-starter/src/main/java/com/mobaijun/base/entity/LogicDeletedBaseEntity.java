@@ -19,6 +19,8 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.io.Serial;
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -39,8 +41,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(title = "逻辑删除类")
-@EqualsAndHashCode(callSuper = false)
-public class LogicDeletedBaseEntity extends BaseEntity {
+@EqualsAndHashCode(callSuper = true)
+public class LogicDeletedBaseEntity extends BaseEntity implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * 逻辑删除标识，已删除: 删除时间戳，未删除: 0
@@ -48,5 +53,5 @@ public class LogicDeletedBaseEntity extends BaseEntity {
     @TableLogic
     @TableField(fill = FieldFill.INSERT)
     @Schema(title = "逻辑删除标识，1已删除: 删除时间戳，未删除: 0")
-    private Integer deleted;
+    private Long deleted;
 }

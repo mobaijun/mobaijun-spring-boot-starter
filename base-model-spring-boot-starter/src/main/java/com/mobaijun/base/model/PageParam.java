@@ -19,11 +19,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -32,9 +36,16 @@ import lombok.Setter;
  *
  * @author MoBaiJun 2022/5/7 15:54
  */
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(title = "分页查询参数")
-public class PageParam {
+public class PageParam implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * 当前页码
@@ -59,6 +70,9 @@ public class PageParam {
 
     @Getter
     @Setter
+    @ToString
+    @NoArgsConstructor
+    @AllArgsConstructor
     @Schema(title = "排序元素载体")
     public static class Sort {
 
