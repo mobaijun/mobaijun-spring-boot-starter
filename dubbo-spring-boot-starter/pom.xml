@@ -40,6 +40,7 @@
         <dependency>
             <groupId>com.mobaijun</groupId>
             <artifactId>json-spring-boot-starter</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Spring Cloud 上下文支持 -->
@@ -95,6 +96,12 @@
         <dependency>
             <groupId>com.mobaijun</groupId>
             <artifactId>core-spring-boot-starter</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

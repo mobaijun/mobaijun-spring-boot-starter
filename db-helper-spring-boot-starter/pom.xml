@@ -91,5 +91,10 @@
             <artifactId>sa-token-core</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
