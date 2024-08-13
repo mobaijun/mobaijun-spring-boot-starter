@@ -2,28 +2,42 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-        <version>3.0.1</version>
+        <version>3.0.2</version>
     </parent>
-
-    <artifactId>sensitive-spring-boot-starter</artifactId>
-    <packaging>jar</packaging>
-
-    <name>sensitive-spring-boot-starter</name>
-    <url>https://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencies>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>sensitive-spring-boot-starter</artifactId>
+    <version>3.0.2</version>
 
+    <description>This is a spring boot common component tool class</description>
+    <name>${project.artifactId}</name>
+    <inceptionYear>2024</inceptionYear>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/sensitive-spring-boot-starter</url>
+
+    <!--  GitHub issues -->
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/sensitive-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
+        <developerConnection>https://github.com/mobaijun</developerConnection>
+    </scm>
+
+    <dependencies>
         <dependency>
             <groupId>com.mobaijun</groupId>
             <artifactId>json-spring-boot-starter</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

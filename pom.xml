@@ -8,7 +8,7 @@
     <groupId>com.mobaijun</groupId>
     <artifactId>mobaijun-spring-boot-dependencies</artifactId>
     <packaging>pom</packaging>
-    <version>3.0.1</version>
+    <version>3.0.2</version>
 
     <name>mobaijun-spring-boot-dependencies</name>
     <inceptionYear>2022</inceptionYear>
@@ -46,16 +46,6 @@
         <module>json-spring-boot-starter</module>
         <module>sensitive-spring-boot-starter</module>
         <module>dubbo-spring-boot-starter</module>
-        <module>encrypt-spring-boot-starter</module>
-        <module>tenant-spring-boot-starter</module>
-        <module>sms-spring-boot-starter</module>
-        <module>satoken-spring-boot-starter</module>
-        <module>feign-spring-boot-starter</module>
-        <module>oss-spring-boot-starter</module>
-        <module>seata-spring-boot-starter</module>
-        <module>xss-spring-boot-starter</module>
-        <module>captcha-spring-boot-starter</module>
-        <module>jwt-spring-boot-starter</module>
         <module>db-helper-spring-boot-starter</module>
     </modules>
 
@@ -219,42 +209,42 @@
                 <!--  https://central.sonatype.com//artifact/com.mobaijun/core-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>core-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/email-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>email-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/influxdb-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>influxdb-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/base-model-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>base-model-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/jpush-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>jpush-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/mybatis-plus-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>mybatis-plus-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <dependency>
@@ -268,70 +258,70 @@
                 <!--  https://central.sonatype.com//artifact/com.mobaijun/influxdb-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>redis-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/swagger-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>openapi-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/table-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>table-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/excel-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>excel-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/bim-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>bim-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/file-upload-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>file-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/minio-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>minio-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/run-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>run-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/jasypt-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <!-- https://central.sonatype.com//artifact/com.mobaijun/json-spring-boot-starter -->
             <dependency>
                 <groupId>com.mobaijun</groupId>
                 <artifactId>json-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>3.0.2</version>
             </dependency>
 
             <!-- tool -->

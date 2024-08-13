@@ -7,11 +7,11 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-        <version>3.0.1</version>
+        <version>3.0.2</version>
     </parent>
 
     <artifactId>dubbo-spring-boot-starter</artifactId>
-    <version>3.0.1</version>
+    <version>3.0.2</version>
 
     <description>This is a spring boot common component tool class</description>
     <name>${project.artifactId}</name>
@@ -90,6 +90,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-commons</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.mobaijun</groupId>

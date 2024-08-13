@@ -6,7 +6,7 @@
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>3.0.1</version>
+        <version>3.0.2</version>
     </parent>
 
     <properties>
@@ -16,7 +16,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>bim-spring-boot-starter</artifactId>
-    <version>3.0.1</version>
+    <version>3.0.2</version>
 
     <name>${project.artifactId}</name>
     <description>Glodon's bim operation quick launcher, which integrates operations such as uploading files,
@@ -49,14 +49,17 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
