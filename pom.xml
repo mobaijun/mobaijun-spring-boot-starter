@@ -51,6 +51,7 @@
         <module>loadbalancer-spring-boot-starter</module>
         <module>nacos-spring-boot-starter</module>
         <module>web-spring-boot-starter</module>
+        <module>sms-spring-boot-starter</module>
     </modules>
 
     <!--  Personal information  -->
@@ -142,6 +143,8 @@
         <spring.context.support.version>1.0.11</spring.context.support.version>
         <jsoup.version>1.18.1</jsoup.version>
         <sa-token.version>1.38.0</sa-token.version>
+        <dysmsapi20170525.version>3.0.0</dysmsapi20170525.version>
+        <tencentcloud-sdk-java.version>3.1.1080</tencentcloud-sdk-java.version>
     </properties>
 
     <dependencies>
@@ -259,7 +262,7 @@
             </dependency>
 
             <dependency>
-                <!-- https://central.sonatype.com//artifact/com.mobaijun/file-upload-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/file-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>file-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
@@ -322,14 +325,14 @@
             </dependency>
 
             <dependency>
-                <!-- https://central.sonatype.com//artifact/com.mobaijun/swagger-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/openapi-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>openapi-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <!--  https://central.sonatype.com//artifact/com.mobaijun/influxdb-spring-boot-starter -->
+                <!--  https://central.sonatype.com//artifact/com.mobaijun/redis-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>redis-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
@@ -343,9 +346,16 @@
             </dependency>
 
             <dependency>
-                <!-- https://central.sonatype.com//artifact/com.mobaijun/json-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/sensitive-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>sensitive-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/sms-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>sms-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -800,6 +810,20 @@
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-core</artifactId>
                 <version>${sa-token.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/com.aliyun/dysmsapi20170525 -->
+                <groupId>com.aliyun</groupId>
+                <artifactId>dysmsapi20170525</artifactId>
+                <version>${dysmsapi20170525.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/com.tencentcloudapi/tencentcloud-sdk-java -->
+                <groupId>com.tencentcloudapi</groupId>
+                <artifactId>tencentcloud-sdk-java</artifactId>
+                <version>${tencentcloud-sdk-java.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

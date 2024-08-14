@@ -45,7 +45,7 @@
         <dependency>
             <groupId>com.mobaijun</groupId>
             <artifactId>base-model-spring-boot-starter</artifactId>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>

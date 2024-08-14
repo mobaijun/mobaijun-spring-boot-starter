@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -10,7 +9,9 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>run-spring-boot-starter</artifactId>
+    <artifactId>sms-spring-boot-starter</artifactId>
+    <name>${project.artifactId}</name>
+    <inceptionYear>2024</inceptionYear>
     <version>3.0.2</version>
 
     <properties>
@@ -18,12 +19,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
-    <name>${project.artifactId}</name>
-    <inceptionYear>2023</inceptionYear>
-    <description>"RunCommandRunner, a Spring Boot application, automates the opening of specified URLs on startup,
-        enhancing user experience by seamlessly navigating to frontend, Swagger, and project home pages."
+    <description>
+        Integrates Alibaba Cloud and Tencent Cloud SMS modules
     </description>
-    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/run-spring-boot-starter</url>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
 
     <!--  GitHub issues -->
     <issueManagement>
@@ -32,16 +31,36 @@
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/run-spring-boot-starter</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/sms-spring-boot-starter</url>
         <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 
     <dependencies>
-        <!-- log -->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>dysmsapi20170525</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.tencentcloudapi</groupId>
+            <artifactId>tencentcloud-sdk-java</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- slf4j日志 -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.mobaijun</groupId>
+            <artifactId>json-spring-boot-starter</artifactId>
             <optional>true</optional>
         </dependency>
     </dependencies>

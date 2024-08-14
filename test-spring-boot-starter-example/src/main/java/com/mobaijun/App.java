@@ -23,7 +23,7 @@ import com.mobaijun.common.license.LicenseTitleAppenderUtil;
  */
 public class App {
     public static void main(String[] args) {
-        String format = "D:\\ideaProject\\my-project\\mobaijun-spring-boot-dependencies\\web-spring-boot-starter\\src\\main\\java\\com\\mobaijun\\web";
+        String format = "D:\\ideaProject\\my-project\\mobaijun-spring-boot-dependencies\\sms-spring-boot-starter\\src\\main\\java";
         LicenseTitleAppenderUtil.append(format, String.format(LicenseType.APACHE_2.getValue(), "www.mobaijun.com"));
         // LicenseTitleAppenderUtil.removeLicense(format, String.format(LicenseType.APACHE_2.getValue(), "www.mobaijun.com"));
     }
