@@ -52,6 +52,8 @@
         <module>nacos-spring-boot-starter</module>
         <module>web-spring-boot-starter</module>
         <module>sms-spring-boot-starter</module>
+        <module>seata-spring-boot-starter</module>
+        <module>redisson-spring-boot-starter</module>
     </modules>
 
     <!--  Personal information  -->
@@ -145,6 +147,7 @@
         <sa-token.version>1.38.0</sa-token.version>
         <dysmsapi20170525.version>3.0.0</dysmsapi20170525.version>
         <tencentcloud-sdk-java.version>3.1.1080</tencentcloud-sdk-java.version>
+        <lock4j.version>2.2.7</lock4j.version>
     </properties>
 
     <dependencies>
@@ -332,9 +335,16 @@
             </dependency>
 
             <dependency>
-                <!--  https://central.sonatype.com//artifact/com.mobaijun/redis-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/redis-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>redis-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/redisson-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -824,6 +834,13 @@
                 <groupId>com.tencentcloudapi</groupId>
                 <artifactId>tencentcloud-sdk-java</artifactId>
                 <version>${tencentcloud-sdk-java.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/com.baomidou/lock4j-redisson-spring-boot-starter -->
+                <groupId>com.baomidou</groupId>
+                <artifactId>lock4j-redisson-spring-boot-starter</artifactId>
+                <version>${lock4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
