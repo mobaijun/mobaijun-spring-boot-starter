@@ -55,6 +55,7 @@
         <module>seata-spring-boot-starter</module>
         <module>redisson-spring-boot-starter</module>
         <module>ip2region-spring-boot-starter</module>
+        <module>operation-log-spring-boot-starter</module>
     </modules>
 
     <!--  Personal information  -->
@@ -340,6 +341,13 @@
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/openapi-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>openapi-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/operation-log-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>operation-log-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
