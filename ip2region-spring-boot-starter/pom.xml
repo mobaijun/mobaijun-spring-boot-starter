@@ -1,0 +1,48 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+          http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.mobaijun</groupId>
+        <artifactId>mobaijun-spring-boot-dependencies</artifactId>
+        <version>3.0.2</version>
+    </parent>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>ip2region-spring-boot-starter</artifactId>
+    <version>3.0.2</version>
+
+    <name>${project.artifactId}</name>
+    <description>ip2region address library simplifies operation package</description>
+    <inceptionYear>2024</inceptionYear>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
+
+    <!--  GitHub issues -->
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/ip2region-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
+        <developerConnection>https://github.com/mobaijun</developerConnection>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+        </dependency>
+    </dependencies>
+</project>
