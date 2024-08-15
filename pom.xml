@@ -83,7 +83,7 @@
         <maven.source>17</maven.source>
         <maven.target>17</maven.target>
         <java.version>17</java.version>
-        <project.version>3.0.1</project.version>
+        <project.version>3.0.3</project.version>
         <project.sourceEncoding>UTF-8</project.sourceEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -117,16 +117,16 @@
         <aliyun.version>3.18.4</aliyun.version>
         <lueetce.version>6.2.2.RELEASE</lueetce.version>
         <guava.version>33.2.1-jre</guava.version>
-        <hutool-all.version>5.8.28</hutool-all.version>
+        <hutool-all.version>[5.+,)</hutool-all.version>
         <jasypt.version>3.0.5</jasypt.version>
         <spring-redis.version>3.3.1</spring-redis.version>
         <minio.version>8.5.11</minio.version>
         <snakeyaml.version>[2.+,)</snakeyaml.version>
         <jettison.version>1.5.4</jettison.version>
-        <slf4j-api.version>2.0.6</slf4j-api.version>
-        <easyexcel.version>3.1.4</easyexcel.version>
+        <slf4j-api.version>[2.+,)</slf4j-api.version>
+        <easyexcel.version>[3.+,)</easyexcel.version>
         <kjs-common.version>[2.+,)</kjs-common.version>
-        <april-sensitive.version>2.0.0</april-sensitive.version>
+        <april-sensitive.version>[2.+,)</april-sensitive.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <bimface-java-sdk.version>3.2.9</bimface-java-sdk.version>
         <tianai-captcha.version>1.5.0</tianai-captcha.version>
@@ -136,7 +136,7 @@
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <httpclient.version>4.5.14</httpclient.version>
         <httpmime.version>4.5.14</httpmime.version>
-        <april-json-util.version>1.0.0</april-json-util.version>
+        <april-json-util.version>[1.+,)</april-json-util.version>
         <easyexcel-core.version>4.0.1</easyexcel-core.version>
         <commons-compress.version>[1.+,)</commons-compress.version>
         <knife4j-openapi3.version>[4.+,)</knife4j-openapi3.version>
@@ -146,7 +146,7 @@
         <redisson.version>3.33.0</redisson.version>
         <dubbo.version>3.2.14</dubbo.version>
         <spring.context.support.version>1.0.11</spring.context.support.version>
-        <jsoup.version>1.18.1</jsoup.version>
+        <jsoup.version>[1.+,)</jsoup.version>
         <sa-token.version>1.38.0</sa-token.version>
         <dysmsapi20170525.version>3.0.0</dysmsapi20170525.version>
         <tencentcloud-sdk-java.version>3.1.1080</tencentcloud-sdk-java.version>
