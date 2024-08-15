@@ -1,4 +1,4 @@
-package com.mobaijun.redisson;
+package com.mobaijun.redisson.config;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;

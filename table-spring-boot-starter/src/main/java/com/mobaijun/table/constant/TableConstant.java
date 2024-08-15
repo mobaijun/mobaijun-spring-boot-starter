@@ -38,7 +38,7 @@ public class TableConstant {
             "  `backups_path` varchar(180) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备份数据地址',\n" +
             "  `backups_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备份文件名称',\n" +
             "  `operation` int(0) NULL DEFAULT NULL COMMENT '操作次数',\n" +
-            "  `status` int(0) NULL DEFAULT NULL COMMENT '数据状态（0正常，1删除）',\n" +
+            "  `deleted` tinyint(1) NULL DEFAULT 0 COMMENT '状态（0：正常，1：删除）',\n" +
             "  `recovery_time` datetime(0) NULL DEFAULT NULL COMMENT '恢复时间',\n" +
             "  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '备份时间',\n" +
             "  PRIMARY KEY (`id`) USING BTREE,\n" +

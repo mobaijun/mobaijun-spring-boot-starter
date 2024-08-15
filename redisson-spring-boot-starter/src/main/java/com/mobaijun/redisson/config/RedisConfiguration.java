@@ -1,4 +1,4 @@
-package com.mobaijun.redisson;
+package com.mobaijun.redisson.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

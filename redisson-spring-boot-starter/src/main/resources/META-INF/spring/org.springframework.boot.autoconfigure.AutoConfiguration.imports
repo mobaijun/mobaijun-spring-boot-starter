@@ -1,2 +1,2 @@
-com.mobaijun.redisson.RedisConfiguration
-com.mobaijun.redisson.CacheConfiguration
+com.mobaijun.redisson.config.RedisConfiguration
+com.mobaijun.redisson.config.CacheConfiguration
