@@ -13,43 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mobaijun.base.model;
+package com.mobaijun.i18n.annotation;
 
-import java.util.List;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Description: [树节点]
+ * Description: 标注于需要国际化处理的类上, 配合 {@link I18nField} 使用，在响应时进行国际化处理
  * Author: [mobaijun]
- * Date: [2024/6/25 16:58]
+ * Date: [2024/8/15 11:55]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-public interface TreeNode<I> {
-
-    /**
-     * 获取节点 key
-     *
-     * @return 树节点 key
-     */
-    I getKey();
-
-    /**
-     * 获取该节点的父节点 key
-     *
-     * @return 父节点 key
-     */
-    I getParentKey();
-
-    /**
-     * 获取所有子节点
-     *
-     * @return 子节点列表
-     */
-    <T extends TreeNode<I>> List<T> getChildren();
-
-    /**
-     * 设置节点的子节点列表
-     *
-     * @param children 子节点
-     */
-    <T extends TreeNode<I>> void setChildren(List<T> children);
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface I18nClass {
 }

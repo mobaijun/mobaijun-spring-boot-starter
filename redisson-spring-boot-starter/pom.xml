@@ -21,7 +21,7 @@
     <description>
         Redisson cache configuration component, encapsulating cache and redisson components
     </description>
-    <inceptionYear>2023</inceptionYear>
+    <inceptionYear>2024</inceptionYear>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
 
     <!--  GitHub issues -->

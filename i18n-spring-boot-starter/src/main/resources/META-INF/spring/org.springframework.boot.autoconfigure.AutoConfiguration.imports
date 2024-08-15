@@ -1,0 +1,4 @@
+com.mobaijun.i18n.config.CustomMessageSourceAutoConfiguration
+com.mobaijun.i18n.config.I18nAutoConfiguration
+com.mobaijun.i18n.config.I18nMessageSourceAutoConfiguration
+com.mobaijun.i18n.config.I18nValidationConfiguration
