@@ -6,12 +6,12 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-        <version>3.0.2</version>
+        <version>3.0.3</version>
     </parent>
 
     <artifactId>web-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
-    <version>3.0.2</version>
+    <version>3.0.3</version>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
 
     <properties>

@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-        <version>3.0.2</version>
+        <version>3.0.3</version>
     </parent>
 
     <properties>
@@ -14,7 +14,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sensitive-spring-boot-starter</artifactId>
-    <version>3.0.2</version>
+    <version>3.0.3</version>
 
     <description>This is a spring boot common component tool class</description>
     <name>${project.artifactId}</name>

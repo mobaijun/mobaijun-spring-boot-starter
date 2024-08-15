@@ -6,12 +6,12 @@
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>3.0.2</version>
+        <version>3.0.3</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>core-spring-boot-starter</artifactId>
-    <version>3.0.2</version>
+    <version>3.0.3</version>
 
     <description>This is a spring boot common component tool class</description>
     <name>${project.artifactId}</name>

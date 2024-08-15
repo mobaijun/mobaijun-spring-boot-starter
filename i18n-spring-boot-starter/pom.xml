@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-        <version>3.0.2</version>
+        <version>3.0.3</version>
     </parent>
 
     <properties>
@@ -15,7 +15,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>i18n-spring-boot-starter</artifactId>
-    <version>3.0.2</version>
+    <version>3.0.3</version>
 
     <name>${project.artifactId}</name>
     <description>Influxdb Quick Action Launcher, which encapsulates commonly used operations such as addition,
