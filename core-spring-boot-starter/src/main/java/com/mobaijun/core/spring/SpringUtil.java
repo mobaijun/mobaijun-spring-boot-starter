@@ -20,6 +20,7 @@ import cn.hutool.core.util.ArrayUtil;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.Map;
+import lombok.Getter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -51,7 +52,10 @@ public class SpringUtil implements ApplicationContextAware, BeanFactoryPostProce
 
     /**
      * ApplicationContext
+     * -- GETTER --
+     * 获取应用程序上下文
      */
+    @Getter
     private static ApplicationContext applicationContext;
 
     /**
@@ -76,15 +80,6 @@ public class SpringUtil implements ApplicationContextAware, BeanFactoryPostProce
      */
     public static boolean containsBean(String name) {
         return getBeanFactory().containsBean(name);
-    }
-
-    /**
-     * 获取{@link ApplicationContext}
-     *
-     * @return {@link ApplicationContext}
-     */
-    public static ApplicationContext getApplicationContext() {
-        return applicationContext;
     }
 
     /**

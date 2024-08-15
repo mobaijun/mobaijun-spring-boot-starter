@@ -58,6 +58,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>compile</scope>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -78,6 +79,11 @@
         <dependency>
             <groupId>com.mobaijun</groupId>
             <artifactId>core-spring-boot-starter</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
             <optional>true</optional>
         </dependency>
     </dependencies>

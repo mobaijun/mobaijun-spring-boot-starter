@@ -48,21 +48,26 @@ public class DefaultAll extends BaseCreateTable {
                     .append(Constant.TABLE_PREFIX)
                     .append(tablePrefix)
                     .append(TableConstant.MYSQL_BACKUPS)
+                    .append("\n")
                     // 项目配置表
                     .append(Constant.TABLE_PREFIX)
                     .append(tablePrefix)
                     .append(TableConstant.CONFIG)
+                    .append("\n")
                     // 字典表
                     .append(Constant.TABLE_PREFIX)
                     .append(tablePrefix)
                     .append(TableConstant.DICT_TYPE)
+                    .append("\n")
                     .append(Constant.TABLE_PREFIX)
                     .append(tablePrefix)
                     .append(TableConstant.DICT_DATA)
+                    .append("\n")
                     // 地区表
                     .append(Constant.TABLE_PREFIX)
                     .append(tablePrefix)
                     .append(TableConstant.REGION)
+                    .append("\n")
                     // 组件配置表
                     .append(Constant.TABLE_PREFIX)
                     .append(tablePrefix)
@@ -73,17 +78,22 @@ public class DefaultAll extends BaseCreateTable {
                     // MySQL备份表
                     .append(Constant.TABLE_PREFIX)
                     .append(TableConstant.MYSQL_BACKUPS)
+                    .append("\n")
                     // 项目配置表
                     .append(Constant.TABLE_PREFIX)
                     .append(TableConstant.CONFIG)
+                    .append("\n")
                     // 字典表
                     .append(Constant.TABLE_PREFIX)
                     .append(TableConstant.DICT_TYPE)
+                    .append("\n")
                     .append(Constant.TABLE_PREFIX)
                     .append(TableConstant.DICT_DATA)
+                    .append("\n")
                     // 地区表
                     .append(Constant.TABLE_PREFIX)
                     .append(TableConstant.REGION)
+                    .append("\n")
                     // 组件配置表
                     .append(Constant.TABLE_PREFIX)
                     .append(TableConstant.SECOND);

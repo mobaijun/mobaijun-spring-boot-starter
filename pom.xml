@@ -842,6 +842,13 @@
                 <artifactId>lock4j-redisson-spring-boot-starter</artifactId>
                 <version>${lock4j.version}</version>
             </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/cn.hutool/hutool-http -->
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-http</artifactId>
+                <version>${hutool-all.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

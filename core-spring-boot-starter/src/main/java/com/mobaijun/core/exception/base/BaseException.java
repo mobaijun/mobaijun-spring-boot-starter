@@ -16,6 +16,8 @@
 package com.mobaijun.core.exception.base;
 
 import java.io.Serial;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Description: [基础异常]
@@ -23,6 +25,8 @@ import java.io.Serial;
  * Date: [2024/7/30 10:15]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
+@Setter
+@Getter
 public class BaseException extends RuntimeException {
 
     @Serial
@@ -100,38 +104,6 @@ public class BaseException extends RuntimeException {
         this.module = module;
         this.code = code;
         this.args = args;
-        this.defaultMessage = defaultMessage;
-    }
-
-    public String getModule() {
-        return module;
-    }
-
-    public void setModule(String module) {
-        this.module = module;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Object[] getArgs() {
-        return args;
-    }
-
-    public void setArgs(Object[] args) {
-        this.args = args;
-    }
-
-    public String getDefaultMessage() {
-        return defaultMessage;
-    }
-
-    public void setDefaultMessage(String defaultMessage) {
         this.defaultMessage = defaultMessage;
     }
 }
