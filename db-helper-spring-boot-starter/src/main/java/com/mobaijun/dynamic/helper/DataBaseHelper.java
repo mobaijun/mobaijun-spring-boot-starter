@@ -96,7 +96,7 @@ public class DataBaseHelper {
      */
     public static <T> String findInSet(T args, String var2) {
         DbType dbType = getDataBaseType();
-        String var = (String) args;
+        String var = args.toString();
         if (dbType == DbType.SQL_SERVER) {
             // char index(',100,' , ',0,100,101,') <> 0
             return "charindex(',%s,' , ','+%s+',') <> 0".formatted(var, var2);
