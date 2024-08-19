@@ -152,6 +152,7 @@
         <tencentcloud-sdk-java.version>3.1.1080</tencentcloud-sdk-java.version>
         <lock4j.version>2.2.7</lock4j.version>
         <ip2region.version>2.7.0</ip2region.version>
+        <mapstruct-plus.version>1.4.3</mapstruct-plus.version>
     </properties>
 
     <dependencies>
@@ -880,6 +881,13 @@
                 <groupId>org.lionsoul</groupId>
                 <artifactId>ip2region</artifactId>
                 <version>${ip2region.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/io.github.linpeilie/mapstruct-plus-spring-boot-starter -->
+                <groupId>io.github.linpeilie</groupId>
+                <artifactId>mapstruct-plus-spring-boot-starter</artifactId>
+                <version>${mapstruct-plus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
