@@ -1,11 +1,12 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-         http://maven.apache.org/maven-v4_0_0.xsd">
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.mobaijun</groupId>
-        <artifactId>mobaijun-spring-boot-dependencies</artifactId>
+        <artifactId>job-spring-boot-starter</artifactId>
         <version>3.0.3</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <properties>
@@ -14,15 +15,13 @@
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>jasypt-spring-boot-starter</artifactId>
+    <artifactId>xxljob-spring-boot-starter</artifactId>
     <version>3.0.3</version>
 
     <name>${project.artifactId}</name>
-    <description>Jasypt Quick Action Launcher, which encapsulates commonly used operations such as
-        encryption,decryption, and configuration.
-    </description>
-    <inceptionYear>2023</inceptionYear>
-    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
+    <description>xxljob-spring-boot-starter</description>
+    <inceptionYear>2024</inceptionYear>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/xxljob-spring-boot-starter</url>
 
     <!--  GitHub issues -->
     <issueManagement>
@@ -37,10 +36,21 @@
     </scm>
 
     <dependencies>
-        <!-- Jasypt Starter -->
+        <!--xxl job-->
         <dependency>
-            <groupId>com.github.ulisesbocchio</groupId>
-            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>

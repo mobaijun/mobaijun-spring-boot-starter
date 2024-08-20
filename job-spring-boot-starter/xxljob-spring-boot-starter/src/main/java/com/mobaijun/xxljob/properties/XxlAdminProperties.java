@@ -13,40 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mobaijun.base.entity;
+package com.mobaijun.xxljob.properties;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import java.io.Serial;
-import java.io.Serializable;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Description: [修改状态请求参数]
+ * Description: xxl 管控台相关属性
  * Author: [mobaijun]
- * Date: [2024/8/16 11:06]
+ * Date: [2024/8/20 9:52]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
- *
- * @param <I> 主键类型
- * @param <S> 状态类型
  */
+
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
-@Schema(name = "修改状态请求参数", description = "[修改状态请求参数]")
-public class QueryStatusModel<I, S> implements Serializable {
+public class XxlAdminProperties {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    @Schema(name = "id", description = "[主键]")
-    private I id;
-
-    @Schema(name = "status", description = "[状态]")
-    private S status;
+    /**
+     * 调度中心部署跟地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。 执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
+     */
+    private String addresses;
 }

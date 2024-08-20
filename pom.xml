@@ -57,6 +57,7 @@
         <module>ip2region-spring-boot-starter</module>
         <module>operation-log-spring-boot-starter</module>
         <module>i18n-spring-boot-starter</module>
+        <module>job-spring-boot-starter</module>
     </modules>
 
     <!--  Personal information  -->
@@ -153,6 +154,7 @@
         <lock4j.version>2.2.7</lock4j.version>
         <ip2region.version>2.7.0</ip2region.version>
         <mapstruct-plus.version>1.4.3</mapstruct-plus.version>
+        <xxl-job.version>2.4.1</xxl-job.version>
     </properties>
 
     <dependencies>
@@ -301,6 +303,27 @@
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/jasypt-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/job-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>job-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/xxljob-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>xxljob-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/quartz-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>quartz-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -888,6 +911,13 @@
                 <groupId>io.github.linpeilie</groupId>
                 <artifactId>mapstruct-plus-spring-boot-starter</artifactId>
                 <version>${mapstruct-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/com.xuxueli/xxl-job-core -->
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

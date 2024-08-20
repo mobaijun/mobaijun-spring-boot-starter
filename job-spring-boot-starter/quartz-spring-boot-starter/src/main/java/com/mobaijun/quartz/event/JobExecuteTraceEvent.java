@@ -13,40 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mobaijun.base.entity;
+package com.mobaijun.quartz.event;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.mobaijun.quartz.enums.JobExecuteTraceType;
+import com.mobaijun.quartz.store.JobExecuteTrace;
 import java.io.Serial;
-import java.io.Serializable;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+import org.springframework.context.ApplicationEvent;
 
 /**
- * Description: [修改状态请求参数]
+ * Description: 任务执行记录事件
  * Author: [mobaijun]
- * Date: [2024/8/16 11:06]
+ * Date: [2024/8/20 9:59]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
- *
- * @param <I> 主键类型
- * @param <S> 状态类型
  */
 @Getter
 @Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
-@Schema(name = "修改状态请求参数", description = "[修改状态请求参数]")
-public class QueryStatusModel<I, S> implements Serializable {
+public class JobExecuteTraceEvent extends ApplicationEvent {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "id", description = "[主键]")
-    private I id;
+    private final JobExecuteTrace jobExecuteTrace;
 
-    @Schema(name = "status", description = "[状态]")
-    private S status;
+    private JobExecuteTraceType eventType;
+
+    /**
+     * 构造方法
+     *
+     * @param jobExecuteTrace JobExecuteTrace
+     * @param eventType       {@link JobExecuteTraceType}
+     */
+    public JobExecuteTraceEvent(JobExecuteTrace jobExecuteTrace, JobExecuteTraceType eventType) {
+        super(jobExecuteTrace.getJobName());
+        this.jobExecuteTrace = jobExecuteTrace;
+        this.eventType = eventType;
+    }
 }

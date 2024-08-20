@@ -13,28 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mobaijun.core.service;
-
-import java.util.Optional;
+package com.mobaijun.quartz.store;
 
 /**
- * Description: [状态修改接口]
+ * Description: []
  * Author: [mobaijun]
- * Date: [2024/8/15 17:15]
+ * Date: [2024/8/20 10:00]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
- *
- * @param <T> 实体类型
- * @param <I> 实体id类型
- * @param <M> 状态属性类型
  */
-public interface StatusService<T, I, M> {
+public interface JobExecuteTraceStore {
 
     /**
-     * 通用修改状态接口（同步版本）
+     * 存储执行记录
      *
-     * @param id     实体ID
-     * @param status 状态属性
-     * @return 修改后的实体，如果实体不存在则返回Optional.empty()
+     * @param jobExecuteTrace 执行记录
      */
-    Optional<T> updateStatus(I id, M status);
+    void storeTrace(JobExecuteTrace jobExecuteTrace);
+
+    /**
+     * 清理过期记录
+     *
+     * @param cleanDays 清理天数
+     */
+    void cleanUp(int cleanDays);
 }

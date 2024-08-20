@@ -13,40 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mobaijun.base.entity;
+package com.mobaijun.quartz.properties;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import java.io.Serial;
-import java.io.Serializable;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Description: [修改状态请求参数]
+ * Description: 定时任务配置类
  * Author: [mobaijun]
- * Date: [2024/8/16 11:06]
+ * Date: [2024/8/20 10:00]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
- *
- * @param <I> 主键类型
- * @param <S> 状态类型
  */
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
-@Schema(name = "修改状态请求参数", description = "[修改状态请求参数]")
-public class QueryStatusModel<I, S> implements Serializable {
+@ConfigurationProperties(QuartzJobProperties.PREFIX)
+public class QuartzJobProperties {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
+    public static final String PREFIX = "quartz.job";
 
-    @Schema(name = "id", description = "[主键]")
-    private I id;
-
-    @Schema(name = "status", description = "[状态]")
-    private S status;
+    /**
+     * 是否启用Quartz调度任务，默认：开启
+     */
+    private boolean enabled = true;
 }

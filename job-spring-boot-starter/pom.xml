@@ -1,12 +1,18 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-         http://maven.apache.org/maven-v4_0_0.xsd">
+          http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <version>3.0.3</version>
     </parent>
+
+    <modules>
+        <!-- submodule -->
+        <module>quartz-spring-boot-starter</module>
+        <module>xxljob-spring-boot-starter</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -14,14 +20,13 @@
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>jasypt-spring-boot-starter</artifactId>
+    <artifactId>job-spring-boot-starter</artifactId>
     <version>3.0.3</version>
+    <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
-    <description>Jasypt Quick Action Launcher, which encapsulates commonly used operations such as
-        encryption,decryption, and configuration.
-    </description>
-    <inceptionYear>2023</inceptionYear>
+    <description>Scheduler component module</description>
+    <inceptionYear>2024</inceptionYear>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
 
     <!--  GitHub issues -->
@@ -31,16 +36,8 @@
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/jasypt-spring-boot-starter</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/job-spring-boot-starter</url>
         <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
-
-    <dependencies>
-        <!-- Jasypt Starter -->
-        <dependency>
-            <groupId>com.github.ulisesbocchio</groupId>
-            <artifactId>jasypt-spring-boot-starter</artifactId>
-        </dependency>
-    </dependencies>
 </project>
