@@ -6,27 +6,28 @@
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>3.0.3</version>
+        <version>3.0.4</version>
+        <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>core-spring-boot-starter</artifactId>
-    <version>3.0.3</version>
+    <version>${project.parent.version}</version>
 
     <description>This is a spring boot common component tool class</description>
     <name>${project.artifactId}</name>
     <inceptionYear>2022</inceptionYear>
-    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/core-spring-boot-starter</url>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
 
     <!--  GitHub issues -->
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/core-spring-boot-starter</url>
-        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/core-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 

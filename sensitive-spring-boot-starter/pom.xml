@@ -5,7 +5,8 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-        <version>3.0.3</version>
+        <version>3.0.4</version>
+        <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
     <properties>
@@ -14,7 +15,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sensitive-spring-boot-starter</artifactId>
-    <version>3.0.3</version>
+    <version>${project.parent.version}</version>
 
     <description>This is a spring boot common component tool class</description>
     <name>${project.artifactId}</name>
@@ -24,12 +25,12 @@
     <!--  GitHub issues -->
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/sensitive-spring-boot-starter</url>
-        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/sensitive-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 

@@ -2,11 +2,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>3.0.3</version>
+        <version>3.0.4</version>
+        <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
     <properties>
@@ -16,25 +16,25 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>bim-spring-boot-starter</artifactId>
-    <version>3.0.3</version>
+    <version>${project.parent.version}</version>
 
     <name>${project.artifactId}</name>
     <description>Glodon's bim operation quick launcher, which integrates operations such as uploading files,
         previewing, deleting, etc.
     </description>
     <inceptionYear>2022</inceptionYear>
-    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/bim-spring-boot-starter</url>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
 
     <!--  GitHub issues -->
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/bim-spring-boot-starter
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/bim-spring-boot-starter
         </url>
-        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 

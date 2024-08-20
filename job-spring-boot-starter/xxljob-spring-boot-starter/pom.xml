@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>job-spring-boot-starter</artifactId>
-        <version>3.0.3</version>
+        <version>3.0.4</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -16,22 +16,24 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>xxljob-spring-boot-starter</artifactId>
-    <version>3.0.3</version>
+    <version>${project.parent.version}</version>
 
     <name>${project.artifactId}</name>
     <description>xxljob-spring-boot-starter</description>
     <inceptionYear>2024</inceptionYear>
-    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/xxljob-spring-boot-starter</url>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
 
     <!--  GitHub issues -->
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/jasypt-spring-boot-starter</url>
-        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
+        <url>
+            https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/3.0.0/job-spring-boot-starter/xxljob-spring-boot-starter
+        </url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 

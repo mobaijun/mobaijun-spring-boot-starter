@@ -6,12 +6,13 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-        <version>3.0.3</version>
+        <version>3.0.4</version>
+        <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
     <artifactId>nacos-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
-    <version>3.0.3</version>
+    <version>${project.parent.version}</version>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
 
     <properties>
@@ -27,12 +28,12 @@
     <!--  GitHub issues -->
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/nacos-spring-boot-starter</url>
-        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/nacos-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 

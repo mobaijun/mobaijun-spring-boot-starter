@@ -6,7 +6,8 @@
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>3.0.3</version>
+        <version>3.0.4</version>
+        <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
     <properties>
@@ -16,23 +17,23 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>influxdb-spring-boot-starter</artifactId>
-    <version>3.0.3</version>
+    <version>${project.parent.version}</version>
 
     <name>${project.artifactId}</name>
     <description>Influxdb Quick Action Launcher, which encapsulates commonly used operations such as addition,
     deletion, modification and query</description>
     <inceptionYear>2022</inceptionYear>
-    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
 
     <!--  GitHub issues -->
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/issues</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies/tree/main/influxdb-spring-boot-starter</url>
-        <connection>https://github.com/mobaijun/mobaijun-spring-boot-dependencies.git</connection>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/influxdb-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 
