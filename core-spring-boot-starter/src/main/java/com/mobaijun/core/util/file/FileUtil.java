@@ -35,7 +35,7 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
      */
     public static void setAttachmentResponseHeader(HttpServletResponse response, String realFileName) {
         String percentEncodedFileName = percentEncode(realFileName);
-        String contentDispositionValue = "attachment; filename=%s;filename*=utf-8''%s".formatted(percentEncodedFileName, percentEncodedFileName);
+        String contentDispositionValue = "attachment; filename=%s;filename=%s".formatted(percentEncodedFileName, percentEncodedFileName);
         response.addHeader("Access-Control-Expose-Headers", "Content-Disposition,download-filename");
         response.setHeader("Content-disposition", contentDispositionValue);
         response.setHeader("download-filename", percentEncodedFileName);

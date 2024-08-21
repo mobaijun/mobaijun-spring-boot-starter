@@ -54,10 +54,8 @@
         <maven.source>17</maven.source>
         <maven.target>17</maven.target>
         <java.version>17</java.version>
-        <project.version>3.0.3</project.version>
         <project.sourceEncoding>UTF-8</project.sourceEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
         <!-- 插件版本 -->
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>

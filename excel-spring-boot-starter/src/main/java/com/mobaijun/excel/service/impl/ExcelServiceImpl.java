@@ -62,7 +62,7 @@ public class ExcelServiceImpl implements ExcelService {
             response.setContentType("application/vnd.ms-excel");
             response.setCharacterEncoding(StandardCharsets.UTF_8.name());
             String fileName = URLEncoder.encode(excelExportParam.getFileName(), StandardCharsets.UTF_8).replaceAll("\\+", "%20");
-            response.setHeader("Content-disposition", String.format("%s%s%s", "attachment;filename*=utf-8''", fileName, excelTypeEnum.getValue()));
+            response.setHeader("Content-disposition", String.format("%s%s%s", "attachment;filename=", fileName, excelTypeEnum.getValue()));
 
             EasyExcel.write(response.getOutputStream(), excelExportParam
                             .getClazz())

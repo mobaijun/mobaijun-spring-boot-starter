@@ -12,7 +12,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>core-spring-boot-starter</artifactId>
-    <version>${project.parent.version}</version>
+    <version>3.0.4</version>
 
     <description>This is a spring boot common component tool class</description>
     <name>${project.artifactId}</name>
@@ -88,6 +88,11 @@
             <artifactId>mapstruct-plus-spring-boot-starter</artifactId>
             <optional>true</optional>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>

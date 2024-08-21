@@ -15,9 +15,15 @@
  */
 package com.mobaijun.core.config;
 
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import com.mobaijun.core.initializing.ApplicationContextBean;
+import com.mobaijun.core.properties.ApplicationProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Description: [程序注解配置]
@@ -25,8 +31,23 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * Date: [2024/7/30 10:10]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-@AutoConfiguration
+@Configuration
+@EnableScheduling
 @EnableAspectJAutoProxy
 @EnableAsync(proxyTargetClass = true)
+@EnableConfigurationProperties(ApplicationProperties.class)
 public class ApplicationConfig {
+
+    /**
+     * 初始化配置
+     *
+     * @param applicationProperties 项目默认配置
+     * @return ApplicationContextBean
+     */
+    @Bean
+    @ConditionalOnClass(ApplicationProperties.class)
+    public ApplicationContextBean applicationContextBean(
+            ApplicationProperties applicationProperties) {
+        return new ApplicationContextBean(applicationProperties);
+    }
 }

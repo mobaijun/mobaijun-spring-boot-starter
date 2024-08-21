@@ -16,7 +16,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>base-model-spring-boot-starter</artifactId>
-    <version>${project.parent.version}</version>
+    <version>3.0.4</version>
 
     <name>${project.artifactId}</name>
     <description>This is a spring boot basic entity tool module, commonly used paging plug-ins,

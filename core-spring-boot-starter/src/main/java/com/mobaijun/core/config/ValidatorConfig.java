@@ -19,10 +19,10 @@ import jakarta.validation.Validator;
 import java.util.Properties;
 import org.hibernate.validator.HibernateValidator;
 import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 /**
@@ -31,7 +31,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  * Date: [2024/8/12 9:49]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-@Configuration
+@AutoConfiguration
 public class ValidatorConfig {
 
     /**

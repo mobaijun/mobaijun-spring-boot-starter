@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>json-spring-boot-starter</artifactId>
-    <version>${project.parent.version}</version>
+    <version>3.0.4</version>
     <name>${project.artifactId}</name>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
 

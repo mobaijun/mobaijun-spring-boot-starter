@@ -15,7 +15,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sensitive-spring-boot-starter</artifactId>
-    <version>${project.parent.version}</version>
+    <version>3.0.4</version>
 
     <description>This is a spring boot common component tool class</description>
     <name>${project.artifactId}</name>

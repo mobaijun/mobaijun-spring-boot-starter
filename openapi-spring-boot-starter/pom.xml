@@ -12,7 +12,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>openapi-spring-boot-starter</artifactId>
-    <version>${project.parent.version}</version>
+    <version>3.0.4</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

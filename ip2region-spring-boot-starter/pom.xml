@@ -15,7 +15,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ip2region-spring-boot-starter</artifactId>
-    <version>${project.parent.version}</version>
+    <version>3.0.4</version>
 
     <name>${project.artifactId}</name>
     <description>ip2region address library simplifies operation package</description>

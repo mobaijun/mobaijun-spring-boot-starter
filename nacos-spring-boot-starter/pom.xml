@@ -12,7 +12,7 @@
 
     <artifactId>nacos-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
-    <version>${project.parent.version}</version>
+    <version>3.0.4</version>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
 
     <properties>

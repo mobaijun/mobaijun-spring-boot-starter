@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-    <version>${project.parent.version}</version>
+    <version>3.0.4</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -62,16 +62,17 @@
         <module>../operation-log-spring-boot-starter</module>
         <module>../i18n-spring-boot-starter</module>
         <module>../job-spring-boot-starter</module>
+        <module>../easyexcel-spring-boot-starter</module>
     </modules>
 
     <properties>
         <!-- 依赖版本 -->
-        <spring-boot.version>3.3.1</spring-boot.version>
-        <spring-cloud.version>2023.0.2</spring-cloud.version>
-        <spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
-        <client.version>3.6.6</client.version>
+        <spring-boot.version>3.3.2</spring-boot.version>
+        <spring-cloud.version>2023.0.3</spring-cloud.version>
+        <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
+        <client.version>3.7.7</client.version>
         <common.version>1.2.7</common.version>
-        <influxdb.version>2.23</influxdb.version>
+        <influxdb.version>2.24</influxdb.version>
         <validation-api>2.0.1.Final</validation-api>
         <mybatis-plus.version>3.5.7</mybatis-plus.version>
         <dynamic.version>4.3.1</dynamic.version>
@@ -82,13 +83,13 @@
         <springdoc.version>1.8.0</springdoc.version>
         <swagger-ui.version>3.0.3</swagger-ui.version>
         <swagger.version>3.0.0</swagger.version>
-        <web-mvc.version>6.1.10</web-mvc.version>
+        <web-mvc.version>6.1.12</web-mvc.version>
         <aliyun.version>3.18.4</aliyun.version>
-        <lueetce.version>6.2.2.RELEASE</lueetce.version>
-        <guava.version>33.2.1-jre</guava.version>
+        <lueetce.version>6.4.0.RELEASE</lueetce.version>
+        <guava.version>33.3.0-jre</guava.version>
         <hutool-all.version>[5.+,)</hutool-all.version>
         <jasypt.version>3.0.5</jasypt.version>
-        <spring-redis.version>3.3.1</spring-redis.version>
+        <spring-redis.version>3.3.3</spring-redis.version>
         <minio.version>8.5.11</minio.version>
         <snakeyaml.version>[2.+,)</snakeyaml.version>
         <jettison.version>1.5.4</jettison.version>
@@ -172,6 +173,7 @@
 
             <!-- spring cloud -->
             <dependency>
+                <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
@@ -233,6 +235,13 @@
             </dependency>
 
             <dependency>
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/easyexcel-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>easyexcel-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/excel-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>excel-spring-boot-starter</artifactId>
@@ -285,14 +294,14 @@
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/xxljob-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>xxljob-spring-boot-starter</artifactId>
-                <version>3.0.4</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/quartz-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>quartz-spring-boot-starter</artifactId>
-                <version>3.0.4</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
