@@ -39,8 +39,6 @@ import io.minio.messages.Bucket;
 import io.minio.messages.DeleteError;
 import io.minio.messages.DeleteObject;
 import io.minio.messages.Item;
-import org.springframework.util.CollectionUtils;
-
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -52,6 +50,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+import org.springframework.util.CollectionUtils;
 
 /**
  * software：IntelliJ IDEA 2022.1
@@ -118,7 +117,7 @@ public class MinioService {
         List<Bucket> bucketList = listBuckets();
         return !CollectionUtils.isEmpty(bucketList) ?
                 bucketList.stream().map(Bucket::name)
-                        .collect(Collectors.toList()) : new ArrayList<>();
+                        .toList() : new ArrayList<>();
     }
 
     /**
@@ -154,8 +153,7 @@ public class MinioService {
      */
     public List<String> listObjectNames(String bucketName) throws Exception {
         List<String> listObjectNames = new ArrayList<>();
-        boolean flag = bucketExists(bucketName);
-        if (flag) {
+        if (bucketExists(bucketName)) {
             Iterable<Result<Item>> myObjects = listObjects(bucketName);
             for (Result<Item> result : myObjects) {
                 Item item = result.get();
@@ -172,8 +170,7 @@ public class MinioService {
      * @return Barrel object
      */
     public Iterable<Result<Item>> listObjects(String bucketName) throws Exception {
-        boolean flag = bucketExists(bucketName);
-        if (flag) {
+        if (bucketExists(bucketName)) {
             return minioClient.listObjects(ListObjectsArgs.builder().bucket(bucketName).build());
         }
         return null;
@@ -188,7 +185,7 @@ public class MinioService {
         // Gets a list of file objects in the bucket
         return !CollectionUtils.isEmpty(list()) ? list().stream()
                 .map(Item::objectName)
-                .collect(Collectors.toCollection(LinkedList::new)) : new LinkedList<>();
+                .toList() : new LinkedList<>();
     }
 
     /**
@@ -202,8 +199,7 @@ public class MinioService {
                 .prefix("")
                 .recursive(false)
                 .build();
-        Iterable<Result<Item>> myObjects = minioClient.listObjects(args);
-        return getItems(myObjects);
+        return getItems(minioClient.listObjects(args));
     }
 
 
@@ -236,8 +232,7 @@ public class MinioService {
         ListObjectsArgs args = ListObjectsArgs.builder()
                 .bucket(minioConfigurationProperties.getBucket())
                 .build();
-        Iterable<Result<Item>> myObjects = minioClient.listObjects(args);
-        return getItems(myObjects);
+        return getItems(minioClient.listObjects(args));
     }
 
     /**
@@ -290,8 +285,7 @@ public class MinioService {
                     } catch (Exception e) {
                         throw new MinioFetchException("Error while parsing list of objects", e);
                     }
-                })
-                .collect(Collectors.toList());
+                }).toList();
     }
 
     /**
@@ -438,7 +432,6 @@ public class MinioService {
                     .headers(headers)
                     .contentType(contentType)
                     .build();
-
             minioClient.putObject(args);
         } catch (Exception e) {
             throw new MinioException("Error while fetching files in Minio", e);
@@ -461,7 +454,6 @@ public class MinioService {
                     .stream(file, file.available(), -1)
                     .contentType(contentType)
                     .build();
-
             minioClient.putObject(args);
         } catch (Exception e) {
             throw new MinioException("Error while fetching files in Minio", e);
@@ -493,14 +485,14 @@ public class MinioService {
      * Get file outreach
      *
      * @param bucketName Bucket Name
-     * @param objectName The file name
+     * @param fileName   The file name
      * @return The file url
      * @throws Exception Exception
      */
-    public String getResignedObjectUrl(String bucketName, String objectName) throws Exception {
+    public String getResignedObjectUrl(String bucketName, String fileName) throws Exception {
         GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder()
                 .bucket(bucketName)
-                .object(objectName)
+                .object(fileName)
                 .method(Method.GET).build();
         return minioClient.getPresignedObjectUrl(args);
     }
@@ -554,14 +546,13 @@ public class MinioService {
      * Deleting an object
      *
      * @param bucketName Bucket Name
-     * @param objectName The name of the object in the bucket
+     * @param fileName   The name of the object in the bucket
      */
-    public boolean removeObject(String bucketName, String objectName) throws Exception {
-        boolean flag = bucketExists(bucketName);
-        if (flag) {
+    public boolean removeObject(String bucketName, String fileName) throws Exception {
+        if (bucketExists(bucketName)) {
             minioClient.removeObject(RemoveObjectArgs.builder()
                     .bucket(bucketName)
-                    .object(objectName).build());
+                    .object(fileName).build());
             return true;
         }
         return false;
@@ -572,20 +563,20 @@ public class MinioService {
      * a list of incorrect objects is displayed.
      * If all file objects are successfully deleted, an empty list is displayed
      *
-     * @param bucketName  Bucket Name
-     * @param objectNames Iterator object containing multiple object names to delete
+     * @param bucketName Bucket Name
+     * @param fileNames  Iterator object containing multiple object names to delete
      * @return Delete the list
      */
-    public List<String> removeObject(String bucketName, List<String> objectNames) throws Exception {
-        if (CollectionUtils.isEmpty(objectNames)) {
+    public List<String> removeObject(String bucketName, List<String> fileNames) throws Exception {
+        if (CollectionUtils.isEmpty(fileNames)) {
             throw new MinioException("minio.delete.object.name.can.not.empty");
         }
         List<String> deleteErrorNames = new ArrayList<>();
         boolean flag = bucketExists(bucketName);
         if (flag) {
-            List<DeleteObject> objects = objectNames.stream().map(DeleteObject::new).collect(Collectors.toList());
+            List<DeleteObject> deleteFileNames = fileNames.stream().map(DeleteObject::new).toList();
             Iterable<Result<DeleteError>> results = minioClient
-                    .removeObjects(RemoveObjectsArgs.builder().bucket(bucketName).objects(objects).build());
+                    .removeObjects(RemoveObjectsArgs.builder().bucket(bucketName).objects(deleteFileNames).build());
             for (Result<DeleteError> result : results) {
                 DeleteError error = result.get();
                 deleteErrorNames.add(error.objectName());
