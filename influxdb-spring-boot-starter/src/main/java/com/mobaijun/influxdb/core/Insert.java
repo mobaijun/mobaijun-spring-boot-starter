@@ -16,15 +16,14 @@
 package com.mobaijun.influxdb.core;
 
 import com.mobaijun.influxdb.core.constant.Constant;
-import com.mobaijun.influxdb.util.CommonUtils;
+import com.mobaijun.influxdb.util.CommonUtil;
+import java.lang.reflect.Field;
+import java.time.LocalDateTime;
+import java.util.Objects;
 import org.influxdb.annotation.Column;
 import org.influxdb.annotation.Measurement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Field;
-import java.time.LocalDateTime;
-import java.util.Objects;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -66,7 +65,7 @@ public class Insert extends BaseQuery {
                 } else {
                     if (Objects.nonNull(field.get(object))) {
                         if (Constant.TIME.equals(column.name())) {
-                            time = CommonUtils.parseLocalDateTimeToInstant((LocalDateTime) field.get(object)).getEpochSecond() + "000000000";
+                            time = CommonUtil.parseLocalDateTimeToInstant((LocalDateTime) field.get(object)).getEpochSecond() + "000000000";
                         } else {
                             if (i == 0) {
                                 insert.append(Constant.SPACE);
@@ -85,7 +84,7 @@ public class Insert extends BaseQuery {
         }
         insert.append(Constant.SPACE).append(time);
         String sql = insert.toString();
-        log.warn("The new sentence is :{}" + sql);
+        log.warn("The new sentence is :{}", sql);
         return sql;
     }
 }

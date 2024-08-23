@@ -29,7 +29,7 @@ public class CaptchaException extends UserException implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public CaptchaException() {
-        super("user.jcaptcha.error");
+        super("user.captcha.error");
     }
 
     public CaptchaException(String msg) {

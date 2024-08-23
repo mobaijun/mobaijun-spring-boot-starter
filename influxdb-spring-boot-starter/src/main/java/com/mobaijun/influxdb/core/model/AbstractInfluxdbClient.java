@@ -15,9 +15,8 @@
  */
 package com.mobaijun.influxdb.core.model;
 
-import okhttp3.OkHttpClient;
-
 import java.util.concurrent.TimeUnit;
+import okhttp3.OkHttpClient;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -81,8 +80,8 @@ public abstract class AbstractInfluxdbClient {
         this.password = password;
         this.url = url;
         this.database = database;
-        this.retentionPolicy = retentionPolicy == null || "".equals(retentionPolicy) ? DEFAULT : retentionPolicy;
-        this.retentionPolicyTime = retentionPolicyTime == null || "".equals(retentionPolicyTime) ? DEFAULT_POLICY_TIME : retentionPolicyTime;
+        this.retentionPolicy = retentionPolicy == null || retentionPolicy.isEmpty() ? DEFAULT : retentionPolicy;
+        this.retentionPolicyTime = retentionPolicyTime == null || retentionPolicyTime.isEmpty() ? DEFAULT_POLICY_TIME : retentionPolicyTime;
     }
 
     public String getUsername() {

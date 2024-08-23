@@ -29,6 +29,5 @@ public final class OssConstants {
     public static final String SLASH = "/";
 
     private OssConstants() {
-
     }
 }

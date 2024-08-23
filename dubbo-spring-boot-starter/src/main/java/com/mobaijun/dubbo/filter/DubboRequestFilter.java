@@ -18,7 +18,7 @@ package com.mobaijun.dubbo.filter;
 import com.mobaijun.core.spring.SpringUtil;
 import com.mobaijun.dubbo.enums.RequestLogEnum;
 import com.mobaijun.dubbo.properrties.DubboCustomProperties;
-import com.mobaijun.json.utils.JsonUtil;
+import com.mobaijun.json.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;

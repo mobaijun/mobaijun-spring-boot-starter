@@ -15,7 +15,7 @@
  */
 package com.mobaijun.sms.tencent;
 
-import com.mobaijun.json.utils.JsonUtil;
+import com.mobaijun.json.util.JsonUtil;
 import com.mobaijun.sms.enums.TypeEnum;
 import com.mobaijun.sms.model.SmsSenderResult;
 import com.mobaijun.sms.properties.SmsProperties;

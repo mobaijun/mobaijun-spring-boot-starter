@@ -65,11 +65,22 @@ import org.springframework.util.CollectionUtils;
  */
 public class MinioService {
 
+    /**
+     * Minio Client
+     */
     private final MinioClient minioClient;
 
+    /**
+     * 配置文件属性
+     */
     private final MinioConfigurationProperties minioConfigurationProperties;
 
-
+    /**
+     * 初始化
+     *
+     * @param minioClient     minio 客户端
+     * @param minioProperties 配置文件属性
+     */
     public MinioService(MinioClient minioClient, MinioConfigurationProperties minioProperties) {
         this.minioClient = minioClient;
         this.minioConfigurationProperties = minioProperties;

@@ -17,6 +17,7 @@ package org.bson.types;
 
 import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
+import java.io.Serial;
 import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
@@ -65,6 +66,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class ObjectId implements Comparable<ObjectId>, Serializable {
 
     // unused, as this class uses a proxy for serialization
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private static final int OBJECT_ID_LENGTH = 12;

@@ -29,6 +29,6 @@ public class CaptchaExpireException extends UserException implements Serializabl
     private static final long serialVersionUID = 1L;
 
     public CaptchaExpireException() {
-        super("user.jcaptcha.expire");
+        super("user.captcha.expire");
     }
 }

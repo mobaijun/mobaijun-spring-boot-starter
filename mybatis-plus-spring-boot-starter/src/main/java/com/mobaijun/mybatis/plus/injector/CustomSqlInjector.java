@@ -40,5 +40,4 @@ public class CustomSqlInjector extends DefaultSqlInjector {
         methodList.addAll(this.methods);
         return methodList;
     }
-
 }

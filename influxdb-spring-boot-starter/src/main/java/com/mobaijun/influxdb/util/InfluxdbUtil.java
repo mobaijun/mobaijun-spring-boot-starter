@@ -41,17 +41,17 @@ import org.springframework.util.ReflectionUtils;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
- * ClassName: InfluxdbUtils
+ * ClassName: InfluxdbUtil
  * 类描述： influxdb 工具类
  *
  * @author MoBaiJun 2022/4/29 14:29
  */
-public class InfluxdbUtils {
+public class InfluxdbUtil {
 
     /**
      * logger
      */
-    private static final Logger log = LoggerFactory.getLogger(InfluxdbUtils.class);
+    private static final Logger log = LoggerFactory.getLogger(InfluxdbUtil.class);
 
     /**
      * 将queryResult 转换为实体对象List
@@ -84,7 +84,7 @@ public class InfluxdbUtils {
                                 String fieldName = columns.get(i);
                                 Field field;
                                 // 使用 spring 工具类获取指定字段
-                                field = ReflectionUtils.findField(clazz, CommonUtils.lineToHump(fieldName));
+                                field = ReflectionUtils.findField(clazz, CommonUtil.lineToHump(fieldName));
                                 if (field == null) {
                                     log.error("Field :{} Not fount", fieldName);
                                     continue;
@@ -101,7 +101,7 @@ public class InfluxdbUtils {
                                 for (Map.Entry<String, String> entry : series.getTags().entrySet()) {
                                     Field field = null;
                                     try {
-                                        field = clazz.getDeclaredField(CommonUtils.lineToHump(entry.getKey()));
+                                        field = clazz.getDeclaredField(CommonUtil.lineToHump(entry.getKey()));
                                         field.setAccessible(true);
                                     } catch (NoSuchFieldException e) {
                                         log.error("Field :{} Not fount, error :{}", entry.getKey(), e.getMessage());
@@ -174,7 +174,7 @@ public class InfluxdbUtils {
                 } else {
                     if (Objects.nonNull(field.get(object))) {
                         if (Constant.TIME.equals(column.name())) {
-                            builder.time(CommonUtils.parseLocalDateTimeToInstant((LocalDateTime) field.get(object)).getEpochSecond(), TimeUnit.SECONDS);
+                            builder.time(CommonUtil.parseLocalDateTimeToInstant((LocalDateTime) field.get(object)).getEpochSecond(), TimeUnit.SECONDS);
                         } else {
                             builder.addField(column.name(), field.get(object).toString());
                         }
@@ -256,7 +256,7 @@ public class InfluxdbUtils {
             BigDecimal v = new BigDecimal(value.get(i).toString());
             field.set(obj, v);
         } else if (type.equals(LocalDateTime.class)) {
-            field.set(obj, CommonUtils.parseStringToLocalDateTime(value.get(i).toString()));
+            field.set(obj, CommonUtil.parseStringToLocalDateTime(value.get(i).toString()));
         } else {
             field.set(obj, value.get(i));
         }

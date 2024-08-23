@@ -15,7 +15,7 @@
  */
 package com.mobaijun.log.handler;
 
-import com.mobaijun.json.utils.JsonUtil;
+import com.mobaijun.json.util.JsonUtil;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import java.util.ArrayList;

@@ -17,14 +17,13 @@ package com.mobaijun.influxdb.core;
 
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.core.model.BaseModel;
-import com.mobaijun.influxdb.util.CommonUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.mobaijun.influxdb.util.CommonUtil;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -48,8 +47,8 @@ public abstract class BaseQuery {
      * @return 开始时间结束时间
      */
     public static StringBuilder time(LocalDateTime start, LocalDateTime end) {
-        Instant startTime = CommonUtils.parseLocalDateTimeToInstant(start);
-        Instant endTime = CommonUtils.parseLocalDateTimeToInstant(end);
+        Instant startTime = CommonUtil.parseLocalDateTimeToInstant(start);
+        Instant endTime = CommonUtil.parseLocalDateTimeToInstant(end);
         StringBuilder sb = new StringBuilder();
         sb.append(Constant.TIME_AND).append(startTime);
         sb.append(Constant.AND_TIME).append(endTime).append(Constant.DELIMITER);

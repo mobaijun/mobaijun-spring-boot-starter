@@ -70,11 +70,11 @@ public class DataBaseHelper {
     }
 
     /**
-     * 判断当前数据库是否为PostgreSQL。
+     * 判断当前数据库是否为PostGreSQL。
      *
-     * @return 如果是PostgreSQL则返回true，否则返回false
+     * @return 如果是PostGreSQL则返回true，否则返回false
      */
-    public static boolean isPostgerSql() {
+    public static boolean isPostGerSql() {
         return DbType.POSTGRE_SQL == getDataBaseType();
     }
 

@@ -19,7 +19,7 @@ import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
 import com.aliyun.teaopenapi.models.Config;
-import com.mobaijun.json.utils.JsonUtil;
+import com.mobaijun.json.util.JsonUtil;
 import com.mobaijun.sms.enums.TypeEnum;
 import com.mobaijun.sms.model.SmsSenderResult;
 import com.mobaijun.sms.properties.SmsProperties;

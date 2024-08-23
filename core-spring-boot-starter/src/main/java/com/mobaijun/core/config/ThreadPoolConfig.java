@@ -45,6 +45,9 @@ public class ThreadPoolConfig {
      */
     private final int core = Runtime.getRuntime().availableProcessors() + 1;
 
+    /**
+     * 后台任务线程池
+     */
     private ScheduledExecutorService scheduledExecutorService;
 
     /**
@@ -81,7 +84,7 @@ public class ThreadPoolConfig {
     @PreDestroy
     public void destroy() {
         try {
-            log.info("====关闭后台任务任务线程池====");
+            log.info("====Example Close the thread pool of a background task====");
             Threads.shutdownAndAwaitTermination(scheduledExecutorService);
         } catch (Exception e) {
             log.error(e.getMessage(), e);

@@ -26,6 +26,7 @@ import org.springframework.context.ApplicationEvent;
  * @author MoBaiJun 2022/8/24 8:43
  */
 public class EmailSendEvent extends ApplicationEvent {
+
     public EmailSendEvent(EmailSendInfo sendInfo) {
         super(sendInfo);
     }

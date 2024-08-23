@@ -43,7 +43,7 @@ public class ReflectUtil extends cn.hutool.core.util.ReflectUtil {
     public static <E> E invokeGetter(Object obj, String propertyName) {
         Object object = obj;
         assert StringUtils.split(propertyName, ".") != null;
-        for (String name : StringUtils.split(propertyName, ".")) {
+        for (String name : Objects.requireNonNull(StringUtils.split(propertyName, "."))) {
             String getterMethodName = GETTER_PREFIX + StringUtils.capitalize(name);
             object = invoke(object, getterMethodName);
         }

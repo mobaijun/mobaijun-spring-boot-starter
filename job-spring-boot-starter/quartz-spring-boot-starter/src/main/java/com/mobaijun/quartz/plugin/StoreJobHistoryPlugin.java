@@ -52,7 +52,6 @@ import org.quartz.spi.SchedulerPlugin;
  * Date: [2024/8/20 10:00]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-
 @Slf4j
 @Setter
 @Getter

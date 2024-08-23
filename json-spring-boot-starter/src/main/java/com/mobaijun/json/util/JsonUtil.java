@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mobaijun.json.utils;
+package com.mobaijun.json.util;
 
 import cn.hutool.core.lang.Dict;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -42,6 +42,51 @@ public class JsonUtil {
 
     public static ObjectMapper getObjectMapper() {
         return OBJECT_MAPPER;
+    }
+
+    /**
+     * 转换对象为JSON字符串
+     *
+     * @param entity 对象
+     * @param <T>    泛型
+     * @return 字符串
+     */
+    public static <T> String toStr(T entity) {
+        return toJsonString(entity);
+    }
+
+    /**
+     * 转换json字符串为对象
+     *
+     * @param json  字符串
+     * @param clazz 对象类型
+     * @param <T>   泛型
+     * @return 对象
+     */
+    public static <T> T toBean(String json, Class<T> clazz) {
+        return parseObject(json, clazz);
+    }
+
+    /**
+     * 转换JSON字符串为List对象
+     *
+     * @param json  JSON字符串
+     * @param clazz 对象类型
+     * @param <T>   泛型
+     * @return 对象
+     */
+    public static <T> List<T> toList(String json, Class<T> clazz) {
+        return parseArray(json, clazz);
+    }
+
+    /**
+     * 转换JSON字符串为Dict对象
+     *
+     * @param json JSON字符串
+     * @return Dict对象
+     */
+    public static Dict toDict(String json) {
+        return parseMap(json);
     }
 
     /**

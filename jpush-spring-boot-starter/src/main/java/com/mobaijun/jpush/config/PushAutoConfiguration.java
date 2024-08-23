@@ -15,8 +15,8 @@
  */
 package com.mobaijun.jpush.config;
 
-import com.mobaijun.jpush.common.PushConnection;
 import com.mobaijun.jpush.prop.PushProp;
+import com.mobaijun.jpush.util.PushUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,7 +45,7 @@ public class PushAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
-    public PushConnection pushUtils(PushProp pushProp) {
-        return new PushConnection(pushProp);
+    public PushUtil pushUtil(PushProp pushProp) {
+        return new PushUtil(pushProp);
     }
 }

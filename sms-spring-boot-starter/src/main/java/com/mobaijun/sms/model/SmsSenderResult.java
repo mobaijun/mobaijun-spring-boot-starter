@@ -15,7 +15,7 @@
  */
 package com.mobaijun.sms.model;
 
-import com.mobaijun.json.utils.JsonUtil;
+import com.mobaijun.json.util.JsonUtil;
 import com.mobaijun.sms.enums.TypeEnum;
 import java.util.Set;
 import lombok.AccessLevel;

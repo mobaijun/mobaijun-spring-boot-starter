@@ -24,7 +24,7 @@ import com.mobaijun.common.collection.StreamUtil;
 import com.mobaijun.core.util.ValidatorUtil;
 import com.mobaijun.easyexcel.result.DefaultExcelResult;
 import com.mobaijun.easyexcel.result.ExcelResult;
-import com.mobaijun.json.utils.JsonUtil;
+import com.mobaijun.json.util.JsonUtil;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.util.Map;

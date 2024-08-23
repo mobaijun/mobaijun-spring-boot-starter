@@ -58,6 +58,11 @@ public enum SensitiveStrategy {
      */
     private final Function<String, String> desensitize;
 
+    /**
+     * 脱敏
+     *
+     * @return 脱敏后的字符串
+     */
     public Function<String, String> desensitize() {
         return desensitize;
     }

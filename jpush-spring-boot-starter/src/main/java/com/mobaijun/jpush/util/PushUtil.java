@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mobaijun.jpush.common;
+package com.mobaijun.jpush.util;
 
 import cn.jiguang.common.ClientConfig;
 import cn.jiguang.common.connection.HttpProxy;
@@ -35,29 +35,28 @@ import cn.jpush.api.push.model.notification.Notification;
 import cn.jpush.api.schedule.ScheduleResult;
 import com.mobaijun.jpush.model.PushMessage;
 import com.mobaijun.jpush.prop.PushProp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Optional;
 import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
-
 /**
  * software：IntelliJ IDEA 2022.1
  * class name: PushUtils
- * class description： 极光推送相关接口
+ * class description： 极光推送工具类
  *
  * @author MoBaiJun 2022/6/21 10:31
  */
-public class PushConnection {
+public class PushUtil {
 
     /**
      * logger
      */
-    private static final Logger log = LoggerFactory.getLogger(PushConnection.class);
+    private static final Logger log = LoggerFactory.getLogger(PushUtil.class);
 
     /**
      * 极光推送客户端工具类
@@ -74,7 +73,7 @@ public class PushConnection {
      *
      * @param pushProp 极光配置文件
      */
-    public PushConnection(PushProp pushProp) {
+    public PushUtil(PushProp pushProp) {
         this.pushProp = pushProp;
         initialization();
     }
@@ -343,7 +342,7 @@ public class PushConnection {
                         // 此字段的值是用来指定本推送的离线保存时长，如果不传此字段则默认保存一天，最多指定保留十天，单位为秒
                         // .setTimeToLive()
                         .build())
-                // jpush的通知，android的由jpush直接下发，iOS的由apns服务器下发，Winphone的由mpns下发
+                // jpush的通知，android的由jpush直接下发，iOS的由apns服务器下发，WinPhone的由mpns下发
                 .setNotification(Notification.newBuilder()
                         // 传一个IosAlert对象，指定apns title、title、subtitle
                         .setAlert(pm.getContent())

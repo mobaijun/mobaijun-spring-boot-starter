@@ -15,7 +15,7 @@
  */
 package com.mobaijun.websocket.distribute;
 
-import com.mobaijun.json.utils.JsonUtil;
+import com.mobaijun.json.util.JsonUtil;
 import com.mobaijun.websocket.dto.MessageDTO;
 import com.mobaijun.websocket.session.WebSocketSessionStore;
 import io.micrometer.common.lang.NonNull;

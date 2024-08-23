@@ -16,6 +16,7 @@
 package com.mobaijun.core.exception;
 
 import java.io.Serial;
+import lombok.Getter;
 
 /**
  * Description: [业务异常]
@@ -31,6 +32,7 @@ public final class ServiceException extends RuntimeException {
     /**
      * 错误码
      */
+    @Getter
     private Integer code;
 
     /**
@@ -41,6 +43,7 @@ public final class ServiceException extends RuntimeException {
     /**
      * 错误明细，内部调试错误
      */
+    @Getter
     private String detailMessage;
 
     public ServiceException(String message) {
@@ -50,10 +53,6 @@ public final class ServiceException extends RuntimeException {
     public ServiceException(String message, Integer code) {
         this.message = message;
         this.code = code;
-    }
-
-    public String getDetailMessage() {
-        return detailMessage;
     }
 
     public ServiceException setDetailMessage(String detailMessage) {
@@ -69,9 +68,5 @@ public final class ServiceException extends RuntimeException {
     public ServiceException setMessage(String message) {
         this.message = message;
         return this;
-    }
-
-    public Integer getCode() {
-        return code;
     }
 }

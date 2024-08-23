@@ -15,6 +15,12 @@
  */
 package com.mobaijun.redis.util;
 
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -28,27 +34,20 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationUtils;
 import org.springframework.util.Assert;
 
-import java.time.Duration;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
 /**
  * Software：IntelliJ IDEA 2021.3.2
- * ClassName: RedisUtils
+ * ClassName: RedisUtil
  * 类描述： Redis 操作 工具类
  *
  * @author MoBaiJun 2022/4/28 15:53
  */
 @SuppressWarnings("all")
-public class RedisUtils {
-    private final Logger log = LoggerFactory.getLogger(RedisUtils.class);
+public class RedisUtil {
+    private final Logger log = LoggerFactory.getLogger(RedisUtil.class);
     private final RedisTemplate<String, Object> redisTemplate;
     private final RedisLockUtil redisLockUtil;
 
-    public RedisUtils(RedisTemplate<String, Object> redisTemplate, RedisLockUtil redisLockUtil) {
+    public RedisUtil(RedisTemplate<String, Object> redisTemplate, RedisLockUtil redisLockUtil) {
         this.redisTemplate = redisTemplate;
         this.redisLockUtil = redisLockUtil;
     }

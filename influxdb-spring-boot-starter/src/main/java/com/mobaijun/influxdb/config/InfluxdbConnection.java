@@ -17,7 +17,7 @@ package com.mobaijun.influxdb.config;
 
 import com.mobaijun.influxdb.core.constant.Constant;
 import com.mobaijun.influxdb.core.model.AbstractInfluxdbClient;
-import com.mobaijun.influxdb.util.InfluxdbUtils;
+import com.mobaijun.influxdb.util.InfluxdbUtil;
 import jakarta.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
@@ -71,6 +71,17 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
     }
 
     /**
+     * 打印查询数据
+     *
+     * @param sql 查询sql
+     */
+    private static void logInfoSqlPrint(StringBuilder sql) {
+        if (log.isInfoEnabled()) {
+            log.info("The query SQL statement is: {}", sql);
+        }
+    }
+
+    /**
      * 初始化数据库
      */
     @PostConstruct
@@ -79,7 +90,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
             this.influxDb = InfluxDBFactory.connect(this.getUrl(), this.getUsername(), this.getPassword(), CLIENT);
             log.info("=================== The influxdb database was initialized successfully!  ===================");
         }
-        if (!InfluxdbUtils.checkDatabase(execute(Constant.SHOW_DATABASE), getDatabase())) {
+        if (!InfluxdbUtil.checkDatabase(execute(Constant.SHOW_DATABASE), getDatabase())) {
             execute(Constant.CREATE_DATABASE + getDatabase() + Constant.DELIMITER);
         }
     }
@@ -90,7 +101,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
      * @return QueryResult
      */
     public QueryResult execute(String query) {
-        log.info("The query SQL statement is: " + query);
+        logInfoSqlPrint(new StringBuilder(query));
         return influxDb.query(new Query(query, getDatabase()));
     }
 
@@ -103,8 +114,8 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
      * @return 返回对应实体List
      */
     public <T> List<T> selectList(String query, Class<T> clazz) {
-        log.debug("The query SQL statement is: " + query);
-        return InfluxdbUtils.toPojo(execute(query), clazz);
+        logInfoSqlPrint(new StringBuilder(query));
+        return InfluxdbUtil.toPojo(execute(query), clazz);
     }
 
     /**
@@ -115,8 +126,8 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
      * @return long
      */
     public long count(String query) {
-        log.debug("The query SQL statement is: " + query);
-        return InfluxdbUtils.count(execute(query));
+        logInfoSqlPrint(new StringBuilder(query));
+        return InfluxdbUtil.count(execute(query));
     }
 
     /**
@@ -126,7 +137,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
      */
     public <T> void insert(List<T> data) {
         BatchPoints batchPoints = BatchPoints.database(getDatabase()).build();
-        data.forEach(item -> batchPoints.point(InfluxdbUtils.save(item)));
+        data.forEach(item -> batchPoints.point(InfluxdbUtil.save(item)));
         // 批量写入
         influxDb.write(batchPoints);
     }
@@ -137,7 +148,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
      * @param data 实体
      */
     public <T> void insert(T data) {
-        influxDb.write(BatchPoints.database(getDatabase()).build().point(InfluxdbUtils.save(data)));
+        influxDb.write(BatchPoints.database(getDatabase()).build().point(InfluxdbUtil.save(data)));
     }
 
     /**
@@ -155,7 +166,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
         if (Objects.nonNull(time)) {
             builder.time(time, TimeUnit.SECONDS);
         }
-        influxDb.write(BatchPoints.database(getDatabase()).build().point(InfluxdbUtils.save(builder)));
+        influxDb.write(BatchPoints.database(getDatabase()).build().point(InfluxdbUtil.save(builder)));
     }
 
     /**
@@ -165,7 +176,7 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
      * @param query 查询语句
      */
     public void insert(String query) {
-        influxDb.write(BatchPoints.database(getDatabase()).build().point(InfluxdbUtils.save(query)));
+        influxDb.write(BatchPoints.database(getDatabase()).build().point(InfluxdbUtil.save(query)));
     }
 
     /**
@@ -177,33 +188,8 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
      * @param query sql语句
      */
     public long delete(String query) {
-        log.debug("The query SQL statement is: " + query);
-        return InfluxdbUtils.delete(execute(query));
-    }
-
-    /**
-     * 复杂条件使用 StringBuilder 拼接 sql
-     *
-     * @param sql 查询sql
-     * @return 查询结果
-     */
-    public List<List<Object>> queryList(StringBuilder sql) {
-        QueryResult queryResult = influxDb.query(new Query(String.valueOf(sql), getDatabase()));
-        log.debug("The query SQL statement is: " + sql);
-        // 对象内容是否正常
-        if (Objects.isNull(queryResult) || !Objects.isNull(queryResult.getError())) {
-            return null;
-        }
-        // 数据集合是否正常-
-        List<QueryResult.Series> series = queryResult.getResults().get(0).getSeries();
-        if (Objects.isNull(series)) {
-            return null;
-        }
-        List<List<Object>> values = series.get(0).getValues();
-        if (Objects.isNull(values) || values.isEmpty()) {
-            return null;
-        }
-        return values;
+        logInfoSqlPrint(new StringBuilder(query));
+        return InfluxdbUtil.delete(execute(query));
     }
 
     /**
@@ -266,5 +252,30 @@ public class InfluxdbConnection extends AbstractInfluxdbClient {
             log.error("influxdb Pong -------------- 无法链接,{}", e.getMessage());
         }
         return isConnected;
+    }
+
+    /**
+     * 复杂条件使用 StringBuilder 拼接 sql
+     *
+     * @param sql 查询sql
+     * @return 查询结果
+     */
+    public List<List<Object>> queryList(StringBuilder sql) {
+        QueryResult queryResult = influxDb.query(new Query(String.valueOf(sql), getDatabase()));
+        logInfoSqlPrint(new StringBuilder(sql));
+        // 对象内容是否正常
+        if (Objects.isNull(queryResult) || !Objects.isNull(queryResult.getError())) {
+            return null;
+        }
+        // 数据集合是否正常-
+        List<QueryResult.Series> series = queryResult.getResults().get(0).getSeries();
+        if (Objects.isNull(series)) {
+            return null;
+        }
+        List<List<Object>> values = series.get(0).getValues();
+        if (Objects.isNull(values) || values.isEmpty()) {
+            return null;
+        }
+        return values;
     }
 }

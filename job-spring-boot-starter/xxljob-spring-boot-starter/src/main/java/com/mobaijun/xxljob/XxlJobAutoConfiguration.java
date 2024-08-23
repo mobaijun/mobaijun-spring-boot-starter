@@ -69,7 +69,7 @@ public class XxlJobAutoConfiguration {
      * @return 执行期名称
      */
     private String getExecutorName(XxlExecutorProperties properties) {
-        String appName = properties.getAppname();
+        String appName = properties.getAppName();
         if (StringUtils.hasText(appName)) {
             return appName;
         } else {

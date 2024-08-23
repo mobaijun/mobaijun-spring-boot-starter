@@ -24,12 +24,12 @@ import java.util.regex.Matcher;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
- * ClassName: CommonUtils
+ * ClassName: CommonUtil
  * 类描述： 工具类
  *
  * @author MoBaiJun 2022/4/29 14:15
  */
-public class CommonUtils {
+public class CommonUtil {
 
     /**
      * 时间转换 Instant字符串时间转 LocalDateTime

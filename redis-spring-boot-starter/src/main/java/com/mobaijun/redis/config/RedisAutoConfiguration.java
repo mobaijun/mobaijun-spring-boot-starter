@@ -26,7 +26,7 @@ import com.mobaijun.json.core.JacksonJavaTimeModule;
 import com.mobaijun.redis.constant.RedisConstant;
 import com.mobaijun.redis.prop.RedisProperties;
 import com.mobaijun.redis.util.RedisLockUtil;
-import com.mobaijun.redis.util.RedisUtils;
+import com.mobaijun.redis.util.RedisUtil;
 import java.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -143,8 +143,8 @@ public class RedisAutoConfiguration {
     }
 
     @Bean
-    public RedisUtils redisUtils(RedisTemplate<String, Object> redisTemplate, RedisLockUtil redisLockUtil) {
-        return new RedisUtils(redisTemplate, redisLockUtil);
+    public RedisUtil redisUtils(RedisTemplate<String, Object> redisTemplate, RedisLockUtil redisLockUtil) {
+        return new RedisUtil(redisTemplate, redisLockUtil);
     }
 
     @Bean

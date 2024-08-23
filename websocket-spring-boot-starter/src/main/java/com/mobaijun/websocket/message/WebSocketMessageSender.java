@@ -15,7 +15,7 @@
  */
 package com.mobaijun.websocket.message;
 
-import com.mobaijun.json.utils.JsonUtil;
+import com.mobaijun.json.util.JsonUtil;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.TextMessage;
