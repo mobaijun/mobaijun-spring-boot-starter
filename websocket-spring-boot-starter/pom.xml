@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>mobaijun-spring-boot-dependencies</artifactId>
+        <groupId>com.mobaijun</groupId>
+        <version>3.0.5</version>
+        <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>websocket-spring-boot-starter</artifactId>
+    <name>${project.artifactId}</name>
+    <version>3.0.5</version>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <inceptionYear>2024</inceptionYear>
+    <description>spring boot's web socket component simplifies web socket operations</description>
+
+    <!--  GitHub issues -->
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/websocket-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
+        <developerConnection>https://github.com/mobaijun</developerConnection>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <!-- rocketmq-->
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- slf4j日志 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- spring-data-redis  -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.mobaijun</groupId>
+            <artifactId>json-spring-boot-starter</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+</project>

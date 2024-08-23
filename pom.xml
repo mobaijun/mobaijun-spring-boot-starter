@@ -8,8 +8,8 @@
     <groupId>com.mobaijun</groupId>
     <artifactId>mobaijun-spring-boot-starter</artifactId>
     <packaging>pom</packaging>
-    <version>3.0.4</version>
-    <name>${artifactId}</name>
+    <version>3.0.5</version>
+    <name>${project.artifactId}</name>
     <inceptionYear>2022</inceptionYear>
     <description>parent pom, defines all dependency versions</description>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>

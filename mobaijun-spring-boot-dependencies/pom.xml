@@ -6,12 +6,12 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-starter</artifactId>
-        <version>3.0.4</version>
+        <version>3.0.5</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-    <version>3.0.4</version>
+    <version>3.0.5</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -63,13 +63,18 @@
         <module>../i18n-spring-boot-starter</module>
         <module>../job-spring-boot-starter</module>
         <module>../easyexcel-spring-boot-starter</module>
+        <module>../websocket-spring-boot-starter</module>
+        <module>../oss-spring-boot-starter</module>
     </modules>
 
     <properties>
-        <!-- 依赖版本 -->
+        <!-- 大版本依赖管理 -->
         <spring-boot.version>3.3.2</spring-boot.version>
         <spring-cloud.version>2023.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
+        <software.amazon.awssdk.version>2.27.11</software.amazon.awssdk.version>
+        <hutool-bom.version>5.8.31</hutool-bom.version>
+        <!-- 依赖版本 -->
         <client.version>3.7.7</client.version>
         <common.version>1.2.7</common.version>
         <influxdb.version>2.24</influxdb.version>
@@ -124,6 +129,7 @@
         <ip2region.version>2.7.0</ip2region.version>
         <mapstruct-plus.version>1.4.3</mapstruct-plus.version>
         <xxl-job.version>2.4.1</xxl-job.version>
+        <rocketmq.version>2.3.1</rocketmq.version>
     </properties>
 
     <dependencies>
@@ -187,6 +193,26 @@
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${spring-cloud-alibaba.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!-- 亚马逊云 Java sdk -->
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/software.amazon.awssdk/bom -->
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>bom</artifactId>
+                <version>${software.amazon.awssdk.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!-- hutool工具类 -->
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/cn.hutool/hutool-bom -->
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-bom</artifactId>
+                <version>${hutool-bom.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -361,6 +387,13 @@
             </dependency>
 
             <dependency>
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/oss-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>oss-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/redis-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>redis-spring-boot-starter</artifactId>
@@ -410,9 +443,9 @@
             </dependency>
 
             <dependency>
-                <!-- https://central.sonatype.com//artifact/com.mobaijun/oss-spring-boot-starter -->
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/websocket-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
-                <artifactId>oss-spring-boot-starter</artifactId>
+                <artifactId>websocket-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -428,7 +461,7 @@
                 <!-- https://central.sonatype.com//artifact/cn.hutool/hutool-all -->
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
-                <version>${hutool-all.version}</version>
+                <version>${hutool-bom.version}</version>
             </dependency>
 
             <!-- redis -->
@@ -793,13 +826,6 @@
             </dependency>
 
             <dependency>
-                <!-- https://central.sonatype.com/artifact/cn.hutool/hutool-core -->
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-core</artifactId>
-                <version>${hutool-all.version}</version>
-            </dependency>
-
-            <dependency>
                 <!-- https://central.sonatype.com/artifact/org.apache.dubbo/dubbo-spring-boot-starter -->
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-spring-boot-starter</artifactId>
@@ -870,13 +896,6 @@
             </dependency>
 
             <dependency>
-                <!-- https://central.sonatype.com/artifact/cn.hutool/hutool-http -->
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-http</artifactId>
-                <version>${hutool-all.version}</version>
-            </dependency>
-
-            <dependency>
                 <!-- https://central.sonatype.com/artifact/org.lionsoul/ip2region -->
                 <groupId>org.lionsoul</groupId>
                 <artifactId>ip2region</artifactId>
@@ -895,6 +914,13 @@
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/org.apache.rocketmq/rocketmq-spring-boot-starter -->
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${rocketmq.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
