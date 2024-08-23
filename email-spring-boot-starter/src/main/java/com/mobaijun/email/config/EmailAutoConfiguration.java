@@ -28,12 +28,13 @@ import org.springframework.mail.javamail.JavaMailSender;
 /**
  * software：IntelliJ IDEA 2022.1
  * class name: EmailAutoConfiguration
- * class description： 邮件 配置类
+ * class description： 邮件配置类
  *
  * @author MoBaiJun 2022/7/7 16:19
  */
 @AutoConfiguration(after = MailSenderAutoConfiguration.class)
 public class EmailAutoConfiguration {
+
     @Bean
     @ConditionalOnMissingBean(EmailSenderService.class)
     @ConditionalOnProperty(prefix = "spring.mail", name = "host")

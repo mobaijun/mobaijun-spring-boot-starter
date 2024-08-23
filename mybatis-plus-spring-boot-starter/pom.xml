@@ -6,7 +6,7 @@
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>3.0.4</version>
+        <version>3.0.5</version>
         <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
@@ -17,7 +17,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>mybatis-plus-spring-boot-starter</artifactId>
-    <version>3.0.4</version>
+    <version>3.0.5</version>
 
     <name>${project.artifactId}</name>
     <inceptionYear>2022</inceptionYear>

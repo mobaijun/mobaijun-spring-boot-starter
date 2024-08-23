@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-        <version>3.0.4</version>
+        <version>3.0.5</version>
         <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
@@ -22,7 +22,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>job-spring-boot-starter</artifactId>
-    <version>3.0.4</version>
+    <version>3.0.5</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>

@@ -18,16 +18,14 @@ package com.mobaijun.email.service;
 import com.mobaijun.email.model.EmailDetails;
 import com.mobaijun.email.model.EmailDetails.EmailDetailsBuilder;
 import com.mobaijun.email.model.EmailSendInfo;
+import java.util.List;
 import org.springframework.mail.MailSendException;
 import org.springframework.util.StringUtils;
-
-import java.util.List;
 
 /**
  * software：IntelliJ IDEA 2022.1
  * interface name: EmailSenderService
  * interface description： 邮件发送接口
- * 接口描述： 邮件发送接口
  *
  * @author MoBaiJun 2022/7/7 16:20
  */

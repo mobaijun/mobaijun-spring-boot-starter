@@ -256,13 +256,7 @@ public class ExcelUtil {
      * @param os           输出流
      */
     public static void exportTemplate(List<Object> data, String templatePath, OutputStream os) {
-        ClassPathResource templateResource = new ClassPathResource(templatePath);
-        ExcelWriter excelWriter = EasyExcel.write(os)
-                .withTemplate(templateResource.getStream())
-                .autoCloseStream(false)
-                // 大数值自动转换 防止失真
-                .registerConverter(new ExcelBigNumberConvert())
-                .build();
+        ExcelWriter excelWriter = createExcelWriterWithTemplate(templatePath, os);
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
         if (CollUtil.isEmpty(data)) {
             throw new IllegalArgumentException("数据为空");
@@ -324,26 +318,14 @@ public class ExcelUtil {
      * @param os           输出流
      */
     public static void exportTemplateMultiList(Map<String, Object> data, String templatePath, OutputStream os) {
-        ClassPathResource templateResource = new ClassPathResource(templatePath);
-        ExcelWriter excelWriter = EasyExcel.write(os)
-                .withTemplate(templateResource.getStream())
-                .autoCloseStream(false)
-                // 大数值自动转换 防止失真
-                .registerConverter(new ExcelBigNumberConvert())
-                .build();
+        ExcelWriter excelWriter = createExcelWriterWithTemplate(templatePath, os);
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
         if (CollUtil.isEmpty(data)) {
             throw new IllegalArgumentException("数据为空");
         }
         for (Map.Entry<String, Object> map : data.entrySet()) {
             // 设置列表后续还有数据
-            FillConfig fillConfig = FillConfig.builder().forceNewRow(Boolean.TRUE).build();
-            if (map.getValue() instanceof Collection) {
-                // 多表导出必须使用 FillWrapper
-                excelWriter.fill(new FillWrapper(map.getKey(), (Collection<?>) map.getValue()), fillConfig, writeSheet);
-            } else {
-                excelWriter.fill(map.getValue(), writeSheet);
-            }
+            appendDataWithNewRows(map, excelWriter, writeSheet);
         }
         excelWriter.finish();
     }
@@ -358,13 +340,7 @@ public class ExcelUtil {
      * @param os           输出流
      */
     public static void exportTemplateMultiSheet(List<Map<String, Object>> data, String templatePath, OutputStream os) {
-        ClassPathResource templateResource = new ClassPathResource(templatePath);
-        ExcelWriter excelWriter = EasyExcel.write(os)
-                .withTemplate(templateResource.getStream())
-                .autoCloseStream(false)
-                // 大数值自动转换 防止失真
-                .registerConverter(new ExcelBigNumberConvert())
-                .build();
+        ExcelWriter excelWriter = createExcelWriterWithTemplate(templatePath, os);
         if (CollUtil.isEmpty(data)) {
             throw new IllegalArgumentException("数据为空");
         }
@@ -372,13 +348,7 @@ public class ExcelUtil {
             WriteSheet writeSheet = EasyExcel.writerSheet(i).build();
             for (Map.Entry<String, Object> map : data.get(i).entrySet()) {
                 // 设置列表后续还有数据
-                FillConfig fillConfig = FillConfig.builder().forceNewRow(Boolean.TRUE).build();
-                if (map.getValue() instanceof Collection) {
-                    // 多表导出必须使用 FillWrapper
-                    excelWriter.fill(new FillWrapper(map.getKey(), (Collection<?>) map.getValue()), fillConfig, writeSheet);
-                } else {
-                    excelWriter.fill(map.getValue(), writeSheet);
-                }
+                appendDataWithNewRows(map, excelWriter, writeSheet);
             }
         }
         excelWriter.finish();
@@ -388,7 +358,7 @@ public class ExcelUtil {
      * 重置响应体
      */
     private static void resetResponse(String sheetName, HttpServletResponse response) throws UnsupportedEncodingException {
-        String filename = encodingFilename(sheetName);
+        String filename = encodeFilename(sheetName);
         FileUtil.setAttachmentResponseHeader(response, filename);
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8");
     }
@@ -452,15 +422,65 @@ public class ExcelUtil {
     }
 
     /**
-     * 编码文件名
+     * 对文件名进行编码。
      *
-     * @param filename 文件名
-     * @return 编码后的文件名
+     * <p>如果系统配置了生成文件ID，则会在文件名后追加一个UUID；否则，仅在文件名后添加文件扩展名。
+     *
+     * @param filename 原始文件名
+     * @return 编码后的文件名，可能带有UUID和扩展名
      */
-    public static String encodingFilename(String filename) {
+    public static String encodeFilename(String filename) {
+        // 获取 Excel 配置属性并判断是否需要生成文件ID
         if (SpringUtil.getBean(ExcelProperties.class).isGenerateFileId()) {
             return String.format("%s_%s%s", filename, IdUtil.fastSimpleUUID(), ExcelTypeEnum.XLSX.getValue());
         }
+        // 如果不需要生成文件ID，直接返回带扩展名的文件名
         return String.format("%s.%s", filename, ExcelTypeEnum.XLSX.getValue());
+    }
+
+    /**
+     * 向 Excel 中追加数据并创建新行。
+     *
+     * <p>此方法用于处理需要在现有列表下方继续添加数据的场景。如果数据是集合类型，
+     * 会使用 FillWrapper 进行包装以支持多表导出。
+     *
+     * @param map         数据映射表，键值对形式存储数据
+     * @param excelWriter Excel 写入器，用于写入数据
+     * @param writeSheet  要写入的 Sheet 表格
+     */
+    public static void appendDataWithNewRows(Map.Entry<String, Object> map, ExcelWriter excelWriter, WriteSheet writeSheet) {
+        // 配置填充器，强制新行模式
+        FillConfig fillConfig = FillConfig.builder().forceNewRow(Boolean.TRUE).build();
+
+        // 如果值是集合类型，则使用 FillWrapper 进行包装，多表导出必须使用此方法
+        if (map.getValue() instanceof Collection) {
+            excelWriter.fill(new FillWrapper(map.getKey(), (Collection<?>) map.getValue()), fillConfig, writeSheet);
+        } else {
+            // 如果不是集合类型，直接填充数据
+            excelWriter.fill(map.getValue(), writeSheet);
+        }
+    }
+
+    /**
+     * 使用指定的模板和输出流创建一个 ExcelWriter 实例。
+     *
+     * <p>该方法从给定的路径加载 Excel 模板，并将模板应用到 ExcelWriter，
+     * 并配置写入器以正确处理大数值，避免精度损失。
+     *
+     * @param templatePath 模板文件的路径，相对于类路径
+     * @param outputStream Excel 文件的输出流
+     * @return 配置了指定模板和输出流的 ExcelWriter 实例
+     */
+    public static ExcelWriter createExcelWriterWithTemplate(String templatePath, OutputStream outputStream) {
+        // 从类路径加载模板资源
+        ClassPathResource templateResource = new ClassPathResource(templatePath);
+        // 构建并返回配置了指定模板和输出流的 ExcelWriter 实例
+        return EasyExcel.write(outputStream)
+                .withTemplate(templateResource.getStream())
+                // 防止自动关闭输出流
+                .autoCloseStream(false)
+                // 注册大数值转换器
+                .registerConverter(new ExcelBigNumberConvert())
+                .build();
     }
 }

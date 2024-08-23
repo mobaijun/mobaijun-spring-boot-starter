@@ -5,13 +5,13 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-        <version>3.0.4</version>
+        <version>3.0.5</version>
         <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>operation-log-spring-boot-starter</artifactId>
-    <version>3.0.4</version>
+    <version>3.0.5</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,7 +21,7 @@
     <name>${project.artifactId}</name>
     <inceptionYear>2024</inceptionYear>
     <description>Simplify system operation log writing to primary keys</description>
-    <url>https://github.com/mobaijun/mobaijun-spring-boot-dependencies</url>
+    <url>https://github.com/mobaijun/oss-spring-boot-starter</url>
 
     <!--  GitHub issues -->
     <issueManagement>
@@ -30,8 +30,7 @@
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/operation-log-spring-boot-starter
-        </url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/operation-log-spring-boot-starter</url>
         <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
