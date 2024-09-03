@@ -15,9 +15,11 @@
  */
 package com.mobaijun.core.util.file;
 
+import com.mobaijun.common.constant.StringConstant;
 import jakarta.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Description: [文件处理工具类]
@@ -50,5 +52,18 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
     public static String percentEncode(String s) {
         String encode = URLEncoder.encode(s, StandardCharsets.UTF_8);
         return encode.replaceAll("\\+", "%20");
+    }
+
+    /**
+     * 获取文件大小转 MB 字符串
+     *
+     * @param file 文件
+     * @return 文件大小字符串
+     */
+    public static String getFileSize(MultipartFile file) {
+        if (file.isEmpty()) {
+            return StringConstant.BLANK;
+        }
+        return String.format("%.2fMB", (file.getSize() / (1024.0 * 1024.0)));
     }
 }

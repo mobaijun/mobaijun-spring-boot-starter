@@ -41,8 +41,8 @@ public class CacheUtil {
      *
      * @param cacheNames 缓存组名称
      */
-    public static Set<Object> keys(String cacheNames) {
-        RMap<Object, Object> rmap = (RMap<Object, Object>)
+    public static <T> Set<T> keys(String cacheNames) {
+        RMap<T, T> rmap = (RMap<T, T>)
                 Objects.requireNonNull(CACHE_MANAGER.getCache(cacheNames)).getNativeCache();
         return rmap.keySet();
     }
@@ -54,7 +54,7 @@ public class CacheUtil {
      * @param key        缓存key
      */
     public static <T> T get(String cacheNames, Object key) {
-        Cache.ValueWrapper wrapper = CACHE_MANAGER.getCache(cacheNames).get(key);
+        Cache.ValueWrapper wrapper = Objects.requireNonNull(CACHE_MANAGER.getCache(cacheNames)).get(key);
         return wrapper != null ? (T) wrapper.get() : null;
     }
 

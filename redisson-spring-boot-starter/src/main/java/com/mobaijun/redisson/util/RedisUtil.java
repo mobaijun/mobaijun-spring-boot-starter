@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.ObjectListener;
 import org.redisson.api.RAtomicLong;
 import org.redisson.api.RBatch;
@@ -39,6 +40,7 @@ import org.redisson.api.RTopic;
 import org.redisson.api.RateIntervalUnit;
 import org.redisson.api.RateType;
 import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.StringCodec;
 
 /**
  * Description: [redis 工具类]
@@ -46,6 +48,7 @@ import org.redisson.api.RedissonClient;
  * Date: [2024/8/14 18:29]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
+@Slf4j
 public class RedisUtil {
 
     /**
@@ -173,7 +176,7 @@ public class RedisUtil {
      * @param value 缓存的值
      * @return set成功或失败
      */
-    public static <T> boolean setObjectIfAbsent(final String key, final T value, final Duration duration) {
+    public static <T> boolean setObjIfAbsent(final String key, final T value, final Duration duration) {
         RBucket<T> bucket = CLIENT.getBucket(key);
         return bucket.setIfAbsent(value, duration);
     }
@@ -185,7 +188,7 @@ public class RedisUtil {
      * @param value 缓存的值
      * @return set成功或失败
      */
-    public static <T> boolean setObjectIfExists(final String key, final T value, final Duration duration) {
+    public static <T> boolean setObjIfExists(final String key, final T value, final Duration duration) {
         RBucket<T> bucket = CLIENT.getBucket(key);
         return bucket.setIfExists(value, duration);
     }
@@ -198,7 +201,7 @@ public class RedisUtil {
      * @param key      缓存的键值
      * @param listener 监听器配置
      */
-    public static <T> void addObjectListener(final String key, final ObjectListener listener) {
+    public static <T> void addObjListener(final String key, final ObjectListener listener) {
         RBucket<T> result = CLIENT.getBucket(key);
         result.addListener(listener);
     }
@@ -275,7 +278,7 @@ public class RedisUtil {
      *
      * @param key 缓存的键值
      */
-    public static boolean isExistsObject(final String key) {
+    public static boolean isExistsObj(final String key) {
         return CLIENT.getBucket(key).isExists();
     }
 
@@ -505,7 +508,7 @@ public class RedisUtil {
      * @param key   Redis键
      * @param value 值
      */
-    public static void setAtomicValue(String key, long value) {
+    public static void setAtomicValue(final String key, long value) {
         RAtomicLong atomic = CLIENT.getAtomicLong(key);
         atomic.set(value);
     }
@@ -516,7 +519,7 @@ public class RedisUtil {
      * @param key Redis键
      * @return 当前值
      */
-    public static long getAtomicValue(String key) {
+    public static long getAtomicValue(final String key) {
         RAtomicLong atomic = CLIENT.getAtomicLong(key);
         return atomic.get();
     }
@@ -527,7 +530,7 @@ public class RedisUtil {
      * @param key Redis键
      * @return 当前值
      */
-    public static long incrAtomicValue(String key) {
+    public static long incrAtomicValue(final String key) {
         RAtomicLong atomic = CLIENT.getAtomicLong(key);
         return atomic.incrementAndGet();
     }
@@ -538,7 +541,7 @@ public class RedisUtil {
      * @param key Redis键
      * @return 当前值
      */
-    public static long decrAtomicValue(String key) {
+    public static long decrAtomicValue(final String key) {
         RAtomicLong atomic = CLIENT.getAtomicLong(key);
         return atomic.decrementAndGet();
     }
@@ -568,8 +571,34 @@ public class RedisUtil {
      *
      * @param key 键
      */
-    public static Boolean hasKey(String key) {
+    public static Boolean hasKey(final String key) {
         RKeys rKeys = CLIENT.getKeys();
         return rKeys.countExists(key) > 0;
+    }
+
+    /**
+     * 异步清除所有与给定模式匹配的缓存键。
+     *
+     * @param pattern 要匹配键的模式。支持类似于 glob 的通配符（*, ?）。
+     *                例如，匹配所有键可以使用 "*"；匹配具有相同前缀的键可以使用 "prefix*"。
+     */
+    public static void clear(final String pattern) {
+        RedissonClient client = getClient();
+        try {
+            Iterable<String> keysByPattern = client.getKeys().getKeysByPattern(pattern);
+            // 异步删除匹配的缓存键
+            for (String key : keysByPattern) {
+                RBucket<String> bucket = client.getBucket(key, StringCodec.INSTANCE);
+                bucket.deleteAsync();
+            }
+        } catch (Exception e) {
+            // 异常信息
+            log.error("清除缓存键失败: {}", e.getMessage());
+        } finally {
+            if (client != null) {
+                // 确保 Redisson 客户端正确关闭，避免资源泄漏
+                client.shutdown();
+            }
+        }
     }
 }
