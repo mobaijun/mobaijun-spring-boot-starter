@@ -6,13 +6,13 @@
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>3.0.5</version>
+        <version>3.0.6</version>
         <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>core-spring-boot-starter</artifactId>
-    <version>3.0.5</version>
+    <version>3.0.6</version>
 
     <description>This is a spring boot common component tool class</description>
     <name>${project.artifactId}</name>
@@ -78,6 +78,11 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-crypto</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
@@ -92,6 +97,11 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
             <optional>true</optional>
         </dependency>
     </dependencies>

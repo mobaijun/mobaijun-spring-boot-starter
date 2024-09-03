@@ -6,13 +6,13 @@
     <parent>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
         <groupId>com.mobaijun</groupId>
-        <version>3.0.5</version>
+        <version>3.0.6</version>
         <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>openapi-spring-boot-starter</artifactId>
-    <version>3.0.5</version>
+    <version>3.0.6</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

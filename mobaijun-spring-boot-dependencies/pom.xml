@@ -6,12 +6,12 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-starter</artifactId>
-        <version>3.0.5</version>
+        <version>3.0.6</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-    <version>3.0.5</version>
+    <version>3.0.6</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -34,7 +34,6 @@
     <modules>
         <module>../openapi-spring-boot-starter</module>
         <module>../influxdb-spring-boot-starter</module>
-        <module>../redis-spring-boot-starter</module>
         <module>../mybatis-plus-spring-boot-starter</module>
         <module>../jpush-spring-boot-starter</module>
         <module>../table-spring-boot-starter</module>
@@ -42,9 +41,7 @@
         <module>../email-spring-boot-starter</module>
         <module>../base-model-spring-boot-starter</module>
         <module>../minio-spring-boot-starter</module>
-        <module>../file-spring-boot-starter</module>
         <module>../bim-spring-boot-starter</module>
-        <module>../excel-spring-boot-starter</module>
         <module>../jasypt-spring-boot-starter</module>
         <module>../run-spring-boot-starter</module>
         <module>../json-spring-boot-starter</module>
@@ -68,6 +65,9 @@
     </modules>
 
     <properties>
+        <!-- 废弃项目版本管理 -->
+        <final-release.version>3.0.5</final-release.version>
+
         <!-- 大版本依赖管理 -->
         <spring-boot.version>3.3.2</spring-boot.version>
         <spring-cloud.version>2023.0.3</spring-cloud.version>
@@ -271,14 +271,14 @@
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/excel-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>excel-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>${final-release.version}</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/file-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>file-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>${final-release.version}</version>
             </dependency>
 
             <dependency>
@@ -397,7 +397,7 @@
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/redis-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>redis-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>${final-release.version}</version>
             </dependency>
 
             <dependency>
