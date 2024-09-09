@@ -32,3 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 rebel.xml
+.flattened-pom.xml

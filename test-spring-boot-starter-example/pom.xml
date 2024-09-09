@@ -6,12 +6,12 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-        <version>3.0.6</version>
+        <version>${revision}</version>
         <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
     <artifactId>test-spring-boot-starter-example</artifactId>
-    <packaging>jar</packaging>
+    <version>${revision}</version>
 
     <name>${project.artifactId}</name>
     <url>https://maven.apache.org</url>

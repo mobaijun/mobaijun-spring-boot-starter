@@ -6,12 +6,12 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-        <version>3.0.6</version>
+        <version>${revision}</version>
         <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
     <artifactId>dubbo-spring-boot-starter</artifactId>
-    <version>3.0.6</version>
+    <version>${revision}</version>
 
     <description>This is a spring boot common component tool class</description>
     <name>${project.artifactId}</name>

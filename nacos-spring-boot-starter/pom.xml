@@ -6,13 +6,13 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-        <version>3.0.6</version>
+        <version>${revision}</version>
         <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
     <artifactId>nacos-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
-    <version>3.0.6</version>
+    <version>${revision}</version>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
 
     <properties>

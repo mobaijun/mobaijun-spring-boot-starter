@@ -6,18 +6,18 @@
     <parent>
         <groupId>com.mobaijun</groupId>
         <artifactId>mobaijun-spring-boot-starter</artifactId>
-        <version>3.0.6</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>mobaijun-spring-boot-dependencies</artifactId>
-    <version>3.0.6</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
     <inceptionYear>2024</inceptionYear>
     <description>Unified management of all dependent versions</description>
-    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/mobaijun-spring-boot-bom</url>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/dependencies</url>
 
     <!--  GitHub issues -->
     <issueManagement>
