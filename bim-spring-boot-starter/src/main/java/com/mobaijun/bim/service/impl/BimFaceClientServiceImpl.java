@@ -70,7 +70,7 @@ public class BimFaceClientServiceImpl implements BimFaceClientService {
     @Override
     public String getViewToken(String compareId, String fileId, String integrateId) {
         return JSONUtil.toBean(HttpRequest.get(BimApiConstant.VIEW_TOKEN_URL + "?fileId=" + Long.parseLong(fileId))
-                .header(Header.AUTHORIZATION.name(), "Bearer " + getAccessToken())
+                .header(Header.AUTHORIZATION.name(), getHeader())
                 .execute()
                 .body(), Data.class).getData();
     }
@@ -97,7 +97,7 @@ public class BimFaceClientServiceImpl implements BimFaceClientService {
     @Override
     public Data getPolicyToken(String name) {
         String json = HttpRequest.get(BimApiConstant.GET_POLICY + "?name=" + name)
-                .header(Header.AUTHORIZATION.name(), "Bearer " + getAccessToken())
+                .header(Header.AUTHORIZATION.name(), getHeader())
                 .execute()
                 .body();
         // 解析为对象
@@ -107,7 +107,7 @@ public class BimFaceClientServiceImpl implements BimFaceClientService {
     @Override
     public Data getFileInform(String fileId) {
         String body = HttpRequest.get(BimApiConstant.FILE_INFO + fileId)
-                .header(Header.AUTHORIZATION.name(), "Bearer " + getAccessToken())
+                .header(Header.AUTHORIZATION.name(), getHeader())
                 .execute()
                 .body();
         return JSONUtil.toBean(JSONUtil.parseObj(body).get("data").toString(), Data.class);
@@ -117,7 +117,7 @@ public class BimFaceClientServiceImpl implements BimFaceClientService {
     public Data translateBimFile(String fileId, String body) {
         if (!StringUtils.hasText(body)) {
             body = HttpRequest.put(BimApiConstant.BIM_TRANSLATE)
-                    .header(Header.AUTHORIZATION.name(), "Bearer " + getAccessToken())
+                    .header(Header.AUTHORIZATION.name(), getHeader())
                     .body("{\n" +
                             "    \"source\":{\n" +
                             "        \"fileId\":" + fileId + ",\n" +
@@ -136,7 +136,7 @@ public class BimFaceClientServiceImpl implements BimFaceClientService {
     @Override
     public void deleteBimFile(String fileIds) {
         HttpRequest.delete(BimApiConstant.DELETE_BIM_FILE + "?fileId=" + fileIds)
-                .header(Header.AUTHORIZATION.name(), "Bearer " + getAccessToken())
+                .header(Header.AUTHORIZATION.name(), getHeader())
                 .execute();
     }
 
@@ -149,5 +149,14 @@ public class BimFaceClientServiceImpl implements BimFaceClientService {
                 gldProjectId +
                 "&fileId=" +
                 fileId;
+    }
+
+    /**
+     * 获取 授权信息
+     *
+     * @return 授权信息 header
+     */
+    private String getHeader() {
+        return String.format("%s %s", "Bearer", getAccessToken());
     }
 }

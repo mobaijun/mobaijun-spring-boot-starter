@@ -32,69 +32,69 @@ import java.time.Duration;
 public class MinioConfigurationProperties {
 
     /**
-     * dependency prefix
+     * 依赖项前缀
      */
     public static final String PREFIX = "spring.minio";
 
     /**
-     * URL for Minio instance. Can include the HTTP scheme. Must include the port. If the port is not provided, then the port of the HTTP is taken.
+     * Minio 实例的 URL。可以包括 HTTP 协议。必须包括端口。如果未提供端口，则使用 HTTP 的默认端口。
      */
     private String url;
 
     /**
-     * Access key (login) on Minio instance
+     * Minio 实例上的访问密钥（登录名）。
      */
     private String accessKey;
 
     /**
-     * Secret key (password) on Minio instance
+     * Minio 实例上的密钥（密码）。
      */
     private String secretKey;
 
     /**
-     * If the scheme is not provided in {@code url} property, define if the connection is done via HTTP or HTTPS.
+     * 如果在 {@code url} 属性中未提供协议，则定义连接是通过 HTTP 还是 HTTPS 进行。
      */
     private boolean secure = false;
 
     /**
-     * Bucket name for the application. The bucket must already exists on Minio.
+     * 应用程序的桶名称。桶必须已经存在于 Minio 上。
      */
     private String bucket;
 
     /**
-     * Metric configuration prefix which are registered on Actuator.
+     * 注册到 Actuator 的指标配置前缀。
      */
     private String metricName = "minio.storage";
 
     /**
-     * Define to connect timeout for the Minio Client.
+     * 定义 Minio 客户端的连接超时时间。
      */
     private Duration connectTimeout = Duration.ofSeconds(10);
 
     /**
-     * Define to write timeout for the Minio Client.
+     * 定义 Minio 客户端的写入超时时间。
      */
     private Duration writeTimeout = Duration.ofSeconds(60);
 
     /**
-     * Define the read timeout for the Minio Client.
+     * 定义 Minio 客户端的读取超时时间。
      */
     private Duration readTimeout = Duration.ofSeconds(10);
 
     /**
-     * Defines the storage expiration time for the Minio client
+     * 定义 Minio 客户端的存储过期时间。
      */
     private Duration expire = Duration.ofSeconds(30);
 
     /**
-     * Check if the bucket exists on Minio instance.
-     * Settings this false will disable the check during the application context initialization.
-     * This property should be used for debug purpose only, because operations on Minio will not work during runtime.
+     * 检查 Minio 实例上是否存在桶。
+     * 将此属性设置为 false 将禁用应用程序上下文初始化期间的检查。
+     * 此属性仅用于调试目的，因为在运行时操作 Minio 将无法正常工作。
      */
     private boolean checkBucket = true;
 
     /**
-     * Will create the bucket if it does not exist on the Minio instance.
+     * 如果桶在 Minio 实例上不存在，则创建桶。
      */
     private boolean createBucket = true;
 

@@ -21,6 +21,11 @@ import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.errors.MinioException;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import okhttp3.OkHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +34,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
 /**
  * software：IntelliJ IDEA 2022.1
  * class name: MinioAutoConfiguration
- * class description： minio configuration class
+ * class description：minio configuration class
  *
  * @author MoBaiJun 2022/9/19 17:28
  */
@@ -47,78 +46,128 @@ import java.security.NoSuchAlgorithmException;
 public class MinioAutoConfiguration {
 
     /**
-     * logger
+     * 日志记录器
      */
     private static final Logger log = LoggerFactory.getLogger(MinioAutoConfiguration.class);
 
+    /**
+     * 创建 Minio 配置属性 Bean
+     *
+     * @return MinioConfigurationProperties 实例
+     */
     @Bean
     public MinioConfigurationProperties minioConfigurationProperties() {
         return new MinioConfigurationProperties();
     }
 
+    /**
+     * 创建 Minio 服务 Bean
+     *
+     * @param minioClient                  MinioClient 实例
+     * @param minioConfigurationProperties Minio 配置属性
+     * @return MinioService 实例
+     */
     @Bean
     public MinioService minioService(MinioClient minioClient, MinioConfigurationProperties minioConfigurationProperties) {
         return new MinioService(minioClient, minioConfigurationProperties);
     }
 
+    /**
+     * 创建 Minio 客户端 Bean
+     *
+     * @return MinioClient 实例
+     * @throws Exception 如果创建客户端或检查/创建桶时发生错误
+     */
     @Bean
-    public MinioClient minioClient() throws MinioException, IOException, NoSuchAlgorithmException, InvalidKeyException {
-        MinioConfigurationProperties minioConfigurationProperties = minioConfigurationProperties();
-        MinioClient minioClient;
-        // proxy configuration
-        if (!configuredProxy()) {
-            minioClient = MinioClient.builder()
-                    .endpoint(minioConfigurationProperties.getUrl())
-                    .credentials(minioConfigurationProperties.getAccessKey(), minioConfigurationProperties.getSecretKey())
-                    .build();
-        } else {
-            minioClient = MinioClient.builder()
-                    .endpoint(minioConfigurationProperties.getUrl())
-                    .credentials(minioConfigurationProperties.getAccessKey(), minioConfigurationProperties.getSecretKey())
-                    .httpClient(client())
-                    .build();
-        }
-        minioClient.setTimeout(
-                minioConfigurationProperties.getConnectTimeout().toMillis(),
-                minioConfigurationProperties.getWriteTimeout().toMillis(),
-                minioConfigurationProperties.getReadTimeout().toMillis()
-        );
+    public MinioClient minioClient() throws Exception {
+        MinioConfigurationProperties properties = minioConfigurationProperties();
+        MinioClient minioClient = createMinioClient(properties);
 
-        // check barrel
-        if (minioConfigurationProperties.isCheckBucket()) {
-            try {
-                log.debug("Checking if bucket {} exists", minioConfigurationProperties.getBucket());
-                BucketExistsArgs existsArgs = BucketExistsArgs.builder()
-                        .bucket(minioConfigurationProperties.getBucket())
-                        .build();
-                boolean b = minioClient.bucketExists(existsArgs);
-                if (!b) {
-                    if (minioConfigurationProperties.isCreateBucket()) {
-                        try {
-                            MakeBucketArgs makeBucketArgs = MakeBucketArgs.builder()
-                                    .bucket(minioConfigurationProperties.getBucket())
-                                    .build();
-                            minioClient.makeBucket(makeBucketArgs);
-                        } catch (Exception e) {
-                            throw new MinioException("Cannot create bucket", e.getMessage());
-                        }
-                    } else {
-                        throw new IllegalStateException("Bucket does not exist: " + minioConfigurationProperties.getBucket());
-                    }
-                }
-            } catch (Exception e) {
-                log.error("Error while checking bucket", e);
-                throw e;
-            }
+        // 检查桶是否存在，并根据配置创建桶
+        try {
+            checkAndCreateBucket(minioClient, properties);
+        } catch (Exception e) {
+            log.error("Error occurred while checking or creating the bucket: {}", e.getMessage(), e);
+            throw new MinioException("Error occurred while checking or creating the bucket: " + e.getMessage());
         }
-
         return minioClient;
     }
 
     /**
-     * Whether to enable proxy configuration
+     * 根据配置创建 Minio 客户端
      *
-     * @return true 是 | false 否
+     * @param properties Minio 配置属性
+     * @return MinioClient 实例
+     */
+    private MinioClient createMinioClient(MinioConfigurationProperties properties) {
+        MinioClient.Builder builder = MinioClient.builder()
+                .endpoint(properties.getUrl())
+                .credentials(properties.getAccessKey(), properties.getSecretKey());
+
+        if (configuredProxy()) {
+            builder.httpClient(client());
+        }
+        MinioClient minioClient = builder.build();
+        minioClient.setTimeout(
+                properties.getConnectTimeout().toMillis(),
+                properties.getWriteTimeout().toMillis(),
+                properties.getReadTimeout().toMillis()
+        );
+        return minioClient;
+    }
+
+    /**
+     * 检查桶是否存在。如果不存在，根据配置创建桶
+     *
+     * @param minioClient MinioClient 实例
+     * @param properties  Minio 配置属性
+     * @throws MinioException           如果与 MinIO 通信时发生错误
+     * @throws IOException              如果 IO 操作失败
+     * @throws NoSuchAlgorithmException 如果没有该算法
+     * @throws InvalidKeyException      如果密钥无效
+     */
+    private void checkAndCreateBucket(MinioClient minioClient, MinioConfigurationProperties properties) throws MinioException,
+            IOException, NoSuchAlgorithmException, InvalidKeyException {
+        if (properties.isCheckBucket()) {
+            log.debug("Checking if bucket {} exists", properties.getBucket());
+
+            boolean bucketExists = minioClient.bucketExists(BucketExistsArgs.builder()
+                    .bucket(properties.getBucket())
+                    .build());
+
+            if (!bucketExists) {
+                if (properties.isCreateBucket()) {
+                    createBucket(minioClient, properties.getBucket());
+                } else {
+                    throw new IllegalStateException("Bucket does not exist and bucket creation is disabled: " + properties.getBucket());
+                }
+            }
+        }
+    }
+
+    /**
+     * 创建桶
+     *
+     * @param minioClient MinioClient 实例
+     * @param bucketName  桶的名称
+     * @throws MinioException 如果创建桶时发生错误
+     */
+    private void createBucket(MinioClient minioClient, String bucketName) throws MinioException {
+        try {
+            minioClient.makeBucket(MakeBucketArgs.builder()
+                    .bucket(bucketName)
+                    .build());
+            log.info("Bucket '{}' created successfully", bucketName);
+        } catch (Exception e) {
+            log.error("Error occurred while creating bucket '{}': {}", bucketName, e.getMessage(), e);
+            throw new MinioException("Error occurred while creating bucket: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 检查是否配置了代理
+     *
+     * @return 如果配置了代理，返回 true；否则返回 false
      */
     private boolean configuredProxy() {
         String httpHost = System.getProperty("http.proxyHost");
@@ -127,18 +176,18 @@ public class MinioAutoConfiguration {
     }
 
     /**
-     * Client proxy configuration
+     * 配置客户端代理
      *
-     * @return OkHttpClient
+     * @return 配置了代理的 OkHttpClient 实例
      */
     private OkHttpClient client() {
         String httpHost = System.getProperty("http.proxyHost");
         String httpPort = System.getProperty("http.proxyPort");
+
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         if (StringUtils.hasText(httpHost)) {
             builder.proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(httpHost, Integer.parseInt(httpPort))));
         }
-        return builder
-                .build();
+        return builder.build();
     }
 }

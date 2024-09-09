@@ -56,7 +56,6 @@ public class ServerUtil {
         return domainWithoutPort;
     }
 
-
     /**
      * 获取域名
      *

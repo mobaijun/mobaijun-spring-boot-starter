@@ -130,6 +130,8 @@
         <mapstruct-plus.version>1.4.3</mapstruct-plus.version>
         <xxl-job.version>2.4.1</xxl-job.version>
         <rocketmq.version>2.3.1</rocketmq.version>
+        <zxing.core.version>3.5.3</zxing.core.version>
+        <jsr305.version>3.0.2</jsr305.version>
     </properties>
 
     <dependencies>
@@ -921,6 +923,27 @@
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
                 <version>${rocketmq.version}</version>
+            </dependency>
+
+            <!-- 二维码支持包 -->
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/com.google.zxing/core -->
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>${zxing.core.version}</version>
+            </dependency>
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/com.google.zxing/javase -->
+                <groupId>com.google.zxing</groupId>
+                <artifactId>javase</artifactId>
+                <version>${zxing.core.version}</version>
+            </dependency>
+
+            <!-- https://central.sonatype.com/artifact/com.google.code.findbugs/jsr305 -->
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>jsr305</artifactId>
+                <version>${jsr305.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

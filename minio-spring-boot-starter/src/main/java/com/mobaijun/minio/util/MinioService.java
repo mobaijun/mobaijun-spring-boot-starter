@@ -55,11 +55,10 @@ import org.springframework.util.CollectionUtils;
 /**
  * software：IntelliJ IDEA 2022.1
  * class name: MinioService
- * class description： Service class to interact with Minio bucket.
- * This class is register as a bean and use the properties defined
- * in {@link MinioConfigurationProperties}.
- * All methods return an {@link MinioException} which wrap the Minio SDK exception.
- * The bucket name is provided with the one defined in the configuration properties.
+ * class description： 服务类，用于与 Minio 存储桶进行交互。
+ * 该类作为 Bean 注册，并使用 {@link MinioConfigurationProperties} 中定义的属性。
+ * 所有方法都返回 {@link MinioException}，该异常封装了 Minio SDK 的异常。
+ * 存储桶名称由配置属性中定义的名称提供。
  *
  * @author MoBaiJun 2022/9/19 17:37
  */
@@ -87,12 +86,13 @@ public class MinioService {
     }
 
     /**
-     * Check whether the bucket exists
+     * 检查存储桶是否存在
      *
-     * @param bucketName Bucket Name
-     * @return If there is a
+     * @param bucketName 存储桶名称
+     * @return 存储桶是否存在
+     * @throws Exception 如果检查过程中发生错误
      */
-    public boolean bucketExists(String bucketName) throws Exception {
+    public boolean existsBucket(String bucketName) throws Exception {
         return minioClient.bucketExists(BucketExistsArgs.builder()
                 .bucket(bucketName)
                 .build()
@@ -100,72 +100,104 @@ public class MinioService {
     }
 
     /**
-     * Creating a Bucket
+     * 创建一个存储桶
      *
-     * @param bucketName Bucket Name
+     * @param bucketName 存储桶名称
+     * @throws Exception 如果创建存储桶过程中发生错误
      */
-    public void makeBucket(String bucketName) throws Exception {
-        if (!bucketExists(bucketName)) {
+    public void createBucket(String bucketName) throws Exception {
+        if (!existsBucket(bucketName)) {
             minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
         }
     }
 
     /**
-     * Lists all buckets
+     * 获取所有存储桶的信息列表
      *
-     * @return Bucket List
+     * @return 存储桶列表
+     * @throws Exception 如果获取存储桶列表过程中发生错误
      */
-    public List<Bucket> listBuckets() throws Exception {
+    public List<Bucket> getAllBuckets() throws Exception {
         return minioClient.listBuckets();
     }
 
     /**
-     * Lists all bucket names
+     * 获取所有存储桶的名称列表
      *
-     * @return Bucket List Name
+     * @return 存储桶名称列表
+     * @throws Exception 如果获取存储桶名称列表过程中发生错误
      */
-    public List<String> listBucketNames() throws Exception {
-        List<Bucket> bucketList = listBuckets();
+    public List<String> getAllBucketNames() throws Exception {
+        List<Bucket> bucketList = getAllBuckets();
         return !CollectionUtils.isEmpty(bucketList) ?
                 bucketList.stream().map(Bucket::name)
                         .toList() : new ArrayList<>();
     }
 
     /**
-     * Deleting a Bucket
+     * 列出默认存储桶根目录下的所有对象
      *
-     * @param bucketName Bucket Name
-     * @return The success of
+     * @return 对象列表
      */
-    public boolean removeBucket(String bucketName) throws Exception {
-        boolean flag = bucketExists(bucketName);
+    public List<Item> listObjects() {
+        return listObjects(null);
+    }
+
+    /**
+     * 列出指定存储桶根目录下的所有对象，如果未指定存储桶，则使用默认存储桶
+     *
+     * @param bucket 存储桶名称，如果为空，则使用默认存储桶
+     * @return 对象列表
+     */
+    public List<Item> listObjects(String bucket) {
+        bucket = (bucket == null || bucket.isEmpty()) ? minioConfigurationProperties.getBucket() : bucket;
+        ListObjectsArgs args = ListObjectsArgs.builder()
+                .bucket(bucket)
+                // 列出根目录下的对象
+                .prefix("")
+                // 不递归列出子目录
+                .recursive(false)
+                .build();
+        return getItems(minioClient.listObjects(args));
+    }
+
+    /**
+     * 删除一个存储桶
+     *
+     * @param bucketName 存储桶名称
+     * @return 删除是否成功
+     * @throws Exception 如果删除存储桶过程中发生错误
+     */
+    public boolean deleteBucket(String bucketName) throws Exception {
+        boolean flag = existsBucket(bucketName);
         if (flag) {
-            Iterable<Result<Item>> myObjects = listObjects(bucketName);
+            Iterable<Result<Item>> myObjects = getListObjects(bucketName);
             for (Result<Item> result : myObjects) {
                 Item item = result.get();
-                // If an object file exists, the file fails to be deleted
+                // 如果存储桶中存在对象文件，则删除失败
                 if (item.size() > 0) {
                     return false;
                 }
             }
-            // The bucket can be deleted only when the bucket is empty.
+            // 只有当存储桶为空时才能删除存储桶
             minioClient.removeBucket(RemoveBucketArgs.builder().bucket(bucketName).build());
-            flag = bucketExists(bucketName);
+            flag = existsBucket(bucketName);
             return !flag;
         }
         return false;
     }
 
     /**
-     * Lists all the object names in the bucket
+     * 列出存储桶中的所有对象名称
      *
-     * @param bucketName Bucket Name
-     * @return The list of
+     * @param bucketName 存储桶名称
+     * @return 对象名称列表
+     * @throws Exception 如果列出对象名称过程中发生错误
      */
     public List<String> listObjectNames(String bucketName) throws Exception {
         List<String> listObjectNames = new ArrayList<>();
-        if (bucketExists(bucketName)) {
-            Iterable<Result<Item>> myObjects = listObjects(bucketName);
+        if (existsBucket(bucketName)) {
+            Iterable<Result<Item>> myObjects = getListObjects(bucketName);
             for (Result<Item> result : myObjects) {
                 Item item = result.get();
                 listObjectNames.add(item.objectName());
@@ -175,88 +207,125 @@ public class MinioService {
     }
 
     /**
-     * Lists all objects in the bucket
+     * 列出存储桶中的所有对象
      *
-     * @param bucketName Bucket Name
-     * @return Barrel object
+     * @param bucketName 存储桶名称
+     * @return 对象结果的迭代器
+     * @throws Exception 如果列出对象过程中发生错误
      */
-    public Iterable<Result<Item>> listObjects(String bucketName) throws Exception {
-        if (bucketExists(bucketName)) {
+    public Iterable<Result<Item>> getListObjects(String bucketName) throws Exception {
+        if (existsBucket(bucketName)) {
             return minioClient.listObjects(ListObjectsArgs.builder().bucket(bucketName).build());
         }
         return null;
     }
 
     /**
-     * Obtaining a list of files
+     * 获取文件列表
      *
-     * @return File list
+     * @return 文件列表
      */
-    public List<String> listFiles() {
-        // Gets a list of file objects in the bucket
-        return !CollectionUtils.isEmpty(list()) ? list().stream()
+    public List<String> getListFiles() {
+        // 获取存储桶中的文件对象列表
+        return !CollectionUtils.isEmpty(listObjects()) ? listObjects().stream()
                 .map(Item::objectName)
                 .toList() : new LinkedList<>();
     }
 
     /**
-     * List all objects at root of the bucket
+     * 获取文件的 URL
      *
-     * @return List of items
+     * @param fileName 存储桶中文件的相对路径
+     * @return 文件的临时 URL
+     * @throws MinioException 如果获取临时 URL 时发生错误
      */
-    public List<Item> list() {
-        ListObjectsArgs args = ListObjectsArgs.builder()
-                .bucket(minioConfigurationProperties.getBucket())
-                .prefix("")
-                .recursive(false)
-                .build();
-        return getItems(minioClient.listObjects(args));
+    public String getFileUrl(String fileName) throws MinioException {
+        return getFileUrl(fileName, null);
     }
 
-
     /**
-     * Get file temporary url
+     * 获取文件的 URL
      *
-     * @param path The relative path of the file in the bucket
-     * @return The address of the file in the bucket
+     * @param fileName 存储桶中文件的相对路径
+     * @param bucket   存储桶名称。如果为 null 或空，则使用默认存储桶
+     * @return 文件的临时 URL
+     * @throws MinioException 如果获取临时 URL 时发生错误
      */
-    public String getUrl(String path) throws MinioException {
-        GetPresignedObjectUrlArgs getPresignedObjectUrlArgs = GetPresignedObjectUrlArgs.builder()
-                .bucket(minioConfigurationProperties.getBucket())
-                .object(path)
+    public String getFileUrl(String fileName, String bucket) throws MinioException {
+        // 使用默认存储桶名称，如果未提供
+        String resolvedBucket = (bucket == null || bucket.isEmpty())
+                ? minioConfigurationProperties.getBucket()
+                : bucket;
+
+        // 设置获取临时 URL 的参数
+        GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder()
+                .bucket(resolvedBucket)
+                .object(fileName)
                 .method(Method.GET)
-                .expiry(Math.toIntExact(minioConfigurationProperties.getExpire().getSeconds()), TimeUnit.MINUTES)
+                .expiry(Math.toIntExact(minioConfigurationProperties.getExpire().getSeconds()), TimeUnit.SECONDS)
                 .build();
+
         try {
-            return minioClient.getPresignedObjectUrl(getPresignedObjectUrlArgs);
+            // 返回文件的临时 URL
+            return minioClient.getPresignedObjectUrl(args);
         } catch (Exception e) {
-            throw new MinioException("Error getting file list", e);
+            // 抛出自定义异常，包含详细错误信息
+            throw new MinioException("Error getting temporary file URL", e);
         }
     }
 
     /**
-     * List all objects at root of the bucket
+     * 列出默认存储桶根目录下的所有对象
      *
-     * @return List of items
+     * @return 对象列表
      */
-    public List<Item> fullList() {
+    public List<Item> fullAllList() {
+        return fullAllList(null);
+    }
+
+    /**
+     * 列出指定存储桶根目录下的所有对象
+     *
+     * @param bucket 存储桶名称。如果为 null 或空，则使用默认存储桶
+     * @return 对象列表
+     */
+    public List<Item> fullAllList(String bucket) {
+        // 使用默认存储桶名称，如果未提供
+        String resolvedBucket = (bucket == null || bucket.isEmpty())
+                ? minioConfigurationProperties.getBucket()
+                : bucket;
+
+        // 设置列出对象的参数
         ListObjectsArgs args = ListObjectsArgs.builder()
-                .bucket(minioConfigurationProperties.getBucket())
+                .bucket(resolvedBucket)
                 .build();
+
+        // 获取对象列表并返回
         return getItems(minioClient.listObjects(args));
     }
 
     /**
-     * List all objects with the prefix given in parameter for the bucket.
-     * Simulate a folder hierarchy. Objects within folders (i.e. all objects which match the pattern
-     * {@code {prefix}/{objectName}/...}) are not returned
+     * 列出具有指定前缀的所有对象，模拟文件夹层级结构。
+     * 不返回文件夹中的对象（即所有匹配模式 {@code {prefix}/{objectName}/...} 的对象）
      *
-     * @param path Prefix of seeked list of object
-     * @return List of items
+     * @param path 查找对象的前缀
+     * @return 对象列表
      */
-    public List<Item> list(Path path) {
+    public List<Item> listPrefix(Path path) {
+        return listPrefix(path, null);
+    }
+
+    /**
+     * 列出具有指定前缀的所有对象，模拟文件夹层级结构。
+     * 不返回文件夹中的对象（即所有匹配模式 {@code {prefix}/{objectName}/...} 的对象）
+     *
+     * @param path 查找对象的前缀
+     * @return 对象列表
+     */
+    public List<Item> listPrefix(Path path, String bucket) {
+        bucket = (bucket == null || bucket.isEmpty()) ? minioConfigurationProperties.getBucket() : bucket;
         ListObjectsArgs args = ListObjectsArgs.builder()
-                .bucket(minioConfigurationProperties.getBucket())
+                .bucket(bucket)
                 .prefix(path.toString())
                 .recursive(false)
                 .build();
@@ -265,27 +334,48 @@ public class MinioService {
     }
 
     /**
-     * List all objects with the prefix given in parameter for the bucket
+     * 列出存储桶中具有指定前缀的所有对象
      * <p>
-     * All objects, even those which are in a folder are returned.
+     * 返回所有对象，包括那些在子目录中的对象。
      *
-     * @param path Prefix of seeked list of object
-     * @return List of items
+     * @param prefix 要查找的对象的前缀
+     * @return 对象列表
      */
-    public List<Item> getFullList(Path path) {
-        ListObjectsArgs args = ListObjectsArgs.builder()
-                .bucket(minioConfigurationProperties.getBucket())
-                .prefix(path.toString())
-                .build();
-        Iterable<Result<Item>> myObjects = minioClient.listObjects(args);
-        return getItems(myObjects);
+    public List<Item> fullList(Path prefix) {
+        return fullList(prefix, null);
     }
 
     /**
-     * Utility method which map results to items and return a list
+     * 列出存储桶中具有指定前缀的所有对象
+     * <p>
+     * 返回所有对象，包括那些在子目录中的对象。
      *
-     * @param myObjects Iterable of results
-     * @return List of items
+     * @param prefix 要查找的对象的前缀
+     * @param bucket 存储桶名称。如果为 null 或空，则使用默认存储桶
+     * @return 对象列表
+     */
+    public List<Item> fullList(Path prefix, String bucket) {
+        // 使用默认存储桶名称，如果未提供
+        String resolvedBucket = (bucket == null || bucket.isEmpty())
+                ? minioConfigurationProperties.getBucket()
+                : bucket;
+
+        // 设置列出对象的参数
+        ListObjectsArgs args = ListObjectsArgs.builder()
+                .bucket(resolvedBucket)
+                .prefix(prefix.toString())
+                .build();
+
+        // 获取对象列表并返回
+        Iterable<Result<Item>> objectResults = minioClient.listObjects(args);
+        return getItems(objectResults);
+    }
+
+    /**
+     * 工具方法，将结果映射为对象并返回列表
+     *
+     * @param myObjects 结果的可迭代集合
+     * @return 对象列表
      */
     private List<Item> getItems(Iterable<Result<Item>> myObjects) {
         return StreamSupport
@@ -300,11 +390,11 @@ public class MinioService {
     }
 
     /**
-     * Get an object from Minio
+     * 从 Minio 获取对象
      *
-     * @param path Path with prefix to the object. Object name must be included.
-     * @return The object as an InputStream
-     * @throws MinioException if an error occur while fetch object
+     * @param path 带前缀的对象路径。必须包括对象名称。
+     * @return 作为 InputStream 的对象
+     * @throws MinioException 如果获取对象时发生错误
      */
     public InputStream get(Path path) throws MinioException {
         try {
@@ -319,11 +409,11 @@ public class MinioService {
     }
 
     /**
-     * Get metadata of an object from Minio
+     * 获取 Minio 中对象的元数据
      *
-     * @param path Path with prefix to the object. Object name must be included.
-     * @return Metadata of the  object
-     * @throws MinioException if an error occur while fetching object metadatas
+     * @param path 带前缀的对象路径。必须包括对象名称。
+     * @return 对象的元数据
+     * @throws MinioException 如果获取对象元数据时发生错误
      */
     public StatObjectResponse getMetadata(Path path) throws MinioException {
         try {
@@ -338,10 +428,10 @@ public class MinioService {
     }
 
     /**
-     * Get metadata for multiples objects from Minio
+     * 获取 Minio 中多个对象的元数据
      *
-     * @param paths Paths of all objects with prefix. Object names must be included.
-     * @return A map where all paths are keys and metadata are values
+     * @param paths 所有对象的路径，必须包括对象名称。
+     * @return 一个映射，其中所有路径是键，元数据是值
      */
     public Map<Path, StatObjectResponse> getMetadata(Iterable<Path> paths) {
         return StreamSupport.stream(paths.spliterator(), false)
@@ -360,11 +450,11 @@ public class MinioService {
     }
 
     /**
-     * Get a file from Minio, and save it in the {@code fileName} file
+     * 从 Minio 获取一个文件，并将其保存到 {@code fileName} 文件中
      *
-     * @param source   Path with prefix to the object. Object name must be included.
-     * @param fileName Filename
-     * @throws MinioException if an error occur while fetch object
+     * @param source   带前缀的对象路径。必须包括对象名称。
+     * @param fileName 文件名
+     * @throws MinioException 如果获取对象时发生错误
      */
     public void getAndSave(Path source, String fileName) throws MinioException {
         try {
@@ -380,210 +470,283 @@ public class MinioService {
     }
 
     /**
-     * Upload a file to Minio
+     * 上传文件到 Minio 并返回链接
+     * 处理大于 JVM 最大内存的文件
      *
-     * @param source  Path with prefix to the object. Object name must be included.
-     * @param file    File as an input stream
-     * @param headers Additional headers to put on the file. The map MUST be mutable. All custom headers will start with 'x-amz-meta-'
-     *                prefix when fetched with {@code getMetadata()} method.
-     * @throws MinioException if an error occur while uploading object
-     */
-    public void upload(Path source, InputStream file, Map<String, String> headers) throws
-            MinioException {
-        try {
-            PutObjectArgs args = PutObjectArgs.builder()
-                    .bucket(minioConfigurationProperties.getBucket())
-                    .object(source.toString())
-                    .stream(file, file.available(), -1)
-                    .headers(headers)
-                    .build();
-            minioClient.putObject(args);
-        } catch (Exception e) {
-            throw new MinioException("Error while fetching files in Minio", e);
-        }
-    }
-
-    /**
-     * Upload a file to Minio
-     *
-     * @param source Path with prefix to the object. Object name must be included.
-     * @param file   File as an input stream
-     * @throws MinioException if an error occur while uploading object
-     */
-    public void upload(Path source, InputStream file) throws
-            MinioException {
-        try {
-            PutObjectArgs args = PutObjectArgs.builder()
-                    .bucket(minioConfigurationProperties.getBucket())
-                    .object(source.toString())
-                    .stream(file, file.available(), -1)
-                    .build();
-            minioClient.putObject(args);
-        } catch (Exception e) {
-            throw new MinioException("Error while fetching files in Minio", e);
-        }
-    }
-
-    /**
-     * Upload a file to Minio
-     *
-     * @param source      Path with prefix to the object. Object name must be included.
-     * @param file        File as an input stream
-     * @param contentType MIME type for the object
-     * @param headers     Additional headers to put on the file. The map MUST be mutable
-     * @throws MinioException if an error occur while uploading object
-     */
-    public void upload(Path source, InputStream file, String contentType, Map<String, String> headers) throws
-            MinioException {
-        try {
-            PutObjectArgs args = PutObjectArgs.builder()
-                    .bucket(minioConfigurationProperties.getBucket())
-                    .object(source.toString())
-                    .stream(file, file.available(), -1)
-                    .headers(headers)
-                    .contentType(contentType)
-                    .build();
-            minioClient.putObject(args);
-        } catch (Exception e) {
-            throw new MinioException("Error while fetching files in Minio", e);
-        }
-    }
-
-    /**
-     * Upload a file to Minio
-     *
-     * @param source      Path with prefix to the object. Object name must be included.
-     * @param file        File as an input stream
-     * @param contentType MIME type for the object
-     * @throws MinioException if an error occur while uploading object
-     */
-    public void upload(Path source, InputStream file, String contentType) throws MinioException {
-        try {
-            PutObjectArgs args = PutObjectArgs.builder()
-                    .bucket(minioConfigurationProperties.getBucket())
-                    .object(source.toString())
-                    .stream(file, file.available(), -1)
-                    .contentType(contentType)
-                    .build();
-            minioClient.putObject(args);
-        } catch (Exception e) {
-            throw new MinioException("Error while fetching files in Minio", e);
-        }
-    }
-
-    /**
-     * Upload a file to Minio
-     * upload file bigger than Xmx size
-     *
-     * @param source Path with prefix to the object. Object name must be included.
-     * @param file   File as a Filename
-     * @throws MinioException if an error occur while uploading object
-     */
-    public void upload(Path source, File file) throws MinioException {
-        try {
-            UploadObjectArgs args = UploadObjectArgs.builder()
-                    .bucket(minioConfigurationProperties.getBucket())
-                    .object(source.toString())
-                    .filename(file.getName())
-                    .build();
-            minioClient.uploadObject(args);
-        } catch (Exception e) {
-            throw new MinioException("Error while fetching files in Minio", e);
-        }
-    }
-
-    /**
-     * Get file outreach
-     *
-     * @param bucketName Bucket Name
-     * @param fileName   The file name
-     * @return The file url
-     * @throws Exception Exception
-     */
-    public String getResignedObjectUrl(String bucketName, String fileName) throws Exception {
-        GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder()
-                .bucket(bucketName)
-                .object(fileName)
-                .method(Method.GET).build();
-        return minioClient.getPresignedObjectUrl(args);
-    }
-
-    /**
-     * Remove a file to Minio
-     *
-     * @param source Path with prefix to the object. Object name must be included.
-     */
-    public void remove(Path source) throws MinioException {
-        try {
-            RemoveObjectArgs args = RemoveObjectArgs.builder()
-                    .bucket(minioConfigurationProperties.getBucket())
-                    .object(source.toString())
-                    .build();
-            minioClient.removeObject(args);
-        } catch (Exception e) {
-            throw new MinioException("Error while fetching files in Minio", e);
-        }
-    }
-
-    /**
-     * Upload a file to Minio And return the link
-     * upload file bigger than Xmx size
-     *
-     * @param source      Path with prefix to the object. Object name must be included.
-     * @param file        File as a Filename
-     * @param contentType Request file type
-     * @return Image links
-     * @throws MinioException if an error occur while uploading object
+     * @param source      带前缀的对象路径。必须包括对象名称。
+     * @param file        作为输入流的文件
+     * @param contentType 请求文件的 MIME 类型
+     * @return 文件的 URL
+     * @throws MinioException 如果上传对象时发生错误
      */
     public String upload(InputStream file, Path source, String contentType) throws MinioException {
+        return upload(file, source, contentType, null);
+    }
+
+    /**
+     * 上传文件到 Minio 并返回链接
+     * 处理大于 JVM 最大内存的文件
+     *
+     * @param source      带前缀的对象路径。必须包括对象名称。
+     * @param file        作为输入流的文件
+     * @param contentType 请求文件的 MIME 类型
+     * @param bucket      存储桶名称。若为空，则使用配置中的默认桶。
+     * @return 文件的 URL
+     * @throws MinioException 如果上传对象时发生错误
+     */
+    public String upload(InputStream file, Path source, String contentType, String bucket) throws MinioException {
         String fileUrl;
         try {
+            // 如果 bucket 参数为空，则使用默认配置中的 bucket 名称
+            bucket = (bucket == null || bucket.isEmpty()) ? minioConfigurationProperties.getBucket() : bucket;
+
+            // 创建上传对象的参数
             PutObjectArgs args = PutObjectArgs.builder()
-                    .bucket(minioConfigurationProperties.getBucket())
+                    .bucket(bucket)
                     .object(source.toString())
                     .stream(file, file.available(), -1)
                     .contentType(contentType)
                     .build();
+
+            // 执行文件上传
             minioClient.putObject(args);
-            // result
-            fileUrl = getResignedObjectUrl(minioConfigurationProperties.getBucket(), source.toString());
+
+            // 获取文件的 URL
+            fileUrl = getResignedObjectUrl(bucket, source.toString());
         } catch (Exception e) {
-            throw new MinioException("Error while fetching files in Minio", e);
+            throw new MinioException("Error while uploading file to Minio", e);
         }
         return fileUrl;
     }
 
     /**
-     * Deleting an object
+     * 上传一个文件到 Minio
      *
-     * @param bucketName Bucket Name
-     * @param fileName   The name of the object in the bucket
+     * @param source  带前缀的对象路径。必须包括对象名称。
+     * @param file    作为输入流的文件
+     * @param headers 要附加到文件上的额外头信息。此映射必须是可变的。所有自定义头信息在使用 {@code getMetadata()} 方法获取时会以 'x-amz-meta-' 前缀开始。
+     * @throws MinioException 如果上传对象时发生错误
      */
-    public boolean removeObject(String bucketName, String fileName) throws Exception {
-        if (bucketExists(bucketName)) {
+    public void upload(Path source, InputStream file, Map<String, String> headers) throws MinioException {
+        upload(source, file, headers, null);
+    }
+
+    /**
+     * 上传一个文件到 Minio
+     *
+     * @param source  带前缀的对象路径。必须包括对象名称。
+     * @param file    作为输入流的文件
+     * @param headers 要附加到文件上的额外头信息。此映射必须是可变的。所有自定义头信息在使用 {@code getMetadata()} 方法获取时会以 'x-amz-meta-' 前缀开始。
+     * @throws MinioException 如果上传对象时发生错误
+     */
+    public void upload(Path source, InputStream file, Map<String, String> headers, String bucket) throws MinioException {
+        try {
+            // 如果 bucket 参数为空，则使用默认配置中的 bucket 名称
+            bucket = (bucket == null || bucket.isEmpty()) ? minioConfigurationProperties.getBucket() : bucket;
+            PutObjectArgs args = PutObjectArgs.builder()
+                    .bucket(bucket)
+                    .object(source.toString())
+                    .stream(file, file.available(), -1)
+                    .headers(headers)
+                    .build();
+            minioClient.putObject(args);
+        } catch (Exception e) {
+            throw new MinioException("Error while fetching files in Minio", e);
+        }
+    }
+
+    /**
+     * 上传一个文件到 Minio
+     *
+     * @param source 带前缀的对象路径。必须包括对象名称。
+     * @param file   作为输入流的文件
+     * @throws MinioException 如果上传对象时发生错误
+     */
+    public void upload(Path source, InputStream file) throws MinioException {
+        try {
+            PutObjectArgs args = PutObjectArgs.builder()
+                    .bucket(minioConfigurationProperties.getBucket())
+                    .object(source.toString())
+                    .stream(file, file.available(), -1)
+                    .build();
+            minioClient.putObject(args);
+        } catch (Exception e) {
+            throw new MinioException("Error while fetching files in Minio", e);
+        }
+    }
+
+    /**
+     * 上传一个文件到 Minio
+     *
+     * @param source      带前缀的对象路径。必须包括对象名称。
+     * @param file        作为输入流的文件
+     * @param contentType 对象的 MIME 类型
+     * @param headers     要附加到文件上的额外头信息。此映射必须是可变的
+     * @throws MinioException 如果上传对象时发生错误
+     */
+    public void upload(Path source, InputStream file, String contentType, Map<String, String> headers) throws MinioException {
+        upload(source, file, contentType, headers, null);
+    }
+
+    /**
+     * 上传一个文件到 Minio
+     *
+     * @param source      带前缀的对象路径。必须包括对象名称。
+     * @param file        作为输入流的文件
+     * @param contentType 对象的 MIME 类型
+     * @param headers     要附加到文件上的额外头信息。此映射必须是可变的
+     * @param bucket      存储桶名称。若为空，则使用配置中的默认桶。
+     * @throws MinioException 如果上传对象时发生错误
+     */
+    public void upload(Path source, InputStream file, String contentType, Map<String, String> headers, String bucket) throws MinioException {
+        try {
+            // 如果 bucket 参数为空，则使用默认配置中的 bucket 名称
+            bucket = (bucket == null || bucket.isEmpty()) ? minioConfigurationProperties.getBucket() : bucket;
+
+            PutObjectArgs args = PutObjectArgs.builder()
+                    .bucket(bucket)
+                    .object(source.toString())
+                    .stream(file, file.available(), -1)
+                    .headers(headers)
+                    .contentType(contentType)
+                    .build();
+            minioClient.putObject(args);
+        } catch (Exception e) {
+            throw new MinioException("Error while uploading file to Minio", e);
+        }
+    }
+
+    /**
+     * 上传一个文件到 Minio
+     * 处理大于 JVM 最大内存的文件
+     *
+     * @param source 带前缀的对象路径。必须包括对象名称。
+     * @param file   作为文件名的文件
+     * @throws MinioException 如果上传对象时发生错误
+     */
+    public void upload(Path source, File file) throws MinioException {
+        upload(source, file, null);
+    }
+
+    /**
+     * 上传一个文件到 Minio
+     * 处理大于 JVM 最大内存的文件
+     *
+     * @param source 带前缀的对象路径。必须包括对象名称。
+     * @param file   作为文件名的文件
+     * @param bucket 指定存储桶的名称。如果为空，则使用默认存储桶
+     * @throws MinioException 如果上传对象时发生错误
+     */
+    public void upload(Path source, File file, String bucket) throws MinioException {
+        try {
+            // 检查是否提供了存储桶名称，如果没有则使用默认存储桶
+            String bucketName = (bucket != null && !bucket.isEmpty()) ? bucket : minioConfigurationProperties.getBucket();
+
+            // 构建上传对象的参数
+            UploadObjectArgs args = UploadObjectArgs.builder()
+                    // 使用提供的存储桶名称或默认存储桶
+                    .bucket(bucketName)
+                    // 对象路径（包括名称）
+                    .object(source.toString())
+                    // 文件的绝对路径
+                    .filename(file.getAbsolutePath())
+                    .build();
+
+            // 上传文件到 Minio
+            minioClient.uploadObject(args);
+        } catch (Exception e) {
+            // 捕获并抛出自定义异常，包含错误信息
+            throw new MinioException("Error while uploading file to Minio", e);
+        }
+    }
+
+    /**
+     * 获取文件的预签名 URL
+     *
+     * @param bucketName 存储桶名称
+     * @param fileName   文件名称
+     * @return 文件的 URL
+     * @throws Exception 异常
+     */
+    public String getResignedObjectUrl(String bucketName, String fileName) throws Exception {
+        GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder()
+                .bucket(bucketName)
+                .object(fileName)
+                .method(Method.GET)
+                .build();
+        return minioClient.getPresignedObjectUrl(args);
+    }
+
+    /**
+     * 从 Minio 删除文件
+     *
+     * @param source 带前缀的对象路径。必须包括对象名称。
+     * @throws MinioException 如果在删除对象时发生错误
+     */
+    public void delete(Path source) throws MinioException {
+        delete(source, null);
+    }
+
+    /**
+     * 从 Minio 删除一个对象
+     *
+     * @param source 带前缀的对象路径。必须包括对象名称。
+     * @param bucket 指定存储桶的名称。如果为空，则使用默认存储桶
+     * @throws MinioException 如果删除对象时发生错误
+     */
+    public void delete(Path source, String bucket) throws MinioException {
+        try {
+            // 如果未提供存储桶名称，则使用默认存储桶
+            bucket = (bucket == null || bucket.isEmpty()) ? minioConfigurationProperties.getBucket() : bucket;
+
+            // 构建删除对象的参数
+            RemoveObjectArgs args = RemoveObjectArgs.builder()
+                    // 使用指定的存储桶名称或默认存储桶
+                    .bucket(bucket)
+                    // 对象路径（包括名称）
+                    .object(source.toString())
+                    .build();
+            // 从 Minio 删除对象
+            minioClient.removeObject(args);
+        } catch (Exception e) {
+            throw new MinioException("Error while removing object from Minio", e);
+        }
+    }
+
+    /**
+     * 删除对象
+     *
+     * @param bucketName 存储桶名称
+     * @param fileName   存储桶中的对象名称
+     * @return 如果对象存在并已删除则返回 true，否则返回 false
+     * @throws Exception 异常
+     */
+    public boolean delete(String bucketName, String fileName) throws Exception {
+        if (existsBucket(bucketName)) {
             minioClient.removeObject(RemoveObjectArgs.builder()
                     .bucket(bucketName)
-                    .object(fileName).build());
+                    .object(fileName)
+                    .build());
             return true;
         }
         return false;
     }
 
     /**
-     * If multiple file objects in the specified bucket are deleted,
-     * a list of incorrect objects is displayed.
-     * If all file objects are successfully deleted, an empty list is displayed
+     * 删除指定存储桶中的多个文件对象，
+     * 返回删除失败的对象列表。如果所有文件对象都成功删除，则返回空列表
      *
-     * @param bucketName Bucket Name
-     * @param fileNames  Iterator object containing multiple object names to delete
-     * @return Delete the list
+     * @param bucketName 存储桶名称
+     * @param fileNames  包含多个要删除的对象名称的迭代器
+     * @return 删除失败的对象列表
+     * @throws Exception 异常
      */
-    public List<String> removeObject(String bucketName, List<String> fileNames) throws Exception {
+    public List<String> delete(String bucketName, List<String> fileNames) throws Exception {
         if (CollectionUtils.isEmpty(fileNames)) {
             throw new MinioException("minio.delete.object.name.can.not.empty");
         }
         List<String> deleteErrorNames = new ArrayList<>();
-        boolean flag = bucketExists(bucketName);
+        boolean flag = existsBucket(bucketName);
         if (flag) {
             List<DeleteObject> deleteFileNames = fileNames.stream().map(DeleteObject::new).toList();
             Iterable<Result<DeleteError>> results = minioClient
@@ -597,17 +760,32 @@ public class MinioService {
     }
 
     /**
-     * Get a short link to the file
+     * 上传文件并获取其短链接
      *
-     * @param file        file
-     * @param source      source
-     * @param contentType contentType
-     * @return url
+     * @param file        文件的输入流
+     * @param source      文件路径，必须包含文件名
+     * @param contentType 文件的 MIME 类型
+     * @return 文件的短链接
+     * @throws MinioException 如果上传文件或获取短链接时发生错误
      */
-    public String interceptUrl(InputStream file, Path source, String contentType) throws MinioException {
+    public String uploadAndGetShortUrl(InputStream file, Path source, String contentType) throws MinioException {
+        return uploadAndGetShortUrl(file, source, contentType, null);
+    }
+
+    /**
+     * 上传文件并获取其短链接
+     *
+     * @param file        文件的输入流
+     * @param source      文件路径，必须包含文件名
+     * @param contentType 文件的 MIME 类型
+     * @param bucket      存储桶名称。如果为 null 或空，则使用默认存储桶
+     * @return 文件的短链接
+     * @throws MinioException 如果上传文件或获取短链接时发生错误
+     */
+    public String uploadAndGetShortUrl(InputStream file, Path source, String contentType, String bucket) throws MinioException {
         String url;
         try {
-            url = upload(file, source, contentType);
+            url = upload(file, source, contentType, bucket);
         } catch (MinioException e) {
             throw new MinioException("minio.delete.object.name.can.not.empty", e);
         }

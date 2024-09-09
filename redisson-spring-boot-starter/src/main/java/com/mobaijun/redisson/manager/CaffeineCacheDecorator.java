@@ -17,7 +17,7 @@ package com.mobaijun.redisson.manager;
 
 import com.mobaijun.core.spring.SpringUtil;
 import io.micrometer.common.lang.NonNullApi;
-import io.micrometer.common.lang.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.concurrent.Callable;
 import org.springframework.cache.Cache;
 

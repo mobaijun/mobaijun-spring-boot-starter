@@ -29,6 +29,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.util.ObjectUtils;
 
+
 /**
  * Description: [JSON 工具类]
  * Author: [mobaijun]
@@ -68,6 +69,19 @@ public class JsonUtil {
     }
 
     /**
+     * 将JSON格式的字符串转换为指定类型的对象，支持复杂类型
+     *
+     * @param json JSON格式的字符串
+     * @param type 指定类型的TypeReference对象
+     * @param <T>  目标对象的泛型类型
+     * @return 转换后的对象，如果字符串为空则返回null
+     * @throws RuntimeException 如果转换过程中发生IO异常，则抛出运行时异常
+     */
+    public static <T> List<T> toBean(String json, TypeReference<List<T>> type) {
+        return parseObject(json, type);
+    }
+
+    /**
      * 转换JSON字符串为List对象
      *
      * @param json  JSON字符串
@@ -87,6 +101,17 @@ public class JsonUtil {
      */
     public static Dict toDict(String json) {
         return parseMap(json);
+    }
+
+    /**
+     * 将JSON格式的字符串转换为Dict对象的列表
+     *
+     * @param text JSON格式的字符串
+     * @return 转换后的Dict对象的列表，如果字符串为空则返回null
+     * @throws RuntimeException 如果转换过程中发生IO异常，则抛出运行时异常
+     */
+    public static List<Dict> toDictList(String text) {
+        return parseArrayMap(text);
     }
 
     /**
