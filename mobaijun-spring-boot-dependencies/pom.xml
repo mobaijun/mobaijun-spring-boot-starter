@@ -93,17 +93,17 @@
         <slf4j-api.version>[2.+,)</slf4j-api.version>
         <easyexcel.version>[3.+,)</easyexcel.version>
         <kjs-common.version>RELEASE</kjs-common.version>
-        <april-sensitive.version>[2.+,)</april-sensitive.version>
-        <easy-captcha.version>1.6.2</easy-captcha.version>
+        <april-sensitive.version>RELEASE</april-sensitive.version>
+        <easy-captcha.version>RELEASE</easy-captcha.version>
         <bimface-java-sdk.version>3.2.9</bimface-java-sdk.version>
         <tianai-captcha.version>RELEASE</tianai-captcha.version>
-        <cos_api.version>5.6.219.1</cos_api.version>
+        <cos_api.version>RELEASE</cos_api.version>
         <qiniu-java-sdk.version>7.15.1</qiniu-java-sdk.version>
         <swagger-parser.version>2.1.22</swagger-parser.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <httpclient.version>RELEASE</httpclient.version>
         <httpmime.version>RELEASE</httpmime.version>
-        <april-json-util.version>[1.+,)</april-json-util.version>
+        <april-json-util.version>RELEASE</april-json-util.version>
         <easyexcel-core.version>4.0.1</easyexcel-core.version>
         <commons-compress.version>RELEASE</commons-compress.version>
         <knife4j-openapi3.version>RELEASE</knife4j-openapi3.version>
