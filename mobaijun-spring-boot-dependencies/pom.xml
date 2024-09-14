@@ -74,8 +74,9 @@
         <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
         <software.amazon.awssdk.version>2.27.11</software.amazon.awssdk.version>
         <hutool-bom.version>5.8.31</hutool-bom.version>
+
         <!-- 依赖版本 -->
-        <client.version>3.7.7</client.version>
+        <client.version>[3.+,)</client.version>
         <common.version>1.2.7</common.version>
         <influxdb.version>2.24</influxdb.version>
         <validation-api>2.0.1.Final</validation-api>
@@ -89,7 +90,7 @@
         <swagger-ui.version>3.0.3</swagger-ui.version>
         <swagger.version>3.0.0</swagger.version>
         <web-mvc.version>6.1.12</web-mvc.version>
-        <aliyun.version>3.18.4</aliyun.version>
+        <aliyun.version>[3.+,)</aliyun.version>
         <lueetce.version>6.4.0.RELEASE</lueetce.version>
         <guava.version>33.3.0-jre</guava.version>
         <hutool-all.version>[5.+,)</hutool-all.version>
