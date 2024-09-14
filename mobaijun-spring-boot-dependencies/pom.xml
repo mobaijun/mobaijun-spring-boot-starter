@@ -79,59 +79,48 @@
         <client.version>[3.+,)</client.version>
         <common.version>1.2.7</common.version>
         <influxdb.version>2.24</influxdb.version>
-        <validation-api>2.0.1.Final</validation-api>
-        <mybatis-plus.version>3.5.7</mybatis-plus.version>
-        <dynamic.version>4.3.1</dynamic.version>
-        <p6spy.version>3.9.1</p6spy.version>
-        <swagger-annotation.version>2.2.7</swagger-annotation.version>
-        <swagger-models.version>2.2.22</swagger-models.version>
-        <swagger-annotations.version>1.6.14</swagger-annotations.version>
-        <springdoc.version>1.8.0</springdoc.version>
-        <swagger-ui.version>3.0.3</swagger-ui.version>
-        <swagger.version>3.0.0</swagger.version>
-        <web-mvc.version>6.1.12</web-mvc.version>
+        <mybatis-plus.version>RELEASE</mybatis-plus.version>
+        <dynamic.version>RELEASE</dynamic.version>
+        <p6spy.version>RELEASE</p6spy.version>
+        <swagger-annotation.version>RELEASE</swagger-annotation.version>
+        <swagger-models.version>RELEASE</swagger-models.version>
         <aliyun.version>[3.+,)</aliyun.version>
-        <lueetce.version>6.4.0.RELEASE</lueetce.version>
-        <guava.version>33.3.0-jre</guava.version>
+        <guava.version>RELEASE</guava.version>
         <hutool-all.version>[5.+,)</hutool-all.version>
         <jasypt.version>3.0.5</jasypt.version>
-        <spring-redis.version>3.3.3</spring-redis.version>
         <minio.version>8.5.11</minio.version>
-        <snakeyaml.version>[2.+,)</snakeyaml.version>
         <jettison.version>1.5.4</jettison.version>
         <slf4j-api.version>[2.+,)</slf4j-api.version>
         <easyexcel.version>[3.+,)</easyexcel.version>
-        <kjs-common.version>[2.+,)</kjs-common.version>
+        <kjs-common.version>RELEASE</kjs-common.version>
         <april-sensitive.version>[2.+,)</april-sensitive.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <bimface-java-sdk.version>3.2.9</bimface-java-sdk.version>
-        <tianai-captcha.version>1.5.0</tianai-captcha.version>
+        <tianai-captcha.version>RELEASE</tianai-captcha.version>
         <cos_api.version>5.6.219.1</cos_api.version>
         <qiniu-java-sdk.version>7.15.1</qiniu-java-sdk.version>
         <swagger-parser.version>2.1.22</swagger-parser.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
-        <httpclient.version>4.5.14</httpclient.version>
-        <httpmime.version>4.5.14</httpmime.version>
+        <httpclient.version>RELEASE</httpclient.version>
+        <httpmime.version>RELEASE</httpmime.version>
         <april-json-util.version>[1.+,)</april-json-util.version>
         <easyexcel-core.version>4.0.1</easyexcel-core.version>
-        <commons-compress.version>[1.+,)</commons-compress.version>
-        <knife4j-openapi3.version>[4.+,)</knife4j-openapi3.version>
-        <knife4j-gateway.version>[4.+,)</knife4j-gateway.version>
-        <mapstruct.version>[1.+,)</mapstruct.version>
-        <validation-api.version>[3.+,)</validation-api.version>
-        <redisson.version>3.33.0</redisson.version>
-        <dubbo.version>3.2.14</dubbo.version>
-        <spring.context.support.version>1.0.11</spring.context.support.version>
-        <jsoup.version>[1.+,)</jsoup.version>
-        <sa-token.version>1.38.0</sa-token.version>
+        <commons-compress.version>RELEASE</commons-compress.version>
+        <knife4j-openapi3.version>RELEASE</knife4j-openapi3.version>
+        <knife4j-gateway.version>RELEASE</knife4j-gateway.version>
+        <mapstruct.version>RELEASE</mapstruct.version>
+        <redisson.version>[3.+,)</redisson.version>
+        <dubbo.version>RELEASE</dubbo.version>
+        <jsoup.version>RELEASE</jsoup.version>
+        <sa-token.version>RELEASE</sa-token.version>
         <dysmsapi20170525.version>3.0.0</dysmsapi20170525.version>
-        <tencentcloud-sdk-java.version>3.1.1080</tencentcloud-sdk-java.version>
+        <tencentcloud-sdk-java.version>RELEASE</tencentcloud-sdk-java.version>
         <lock4j.version>2.2.7</lock4j.version>
         <ip2region.version>2.7.0</ip2region.version>
-        <mapstruct-plus.version>1.4.3</mapstruct-plus.version>
-        <xxl-job.version>2.4.1</xxl-job.version>
+        <mapstruct-plus.version>RELEASE</mapstruct-plus.version>
+        <xxl-job.version>RELEASE</xxl-job.version>
         <rocketmq.version>2.3.1</rocketmq.version>
-        <zxing.core.version>3.5.3</zxing.core.version>
+        <zxing.core.version>RELEASE</zxing.core.version>
         <jsr305.version>3.0.2</jsr305.version>
     </properties>
 
@@ -467,54 +456,6 @@
                 <version>${hutool-bom.version}</version>
             </dependency>
 
-            <!-- redis -->
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/org.springframework.data/spring-data-redis -->
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-redis</artifactId>
-                <version>${spring-redis.version}</version>
-                <scope>compile</scope>
-            </dependency>
-
-            <!-- External dependency version control -->
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/io.springfox/springfox-boot-starter -->
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
-                <!--Please search for the latest version number of 2.X in the maven central repository when referencing-->
-                <version>${swagger-ui.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/org.springframework/spring-webmvc -->
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-webmvc</artifactId>
-                <version>${web-mvc.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/org.springframework.boot/spring-boot-starter -->
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter</artifactId>
-                <version>${spring-boot.version}</version>
-                <scope>compile</scope>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/io.lettuce/lettuce-core -->
-                <groupId>io.lettuce</groupId>
-                <artifactId>lettuce-core</artifactId>
-                <version>${lueetce.version}</version>
-                <scope>compile</scope>
-            </dependency>
-
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.aliyun.oss/aliyun-sdk-oss -->
                 <groupId>com.aliyun.oss</groupId>
@@ -632,28 +573,6 @@
                 <version>${swagger-models.version}</version>
             </dependency>
 
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/io.swagger/swagger-annotations -->
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger-annotations.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/org.springdoc/springdoc-openapi-common -->
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-common</artifactId>
-                <version>${springdoc.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/org.yaml/snakeyaml -->
-                <groupId>org.yaml</groupId>
-                <artifactId>snakeyaml</artifactId>
-                <version>${snakeyaml.version}</version>
-                <scope>compile</scope>
-            </dependency>
-
             <!-- file storage -->
             <dependency>
                 <!-- https://central.sonatype.com//artifact/io.minio/minio -->
@@ -736,13 +655,6 @@
             </dependency>
 
             <dependency>
-                <!-- https://central.sonatype.com//artifact/io.swagger.parser.v3/swagger-parser -->
-                <groupId>io.swagger.parser.v3</groupId>
-                <artifactId>swagger-parser</artifactId>
-                <version>${swagger-parser.version}</version>
-            </dependency>
-
-            <dependency>
                 <!-- https://central.sonatype.com/artifact/javax.servlet/javax.servlet-api -->
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
@@ -813,14 +725,6 @@
                 <version>${mapstruct.version}</version>
             </dependency>
 
-            <!-- https://central.sonatype.com/artifact/jakarta.validation/validation-api -->
-            <dependency>
-                <!-- parameter verification -->
-                <groupId>jakarta.validation</groupId>
-                <artifactId>jakarta.validation-api</artifactId>
-                <version>${validation-api.version}</version>
-            </dependency>
-
             <dependency>
                 <!-- https://central.sonatype.com/artifact/org.redisson/redisson-spring-boot-starter -->
                 <groupId>org.redisson</groupId>
@@ -854,13 +758,6 @@
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-metadata-report-redis</artifactId>
                 <version>${dubbo.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com/artifact/org.springframework/spring-context-support -->
-                <groupId>com.alibaba.spring</groupId>
-                <artifactId>spring-context-support</artifactId>
-                <version>${spring.context.support.version}</version>
             </dependency>
 
             <dependency>
