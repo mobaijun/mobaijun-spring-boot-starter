@@ -48,7 +48,6 @@
         <module>../sensitive-spring-boot-starter</module>
         <module>../dubbo-spring-boot-starter</module>
         <module>../db-helper-spring-boot-starter</module>
-        <module>../test-spring-boot-starter-example</module>
         <module>../loadbalancer-spring-boot-starter</module>
         <module>../nacos-spring-boot-starter</module>
         <module>../web-spring-boot-starter</module>
@@ -74,54 +73,53 @@
         <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
         <software.amazon.awssdk.version>2.27.11</software.amazon.awssdk.version>
         <hutool-bom.version>5.8.31</hutool-bom.version>
+        <dubbo-bom.version>3.3.0</dubbo-bom.version>
 
         <!-- 依赖版本 -->
         <client.version>[3.+,)</client.version>
         <common.version>1.2.7</common.version>
         <influxdb.version>2.24</influxdb.version>
-        <mybatis-plus.version>RELEASE</mybatis-plus.version>
-        <dynamic.version>RELEASE</dynamic.version>
-        <p6spy.version>RELEASE</p6spy.version>
-        <swagger-annotation.version>RELEASE</swagger-annotation.version>
-        <swagger-models.version>RELEASE</swagger-models.version>
+        <mybatis-plus.version>[3.+,)</mybatis-plus.version>
+        <dynamic.version>[4.+,)</dynamic.version>
+        <p6spy.version>[3.+,)</p6spy.version>
+        <swagger-base.version>[2.+,)</swagger-base.version>
         <aliyun.version>[3.+,)</aliyun.version>
-        <guava.version>RELEASE</guava.version>
+        <guava.version>[33.+,)</guava.version>
         <hutool-all.version>[5.+,)</hutool-all.version>
         <jasypt.version>3.0.5</jasypt.version>
         <minio.version>8.5.11</minio.version>
-        <jettison.version>1.5.4</jettison.version>
+        <jettison.version>[1.+,)</jettison.version>
         <slf4j-api.version>[2.+,)</slf4j-api.version>
         <easyexcel.version>[3.+,)</easyexcel.version>
-        <kjs-common.version>RELEASE</kjs-common.version>
-        <april-sensitive.version>RELEASE</april-sensitive.version>
-        <easy-captcha.version>RELEASE</easy-captcha.version>
+        <kjs-common.version>[2.+,)</kjs-common.version>
+        <april-sensitive.version>2.0.0</april-sensitive.version>
+        <easy-captcha.version>[1.+,)</easy-captcha.version>
         <bimface-java-sdk.version>3.2.9</bimface-java-sdk.version>
-        <tianai-captcha.version>RELEASE</tianai-captcha.version>
-        <cos_api.version>RELEASE</cos_api.version>
+        <tianai-captcha.version>[1.+,)</tianai-captcha.version>
+        <cos_api.version>[5.+,)</cos_api.version>
         <qiniu-java-sdk.version>7.15.1</qiniu-java-sdk.version>
-        <swagger-parser.version>2.1.22</swagger-parser.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
-        <httpclient.version>RELEASE</httpclient.version>
-        <httpmime.version>RELEASE</httpmime.version>
-        <april-json-util.version>RELEASE</april-json-util.version>
+        <httpclient.version>[4.+,)</httpclient.version>
+        <httpmime.version>[4.+,)</httpmime.version>
+        <april-json-util.version>1.0.0</april-json-util.version>
         <easyexcel-core.version>4.0.1</easyexcel-core.version>
-        <commons-compress.version>RELEASE</commons-compress.version>
-        <knife4j-openapi3.version>RELEASE</knife4j-openapi3.version>
-        <knife4j-gateway.version>RELEASE</knife4j-gateway.version>
-        <mapstruct.version>RELEASE</mapstruct.version>
+        <commons-compress.version>[1.+,)</commons-compress.version>
+        <knife4j-openapi3.version>[4.+,)</knife4j-openapi3.version>
+        <mapstruct.version>[1.+,)</mapstruct.version>
         <redisson.version>[3.+,)</redisson.version>
-        <dubbo.version>RELEASE</dubbo.version>
-        <jsoup.version>RELEASE</jsoup.version>
-        <sa-token.version>RELEASE</sa-token.version>
+        <jsoup.version>[1.+,)</jsoup.version>
+        <sa-token.version>[1.+,)</sa-token.version>
         <dysmsapi20170525.version>3.0.0</dysmsapi20170525.version>
-        <tencentcloud-sdk-java.version>RELEASE</tencentcloud-sdk-java.version>
+        <tencentcloud-sdk-java.version>[4.+,)</tencentcloud-sdk-java.version>
         <lock4j.version>2.2.7</lock4j.version>
         <ip2region.version>2.7.0</ip2region.version>
-        <mapstruct-plus.version>RELEASE</mapstruct-plus.version>
-        <xxl-job.version>RELEASE</xxl-job.version>
+        <mapstruct-plus.version>[1.+,)</mapstruct-plus.version>
+        <xxl-job.version>[2.+,)</xxl-job.version>
         <rocketmq.version>2.3.1</rocketmq.version>
-        <zxing.core.version>RELEASE</zxing.core.version>
-        <jsr305.version>3.0.2</jsr305.version>
+        <zxing.core.version>[3.+,)</zxing.core.version>
+        <jsr305.version>[3.+,)</jsr305.version>
+        <!-- dubbo 相关 -->
+        <dubbo-metadata.version>[3.+,)</dubbo-metadata.version>
     </properties>
 
     <dependencies>
@@ -205,6 +203,16 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-bom</artifactId>
                 <version>${hutool-bom.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!-- dubbo -->
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/org.apache.dubbo/dubbo-bom -->
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-bom</artifactId>
+                <version>${dubbo-bom.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -538,7 +546,7 @@
             </dependency>
 
             <dependency>
-                <!-- https://central.sonatype.com//artifact/com.baomidou/dynamic-datasource-spring-boot3-starter -->
+                <!-- https://central.sonatype.com//artifact/com.baomidou/dynamic-datasource-spring -->
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring</artifactId>
                 <version>${dynamic.version}</version>
@@ -563,14 +571,14 @@
                 <!-- https://central.sonatype.com//artifact/io.swagger.core.v3/swagger-annotations -->
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-annotations</artifactId>
-                <version>${swagger-annotation.version}</version>
+                <version>${swagger-base.version}</version>
             </dependency>
 
             <dependency>
                 <!-- https://central.sonatype.com//artifact/io.swagger.core.v3/swagger-models -->
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-models</artifactId>
-                <version>${swagger-models.version}</version>
+                <version>${swagger-base.version}</version>
             </dependency>
 
             <!-- file storage -->
@@ -708,7 +716,7 @@
                 <!-- https://central.sonatype.com/artifact/com.github.xiaoymin/knife4j-gateway-spring-boot-starter -->
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
-                <version>${knife4j-gateway.version}</version>
+                <version>${knife4j-openapi3.version}</version>
             </dependency>
 
             <dependency>
@@ -733,31 +741,10 @@
             </dependency>
 
             <dependency>
-                <!-- https://central.sonatype.com/artifact/org.apache.dubbo/dubbo-spring-boot-starter -->
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-spring-boot-starter</artifactId>
-                <version>${dubbo.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com/artifact/org.apache.dubbo/dubbo-spring-boot-actuator -->
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-spring-boot-actuator</artifactId>
-                <version>${dubbo.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com/artifact/org.apache.dubbo/dubbo -->
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo</artifactId>
-                <version>${dubbo.version}</version>
-            </dependency>
-
-            <dependency>
                 <!-- https://central.sonatype.com/artifact/org.apache.dubbo/dubbo-metadata-report-redis -->
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-metadata-report-redis</artifactId>
-                <version>${dubbo.version}</version>
+                <version>${dubbo-metadata.version}</version>
             </dependency>
 
             <dependency>

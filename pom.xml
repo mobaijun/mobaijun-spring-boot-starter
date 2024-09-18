@@ -53,7 +53,7 @@
 
     <properties>
         <!-- 项目版本 -->
-        <revision>3.0.7</revision>
+        <revision>3.0.8</revision>
 
         <!-- 基础配置和版本定义 -->
         <maven.source>17</maven.source>
