@@ -74,52 +74,50 @@
         <software.amazon.awssdk.version>2.27.11</software.amazon.awssdk.version>
         <hutool-bom.version>5.8.31</hutool-bom.version>
         <dubbo-bom.version>3.3.0</dubbo-bom.version>
+        <dynamic.version>4.3.1</dynamic.version>
+        <mybatis-plus.version>3.5.8</mybatis-plus.version>
+        <knife4j-swagger-ui.version>4.5.0</knife4j-swagger-ui.version>
 
         <!-- 依赖版本 -->
-        <client.version>[3.+,)</client.version>
+        <sa-token-core.version>1.39.0</sa-token-core.version>
+        <jpush-client.version>3.7.7</jpush-client.version>
         <common.version>1.2.7</common.version>
         <influxdb.version>2.24</influxdb.version>
-        <mybatis-plus.version>[3.+,)</mybatis-plus.version>
-        <dynamic.version>[4.+,)</dynamic.version>
-        <p6spy.version>[3.+,)</p6spy.version>
-        <swagger-base.version>[2.+,)</swagger-base.version>
-        <aliyun.version>[3.+,)</aliyun.version>
+        <swagger-base.version>2.2.23</swagger-base.version>
+        <aliyun-sdk-oss.version>3.18.1</aliyun-sdk-oss.version>
         <guava.version>[33.+,)</guava.version>
-        <hutool-all.version>[5.+,)</hutool-all.version>
+        <hutool-all.version>${hutool-bom.version}</hutool-all.version>
         <jasypt.version>3.0.5</jasypt.version>
         <minio.version>8.5.11</minio.version>
-        <jettison.version>[1.+,)</jettison.version>
+        <jettison.version>1.5.4</jettison.version>
         <slf4j-api.version>[2.+,)</slf4j-api.version>
-        <easyexcel.version>[3.+,)</easyexcel.version>
+        <easyexcel.version>4.0.3</easyexcel.version>
         <kjs-common.version>[2.+,)</kjs-common.version>
         <april-sensitive.version>2.0.0</april-sensitive.version>
-        <easy-captcha.version>[1.+,)</easy-captcha.version>
+        <easy-captcha.version>1.6.2</easy-captcha.version>
         <bimface-java-sdk.version>3.2.9</bimface-java-sdk.version>
-        <tianai-captcha.version>[1.+,)</tianai-captcha.version>
-        <cos_api.version>[5.+,)</cos_api.version>
+        <tianai-captcha.version>1.5.1</tianai-captcha.version>
+        <cos_api.version>5.6.231</cos_api.version>
         <qiniu-java-sdk.version>7.15.1</qiniu-java-sdk.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <httpclient.version>[4.+,)</httpclient.version>
         <httpmime.version>[4.+,)</httpmime.version>
         <april-json-util.version>1.0.0</april-json-util.version>
-        <easyexcel-core.version>4.0.1</easyexcel-core.version>
         <commons-compress.version>[1.+,)</commons-compress.version>
-        <knife4j-openapi3.version>[4.+,)</knife4j-openapi3.version>
         <mapstruct.version>[1.+,)</mapstruct.version>
-        <redisson.version>[3.+,)</redisson.version>
+        <redisson.version>3.36.0</redisson.version>
         <jsoup.version>[1.+,)</jsoup.version>
-        <sa-token.version>[1.+,)</sa-token.version>
         <dysmsapi20170525.version>3.0.0</dysmsapi20170525.version>
         <tencentcloud-sdk-java.version>[4.+,)</tencentcloud-sdk-java.version>
         <lock4j.version>2.2.7</lock4j.version>
         <ip2region.version>2.7.0</ip2region.version>
         <mapstruct-plus.version>[1.+,)</mapstruct-plus.version>
-        <xxl-job.version>[2.+,)</xxl-job.version>
+        <xxl-job.version>2.4.1</xxl-job.version>
         <rocketmq.version>2.3.1</rocketmq.version>
-        <zxing.core.version>[3.+,)</zxing.core.version>
-        <jsr305.version>[3.+,)</jsr305.version>
+        <zxing.core.version>3.5.3</zxing.core.version>
+        <jsr305.version>3.0.2</jsr305.version>
         <!-- dubbo 相关 -->
-        <dubbo-metadata.version>[3.+,)</dubbo-metadata.version>
+        <dubbo-metadata.version>3.3.0-beta.4</dubbo-metadata.version>
     </properties>
 
     <dependencies>
@@ -213,6 +211,36 @@
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-bom</artifactId>
                 <version>${dubbo-bom.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!-- dynamic-datasource -->
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/com.baomidou/dynamic-datasource -->
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource</artifactId>
+                <version>${dynamic.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!-- mybatis plus -->
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/com.baomidou/mybatis-plus-bom -->
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-bom</artifactId>
+                <version>${mybatis-plus.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!-- swagger ui -->
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/com.github.xiaoymin/knife4j-dependencies -->
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-dependencies</artifactId>
+                <version>${knife4j-swagger-ui.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -468,7 +496,7 @@
                 <!-- https://central.sonatype.com//artifact/com.aliyun.oss/aliyun-sdk-oss -->
                 <groupId>com.aliyun.oss</groupId>
                 <artifactId>aliyun-sdk-oss</artifactId>
-                <version>${aliyun.version}</version>
+                <version>${aliyun-sdk-oss.version}</version>
             </dependency>
 
             <!--  Aurora Client  -->
@@ -476,7 +504,7 @@
                 <!-- https://central.sonatype.com//artifact/cn.jpush.api/jpush-client -->
                 <groupId>cn.jpush.api</groupId>
                 <artifactId>jpush-client</artifactId>
-                <version>${client.version}</version>
+                <version>${jpush-client.version}</version>
             </dependency>
 
             <!-- Aurora push tools  -->
@@ -493,70 +521,6 @@
                 <groupId>org.influxdb</groupId>
                 <artifactId>influxdb-java</artifactId>
                 <version>${influxdb.version}</version>
-            </dependency>
-
-            <!-- mybatis plus -->
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/com.baomidou/mybatis-plus-annotation -->
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-annotation</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/com.baomidou/mybatis-plus-boot-starter -->
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/com.baomidou/mybatis-plus-core -->
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-core</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/com.baomidou/mybatis-plus -->
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/com.baomidou/mybatis-plus-extension -->
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-extension</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
-                <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-                <version>${dynamic.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/com.baomidou/dynamic-datasource-spring-boot3-starter -->
-                <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
-                <version>${dynamic.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/com.baomidou/dynamic-datasource-spring -->
-                <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring</artifactId>
-                <version>${dynamic.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/p6spy/p6spy -->
-                <groupId>p6spy</groupId>
-                <artifactId>p6spy</artifactId>
-                <version>${p6spy.version}</version>
             </dependency>
 
             <!-- Configuration file encryption -->
@@ -608,14 +572,6 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j-api.version}</version>
-            </dependency>
-
-            <!-- easyexcel -->
-            <dependency>
-                <!-- https://central.sonatype.com//artifact/com.alibaba/easyexcel -->
-                <groupId>com.alibaba</groupId>
-                <artifactId>easyexcel</artifactId>
-                <version>${easyexcel.version}</version>
             </dependency>
 
             <!-- 工具类 -->
@@ -691,11 +647,19 @@
                 <version>${april-json-util.version}</version>
             </dependency>
 
+            <!-- easyexcel -->
+            <dependency>
+                <!-- https://central.sonatype.com//artifact/com.alibaba/easyexcel -->
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
+            </dependency>
+
             <dependency>
                 <!-- https://central.sonatype.com/artifact/com.alibaba/easyexcel-core -->
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel-core</artifactId>
-                <version>${easyexcel-core.version}</version>
+                <version>${easyexcel.version}</version>
             </dependency>
 
             <dependency>
@@ -703,20 +667,6 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-compress</artifactId>
                 <version>${commons-compress.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com/artifact/com.github.xiaoymin/knife4j-openapi3-jakarta-spring-boot-starter -->
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-                <version>${knife4j-openapi3.version}</version>
-            </dependency>
-
-            <dependency>
-                <!-- https://central.sonatype.com/artifact/com.github.xiaoymin/knife4j-gateway-spring-boot-starter -->
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
-                <version>${knife4j-openapi3.version}</version>
             </dependency>
 
             <dependency>
@@ -758,7 +708,7 @@
                 <!-- https://central.sonatype.com/artifact/cn.dev33/sa-token-core -->
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-core</artifactId>
-                <version>${sa-token.version}</version>
+                <version>${sa-token-core.version}</version>
             </dependency>
 
             <dependency>
