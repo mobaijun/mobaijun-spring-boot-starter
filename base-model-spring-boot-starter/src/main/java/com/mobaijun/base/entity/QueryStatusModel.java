@@ -16,6 +16,7 @@
 package com.mobaijun.base.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
@@ -30,8 +31,8 @@ import lombok.ToString;
  * Date: [2024/8/16 11:06]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  *
- * @param <I> 主键类型
- * @param <S> 状态类型
+ * @param <ID>     主键类型
+ * @param <Status> 状态类型
  */
 @Getter
 @Setter
@@ -39,14 +40,16 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(name = "修改状态请求参数", description = "[修改状态请求参数]")
-public class QueryStatusModel<I, S> implements Serializable {
+public class QueryStatusModel<ID, Status> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @NotNull(message = "[id]字段不能为空,请检查")
     @Schema(name = "id", description = "[主键]")
-    private I id;
+    private ID id;
 
+    @NotNull(message = "[status]字段不能为空,请检查")
     @Schema(name = "status", description = "[状态]")
-    private S status;
+    private Status status;
 }
