@@ -291,7 +291,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
      * @param idList 主键ID列表
      */
     public List<T> listByIds(Collection<? extends Serializable> idList) {
-        return this.baseMapper.selectBatchIds(idList);
+        return this.baseMapper.selectByIds(idList);
     }
 
     /**
