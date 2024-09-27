@@ -47,13 +47,13 @@ public class QueryTimeRange implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Schema(title = "开始时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = EntityConstants.DEFAULT_DATE_TIME_FORMAT)
+    @DateTimeFormat(pattern = EntityConstants.DEFAULT_DATE_TIME_FORMAT)
     private LocalDateTime startTime;
 
     @Schema(title = "结束时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = EntityConstants.DEFAULT_DATE_TIME_FORMAT)
+    @DateTimeFormat(pattern = EntityConstants.DEFAULT_DATE_TIME_FORMAT)
     private LocalDateTime endTime;
 
     /**
