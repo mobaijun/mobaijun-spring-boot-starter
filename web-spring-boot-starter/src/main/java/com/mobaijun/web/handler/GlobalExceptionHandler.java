@@ -24,14 +24,17 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -253,6 +256,42 @@ public class GlobalExceptionHandler {
     public R<Void> handleBaseException(BaseException e, HttpServletRequest request) {
         log.error("基础异常发生，异常信息: {}, 请求路径: {}", e.getMessage(), request.getRequestURI());
         return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "系统发生错误{ %s }，请稍后再试!".formatted(e.getMessage()));
+    }
+
+    /**
+     * 处理缺失请求参数异常
+     *
+     * @param e 捕获到的 {@link MissingServletRequestParameterException} 异常对象
+     * @return 封装的响应结果，包含缺失的请求参数信息
+     */
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public R<Void> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+        log.error("请求缺少必需的请求参数 '{}'", e.getParameterName());
+        return buildErrorResponse(HttpStatus.INVALID_ARGUMENT, String.format("缺失请求参数: [%s]", e.getParameterName()));
+    }
+
+    /**
+     * 处理不支持的媒体类型异常
+     *
+     * @param e 捕获到的 {@link HttpMediaTypeNotSupportedException} 异常对象
+     * @return 封装的响应结果，包含不支持的媒体类型信息
+     */
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public R<Void> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+        log.error("不支持的媒体类型: {}", e.getContentType());
+        return buildErrorResponse(HttpStatus.UNSUPPORTED_MEDIA_TYPE, String.format("不支持的媒体类型: [%s]", e.getContentType()));
+    }
+
+    /**
+     * 处理找不到元素异常
+     *
+     * @param e 捕获到的 {@link NoSuchElementException} 异常对象
+     * @return 封装的响应结果，包含找不到的元素信息
+     */
+    @ExceptionHandler(NoSuchElementException.class)
+    public R<Void> handleNoSuchElementException(NoSuchElementException e, HttpServletRequest request) {
+        log.error("请求的资源在数据库中不存在: {}", e.getMessage());
+        return buildErrorResponse(HttpStatus.NOT_FOUND, "请求的资源不存在");
     }
 
     /**
