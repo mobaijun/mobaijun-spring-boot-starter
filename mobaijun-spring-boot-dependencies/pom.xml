@@ -36,14 +36,11 @@
         <module>../influxdb-spring-boot-starter</module>
         <module>../mybatis-plus-spring-boot-starter</module>
         <module>../jpush-spring-boot-starter</module>
-        <module>../table-spring-boot-starter</module>
         <module>../core-spring-boot-starter</module>
-        <module>../email-spring-boot-starter</module>
         <module>../base-model-spring-boot-starter</module>
         <module>../minio-spring-boot-starter</module>
         <module>../bim-spring-boot-starter</module>
         <module>../jasypt-spring-boot-starter</module>
-        <module>../run-spring-boot-starter</module>
         <module>../json-spring-boot-starter</module>
         <module>../sensitive-spring-boot-starter</module>
         <module>../dubbo-spring-boot-starter</module>
@@ -66,6 +63,9 @@
     <properties>
         <!-- 废弃项目版本管理 -->
         <final-release.version>3.0.5</final-release.version>
+
+        <!-- 废弃项目版本管理 -->
+        <gen-3-v10.version>3.0.10</gen-3-v10.version>
 
         <!-- 大版本依赖管理 -->
         <spring-boot.version>3.3.2</spring-boot.version>
@@ -285,7 +285,7 @@
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/email-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>email-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>${gen-3-v10.version}</version>
             </dependency>
 
             <dependency>
@@ -439,7 +439,7 @@
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/run-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>run-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>${gen-3-v10.version}</version>
             </dependency>
 
             <dependency>
@@ -460,7 +460,7 @@
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/table-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>table-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
+                <version>${gen-3-v10.version}</version>
             </dependency>
 
             <dependency>
