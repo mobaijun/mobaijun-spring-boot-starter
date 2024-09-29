@@ -23,12 +23,21 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.nio.file.AccessDeniedException;
+import java.sql.SQLException;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -38,6 +47,9 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -290,8 +302,164 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(NoSuchElementException.class)
     public R<Void> handleNoSuchElementException(NoSuchElementException e, HttpServletRequest request) {
-        log.error("请求的资源在数据库中不存在: {}", e.getMessage());
+        log.error("请求的资源在数据库中不存在: {}, 请求路径: {}", e.getMessage(), request.getRequestURI());
         return buildErrorResponse(HttpStatus.NOT_FOUND, "请求的资源不存在");
+    }
+
+    /**
+     * 处理 SQL 异常
+     *
+     * @param e 捕获到的 {@link SQLException} 异常对象
+     * @return 封装的响应结果，包含 SQL 错误信息
+     */
+    @ExceptionHandler(SQLException.class)
+    public R<Void> handleSQLException(SQLException e) {
+        log.error("SQL 执行异常: {}", e.getMessage(), e);
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "数据库操作失败，请稍后再试！");
+    }
+
+    /**
+     * 处理数据完整性异常
+     *
+     * @param e 捕获到的 {@link DataIntegrityViolationException} 异常对象
+     * @return 封装的响应结果，包含详细的错误信息
+     */
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public R<Void> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+        log.error("数据完整性违规: {}", e.getMessage(), e);
+        return buildErrorResponse(HttpStatus.PERMANENT_REDIRECT, "数据操作失败，可能违反了数据库的约束条件！");
+    }
+
+    /**
+     * 处理空结果异常
+     *
+     * @param e 捕获到的 {@link EmptyResultDataAccessException} 异常对象
+     * @return 封装的响应结果，提示资源未找到
+     */
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public R<Void> handleEmptyResultDataAccessException(EmptyResultDataAccessException e) {
+        log.error("查询的资源不存在: {}", e.getMessage(), e);
+        return buildErrorResponse(HttpStatus.NOT_FOUND, "查询的资源不存在！");
+    }
+
+    /**
+     * 处理数据访问资源失败异常
+     *
+     * @param e 捕获到的 {@link DataAccessResourceFailureException} 异常对象
+     * @return 封装的响应结果，包含数据库连接失败的提示信息
+     */
+    @ExceptionHandler(DataAccessResourceFailureException.class)
+    public R<Void> handleDataAccessResourceFailureException(DataAccessResourceFailureException e) {
+        log.error("数据库访问资源失败: {}", e.getMessage(), e);
+        return buildErrorResponse(HttpStatus.SERVICE_UNAVAILABLE, "数据库连接失败，请稍后重试！");
+    }
+
+    /**
+     * 处理乐观锁异常
+     *
+     * @param e 捕获到的 {@link OptimisticLockingFailureException} 异常对象
+     * @return 封装的响应结果，提示乐观锁失败
+     */
+    @ExceptionHandler(OptimisticLockingFailureException.class)
+    public R<Void> handleOptimisticLockingFailureException(OptimisticLockingFailureException e) {
+        log.error("乐观锁失败: {}", e.getMessage(), e);
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "数据版本冲突，请重试！");
+    }
+
+    /**
+     * 处理结果大小不匹配异常
+     *
+     * @param e 捕获到的 {@link IncorrectResultSizeDataAccessException} 异常对象
+     * @return 封装的响应结果，提示数据不一致
+     */
+    @ExceptionHandler(IncorrectResultSizeDataAccessException.class)
+    public R<Void> handleIncorrectResultSizeDataAccessException(IncorrectResultSizeDataAccessException e) {
+        log.error("查询结果数量异常: {}", e.getMessage(), e);
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "查询结果数量不匹配！");
+    }
+
+    /**
+     * 处理网络请求超时异常
+     *
+     * @param e 捕获到的 {@link java.net.SocketTimeoutException} 异常对象
+     * @return 封装的响应结果，包含超时错误信息
+     */
+    @ExceptionHandler(SocketTimeoutException.class)
+    public R<Void> handleSocketTimeoutException(SocketTimeoutException e) {
+        log.error("网络请求超时", e);
+        return buildErrorResponse(HttpStatus.GATEWAY_TIMEOUT, "网络请求超时，请稍后重试");
+    }
+
+    /**
+     * 处理网络连接异常
+     *
+     * @param e 捕获到的 {@link java.net.ConnectException} 异常对象
+     * @return 封装的响应结果，包含连接错误信息
+     */
+    @ExceptionHandler(ConnectException.class)
+    public R<Void> handleConnectException(ConnectException e) {
+        log.error("网络连接失败", e);
+        return buildErrorResponse(HttpStatus.SERVICE_UNAVAILABLE, "无法连接到服务，请稍后再试");
+    }
+
+    /**
+     * 处理主机未知异常
+     *
+     * @param e 捕获到的 {@link java.net.UnknownHostException} 异常对象
+     * @return 封装的响应结果，包含主机错误信息
+     */
+    @ExceptionHandler(UnknownHostException.class)
+    public R<Void> handleUnknownHostException(UnknownHostException e) {
+        log.error("未知主机", e);
+        return buildErrorResponse(HttpStatus.SERVICE_UNAVAILABLE, "无法解析主机地址，请检查网络连接");
+    }
+
+    /**
+     * 处理 HTTP 客户端异常
+     *
+     * @param e 捕获到的 {@link org.springframework.web.client.HttpClientErrorException} 异常对象
+     * @return 封装的响应结果，包含 HTTP 客户端错误信息
+     */
+    @ExceptionHandler(HttpClientErrorException.class)
+    public R<Void> handleHttpClientErrorException(HttpClientErrorException e) {
+        log.error("HTTP 客户端异常: 状态码 {}, 错误信息 {}", e.getStatusCode(), e.getResponseBodyAsString());
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "客户端请求错误: " + e.getStatusText());
+    }
+
+    /**
+     * 处理 HTTP 服务端异常
+     *
+     * @param e 捕获到的 {@link org.springframework.web.client.HttpServerErrorException} 异常对象
+     * @return 封装的响应结果，包含 HTTP 服务端错误信息
+     */
+    @ExceptionHandler(HttpServerErrorException.class)
+    public R<Void> handleHttpServerErrorException(HttpServerErrorException e) {
+        log.error("HTTP 服务端异常: 状态码 {}, 错误信息 {}", e.getStatusCode(), e.getResponseBodyAsString());
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "服务端处理失败，请稍后再试");
+    }
+
+    /**
+     * 处理远程服务调用异常
+     *
+     * @param e 捕获到的 {@link org.springframework.web.client.RestClientException} 异常对象
+     * @return 封装的响应结果，包含远程服务错误信息
+     */
+    @ExceptionHandler(RestClientException.class)
+    public R<Void> handleRestClientException(RestClientException e) {
+        log.error("远程服务调用失败", e);
+        return buildErrorResponse(HttpStatus.SERVICE_UNAVAILABLE, "远程服务调用失败，请稍后再试");
+    }
+
+    /**
+     * IllegalArgumentException 异常捕获，主要用于 Assert
+     *
+     * @param e the e
+     * @return 封装的响应结果，包含远程服务错误信息
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public R<Void> handleIllegalArgumentException(IllegalArgumentException e, HttpServletRequest request) {
+        log.error(String.format("请求地址: %s, 非法数据输入 ex=%s", request.getRequestURI(), e.getMessage()), e);
+        return R.failed(HttpStatus.INVALID_ARGUMENT, String.format("非法数据输入:[%s],请求地址:[%s]", e.getMessage(), request.getRequestURI()));
     }
 
     /**
