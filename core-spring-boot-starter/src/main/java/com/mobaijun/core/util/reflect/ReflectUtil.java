@@ -15,6 +15,7 @@
  */
 package com.mobaijun.core.util.reflect;
 
+import com.mobaijun.common.text.StringUtil;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import org.springframework.util.StringUtils;
@@ -42,13 +43,13 @@ public class ReflectUtil extends cn.hutool.core.util.ReflectUtil {
     @SuppressWarnings("unchecked")
     public static <E> E invokeGetter(Object obj, String propertyName) {
         Object object = obj;
-        assert StringUtils.split(propertyName, ".") != null;
-        for (String name : Objects.requireNonNull(StringUtils.split(propertyName, "."))) {
+        for (String name : StringUtil.split(propertyName, ".")) {
             String getterMethodName = GETTER_PREFIX + StringUtils.capitalize(name);
             object = invoke(object, getterMethodName);
         }
         return (E) object;
     }
+
 
     /**
      * 调用对象的 Setter 方法。
@@ -60,7 +61,7 @@ public class ReflectUtil extends cn.hutool.core.util.ReflectUtil {
      */
     public static <E> void invokeSetter(Object obj, String propertyName, E value) {
         Object object = obj;
-        String[] names = StringUtils.split(propertyName, ".");
+        String[] names = StringUtil.split(propertyName, ".");
         for (int i = 0; i < Objects.requireNonNull(names).length; i++) {
             if (i < names.length - 1) {
                 String getterMethodName = GETTER_PREFIX + StringUtils.capitalize(names[i]);
