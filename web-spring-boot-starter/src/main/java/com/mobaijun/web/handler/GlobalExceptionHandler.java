@@ -36,15 +36,18 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.executor.BatchExecutorException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -115,10 +118,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public R<Void> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e, HttpServletRequest request) {
-        log.error("请求路径 '{}' 的参数 '{}' 类型不匹配，期望类型：'{}'，但输入值为：'{}'", request.getRequestURI(),
-                e.getName(), Objects.requireNonNull(e.getRequiredType()).getName(), e.getValue(), e);
-        String errorMessage = String.format("请求参数类型不匹配，参数 [%s] 要求类型为：'%s'，但输入值为：'%s'",
-                e.getName(), Objects.requireNonNull(e.getRequiredType()).getName(), e.getValue());
+        log.error("请求路径 '{}' 的参数 '{}' 类型不匹配，期望类型：'{}'，但输入值为：'{}'", request.getRequestURI(), e.getName(), Objects.requireNonNull(e.getRequiredType()).getName(), e.getValue(), e);
+        String errorMessage = String.format("请求参数类型不匹配，参数 [%s] 要求类型为：'%s'，但输入值为：'%s'", e.getName(), Objects.requireNonNull(e.getRequiredType()).getName(), e.getValue());
         return buildErrorResponse(HttpStatus.INVALID_ARGUMENT, errorMessage);
     }
 
@@ -281,7 +282,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR)
     public R<Void> handleNullPointerException(NullPointerException e, HttpServletRequest request) {
         log.error("请求地址 '{}' 发生空指针异常", request.getRequestURI(), e);
-        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "系统发生参数为空异常{ %s }，请检查参数后重新再试!".formatted(e.getMessage()));
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("系统发生空指针异常，请检查参数后重新尝试! 请求地址：{%s}", request.getRequestURI()));
     }
 
     /**
@@ -297,7 +298,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ServiceException.class)
     public R<Void> handleServiceException(ServiceException e, HttpServletRequest request) {
         log.error("业务异常发生，异常信息: {}, 请求路径: {}", e.getMessage(), request.getRequestURI());
-        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "系统发生错误{ %s }，请稍后再试!".formatted(e.getMessage()));
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("系统发生错误{ %s }，请稍后再试!", e.getDetailMessage()));
     }
 
     /**
@@ -313,7 +314,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BaseException.class)
     public R<Void> handleBaseException(BaseException e, HttpServletRequest request) {
         log.error("基础异常发生，异常信息: {}, 请求路径: {}", e.getMessage(), request.getRequestURI(), e);
-        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "系统发生错误{ %s }，请稍后再试!".formatted(e.getMessage()));
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("系统发生错误{ %s }，请稍后再试!", e.getDefaultMessage()));
     }
 
     /**
@@ -367,13 +368,13 @@ public class GlobalExceptionHandler {
     /**
      * 处理数据完整性异常
      *
-     * @param e 捕获到的 {@link DataIntegrityViolationException} 异常对象
+     * @param e 捕获到的 {@link DuplicateKeyException} 异常对象
      * @return 封装的响应结果，包含详细的错误信息
      */
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public R<Void> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+    @ExceptionHandler(DuplicateKeyException.class)
+    public R<Void> handleDataIntegrityViolationException(DuplicateKeyException e) {
         log.error("数据完整性违规: {}", e.getMessage(), e);
-        return buildErrorResponse(HttpStatus.PERMANENT_REDIRECT, "数据操作失败，可能违反了数据库的约束条件！");
+        return buildErrorResponse(HttpStatus.PERMANENT_REDIRECT, "操作失败，违反数据唯一约束！");
     }
 
     /**
@@ -575,35 +576,35 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 处理 MyBatis 批量操作失败的异常
+     * 处理 SQL 语法错误的异常
      * <p>
-     * 当使用 MyBatis 执行批量操作时出现错误（例如 SQL 语句错误）会抛出该异常。
+     * 当执行 SQL 语法错误时会抛出该异常。
      * 该方法捕获异常并记录日志，返回状态码 500（INTERNAL_SERVER_ERROR）和提示信息。
      *
-     * @param e       {@link BatchExecutorException} 异常对象
+     * @param e       {@link BadSqlGrammarException} 异常对象
      * @param request {@link HttpServletRequest} 对象，用于获取请求相关的信息
      * @return 标准化的响应结果，包含错误提示和请求的接口地址
      */
-    @ExceptionHandler(BatchExecutorException.class)
-    public R<Void> handleBatchExecutorException(BatchExecutorException e, HttpServletRequest request) {
-        log.error("批量执行失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
-        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("批量操作执行失败，请稍后重试。请求地址：{%s}", request.getRequestURI()));
+    @ExceptionHandler(BadSqlGrammarException.class)
+    public R<Void> handleBadSqlGrammarException(BadSqlGrammarException e, HttpServletRequest request) {
+        log.error("SQL 语法错误, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("SQL 语法错误，请稍后重试。请求地址：{%s}", request.getRequestURI()));
     }
 
     /**
-     * 处理 MyBatis 持久化操作失败的异常
+     * 处理通用数据访问异常
      * <p>
-     * 当 MyBatis 执行持久化操作时（例如插入、更新、删除或查询）失败时会抛出该异常。
+     * 处理其他 MyBatis 或数据库访问操作失败时抛出的异常。
      * 该方法捕获异常并记录日志，返回状态码 500（INTERNAL_SERVER_ERROR）和提示信息。
      *
-     * @param e       {@link PersistenceException} 异常对象
+     * @param e       {@link DataAccessException} 异常对象
      * @param request {@link HttpServletRequest} 对象，用于获取请求相关的信息
      * @return 标准化的响应结果，包含错误提示和请求的接口地址
      */
-    @ExceptionHandler(PersistenceException.class)
-    public R<Void> handlePersistenceException(PersistenceException e, HttpServletRequest request) {
-        log.error("MyBatis 操作失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
-        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("数据操作失败，请稍后重试。请求地址：{%s}", request.getRequestURI()));
+    @ExceptionHandler(DataAccessException.class)
+    public R<Void> handleDataAccessException(DataAccessException e, HttpServletRequest request) {
+        log.error("数据访问失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("数据库操作失败，请稍后重试。请求地址：{%s}", request.getRequestURI()));
     }
 
     /**
@@ -620,6 +621,54 @@ public class GlobalExceptionHandler {
     public R<Void> handleHttpMessageNotReadableException(HttpMessageNotReadableException e, HttpServletRequest request) {
         log.error("请求参数不可用, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
         return buildErrorResponse(HttpStatus.INVALID_ARGUMENT, String.format("请求参数类型错误，请检查输入。请求地址：{%s}", request.getRequestURI()));
+    }
+
+    /**
+     * 处理 MyBatis 批量操作失败的异常
+     * <p>
+     * 当执行 MyBatis 批量操作时出现错误（例如 SQL 语句错误）会抛出该异常。
+     * 该方法捕获异常并记录日志，返回状态码 500（INTERNAL_SERVER_ERROR）和提示信息。
+     *
+     * @param e       {@link BatchExecutorException} 异常对象
+     * @param request {@link HttpServletRequest} 对象，用于获取请求相关的信息
+     * @return 标准化的响应结果，包含错误提示和请求的接口地址
+     */
+    @ExceptionHandler(BatchExecutorException.class)
+    public R<Void> handleBatchExecutorException(BatchExecutorException e, HttpServletRequest request) {
+        log.error("批量执行失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("批量操作执行失败，请稍后重试。请求地址：{%s}", request.getRequestURI()));
+    }
+
+    /**
+     * 处理 MyBatis 持久化操作失败的异常
+     * <p>
+     * 当 MyBatis 执行持久化操作（如插入、更新、删除、查询）失败时会抛出该异常。
+     * 该方法捕获异常并记录日志，返回状态码 500（INTERNAL_SERVER_ERROR）和提示信息。
+     *
+     * @param e       {@link PersistenceException} 异常对象
+     * @param request {@link HttpServletRequest} 对象，用于获取请求相关的信息
+     * @return 标准化的响应结果，包含错误提示和请求的接口地址
+     */
+    @ExceptionHandler(PersistenceException.class)
+    public R<Void> handlePersistenceException(PersistenceException e, HttpServletRequest request) {
+        log.error("持久化操作失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("持久化操作失败，请稍后重试。请求地址：{%s}", request.getRequestURI()));
+    }
+
+    /**
+     * 处理 MyBatis 构建配置文件或映射文件失败的异常
+     * <p>
+     * 当 MyBatis 构建配置文件或映射文件时出现错误，会抛出该异常。
+     * 该方法捕获异常并记录日志，返回状态码 500（INTERNAL_SERVER_ERROR）和提示信息。
+     *
+     * @param e       {@link BuilderException} 异常对象
+     * @param request {@link HttpServletRequest} 对象，用于获取请求相关的信息
+     * @return 标准化的响应结果，包含错误提示和请求的接口地址
+     */
+    @ExceptionHandler(BuilderException.class)
+    public R<Void> handleBuilderException(BuilderException e, HttpServletRequest request) {
+        log.error("MyBatis 配置文件或映射文件构建失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("SQL 构建失败，请联系开发人员。请求地址：{%s}", request.getRequestURI()));
     }
 
     /**
