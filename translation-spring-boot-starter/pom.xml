@@ -37,6 +37,7 @@
     </scm>
 
     <dependencies>
+        <!-- 定义 lib 传递 -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
