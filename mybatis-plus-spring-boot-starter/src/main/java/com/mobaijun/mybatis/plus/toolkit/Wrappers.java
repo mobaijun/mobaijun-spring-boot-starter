@@ -187,6 +187,18 @@ public final class Wrappers {
     }
 
     /**
+     * 获取 EmptyWrapper&lt;T&gt;
+     *
+     * @param <T> 任意泛型
+     * @return EmptyWrapper&lt;T&gt;
+     * @see com.mobaijun.mybatis.plus.toolkit.Wrappers.EmptyWrapper
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> QueryWrapper<T> emptyWrapper() {
+        return (QueryWrapper<T>) emptyWrapper;
+    }
+
+    /**
      * 一个空的QueryWrapper子类该类不包含任何条件
      *
      * @param <T>
