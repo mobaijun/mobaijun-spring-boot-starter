@@ -58,6 +58,7 @@
         <module>../easyexcel-spring-boot-starter</module>
         <module>../websocket-spring-boot-starter</module>
         <module>../oss-spring-boot-starter</module>
+        <module>../translation-spring-boot-starter</module>
     </modules>
 
     <properties>
@@ -455,6 +456,13 @@
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/sms-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>sms-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/translation-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>translation-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
