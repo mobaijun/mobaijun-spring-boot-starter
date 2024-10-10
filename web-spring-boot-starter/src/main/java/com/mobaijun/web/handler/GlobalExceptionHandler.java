@@ -603,7 +603,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(DataAccessException.class)
     public R<Void> handleDataAccessException(DataAccessException e, HttpServletRequest request) {
-        log.error("数据访问失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
+        log.error("数据库操作失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
         return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("数据库操作失败，请稍后重试。请求地址：{%s}", request.getRequestURI()));
     }
 
