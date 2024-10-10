@@ -117,6 +117,7 @@
         <zxing.core.version>3.5.3</zxing.core.version>
         <jsr305.version>3.0.2</jsr305.version>
         <mybatis.version>3.5.16</mybatis.version>
+        <april-project-authorize.version>3.0.0</april-project-authorize.version>
         <!-- dubbo 相关 -->
         <dubbo-metadata.version>3.3.0-beta.4</dubbo-metadata.version>
     </properties>
@@ -787,6 +788,13 @@
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
                 <version>${mybatis.version}</version>
+            </dependency>
+
+            <!-- https://central.sonatype.com/artifact/com.mobaijun/april-project-authorize -->
+            <dependency>
+                <groupId>com.mobaijun</groupId>
+                <artifactId>april-project-authorize</artifactId>
+                <version>${april-project-authorize.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
