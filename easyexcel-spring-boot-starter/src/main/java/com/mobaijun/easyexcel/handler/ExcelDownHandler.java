@@ -27,7 +27,7 @@ import com.alibaba.excel.write.handler.SheetWriteHandler;
 import com.alibaba.excel.write.metadata.holder.WriteSheetHolder;
 import com.alibaba.excel.write.metadata.holder.WriteWorkbookHolder;
 import com.mobaijun.common.collection.StreamUtil;
-import com.mobaijun.core.exception.ServiceException;
+import com.mobaijun.common.exception.ServiceException;
 import com.mobaijun.core.service.DictService;
 import com.mobaijun.core.spring.SpringUtil;
 import com.mobaijun.easyexcel.annotation.ExcelDictFormat;

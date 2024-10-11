@@ -63,11 +63,6 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.mobaijun</groupId>
-            <artifactId>core-spring-boot-starter</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
             <optional>true</optional>

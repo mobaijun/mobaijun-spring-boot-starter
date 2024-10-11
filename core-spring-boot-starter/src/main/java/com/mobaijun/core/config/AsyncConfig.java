@@ -15,7 +15,7 @@
  */
 package com.mobaijun.core.config;
 
-import com.mobaijun.core.exception.ServiceException;
+import com.mobaijun.common.exception.ServiceException;
 import com.mobaijun.core.spring.SpringUtil;
 import java.util.Arrays;
 import java.util.concurrent.Executor;

@@ -16,9 +16,9 @@
 package com.mobaijun.web.handler;
 
 import com.mobaijun.common.enums.http.HttpStatus;
+import com.mobaijun.common.exception.ServiceException;
+import com.mobaijun.common.exception.base.BaseException;
 import com.mobaijun.common.result.R;
-import com.mobaijun.core.exception.ServiceException;
-import com.mobaijun.core.exception.base.BaseException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -288,7 +288,7 @@ public class GlobalExceptionHandler {
     /**
      * 处理业务异常
      * <p>
-     * 当业务逻辑出现错误时，会抛出 {@link ServiceException} 异常。
+     * 当业务逻辑出现错误时，会抛出 {@link com.mobaijun.common.exception.ServiceException} 异常。
      * 本方法捕获此异常，记录请求路径和错误信息，并返回封装的响应结果。
      *
      * @param e       捕获到的业务异常对象
@@ -307,7 +307,7 @@ public class GlobalExceptionHandler {
      * 当捕获到基础异常时，Spring 会调用本方法进行处理。
      * 本方法记录异常信息和请求路径，并返回封装的响应结果。
      *
-     * @param e       捕获到的 {@link com.mobaijun.core.exception.base.BaseException } 基础异常对象
+     * @param e       捕获到的 {@link com.mobaijun.common.exception.base.BaseException } 基础异常对象
      * @param request 当前的 HTTP 请求对象
      * @return 封装的响应结果，包含错误信息
      */
