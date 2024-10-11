@@ -24,8 +24,12 @@ import com.mobaijun.common.constant.StringConstant;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import lombok.SneakyThrows;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -136,5 +140,50 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         }
         // 情况二：基于 content 计算
         return sha256Hex + '.' + FileTypeUtil.getType(new ByteArrayInputStream(content));
+    }
+
+    /**
+     * 将 Base64 字符串转换为 MultipartFile
+     *
+     * @param base64Str Base64 编码的字符串
+     * @return MultipartFile 对象
+     */
+    public static MultipartFile base64ToMultipartFile(String base64Str) {
+        // 去掉 Base64 编码的头部信息
+        String[] base64Parts = base64Str.split(",");
+        String base64Data = base64Parts.length > 1 ? base64Parts[1] : base64Parts[0];
+        byte[] decodedBytes = Base64.getDecoder().decode(base64Data);
+        // 设置默认 MIME 类型为 image/png
+        String header = base64Parts.length > 1 ? base64Parts[0] : "data:image/png;base64";
+
+        return new Base64MultipartFile(decodedBytes, header);
+    }
+
+    /**
+     * 将 Base64 字符串转换为临时文件
+     *
+     * @param base64Img Base64 编码的图片
+     * @return File 对象（临时文件）
+     * @throws java.io.IOException 如果解码或写入失败
+     */
+    public static File base64ToTempFile(String base64Img) throws IOException {
+        // 去掉 Base64 编码中的头部信息
+        String[] base64Parts = base64Img.split(",");
+        String base64Data = base64Parts.length > 1 ? base64Parts[1] : base64Parts[0];
+
+        // 解码 Base64 字符串
+        byte[] imgBytes = Base64.getDecoder().decode(base64Data);
+
+        // 创建临时文件
+        File tempFile = File.createTempFile("temp_image_", ".png");
+        // 在 JVM 退出时自动删除临时文件
+        tempFile.deleteOnExit();
+
+        // 写入文件
+        try (OutputStream out = new FileOutputStream(tempFile)) {
+            out.write(imgBytes);
+        }
+
+        return tempFile;
     }
 }
