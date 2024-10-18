@@ -15,11 +15,9 @@
  */
 package com.mobaijun.core.spring;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
+import com.mobaijun.common.collection.MapUtil;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -75,7 +73,7 @@ public class SpringExpressionUtil {
      */
     public static Map<String, Object> parseExpressions(JoinPoint joinPoint, List<String> expressionStrings) {
         // 如果为空，则不进行解析
-        if (CollUtil.isEmpty(expressionStrings)) {
+        if (expressionStrings == null || expressionStrings.isEmpty()) {
             return MapUtil.newHashMap();
         }
 
@@ -88,7 +86,8 @@ public class SpringExpressionUtil {
         // Spring 的表达式上下文对象
         EvaluationContext context = new StandardEvaluationContext();
         // 给上下文赋值
-        if (ArrayUtil.isNotEmpty(paramNames)) {
+        assert paramNames != null;
+        if (!Arrays.asList(paramNames).isEmpty()) {
             Object[] args = joinPoint.getArgs();
             for (int i = 0; i < paramNames.length; i++) {
                 context.setVariable(paramNames[i], args[i]);
@@ -111,7 +110,7 @@ public class SpringExpressionUtil {
      * @return 执行界面
      */
     public static Object parseExpression(String expressionString) {
-        if (StrUtil.isBlank(expressionString)) {
+        if (expressionString.isBlank()) {
             return null;
         }
         Expression expression = EXPRESSION_PARSER.parseExpression(expressionString);

@@ -16,7 +16,6 @@
 package com.mobaijun.core.xss;
 
 import cn.hutool.core.util.ReUtil;
-import cn.hutool.http.HtmlUtil;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -29,6 +28,11 @@ import jakarta.validation.ConstraintValidatorContext;
 public class XssValidator implements ConstraintValidator<Xss, String> {
 
     /**
+     * html标记的正则表达式
+     */
+    public static final String RE_HTML_MARK = "(<[^<]*?>)|(<[\\s]*?/[^<]*?>)|(<[^<]*?/[\\s]*?>)";
+
+    /**
      * 重写父类或接口中的 isValid 方法，用于验证给定值是否符合约束条件。
      *
      * @param value                      要验证的值
@@ -37,6 +41,6 @@ public class XssValidator implements ConstraintValidator<Xss, String> {
      */
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        return !ReUtil.contains(HtmlUtil.RE_HTML_MARK, value);
+        return !ReUtil.contains(RE_HTML_MARK, value);
     }
 }

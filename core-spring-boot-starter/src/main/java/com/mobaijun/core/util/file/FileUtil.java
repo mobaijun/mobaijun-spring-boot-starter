@@ -19,7 +19,6 @@ import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.digest.DigestUtil;
 import com.mobaijun.common.constant.StringConstant;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
@@ -29,6 +28,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import lombok.SneakyThrows;
 import org.springframework.web.multipart.MultipartFile;
@@ -132,7 +133,7 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
      * @return path，唯一不可重复
      */
     public static String generatePath(byte[] content, String originalName) {
-        String sha256Hex = DigestUtil.sha256Hex(content);
+        String sha256Hex = calculateSha256Hex(content);
         // 情况一：如果存在 name，则优先使用 name 的后缀
         if (StrUtil.isNotBlank(originalName)) {
             String extName = FileNameUtil.extName(originalName);
@@ -140,6 +141,29 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         }
         // 情况二：基于 content 计算
         return sha256Hex + '.' + FileTypeUtil.getType(new ByteArrayInputStream(content));
+    }
+
+    /**
+     * 计算给定内容的 SHA-256 哈希值，并返回十六进制字符串。
+     *
+     * @param content 文件内容
+     * @return SHA-256 哈希值的十六进制字符串
+     */
+    private static String calculateSha256Hex(byte[] content) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(content);
+            StringBuilder hexString = new StringBuilder();
+
+            for (byte b : hashBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 algorithm not found", e);
+        }
     }
 
     /**

@@ -18,8 +18,8 @@ package com.mobaijun.core.util;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.JakartaServletUtil;
-import cn.hutool.http.HttpStatus;
 import com.mobaijun.common.constant.StringConstant;
+import com.mobaijun.common.enums.http.HttpStatus;
 import com.mobaijun.common.text.StringUtil;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
@@ -205,8 +205,8 @@ public class ServletUtil extends JakartaServletUtil {
      */
     public static String getHeader(HttpServletRequest request, String name) {
         String value = request.getHeader(name);
-        if (StrUtil.isEmpty(value)) {
-            return StrUtil.EMPTY;
+        if (value.isEmpty()) {
+            return StringConstant.BLANK;
         }
         return urlDecode(value);
     }
@@ -238,7 +238,7 @@ public class ServletUtil extends JakartaServletUtil {
      */
     public static void renderString(HttpServletResponse response, String string) {
         try {
-            response.setStatus(HttpStatus.HTTP_OK);
+            response.setStatus(HttpStatus.OK.getCode());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
             response.getWriter().print(string);

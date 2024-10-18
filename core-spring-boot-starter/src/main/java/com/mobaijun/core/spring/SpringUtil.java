@@ -15,8 +15,7 @@
  */
 package com.mobaijun.core.spring;
 
-import cn.hutool.core.lang.TypeReference;
-import cn.hutool.core.util.ArrayUtil;
+import com.mobaijun.core.util.TypeReference;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.Map;
@@ -256,7 +255,8 @@ public class SpringUtil implements ApplicationContextAware, BeanFactoryPostProce
      */
     public static String getActiveProfile() {
         final String[] activeProfiles = getActiveProfiles();
-        return ArrayUtil.isNotEmpty(activeProfiles) ? activeProfiles[0] : null;
+        // 检查 activeProfiles 是否为空或长度为 0
+        return (activeProfiles != null && activeProfiles.length > 0) ? activeProfiles[0] : null;
     }
 
     /**
