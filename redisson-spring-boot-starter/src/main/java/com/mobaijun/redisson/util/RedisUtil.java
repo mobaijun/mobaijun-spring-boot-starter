@@ -24,7 +24,6 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.ObjectListener;
 import org.redisson.api.RAtomicLong;
 import org.redisson.api.RBatch;
@@ -41,6 +40,9 @@ import org.redisson.api.RateIntervalUnit;
 import org.redisson.api.RateType;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * Description: [redis 工具类]
@@ -48,8 +50,13 @@ import org.redisson.client.codec.StringCodec;
  * Date: [2024/8/14 18:29]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-@Slf4j
+@Component
 public class RedisUtil {
+
+    /**
+     * 日志记录器
+     */
+    private static final Logger log = LoggerFactory.getLogger(RedisUtil.class);
 
     /**
      * 客户端实例

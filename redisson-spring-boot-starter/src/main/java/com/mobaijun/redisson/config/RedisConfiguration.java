@@ -30,16 +30,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.TimeZone;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.redisson.client.codec.StringCodec;
 import org.redisson.codec.CompositeCodec;
 import org.redisson.codec.TypedJsonJacksonCodec;
 import org.redisson.spring.starter.RedissonAutoConfigurationCustomizer;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.thread.Threading;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.task.VirtualThreadTaskExecutor;
 
@@ -49,16 +49,23 @@ import org.springframework.core.task.VirtualThreadTaskExecutor;
  * Date: [2024/8/14 18:28]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-@Slf4j
-@AutoConfiguration
-@RequiredArgsConstructor
+@Configuration
 @EnableConfigurationProperties(RedissonProperties.class)
 public class RedisConfiguration {
+
+    /**
+     * 日志记录器
+     */
+    private static final Logger log = LoggerFactory.getLogger(RedisConfiguration.class);
 
     /**
      * redisson 配置
      */
     private final RedissonProperties redissonProperties;
+
+    public RedisConfiguration(RedissonProperties redissonProperties) {
+        this.redissonProperties = redissonProperties;
+    }
 
     /**
      * 是否是虚拟线程

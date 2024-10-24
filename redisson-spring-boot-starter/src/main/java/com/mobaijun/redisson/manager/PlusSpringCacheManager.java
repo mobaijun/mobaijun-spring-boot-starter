@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import lombok.Setter;
 import org.redisson.api.RMap;
 import org.redisson.api.RMapCache;
 import org.redisson.spring.cache.CacheConfig;
@@ -71,7 +70,6 @@ public class PlusSpringCacheManager implements CacheManager {
      * <p>
      * Default is <code>true</code>
      */
-    @Setter
     private boolean allowNullValues = true;
 
     /**
@@ -82,7 +80,6 @@ public class PlusSpringCacheManager implements CacheManager {
      * <p>
      * Default is <code>false</code>
      */
-    @Setter
     private boolean transactionAware = true;
 
     /**
@@ -203,5 +200,45 @@ public class PlusSpringCacheManager implements CacheManager {
             getCache(name);
         }
         dynamic = false;
+    }
+
+    public Map<String, CacheConfig> getConfigMap() {
+        return configMap;
+    }
+
+    public void setConfigMap(Map<String, CacheConfig> configMap) {
+        this.configMap = configMap;
+    }
+
+    public ConcurrentMap<String, Cache> getInstanceMap() {
+        return instanceMap;
+    }
+
+    public void setInstanceMap(ConcurrentMap<String, Cache> instanceMap) {
+        this.instanceMap = instanceMap;
+    }
+
+    public boolean isDynamic() {
+        return dynamic;
+    }
+
+    public void setDynamic(boolean dynamic) {
+        this.dynamic = dynamic;
+    }
+
+    public boolean isAllowNullValues() {
+        return allowNullValues;
+    }
+
+    public void setAllowNullValues(boolean allowNullValues) {
+        this.allowNullValues = allowNullValues;
+    }
+
+    public boolean isTransactionAware() {
+        return transactionAware;
+    }
+
+    public void setTransactionAware(boolean transactionAware) {
+        this.transactionAware = transactionAware;
     }
 }

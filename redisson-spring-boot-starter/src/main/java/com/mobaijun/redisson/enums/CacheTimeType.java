@@ -16,8 +16,6 @@
 package com.mobaijun.redisson.enums;
 
 import java.time.Duration;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * software：IntelliJ IDEA 2022.1
@@ -26,8 +24,6 @@ import lombok.Getter;
  *
  * @author MoBaiJun 2022/5/16 13:25
  */
-@Getter
-@AllArgsConstructor
 public enum CacheTimeType {
 
     /**
@@ -99,4 +95,12 @@ public enum CacheTimeType {
      * 缓存时间
      */
     private final Duration time;
+
+    CacheTimeType(Duration time) {
+        this.time = time;
+    }
+
+    public Duration getTime() {
+        return time;
+    }
 }

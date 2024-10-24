@@ -21,6 +21,7 @@ import java.util.Set;
 import org.redisson.api.RMap;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.stereotype.Component;
 
 /**
  * Description: [缓存操作工具类]
@@ -28,6 +29,7 @@ import org.springframework.cache.CacheManager;
  * Date: [2024/8/14 18:29]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
+@Component
 @SuppressWarnings(value = {"unchecked"})
 public class CacheUtil {
 
