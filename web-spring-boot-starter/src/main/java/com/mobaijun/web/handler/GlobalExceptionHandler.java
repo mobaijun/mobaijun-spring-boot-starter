@@ -19,6 +19,7 @@ import com.mobaijun.common.enums.http.HttpStatus;
 import com.mobaijun.common.exception.ServiceException;
 import com.mobaijun.common.exception.base.BaseException;
 import com.mobaijun.common.result.R;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -669,6 +670,28 @@ public class GlobalExceptionHandler {
     public R<Void> handleBuilderException(BuilderException e, HttpServletRequest request) {
         log.error("MyBatis 配置文件或映射文件构建失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
         return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("SQL 构建失败，请联系开发人员。请求地址：{%s}", request.getRequestURI()));
+    }
+
+    /**
+     * 处理 Servlet 异常
+     * <p>
+     * 捕获 ServletException 异常，并根据异常信息返回不同的错误响应。
+     *
+     * @param e       {@link ServletException} 异常对象
+     * @param request {@link HttpServletRequest} 对象，用于获取请求相关的信息
+     * @return 标准化的响应结果，包含错误提示和请求的接口地址
+     */
+    @ExceptionHandler(ServletException.class)
+    public R<Void> handleServletException(ServletException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        String errorMessage = e.getMessage();
+        if (errorMessage != null && errorMessage.contains("NotLoginException")) {
+            log.error("请求地址'{}', 认证失败'{}', 无法访问系统资源", requestURI, errorMessage);
+            return buildErrorResponse(HttpStatus.UNAUTHENTICATED, "认证失败，无法访问系统资源");
+        } else {
+            log.error("请求地址'{}', 发生未知异常: {}", requestURI, errorMessage, e);
+            return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "系统内部错误，请联系管理员");
+        }
     }
 
     /**
