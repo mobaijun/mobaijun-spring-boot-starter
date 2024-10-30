@@ -299,7 +299,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ServiceException.class)
     public R<Void> handleServiceException(ServiceException e, HttpServletRequest request) {
         log.error("业务异常发生，异常信息: {}, 请求路径: {}", e.getMessage(), request.getRequestURI());
-        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("系统发生错误{ %s }，请稍后再试!", e.getDetailMessage()));
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
     /**
@@ -315,7 +315,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BaseException.class)
     public R<Void> handleBaseException(BaseException e, HttpServletRequest request) {
         log.error("基础异常发生，异常信息: {}, 请求路径: {}", e.getMessage(), request.getRequestURI(), e);
-        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("系统发生错误{ %s }，请稍后再试!", e.getDefaultMessage()));
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, String.format("系统发生错误{ %s }，请稍后再试!", e.getMessage()));
     }
 
     /**

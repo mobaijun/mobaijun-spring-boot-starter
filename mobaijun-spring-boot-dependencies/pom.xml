@@ -70,46 +70,41 @@
         <gen-3-v10.version>3.0.10</gen-3-v10.version>
 
         <!-- 大版本依赖管理 -->
-        <spring-boot.version>3.3.2</spring-boot.version>
+        <spring-boot.version>3.3.5</spring-boot.version>
         <spring-cloud.version>2023.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
-        <software.amazon.awssdk.version>2.27.11</software.amazon.awssdk.version>
-        <hutool-bom.version>5.8.31</hutool-bom.version>
-        <dubbo-bom.version>3.3.0</dubbo-bom.version>
+        <software.amazon.awssdk.version>2.29.1</software.amazon.awssdk.version>
+        <hutool-bom.version>5.8.32</hutool-bom.version>
+        <dubbo-bom.version>3.3.1</dubbo-bom.version>
         <dynamic.version>4.3.1</dynamic.version>
         <mybatis-plus.version>3.5.8</mybatis-plus.version>
         <knife4j-swagger-ui.version>4.5.0</knife4j-swagger-ui.version>
 
         <!-- 依赖版本 -->
         <sa-token-core.version>1.39.0</sa-token-core.version>
-        <jpush-client.version>3.7.7</jpush-client.version>
         <common.version>1.2.7</common.version>
         <influxdb.version>2.24</influxdb.version>
-        <swagger-base.version>2.2.23</swagger-base.version>
-        <aliyun-sdk-oss.version>3.18.1</aliyun-sdk-oss.version>
+        <swagger-base.version>2.2.25</swagger-base.version>
+
         <guava.version>[33.+,)</guava.version>
         <hutool-all.version>${hutool-bom.version}</hutool-all.version>
         <jasypt.version>3.0.5</jasypt.version>
-        <minio.version>8.5.11</minio.version>
+        <minio.version>8.5.13</minio.version>
         <jettison.version>1.5.4</jettison.version>
         <slf4j-api.version>[2.+,)</slf4j-api.version>
         <easyexcel.version>4.0.3</easyexcel.version>
         <kjs-common.version>[2.+,)</kjs-common.version>
         <april-sensitive.version>2.0.0</april-sensitive.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
-        <bimface-java-sdk.version>3.2.9</bimface-java-sdk.version>
-        <tianai-captcha.version>1.5.1</tianai-captcha.version>
-        <cos_api.version>5.6.231</cos_api.version>
-        <qiniu-java-sdk.version>7.15.1</qiniu-java-sdk.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <httpclient.version>[4.+,)</httpclient.version>
         <httpmime.version>[4.+,)</httpmime.version>
         <april-json-util.version>1.0.0</april-json-util.version>
         <commons-compress.version>[1.+,)</commons-compress.version>
         <mapstruct.version>[1.+,)</mapstruct.version>
-        <redisson.version>3.36.0</redisson.version>
+        <redisson.version>3.37.0</redisson.version>
         <jsoup.version>[1.+,)</jsoup.version>
-        <dysmsapi20170525.version>3.0.0</dysmsapi20170525.version>
+        <dysmsapi20170525.version>3.1.0</dysmsapi20170525.version>
         <tencentcloud-sdk-java.version>[4.+,)</tencentcloud-sdk-java.version>
         <lock4j.version>2.2.7</lock4j.version>
         <ip2region.version>2.7.0</ip2region.version>
@@ -120,6 +115,17 @@
         <jsr305.version>3.0.2</jsr305.version>
         <mybatis.version>3.5.16</mybatis.version>
         <april-project-authorize.version>LATEST</april-project-authorize.version>
+
+        <!-- 第三方 api 组件-->
+        <tess4j.version>5.13.0</tess4j.version>
+        <jpush-client.version>3.7.7</jpush-client.version>
+        <aliyun-sdk-oss.version>3.18.1</aliyun-sdk-oss.version>
+        <bimface-java-sdk.version>3.2.9</bimface-java-sdk.version>
+        <cos_api.version>5.6.234</cos_api.version>
+        <qiniu-java-sdk.version>7.16.0</qiniu-java-sdk.version>
+        <tianai-captcha.version>1.5.1</tianai-captcha.version>
+        <huaweicloud-sdk-ocr.version>3.1.119</huaweicloud-sdk-ocr.version>
+
         <!-- dubbo 相关 -->
         <dubbo-metadata.version>3.3.0-beta.4</dubbo-metadata.version>
     </properties>
@@ -162,6 +168,7 @@
         <dependencies>
             <!-- spring boot-->
             <dependency>
+                <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
@@ -811,6 +818,20 @@
                 <groupId>com.mobaijun</groupId>
                 <artifactId>april-project-authorize</artifactId>
                 <version>${april-project-authorize.version}</version>
+            </dependency>
+
+            <!-- https://central.sonatype.com/artifact/net.sourceforge.tess4j/tess4j -->
+            <dependency>
+                <groupId>net.sourceforge.tess4j</groupId>
+                <artifactId>tess4j</artifactId>
+                <version>${tess4j.version}</version>
+            </dependency>
+
+            <!-- https://central.sonatype.com/artifact/com.huaweicloud.sdk/huaweicloud-sdk-ocr -->
+            <dependency>
+                <groupId>com.huaweicloud.sdk</groupId>
+                <artifactId>huaweicloud-sdk-ocr</artifactId>
+                <version>${huaweicloud-sdk-ocr.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
