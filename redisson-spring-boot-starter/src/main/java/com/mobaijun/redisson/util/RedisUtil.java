@@ -42,7 +42,6 @@ import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 /**
  * Description: [redis 工具类]
@@ -50,7 +49,6 @@ import org.springframework.stereotype.Component;
  * Date: [2024/8/14 18:29]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-@Component
 public class RedisUtil {
 
     /**
