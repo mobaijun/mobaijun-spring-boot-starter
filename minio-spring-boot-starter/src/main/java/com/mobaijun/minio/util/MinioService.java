@@ -86,6 +86,16 @@ public class MinioService {
     }
 
     /**
+     * 获取 MinIO 客户端实例。
+     *
+     * @return MinioClient 实例，用于与 MinIO 服务进行交互。
+     * 如果尚未初始化，可能会抛出相关异常。
+     */
+    public MinioClient getMinioClient() {
+        return minioClient;
+    }
+
+    /**
      * 检查存储桶是否存在
      *
      * @param bucketName 存储桶名称
