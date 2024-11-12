@@ -37,7 +37,6 @@
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 
-
     <dependencies>
         <dependency>
             <groupId>io.swagger.core.v3</groupId>

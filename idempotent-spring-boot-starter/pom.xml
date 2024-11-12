@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.mobaijun</groupId>
+        <artifactId>mobaijun-spring-boot-dependencies</artifactId>
+        <version>3.0.14</version>
+        <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>idempotent-spring-boot-starter</artifactId>
+    <version>${revision}</version>
+
+    <name>${project.artifactId}</name>
+    <description>该组件通过注解和Redis分布式锁防止重复提交，确保请求频率控制，提升系统稳定性。</description>
+    <inceptionYear>2024</inceptionYear>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
+
+    <!--  GitHub issues -->
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/idempotent-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
+        <developerConnection>https://github.com/mobaijun</developerConnection>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.mobaijun</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.mobaijun</groupId>
+            <artifactId>kjs-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mobaijun</groupId>
+            <artifactId>core-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
+</project>

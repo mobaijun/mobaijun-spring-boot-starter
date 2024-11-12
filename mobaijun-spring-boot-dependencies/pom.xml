@@ -60,6 +60,7 @@
         <module>../oss-spring-boot-starter</module>
         <module>../translation-spring-boot-starter</module>
         <module>../sse-spring-boot-starter</module>
+        <module>../idempotent-spring-boot-starter</module>
     </modules>
 
     <properties>
@@ -79,6 +80,7 @@
         <dynamic.version>4.3.1</dynamic.version>
         <mybatis-plus.version>3.5.8</mybatis-plus.version>
         <knife4j-swagger-ui.version>4.5.0</knife4j-swagger-ui.version>
+        <flowable.version>7.1.0</flowable.version>
 
         <!-- 依赖版本 -->
         <sa-token-core.version>1.39.0</sa-token-core.version>
@@ -105,7 +107,7 @@
         <redisson.version>3.37.0</redisson.version>
         <jsoup.version>[1.+,)</jsoup.version>
         <dysmsapi20170525.version>3.1.0</dysmsapi20170525.version>
-        <tencentcloud-sdk-java.version>[4.+,)</tencentcloud-sdk-java.version>
+        <tencentcloud-sdk-java.version>3.1.1140</tencentcloud-sdk-java.version>
         <lock4j.version>2.2.7</lock4j.version>
         <ip2region.version>2.7.0</ip2region.version>
         <mapstruct-plus.version>[1.+,)</mapstruct-plus.version>
@@ -125,6 +127,7 @@
         <qiniu-java-sdk.version>7.16.0</qiniu-java-sdk.version>
         <tianai-captcha.version>1.5.1</tianai-captcha.version>
         <huaweicloud-sdk-ocr.version>3.1.119</huaweicloud-sdk-ocr.version>
+        <flowable-json.version>6.8.1</flowable-json.version>
 
         <!-- dubbo 相关 -->
         <dubbo-metadata.version>3.3.0-beta.4</dubbo-metadata.version>
@@ -256,6 +259,16 @@
                 <type>pom</type>
             </dependency>
 
+            <!-- flowable workflow -->
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/org.flowable/flowable-bom -->
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-bom</artifactId>
+                <version>${flowable.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
             <!-- own submodule -->
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/base-model-spring-boot-starter -->
@@ -324,6 +337,13 @@
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/i18n-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>i18n-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/idempotent-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>idempotent-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -832,6 +852,14 @@
                 <groupId>com.huaweicloud.sdk</groupId>
                 <artifactId>huaweicloud-sdk-ocr</artifactId>
                 <version>${huaweicloud-sdk-ocr.version}</version>
+            </dependency>
+
+            <!-- flowable json 转换 -->
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/org.flowable/flowable-json-converter -->
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-json-converter</artifactId>
+                <version>${flowable-json.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
