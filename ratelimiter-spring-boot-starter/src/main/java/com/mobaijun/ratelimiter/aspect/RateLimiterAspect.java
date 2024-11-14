@@ -65,13 +65,14 @@ public class RateLimiterAspect {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         Object[] args = joinPoint.getArgs();
-
+        // 获取客户端IP地址
+        String ip = getClientIp(rateLimiter);
         // 使用传入的 rateLimiter 参数和方法上的RateLimiter注解
-        boolean limitFlag = processRateLimit(rateLimiter, method, args);
+        boolean limitFlag = processRateLimit(rateLimiter, method, args, ip);
 
         if (limitFlag) {
             // 达到限流条件，抛出异常
-            throw new RateLimiterException("触发了滥用检测机制，请稍候再试。");
+            throw new RateLimiterException("触发了滥用检测机制，请稍候再试。", ip);
         }
     }
 
@@ -81,14 +82,12 @@ public class RateLimiterAspect {
      * @param limitAnnotation 当前RateLimiter注解
      * @param method          当前方法
      * @param args            方法参数
+     * @param ip              IP地址
      * @return 是否触发限流条件
      */
-    private boolean processRateLimit(RateLimiter limitAnnotation, Method method, Object[] args) {
+    private boolean processRateLimit(RateLimiter limitAnnotation, Method method, Object[] args, String ip) {
         String project = limitAnnotation.project();
         String resolveLimitKey = SpelParser.resolveLimitKey(limitAnnotation.key(), method, args);
-
-        // 获取客户端IP地址
-        String ip = getClientIp(limitAnnotation);
         // 根据不同的限流模式进行处理
         return switch (limitAnnotation.limitMode()) {
             case KEY -> checkRateLimit(limitAnnotation, project, resolveLimitKey, null);

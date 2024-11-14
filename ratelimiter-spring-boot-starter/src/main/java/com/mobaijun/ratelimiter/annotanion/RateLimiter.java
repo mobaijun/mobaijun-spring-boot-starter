@@ -44,7 +44,7 @@ public @interface RateLimiter {
      *
      * @return 限流前缀
      */
-    String prefix() default "rate_limiter_";
+    String prefix() default "rate_limiter:";
 
     /**
      * 限流所属模块的名称。通常用于标识不同的业务模块或系统。
@@ -54,7 +54,7 @@ public @interface RateLimiter {
      *
      * @return 模块名称
      */
-    String project() default "project_";
+    String project() default "project:";
 
     /**
      * 限流的资源的唯一标识符，通常是 API 路径或其他资源标识符。
@@ -64,7 +64,7 @@ public @interface RateLimiter {
      *
      * @return 限流资源的 key
      */
-    String key() default "api_";
+    String key() default "api:";
 
     /**
      * 限流周期，即时间窗口的长度，单位为秒。
