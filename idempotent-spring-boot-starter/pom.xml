@@ -40,10 +40,12 @@
         <dependency>
             <groupId>com.mobaijun</groupId>
             <artifactId>redisson-spring-boot-starter</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -53,10 +55,12 @@
         <dependency>
             <groupId>com.mobaijun</groupId>
             <artifactId>kjs-common</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.mobaijun</groupId>
             <artifactId>core-spring-boot-starter</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>
