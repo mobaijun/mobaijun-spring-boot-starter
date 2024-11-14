@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -11,12 +10,17 @@
         <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
-    <artifactId>idempotent-spring-boot-starter</artifactId>
+    <artifactId>ratelimiter-spring-boot-starter</artifactId>
+    <name>${project.artifactId}</name>
+    <inceptionYear>2024</inceptionYear>
     <version>${revision}</version>
 
-    <name>${project.artifactId}</name>
-    <description>该组件通过注解和Redis分布式锁防止重复提交，确保请求频率控制，提升系统稳定性。</description>
-    <inceptionYear>2024</inceptionYear>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <description>自定义限流组件通过控制请求频率或数量，防止系统过载，确保服务的稳定性和可用性。</description>
     <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
 
     <!--  GitHub issues -->
@@ -26,24 +30,20 @@
     </issueManagement>
 
     <scm>
-        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/idempotent-spring-boot-starter</url>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/ratelimiter-spring-boot-starter</url>
         <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
         <developerConnection>https://github.com/mobaijun</developerConnection>
     </scm>
 
     <dependencies>
         <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.mobaijun</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -51,12 +51,13 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.mobaijun</groupId>
-            <artifactId>kjs-common</artifactId>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.mobaijun</groupId>
-            <artifactId>core-spring-boot-starter</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
     </dependencies>
 </project>

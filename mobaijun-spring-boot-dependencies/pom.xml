@@ -61,6 +61,7 @@
         <module>../translation-spring-boot-starter</module>
         <module>../sse-spring-boot-starter</module>
         <module>../idempotent-spring-boot-starter</module>
+        <module>../ratelimiter-spring-boot-starter</module>
     </modules>
 
     <properties>
@@ -74,8 +75,8 @@
         <spring-boot.version>3.3.5</spring-boot.version>
         <spring-cloud.version>2023.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
-        <software.amazon.awssdk.version>2.29.1</software.amazon.awssdk.version>
-        <hutool-bom.version>5.8.32</hutool-bom.version>
+        <software.amazon.awssdk.version>2.29.12</software.amazon.awssdk.version>
+        <hutool-bom.version>5.8.33</hutool-bom.version>
         <dubbo-bom.version>3.3.1</dubbo-bom.version>
         <dynamic.version>4.3.1</dynamic.version>
         <mybatis-plus.version>3.5.8</mybatis-plus.version>
@@ -110,7 +111,7 @@
         <tencentcloud-sdk-java.version>3.1.1140</tencentcloud-sdk-java.version>
         <lock4j.version>2.2.7</lock4j.version>
         <ip2region.version>2.7.0</ip2region.version>
-        <mapstruct-plus.version>[1.+,)</mapstruct-plus.version>
+        <mapstruct-plus.version>1.4.5</mapstruct-plus.version>
         <xxl-job.version>2.4.1</xxl-job.version>
         <rocketmq.version>2.3.1</rocketmq.version>
         <zxing.core.version>3.5.3</zxing.core.version>
@@ -457,6 +458,13 @@
                 <groupId>com.mobaijun</groupId>
                 <artifactId>redis-spring-boot-starter</artifactId>
                 <version>${final-release.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/ratelimiter-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>ratelimiter-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
