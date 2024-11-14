@@ -19,21 +19,18 @@ import com.mobaijun.ratelimiter.annotanion.RateLimiter;
 import com.mobaijun.ratelimiter.enums.LimiterMode;
 import com.mobaijun.ratelimiter.exception.RateLimiterException;
 import com.mobaijun.ratelimiter.util.SpelParser;
+import com.mobaijun.redisson.util.RedisUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Duration;
 import java.util.Objects;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.redisson.api.RateType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -57,17 +54,11 @@ public class RateLimiterAspect {
     private static final String UNKNOWN = "unknown";
 
     /**
-     * RedisTemplate，执行 Redis 脚本
-     */
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
-
-    /**
      * 限流切面方法，在带有@RateLimiter注解的方法执行前进行拦截
      *
      * @param joinPoint   连接点，包含目标方法的相关信息
      * @param rateLimiter 限流注解，包含限流配置
-     * @throws RateLimiterException 当达到限流条件时抛出此异常
+     * @throws com.mobaijun.ratelimiter.exception.RateLimiterException 当达到限流条件时抛出此异常
      */
     @Before("@annotation(rateLimiter)")
     public void interceptor(JoinPoint joinPoint, RateLimiter rateLimiter) throws RateLimiterException {
@@ -94,28 +85,14 @@ public class RateLimiterAspect {
      */
     private boolean processRateLimit(RateLimiter limitAnnotation, Method method, Object[] args) {
         String project = limitAnnotation.project();
-        String limitKeySpel = limitAnnotation.key();
-        String limitKey = SpelParser.parse(limitKeySpel, method, args);
+        String resolveLimitKey = SpelParser.resolveLimitKey(limitAnnotation.key(), method, args);
 
         // 获取客户端IP地址
         String ip = getClientIp(limitAnnotation);
-
-        // 限流周期
-        int limitPeriod = limitAnnotation.period();
-        // 单个key的限流次数
-        int keyLimitCount = limitAnnotation.keyLimitCount();
-        // 单个IP的限流次数
-        int ipLimitCount = limitAnnotation.ipLimitCount();
-
-        // 生成Lua脚本
-        String luaScript = buildLuaScript();
-
         // 根据不同的限流模式进行处理
         return switch (limitAnnotation.limitMode()) {
-            case KEY -> checkRateLimit(luaScript, limitAnnotation, project, limitKey, keyLimitCount, limitPeriod, null);
-            case COMBINATION ->
-                    checkRateLimit(luaScript, limitAnnotation, project, limitKey, keyLimitCount, limitPeriod, ip);
-            case IP -> checkRateLimit(luaScript, limitAnnotation, project, limitKey, ipLimitCount, limitPeriod, ip);
+            case KEY -> checkRateLimit(limitAnnotation, project, resolveLimitKey, null);
+            case COMBINATION, IP -> checkRateLimit(limitAnnotation, project, resolveLimitKey, ip);
         };
     }
 
@@ -133,53 +110,40 @@ public class RateLimiterAspect {
     }
 
     /**
-     * 检查当前限流条件是否被触发
+     * 检查是否超出限流次数，使用 Redisson 提供的 rateLimiter 方法进行限流
      *
-     * @param luaScript       生成的Lua脚本
-     * @param limitAnnotation 当前的限流注解
+     * @param limitAnnotation 限流注解
      * @param project         项目名称
-     * @param limitKey        限流Key
-     * @param limitCount      限流阈值
-     * @param limitPeriod     限流周期
-     * @param ip              客户端IP地址（可为null）
-     * @return 是否触发限流条件
+     * @param limitKey        限流资源的 key
+     * @param ip              客户端 IP
+     * @return true 如果超出限流次数，否则 false
      */
-    private boolean checkRateLimit(String luaScript, RateLimiter limitAnnotation, String project, String limitKey,
-                                   int limitCount, int limitPeriod, String ip) {
-        // 构造Redis键集合
-        List<String> keys = new ArrayList<>();
-        if (limitAnnotation.limitMode().equals(LimiterMode.COMBINATION) || limitAnnotation.limitMode().equals(LimiterMode.IP)) {
-            keys.add(limitAnnotation.prefix() + project + limitKey + ip);
-        } else {
-            keys.add(limitAnnotation.prefix() + project + limitKey);
+    private boolean checkRateLimit(RateLimiter limitAnnotation, String project, String limitKey, String ip) {
+
+        // 构造 Redis 键（根据限流模式决定是否使用 IP）
+        String key = limitAnnotation.prefix() + project + limitKey;
+
+        if (limitAnnotation.limitMode() == LimiterMode.COMBINATION || limitAnnotation.limitMode() == LimiterMode.IP) {
+            // 如果是组合模式或按IP限流，则加入IP作为key的一部分
+            key += ip;
         }
 
-        // 执行Redis限流脚本
-        RedisScript<Number> redisScript = new DefaultRedisScript<>(luaScript, Number.class);
-        Number count = redisTemplate.execute(redisScript, keys, limitPeriod);
+        // 调用封装好的 rateLimiter 方法执行限流操作
+        long availablePermits = RedisUtil.rateLimiter(
+                key,
+                limitAnnotation.limitMode() == LimiterMode.IP ? RateType.PER_CLIENT : RateType.OVERALL,
+                limitAnnotation.keyLimitCount(),
+                // 使用 period 作为限流周期，单位秒
+                Duration.ofSeconds(limitAnnotation.period()),
+                // 设置过期时间
+                Duration.ofMinutes(limitAnnotation.expireTime())
+        );
 
         // 记录日志
-        log.debug("尝试访问: project={}, key={}, ip={}, 当前访问次数={}", project, limitKey, ip, count);
+        log.info("尝试访问: project={}, key={}, ip={}, 当前可用令牌数={}", project, limitKey, ip, availablePermits);
 
-        // 判断是否超过限流次数
-        return count != null && count.intValue() > limitCount;
-    }
-
-    /**
-     * 生成Lua脚本，用于Redis限流操作
-     * Lua脚本通过Redis的`incr`命令进行访问次数的统计，并设置过期时间
-     *
-     * @return 返回Lua脚本字符串
-     */
-    private String buildLuaScript() {
-        return """
-                local c
-                c = redis.call('get', KEYS[1])
-                c = redis.call('incr', KEYS[1])
-                if tonumber(c) == 1 then
-                redis.call('expire', KEYS[1], ARGV[1])
-                end
-                return c;""";
+        // 判断是否超出限流次数：如果返回 -1，表示限流失败；否则检查可用令牌数
+        return availablePermits == -1L || availablePermits == 0;
     }
 
     /**

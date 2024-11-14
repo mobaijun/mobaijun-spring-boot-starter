@@ -37,12 +37,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.lettuce</groupId>
-            <artifactId>lettuce-core</artifactId>
+            <groupId>com.mobaijun</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -58,6 +54,7 @@
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>

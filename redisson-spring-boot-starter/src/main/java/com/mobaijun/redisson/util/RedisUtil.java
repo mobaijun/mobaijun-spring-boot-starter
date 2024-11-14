@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import org.redisson.api.ObjectListener;
 import org.redisson.api.RAtomicLong;
 import org.redisson.api.RBatch;
@@ -36,9 +36,9 @@ import org.redisson.api.RMapAsync;
 import org.redisson.api.RRateLimiter;
 import org.redisson.api.RSet;
 import org.redisson.api.RTopic;
-import org.redisson.api.RateIntervalUnit;
 import org.redisson.api.RateType;
 import org.redisson.api.RedissonClient;
+import org.redisson.api.options.KeysScanParams;
 import org.redisson.client.codec.StringCodec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,22 +62,38 @@ public class RedisUtil {
     private static final RedissonClient CLIENT = SpringUtil.getBean(RedissonClient.class);
 
     /**
-     * 限流
+     * 执行限流操作，利用 Redis 的 RateLimiter 来限制请求的速率。
      *
-     * @param key          限流key
-     * @param rateType     限流类型
-     * @param rate         速率
-     * @param rateInterval 速率间隔
-     * @return -1 表示失败
+     * @param key         限流的 Redis 键。通常是基于业务场景生成的唯一标识符。
+     *                    例如，可以使用用户 ID、API 路径等作为 key 来标识不同的限流策略。
+     * @param rateType    限流类型，决定了限流的策略。可以是全局限流（`RateType.OVERALL`），
+     *                    或者按客户端（如按 IP）限流（`RateType.PER_CLIENT`）。
+     * @param rate        每个时间间隔内允许的请求次数。例如，`rate = 10` 表示每个时间窗口最多允许 10 次请求。
+     * @param limitPeriod 限流周期，单位为秒，表示每个时间窗口的时间长度。
+     *                    例如，`limitPeriod = Duration.ofMinutes(1)` 表示每分钟最多允许 `rate` 次请求。
+     * @param timeToLive  限流规则的有效期，单位为秒，表示 Redis 中存储限流的键值对的过期时间。
+     *                    过期后，限流规则将会自动失效，Redis 会自动清理与之相关的限流键。
+     *                    例如，`timeToLive = Duration.ofMinutes(5)` 表示该限流规则在 5 分钟后自动失效。
+     * @return 如果成功获取令牌，返回当前可用的令牌数；如果限流失败，返回 -1。
+     * 例如，如果当前时间窗口内的请求次数已经超过限流次数，返回 -1 表示请求被限流。
+     * 如果获取令牌成功，则返回当前剩余的可用令牌数，表示可以继续进行请求。
      */
-    public static long rateLimiter(String key, RateType rateType, int rate, int rateInterval) {
+    public static long rateLimiter(String key, RateType rateType, int rate, Duration limitPeriod, Duration timeToLive) {
+        // 获取 Redis 的限流器对象
         RRateLimiter rateLimiter = CLIENT.getRateLimiter(key);
-        rateLimiter.trySetRate(rateType, rate, rateInterval, RateIntervalUnit.SECONDS);
+
+        // 设置限流规则：指定限流类型、速率、时间间隔和过期时间
+        rateLimiter.trySetRate(rateType, rate, limitPeriod, timeToLive);
+
+        // 尝试获取令牌，获取成功返回当前可用令牌数，获取失败返回 -1
         if (rateLimiter.tryAcquire()) {
+            // 获取成功，返回当前可用的令牌数
             return rateLimiter.availablePermits();
-        } else {
-            return -1L;
         }
+
+        // 获取失败，表示限流，返回 -1
+        log.warn("请求被限流，key={}，rateType={}，rate={}，limitPeriod={}", key, rateType, rate, limitPeriod);
+        return -1L;
     }
 
     /**
@@ -261,8 +277,8 @@ public class RedisUtil {
      *
      * @param key 缓存的键值
      */
-    public static boolean deleteObj(final String key) {
-        return CLIENT.getBucket(key).delete();
+    public static void deleteObj(final String key) {
+        CLIENT.getBucket(key).delete();
     }
 
     /**
@@ -552,14 +568,19 @@ public class RedisUtil {
     }
 
     /**
-     * 获得缓存的基本对象列表
+     * 获取匹配指定模式的所有 Redis 键。
      *
-     * @param pattern 字符串前缀
-     * @return 对象列表
+     * @param pattern 匹配的模式（例如 "prefix*"）
+     * @return 匹配的键集合
      */
     public static Collection<String> keys(final String pattern) {
-        Stream<String> stream = CLIENT.getKeys().getKeysStreamByPattern(pattern);
-        return stream.collect(Collectors.toList());
+        KeysScanParams params = new KeysScanParams();
+        // 获取 Redis 键集合，支持模式匹配
+        Iterable<String> keysIterable = CLIENT.getKeys().getKeys(params.pattern(pattern));
+
+        // 转换 Iterable 到 List 或 Set
+        return StreamSupport.stream(keysIterable.spliterator(), false)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -590,7 +611,9 @@ public class RedisUtil {
     public static void clear(final String pattern) {
         RedissonClient client = getClient();
         try {
-            Iterable<String> keysByPattern = client.getKeys().getKeysByPattern(pattern);
+            KeysScanParams params = new KeysScanParams();
+            // 获取 Redis 键集合，支持模式匹配
+            Iterable<String> keysByPattern = client.getKeys().getKeys(params.pattern(pattern));
             // 异步删除匹配的缓存键
             for (String key : keysByPattern) {
                 RBucket<String> bucket = client.getBucket(key, StringCodec.INSTANCE);

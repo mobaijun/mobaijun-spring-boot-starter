@@ -36,5 +36,5 @@ public enum LimiterMode {
     /**
      * 二者结合的方式限流
      */
-    COMBINATION
+    COMBINATION,
 }

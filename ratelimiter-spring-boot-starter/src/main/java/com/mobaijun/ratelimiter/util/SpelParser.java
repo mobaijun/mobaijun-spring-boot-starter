@@ -98,4 +98,22 @@ public class SpelParser {
     public static String parse(Object rootObject, String spel, Method method, Object[] args) {
         return parseSpel(spel, method, args, rootObject);
     }
+
+    /**
+     * 解析限流key，判断是否为SpEL表达式。如果是SpEL表达式，则解析后返回结果；否则直接返回原始字符串。
+     *
+     * @param limitKeySpel 限流key，可能为SpEL表达式
+     * @param method       当前调用的方法
+     * @param args         方法参数
+     * @return 解析后的限流key
+     */
+    public static String resolveLimitKey(String limitKeySpel, Method method, Object[] args) {
+        // 判断limitKeySpel是否是SpEL表达式
+        if (limitKeySpel.startsWith("#{") && limitKeySpel.endsWith("}")) {
+            // 解析SpEL表达式
+            return SpelParser.parse(limitKeySpel, method, args);
+        }
+        // 不是SpEL表达式，直接返回原始的limitKey
+        return limitKeySpel;
+    }
 }
