@@ -17,7 +17,6 @@ package com.mobaijun.easyexcel.convert;
 
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.convert.Convert;
-import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.excel.converters.Converter;
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.metadata.GlobalConfiguration;
@@ -30,6 +29,7 @@ import com.mobaijun.easyexcel.annotation.ExcelDictFormat;
 import com.mobaijun.easyexcel.util.ExcelUtil;
 import io.micrometer.common.util.StringUtils;
 import java.lang.reflect.Field;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -67,7 +67,7 @@ public class ExcelDictConvert implements Converter<Object> {
 
     @Override
     public WriteCellData<String> convertToExcelData(Object object, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
-        if (ObjectUtil.isNull(object)) {
+        if (Objects.isNull(object)) {
             return new WriteCellData<>("");
         }
         ExcelDictFormat anno = getAnnotation(contentProperty.getField());

@@ -18,7 +18,6 @@ package com.mobaijun.easyexcel.handler;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.EnumUtil;
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.metadata.FieldCache;
 import com.alibaba.excel.metadata.FieldWrapper;
@@ -40,6 +39,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
@@ -152,7 +152,7 @@ public class ExcelDownHandler implements SheetWriteHandler {
                 List<Object> values = EnumUtil.getFieldValues(format.enumClass(), format.textField());
                 options = StreamUtil.toList(values, String::valueOf);
             }
-            if (ObjectUtil.isNotEmpty(options)) {
+            if (Objects.nonNull(options)) {
                 // 仅当下拉可选项不为空时执行
                 if (options.size() > 20) {
                     // 这里限制如果可选项大于20，则使用额外表形式
@@ -189,7 +189,7 @@ public class ExcelDownHandler implements SheetWriteHandler {
      * @param value    下拉选可选值
      */
     private void dropDownWithSimple(DataValidationHelper helper, Sheet sheet, Integer celIndex, List<String> value) {
-        if (ObjectUtil.isEmpty(value)) {
+        if (value.isEmpty()) {
             return;
         }
         this.markOptionsToSheet(helper, sheet, celIndex, helper.createExplicitListConstraint(ArrayUtil.toArray(value, String.class)));

@@ -25,7 +25,7 @@ import java.util.Set;
  * Date: [2024/7/17 15:17]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-public class PageableConstants {
+public final class PageableConstants {
 
     /**
      * 排序的 Field 部分的正则

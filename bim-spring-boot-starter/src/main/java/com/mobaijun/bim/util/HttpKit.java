@@ -15,6 +15,11 @@
  */
 package com.mobaijun.bim.util;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -26,12 +31,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * HTTP请求
@@ -86,9 +85,7 @@ public class HttpKit {
             httpPost.setConfig(requestConfig);
 
             // 执行提交
-            CloseableHttpResponse response = httpClient.execute(httpPost);
-
-            try {
+            try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
                 HttpEntity responseEntity = response.getEntity();
                 resultMap.put("scode", String.valueOf(response.getStatusLine().getStatusCode()));
                 resultMap.put("data", "");
@@ -98,8 +95,6 @@ public class HttpKit {
                     result = EntityUtils.toString(responseEntity, StandardCharsets.UTF_8);
                     resultMap.put("data", result);
                 }
-            } finally {
-                response.close();
             }
         } catch (IOException e) {
             resultMap.put("scode", "error");
@@ -111,7 +106,6 @@ public class HttpKit {
                 e.printStackTrace();
             }
         }
-
         return resultMap;
     }
 }
