@@ -44,6 +44,7 @@ public class SpringExpressionUtil {
      * Spring EL 表达式解析器
      */
     private static final ExpressionParser EXPRESSION_PARSER = new SpelExpressionParser();
+
     /**
      * 参数名发现器
      */
