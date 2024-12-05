@@ -15,6 +15,7 @@
  */
 package com.mobaijun.base.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -88,5 +89,103 @@ public class PageParam implements Serializable {
          */
         @Schema(title = "是否正序排序", example = "false")
         private boolean asc;
+    }
+
+    @JsonIgnore
+    public long getStartRow() {
+        // 起始行 = (当前页码 - 1) * 每页显示条数
+        return (current - 1) * size;
+    }
+
+    /**
+     * 获取结束行（适合仅内存分页使用）
+     * 注意：此方法不适合数据库分页，因为数据库通常只需要起始行和每页大小。
+     */
+    @JsonIgnore
+    public long getEndRow() {
+        return current * size;
+    }
+
+    /**
+     * 获取总页数
+     *
+     * @param total 总记录数
+     * @return 总页数
+     */
+    @JsonIgnore
+    public long getTotalPages(long total) {
+        return (total + size - 1) / size;
+    }
+
+    /**
+     * 判断是否为第一页
+     *
+     * @return 如果当前页是第一页返回 true，否则返回 false
+     */
+    @JsonIgnore
+    public boolean isFirstPage() {
+        return current == 1;
+    }
+
+    /**
+     * 判断是否有下一页
+     *
+     * @param total 总记录数
+     * @return 如果有下一页返回 true，否则返回 false
+     */
+    @JsonIgnore
+    public boolean hasNextPage(long total) {
+        return current * size < total;
+    }
+
+    /**
+     * 判断是否有上一页
+     *
+     * @return 如果有上一页返回 true，否则返回 false
+     */
+    @JsonIgnore
+    public boolean hasPreviousPage() {
+        return current > 1;
+    }
+
+    /**
+     * 设置默认排序规则
+     *
+     * @param field 排序字段
+     * @param asc   是否正序
+     */
+    @JsonIgnore
+    public void setDefaultSort(String field, boolean asc) {
+        if (sorts.isEmpty()) {
+            sorts.add(new Sort(field, asc));
+        }
+    }
+
+    /**
+     * 清除所有排序规则
+     */
+    @JsonIgnore
+    public void clearSorts() {
+        sorts.clear();
+    }
+
+    /**
+     * 获取排序规则字符串
+     *
+     * @return 拼接后的排序字段字符串
+     */
+    @JsonIgnore
+    public String getSortSql() {
+        if (sorts.isEmpty()) {
+            return "";
+        }
+        StringBuilder sortSql = new StringBuilder();
+        for (Sort sort : sorts) {
+            sortSql.append(sort.getField())
+                    .append(sort.isAsc() ? " ASC" : " DESC")
+                    .append(", ");
+        }
+        // 去掉最后多余的逗号和空格
+        return sortSql.substring(0, sortSql.length() - 2);
     }
 }
