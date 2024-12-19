@@ -15,7 +15,6 @@
  */
 package com.mobaijun.base.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -91,7 +90,11 @@ public class PageParam implements Serializable {
         private boolean asc;
     }
 
-    @JsonIgnore
+    /**
+     * 获取起始行（适合仅内存分页使用）
+     *
+     * @return 起始行
+     */
     public long getStartRow() {
         // 起始行 = (当前页码 - 1) * 每页显示条数
         return (current - 1) * size;
@@ -101,7 +104,6 @@ public class PageParam implements Serializable {
      * 获取结束行（适合仅内存分页使用）
      * 注意：此方法不适合数据库分页，因为数据库通常只需要起始行和每页大小。
      */
-    @JsonIgnore
     public long getEndRow() {
         return current * size;
     }
@@ -112,7 +114,6 @@ public class PageParam implements Serializable {
      * @param total 总记录数
      * @return 总页数
      */
-    @JsonIgnore
     public long getTotalPages(long total) {
         return (total + size - 1) / size;
     }
@@ -122,7 +123,6 @@ public class PageParam implements Serializable {
      *
      * @return 如果当前页是第一页返回 true，否则返回 false
      */
-    @JsonIgnore
     public boolean isFirstPage() {
         return current == 1;
     }
@@ -133,7 +133,6 @@ public class PageParam implements Serializable {
      * @param total 总记录数
      * @return 如果有下一页返回 true，否则返回 false
      */
-    @JsonIgnore
     public boolean hasNextPage(long total) {
         return current * size < total;
     }
@@ -143,7 +142,6 @@ public class PageParam implements Serializable {
      *
      * @return 如果有上一页返回 true，否则返回 false
      */
-    @JsonIgnore
     public boolean hasPreviousPage() {
         return current > 1;
     }
@@ -154,7 +152,6 @@ public class PageParam implements Serializable {
      * @param field 排序字段
      * @param asc   是否正序
      */
-    @JsonIgnore
     public void setDefaultSort(String field, boolean asc) {
         if (sorts.isEmpty()) {
             sorts.add(new Sort(field, asc));
@@ -164,7 +161,6 @@ public class PageParam implements Serializable {
     /**
      * 清除所有排序规则
      */
-    @JsonIgnore
     public void clearSorts() {
         sorts.clear();
     }
@@ -174,7 +170,6 @@ public class PageParam implements Serializable {
      *
      * @return 拼接后的排序字段字符串
      */
-    @JsonIgnore
     public String getSortSql() {
         if (sorts.isEmpty()) {
             return "";

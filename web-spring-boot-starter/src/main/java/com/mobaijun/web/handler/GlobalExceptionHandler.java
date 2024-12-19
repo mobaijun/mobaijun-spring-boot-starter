@@ -95,6 +95,8 @@ public class GlobalExceptionHandler {
         String[] supportedMethods = e.getSupportedMethods();
         String supportedMethodsInfo = (supportedMethods != null && supportedMethods.length > 0) ? String.join(", ", supportedMethods) : "无可用方法";
 
+        log.error("请求方法 '{}' 不被支持，支持的方法：{}", unsupportedMethod, supportedMethodsInfo);
+
         // 错误信息
         String errorMessage = String.format("请求方法 '%s' 不被支持。请使用以下方法：[%s]", unsupportedMethod, supportedMethodsInfo);
 
@@ -118,6 +120,7 @@ public class GlobalExceptionHandler {
         // 获取路径和缺少的变量名
         String missingVariable = e.getVariableName();
 
+        log.error("请求路径中缺少必需的路径变量：{}", missingVariable);
         // 构造错误信息
         String errorMessage = String.format("请求路径中缺少必需的路径变量：[%s]", missingVariable);
 
@@ -168,7 +171,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(org.springframework.http.HttpStatus.NOT_FOUND)
     public R<ErrorDataInfo> handleNoHandlerFoundException(NoHandlerFoundException e, HttpServletRequest request) {
         log.error("请求地址 '{}' 不存在", request.getRequestURI(), e);
-        return handleException(e, request, HttpStatus.NOT_FOUND, "请求的资源不存在，请检查请求路径,异常详情：{%s}".formatted(e.getMessage()), "");
+        return handleException(e, request, HttpStatus.NOT_FOUND, "请求的资源不存在，请检查请求路径!", "");
     }
 
     /**
@@ -186,7 +189,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(org.springframework.http.HttpStatus.FORBIDDEN)
     public R<ErrorDataInfo> handleAccessDeniedException(AccessDeniedException e, HttpServletRequest request) {
         log.error("请求地址 '{}' 无权限访问", request.getRequestURI(), e);
-        return handleException(e, request, HttpStatus.FORBIDDEN, "无权限访问该资源", "");
+        return handleException(e, request, HttpStatus.FORBIDDEN, "无权限访问该资源！", "");
     }
 
     /**
@@ -203,7 +206,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(org.springframework.http.HttpStatus.PAYLOAD_TOO_LARGE)
     public R<ErrorDataInfo> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e, HttpServletRequest request) {
         log.error("文件上传大小超限，最大允许上传大小为：{} 字节，错误信息：{}", e.getMaxUploadSize(), e.getMessage(), e);
-        return handleException(e, request, HttpStatus.PAYLOAD_TOO_LARGE, String.format("文件上传大小超限，最大允许上传大小为：{%s} 字节，错误信息：{%s}", e.getMaxUploadSize(), e.getMessage()), "");
+        return handleException(e, request, HttpStatus.PAYLOAD_TOO_LARGE, String.format("文件上传大小超限，最大允许上传大小为：%d 字节!", e.getMaxUploadSize()), "");
     }
 
     /**
@@ -219,7 +222,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IOException.class)
     public R<ErrorDataInfo> handleIOException(IOException e, HttpServletRequest request) {
         log.error("文件操作失败，错误信息：{}", e.getMessage(), e);
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, String.format("文件操作失败，错误信息：{%s}", e.getMessage()), "");
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "文件操作失败，请稍后重试！", "");
     }
 
     /**
@@ -235,8 +238,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(RuntimeException.class)
     public R<ErrorDataInfo> handleRuntimeException(RuntimeException e, HttpServletRequest request) {
-        log.error("请求地址 '{}' 发生未知运行时异常，异常信息：{}", request.getRequestURI(), e.getMessage(), e);
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, String.format("系统运行时出现错误，请稍后再试,错误信息:{%s}", e.getMessage()), "");
+        log.error("请求地址 '{}' 发生未知运行时异常", request.getRequestURI(), e);
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "系统运行时出现错误，请稍后再试！", "");
     }
 
     /**
@@ -253,8 +256,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public R<ErrorDataInfo> handleException(Exception e, HttpServletRequest request) {
         log.error("请求地址 '{}' 发生系统异常，异常信息：{}", request.getRequestURI(), e.getMessage(), e);
-        String errorMessage = String.format("系统内部错误，请稍后再试。异常信息：'%s'", e.getMessage());
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, "");
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "系统内部错误，请稍后再试!", "");
     }
 
     /**
@@ -269,9 +271,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     public R<ErrorDataInfo> handleBindException(BindException e, HttpServletRequest request) {
-        log.error("参数绑定异常", e);
         String message = e.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(", "));
-        String errorMessage = String.format("请求参数绑定异常，验证错误信息：'%s'，详细错误信息：'%s'", message, e.getMessage());
+        log.error("请求参数绑定异常，验证错误信息：{}", message);
+        String errorMessage = String.format("请求参数无效，验证错误信息：'%s'", message);
         return handleException(e, request, HttpStatus.BAD_REQUEST, errorMessage, "");
     }
 
@@ -287,9 +289,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public R<ErrorDataInfo> handleConstraintViolationException(ConstraintViolationException e, HttpServletRequest request) {
-        log.error("约束违规异常", e);
         String message = e.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(", "));
-        String errorMessage = String.format("请求参数违反约束条件，约束错误信息：'%s'，详细错误信息：'%s'", message, e.getMessage());
+        log.error("请求参数违反约束条件，约束错误信息：{}", message);
+        String errorMessage = String.format("请求参数违反约束条件，约束错误信息：'%s'", message);
         return handleException(e, request, HttpStatus.BAD_REQUEST, errorMessage, "");
     }
 
@@ -305,9 +307,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public R<ErrorDataInfo> handleMethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
-        log.error("方法参数无效异常", e);
         String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
-        String errorMessage = String.format("方法参数无效，验证失败，字段错误信息：'%s'，详细错误信息：'%s'", message, e.getMessage());
+        log.error("方法参数无效，验证失败，字段错误信息：{}", message);
+        String errorMessage = String.format("方法参数无效，验证失败，字段错误信息：'%s'", message);
         return handleException(e, request, HttpStatus.BAD_REQUEST, errorMessage, "");
     }
 
@@ -326,8 +328,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR)
     public R<ErrorDataInfo> handleNullPointerException(NullPointerException e, HttpServletRequest request) {
         log.error("请求地址 '{}' 发生空指针异常", request.getRequestURI(), e);
-        String errorMessage = String.format("系统发生空指针异常，请检查参数后重新尝试! 异常信息：'%s'", e.getMessage());
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, "");
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "系统发生错误，请稍后重试，或联系管理员！", "");
     }
 
     /**
@@ -346,7 +347,7 @@ public class GlobalExceptionHandler {
         log.error("业务异常发生，异常信息: {}, 请求路径: {}", e.getMessage(), request.getRequestURI());
 
         // 构建详细的错误信息，包含异常信息、请求路径、请求方法
-        String errorMessage = String.format("业务异常发生，异常信息: {%s}", e.getMessage());
+        String errorMessage = String.format("系统发生异常，异常信息: {%s}", e.getMessage());
 
         // 调用通用异常处理方法
         return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, null);
@@ -367,11 +368,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("基础异常发生，异常信息: {}, 请求路径: {}", e.getMessage(), request.getRequestURI(), e);
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("基础异常发生，异常信息: {%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, null);
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "系统基础异常发生！", null);
     }
 
     /**
@@ -385,11 +383,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含缺失的请求参数信息
         log.error("请求缺少必需的请求参数 '{}', 请求路径: {}", e.getParameterName(), request.getRequestURI());
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("缺失请求参数: [%s], 错误详情: {%s}", e.getParameterName(), e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.BAD_REQUEST, errorMessage, null);
+        return handleException(e, request, HttpStatus.BAD_REQUEST, String.format("缺失请求参数: [%s]", e.getParameterName()), null);
     }
 
     /**
@@ -404,7 +399,7 @@ public class GlobalExceptionHandler {
         log.error("不支持的媒体类型: {}, 请求路径: {}", e.getContentType(), request.getRequestURI());
 
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.UNSUPPORTED_MEDIA_TYPE, String.format("不支持的媒体类型: [%s]", e.getContentType()), null);
+        return handleException(e, request, HttpStatus.UNSUPPORTED_MEDIA_TYPE, String.format("不支持的媒体类型: %s", e.getContentType()), null);
     }
 
     /**
@@ -418,11 +413,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("请求的资源在数据库中不存在: {}, 请求路径: {}", e.getMessage(), request.getRequestURI());
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("请求的资源不存在，异常信息: {%s},", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.NOT_FOUND, errorMessage, null);
+        return handleException(e, request, HttpStatus.NOT_FOUND, "请求的资源不存在！", null);
     }
 
     /**
@@ -441,11 +433,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("SQL 执行异常: {}, 请求路径: {}, 请求方法: {}", e.getMessage(), request.getRequestURI(), request.getMethod(), e);
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("SQL 执行异常: {%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, null);
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "SQL 执行异常！", null);
     }
 
     /**
@@ -464,11 +453,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("数据完整性违规: {}, 请求路径: {}, 请求方法: {}", e.getMessage(), request.getRequestURI(), request.getMethod(), e);
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("数据完整性违规: {%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.PERMANENT_REDIRECT, errorMessage, null);
+        return handleException(e, request, HttpStatus.PERMANENT_REDIRECT, "数据完整性违规！", null);
     }
 
     /**
@@ -487,11 +473,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("查询的资源不存在: {}, 请求路径: {}, 请求方法: {}", e.getMessage(), request.getRequestURI(), request.getMethod(), e);
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("查询的资源不存在: {%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.NOT_FOUND, errorMessage, null);
+        return handleException(e, request, HttpStatus.NOT_FOUND, "查询的资源不存在！", null);
     }
 
     /**
@@ -510,11 +493,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("数据库访问资源失败: {}, 请求路径: {}, 请求方法: {}", e.getMessage(), request.getRequestURI(), request.getMethod(), e);
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("数据库访问资源失败: {%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.SERVICE_UNAVAILABLE, errorMessage, null);
+        return handleException(e, request, HttpStatus.SERVICE_UNAVAILABLE, "数据库访问资源失败！", null);
     }
 
     /**
@@ -533,11 +513,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("乐观锁失败: {}, 请求路径: {}, 请求方法: {}", e.getMessage(), request.getRequestURI(), request.getMethod(), e);
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("乐观锁失败: {%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, null);
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "乐观锁失败！", null);
     }
 
     /**
@@ -555,11 +532,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("查询结果数量异常: {}, 请求路径: {}, 请求方法: {}", e.getMessage(), request.getRequestURI(), request.getMethod(), e);
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("查询结果数量异常: {%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, null);
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "查询结果数量异常！", null);
     }
 
     /**
@@ -577,11 +551,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("网络请求超时: {}, 请求路径: {}, 请求方法: {}", e.getMessage(), request.getRequestURI(), request.getMethod(), e);
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("网络请求超时: {%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.GATEWAY_TIMEOUT, errorMessage, null);
+        return handleException(e, request, HttpStatus.GATEWAY_TIMEOUT, "网络请求超时！", null);
     }
 
     /**
@@ -599,11 +570,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("网络连接失败: {}, 请求路径: {}, 请求方法: {}", e.getMessage(), request.getRequestURI(), request.getMethod(), e);
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("网络连接失败: {%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.SERVICE_UNAVAILABLE, errorMessage, null);
+        return handleException(e, request, HttpStatus.SERVICE_UNAVAILABLE, "网络连接失败！", null);
     }
 
     /**
@@ -621,11 +589,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("未知主机: {}, 请求路径: {}, 请求方法: {}", e.getMessage(), request.getRequestURI(), request.getMethod(), e);
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("未知主机: {%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.SERVICE_UNAVAILABLE, errorMessage, null);
+        return handleException(e, request, HttpStatus.SERVICE_UNAVAILABLE, "未知主机错误！", null);
     }
 
     /**
@@ -688,11 +653,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("远程服务调用失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("远程服务调用失败，请稍后再试, 错误详情：{%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.SERVICE_UNAVAILABLE, errorMessage, null);
+        return handleException(e, request, HttpStatus.SERVICE_UNAVAILABLE, "远程服务调用失败，请稍后再试！", null);
     }
 
     /**
@@ -711,11 +673,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("非法数据输入, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("非法数据输入，请检查输入数据。错误详情：{%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.BAD_REQUEST, errorMessage, null);
+        return handleException(e, request, HttpStatus.BAD_REQUEST, "非法数据输入，请检查输入数据！", null);
     }
 
     /**
@@ -735,11 +694,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("数据库约束违反, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("操作违反数据库唯一约束，请确认数据是否重复。错误详情：{%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.CONFLICT, errorMessage, null);
+        return handleException(e, request, HttpStatus.CONFLICT, "操作违反数据库唯一约束，请确认数据是否重复！", null);
     }
 
     /**
@@ -760,7 +716,7 @@ public class GlobalExceptionHandler {
         log.error("数据库连接失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
 
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.SERVICE_UNAVAILABLE, "数据库连接失败，请稍后重试。错误详情：{%s}".formatted(e.getMessage()), null);
+        return handleException(e, request, HttpStatus.SERVICE_UNAVAILABLE, "数据库连接失败，请稍后重试！", null);
     }
 
     /**
@@ -780,11 +736,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("事务回滚, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage(), e);
 
-        // 构建详细的错误信息
-        String errorMessage = String.format("操作失败，事务已回滚，请重试。错误信息：{%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, null);
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "操作失败，事务已回滚，请重试！", null);
     }
 
     /**
@@ -804,11 +757,8 @@ public class GlobalExceptionHandler {
         // 打印详细日志，包括请求地址、错误信息、堆栈信息
         log.error("批量更新失败, 请求地址: {}, 错误信息: {} ", request.getRequestURI(), errorMessage);
 
-        // 构建详细错误信息
-        String errorDetail = String.format("批量更新操作失败，可能由于数据格式不符合要求或数据库连接问题。错误详情：%s", errorMessage);
-
         // 返回详细的错误响应
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorDetail, null);
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "批量更新操作失败，可能由于数据格式不符合要求或数据库连接问题！", null);
     }
 
     /**
@@ -828,11 +778,8 @@ public class GlobalExceptionHandler {
         // 打印详细日志，包括请求地址、错误信息、堆栈信息
         log.error("SQL 语法错误, 请求地址: {}, 错误信息: {}", request.getRequestURI(), errorMessage);
 
-        // 构建详细错误信息
-        String errorDetail = String.format("SQL 语法错误，可能由于 SQL 语句编写不规范，请检查输入的 SQL 语句。错误详情：%s", errorMessage);
-
         // 返回详细的错误响应
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorDetail, null);
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "SQL 语法错误，可能由于 SQL 语句编写不规范，请检查输入的 SQL 语句！", null);
     }
 
     /**
@@ -852,11 +799,8 @@ public class GlobalExceptionHandler {
         // 打印详细日志，包括请求地址、错误信息、堆栈信息
         log.error("数据库操作失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), errorMessage);
 
-        // 构建详细错误信息
-        String errorDetail = String.format("数据库操作失败，可能由于数据库连接问题或查询语句问题，请稍后重试。错误详情：%s", errorMessage);
-
         // 返回详细的错误响应
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorDetail, null);
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "数据库操作失败，可能由于数据库连接问题或查询语句问题，请稍后重试！", null);
     }
 
     /**
@@ -875,11 +819,8 @@ public class GlobalExceptionHandler {
         // 打印详细日志，包括请求地址、错误信息、堆栈信息
         log.error("请求参数不可用, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage());
 
-        // 构建详细错误信息
-        String errorDetail = String.format("请求参数不可用，可能由于请求体格式不正确或数据不完整，请检查输入。错误详情：%s", e.getMessage());
-
         // 返回详细的错误响应
-        return handleException(e, request, HttpStatus.BAD_REQUEST, errorDetail, null);
+        return handleException(e, request, HttpStatus.BAD_REQUEST, "请求参数不可用，可能由于请求体格式不正确或数据不完整，请检查输入！", null);
     }
 
     /**
@@ -898,11 +839,8 @@ public class GlobalExceptionHandler {
         // 打印详细日志
         log.error("批量执行失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), e.getMessage());
 
-        // 构建详细的错误信息
-        String errorDetail = String.format("批量操作执行失败，可能由于 SQL 语句错误或数据格式问题，请稍后重试。错误详情：%s", e.getMessage());
-
         // 返回详细错误信息
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorDetail, null);
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "批量操作执行失败，可能由于 SQL 语句错误或数据格式问题，请稍后重试！", null);
     }
 
     /**
@@ -922,11 +860,8 @@ public class GlobalExceptionHandler {
         // 打印详细日志
         log.error("持久化操作失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), errorMessage);
 
-        // 构建详细的错误信息
-        String errorDetail = String.format("持久化操作失败，可能由于数据库连接错误或数据问题，请稍后重试。错误详情：%s", errorMessage);
-
         // 返回详细错误信息
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorDetail, null);
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "持久化操作失败，可能由于数据库连接错误或数据问题，请稍后重试！", null);
     }
 
     /**
@@ -946,11 +881,8 @@ public class GlobalExceptionHandler {
         // 打印详细日志
         log.error("MyBatis 配置文件或映射文件构建失败, 请求地址: {}, 错误信息: {}", request.getRequestURI(), errorMessage);
 
-        // 构建详细的错误信息
-        String errorDetail = String.format("SQL 构建失败，可能由于配置文件错误或映射问题，请联系开发人员。错误详情：%s", errorMessage);
-
         // 返回详细错误信息
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorDetail, null);
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "SQL 构建失败，可能由于配置文件错误或映射问题，请联系开发人员！", null);
     }
 
     /**
@@ -970,13 +902,11 @@ public class GlobalExceptionHandler {
         // 认证失败日志
         if (errorMessage != null && errorMessage.contains("NotLoginException")) {
             log.error("请求地址'{}', 认证失败'{}', 无法访问系统资源", requestURI, errorMessage);
-            String errorDetail = String.format("认证失败，无法访问系统资源。错误详情：%s", errorMessage);
-            return handleException(e, request, HttpStatus.UNAUTHORIZED, errorDetail, null);
+            return handleException(e, request, HttpStatus.UNAUTHORIZED, "认证失败，无法访问系统资源！", null);
         } else {
             // 打印详细日志
             log.error("请求地址'{}', 发生未知异常: {}", requestURI, errorMessage, e);
-            String errorDetail = String.format("系统内部错误，请联系管理员。错误详情：%s", errorMessage);
-            return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorDetail, null);
+            return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, "系统内部错误，请联系管理员！", null);
         }
     }
 
