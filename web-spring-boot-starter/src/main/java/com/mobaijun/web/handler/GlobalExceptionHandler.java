@@ -45,7 +45,6 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -440,21 +439,21 @@ public class GlobalExceptionHandler {
     /**
      * 处理数据完整性异常，捕获违反数据库唯一约束或完整性约束的错误。
      * <p>
-     * 当操作违反数据库约束（如重复的唯一键）时，本方法捕获 {@link DuplicateKeyException} 异常，
-     * 记录错误信息、请求路径和请求方法，并返回相应的错误响应。常见情况如插入重复数据等。
+     * 当操作违反数据库约束（如插入重复数据）时，本方法捕获 {@link DataIntegrityViolationException} 异常，
+     * 记录错误信息、请求路径和请求方法，并返回相应的错误响应。常见的情况如插入重复数据或违反其他约束。
      * </p>
      *
-     * @param e       捕获到的 {@link DuplicateKeyException} 异常对象，包含违反数据完整性约束的具体信息
+     * @param e       捕获到的 {@link DataIntegrityViolationException} 异常对象，包含违反数据完整性约束的具体信息
      * @param request 当前的 HTTP 请求对象，用于记录请求路径和方法
      * @return 封装的 {@link R<ErrorDataInfo>} 响应结果，包含详细的错误信息
      */
     @ExceptionHandler(DataIntegrityViolationException.class)
     public R<ErrorDataInfo> handleDataIntegrityViolationException(DataIntegrityViolationException e, HttpServletRequest request) {
         // 记录日志，包含异常信息和请求路径
-        log.error("数据完整性违规: {}, 请求路径: {}, 请求方法: {}", e.getMessage(), request.getRequestURI(), request.getMethod(), e);
+        log.error("数据库操作失败，违反唯一性或完整性约束: {}, 请求路径: {}, 请求方法: {}", e.getMessage(), request.getRequestURI(), request.getMethod(), e);
 
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.PERMANENT_REDIRECT, "数据完整性违规！", null);
+        return handleException(e, request, HttpStatus.BAD_REQUEST, "操作失败，数据违反唯一性或完整性约束，例如重复数据或不符合其他约束！", null);
     }
 
     /**
