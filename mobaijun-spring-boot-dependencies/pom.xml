@@ -62,6 +62,7 @@
         <module>../sse-spring-boot-starter</module>
         <module>../idempotent-spring-boot-starter</module>
         <module>../ratelimiter-spring-boot-starter</module>
+        <module>../api-version-spring-boot-starter</module>
     </modules>
 
     <properties>
@@ -74,10 +75,10 @@
         <!-- 大版本依赖管理 -->
         <spring-boot.version>3.3.5</spring-boot.version>
         <spring-cloud.version>2023.0.3</spring-cloud.version>
-        <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
-        <software.amazon.awssdk.version>2.29.12</software.amazon.awssdk.version>
-        <hutool-bom.version>5.8.33</hutool-bom.version>
-        <dubbo-bom.version>3.3.1</dubbo-bom.version>
+        <spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
+        <software.amazon.awssdk.version>2.29.39</software.amazon.awssdk.version>
+        <hutool-bom.version>5.8.34</hutool-bom.version>
+        <dubbo-bom.version>3.3.2</dubbo-bom.version>
         <dynamic.version>4.3.1</dynamic.version>
         <mybatis-plus.version>3.5.8</mybatis-plus.version>
         <knife4j-swagger-ui.version>4.5.0</knife4j-swagger-ui.version>
@@ -271,6 +272,13 @@
             </dependency>
 
             <!-- own submodule -->
+            <dependency>
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/api-version-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>api-version-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/base-model-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>

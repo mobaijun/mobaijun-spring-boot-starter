@@ -453,7 +453,7 @@ public class GlobalExceptionHandler {
         log.error("数据库操作失败，违反唯一性或完整性约束: {}, 请求路径: {}, 请求方法: {}", e.getMessage(), request.getRequestURI(), request.getMethod(), e);
 
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.BAD_REQUEST, "操作失败，数据违反唯一性或完整性约束，例如重复数据或不符合其他约束！", null);
+        return handleException(e, request, HttpStatus.BAD_REQUEST, "操作失败，数据违反唯一性或完整性约束！", null);
     }
 
     /**

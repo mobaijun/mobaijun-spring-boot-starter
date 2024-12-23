@@ -1,0 +1,52 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.mobaijun</groupId>
+        <artifactId>mobaijun-spring-boot-dependencies</artifactId>
+        <version>3.0.17</version>
+        <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <artifactId>api-version-spring-boot-starter</artifactId>
+    <version>${revision}</version>
+
+    <name>${project.artifactId}</name>
+    <description>这个项目是一个基于 Spring Framework 的多版本 API 管理系统，旨在实现 API 版本控制与路由。
+        通过自定义的 RequestMappingHandlerMapping，系统能够根据请求的 URI 路径中的版本信息（如
+        /api/v1/、/api/v2/）动态地匹配并路由到不同版本的控制器。
+        这使得开发者能够轻松地维护多个版本的 API，避免因版本迭代而破坏现有接口，同时为每个版本提供独立的实现和扩展。
+        项目的核心功能包括支持版本优先级比较、灵活的版本条件匹配以及根据不同版本号路由到对应的控制器方法，提升了 API
+        的灵活性与可维护性。
+    </description>
+    <inceptionYear>2024</inceptionYear>
+    <url>https://github.com/mobaijun/mobaijun-spring-boot-starter</url>
+
+    <!--  GitHub issues -->
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/mobaijun/mobaijun-spring-boot-starter/tree/main/api-version-spring-boot-starter</url>
+        <connection>https://github.com/mobaijun/mobaijun-spring-boot-starter.git</connection>
+        <developerConnection>https://github.com/mobaijun</developerConnection>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+        </dependency>
+    </dependencies>
+</project>
