@@ -32,6 +32,7 @@ import com.mobaijun.easyexcel.constant.ExcelConstant;
 import com.mobaijun.easyexcel.convert.ExcelBigNumberConvert;
 import com.mobaijun.easyexcel.core.CellMergeStrategy;
 import com.mobaijun.easyexcel.core.DropDownOptions;
+import com.mobaijun.easyexcel.handler.DataWriteHandler;
 import com.mobaijun.easyexcel.handler.ExcelDownHandler;
 import com.mobaijun.easyexcel.listener.DefaultExcelListener;
 import com.mobaijun.easyexcel.listener.ExcelListener;
@@ -214,6 +215,7 @@ public class ExcelUtil {
                 .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
                 // 大数值自动转换 防止失真
                 .registerConverter(new ExcelBigNumberConvert())
+                .registerWriteHandler(new DataWriteHandler(clazz))
                 .sheet(sheetName);
         if (merge) {
             // 合并处理器
