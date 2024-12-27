@@ -88,7 +88,7 @@ public class SseEmitterManager implements Serializable {
      */
     public void disconnect(Long userId, String token) {
         Map<String, SseEmitter> emitters = USER_TOKEN_EMITTERS.get(userId);
-        if (emitters != null) {
+        if (!emitters.isEmpty()) {
             try {
                 SseEmitter sseEmitter = emitters.get(token);
                 sseEmitter.send(SseEmitter.event().comment("disconnected"));
@@ -96,6 +96,8 @@ public class SseEmitterManager implements Serializable {
             } catch (Exception ignore) {
             }
             emitters.remove(token);
+        } else {
+            USER_TOKEN_EMITTERS.remove(userId);
         }
     }
 
@@ -116,7 +118,7 @@ public class SseEmitterManager implements Serializable {
      */
     public void sendMessage(Long userId, String message) {
         Map<String, SseEmitter> emitters = USER_TOKEN_EMITTERS.get(userId);
-        if (emitters != null) {
+        if (!emitters.isEmpty()) {
             for (Map.Entry<String, SseEmitter> entry : emitters.entrySet()) {
                 try {
                     entry.getValue().send(SseEmitter.event()
@@ -126,6 +128,8 @@ public class SseEmitterManager implements Serializable {
                     emitters.remove(entry.getKey());
                 }
             }
+        } else {
+            USER_TOKEN_EMITTERS.remove(userId);
         }
     }
 
