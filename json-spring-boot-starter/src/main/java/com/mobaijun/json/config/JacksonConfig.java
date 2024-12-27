@@ -55,7 +55,6 @@ public class JacksonConfig {
             javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(formatter));
             builder.modules(javaTimeModule);
             builder.timeZone(TimeZone.getDefault());
-            log.info("初始化 jackson 配置");
         };
     }
 }

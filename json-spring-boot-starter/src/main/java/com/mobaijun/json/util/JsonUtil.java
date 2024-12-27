@@ -21,7 +21,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.mobaijun.core.spring.SpringUtil;
-import io.micrometer.common.util.StringUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +38,16 @@ import org.springframework.util.ObjectUtils;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JsonUtil {
 
+    /**
+     * ObjectMapper
+     */
     private static final ObjectMapper OBJECT_MAPPER = SpringUtil.getBean(ObjectMapper.class);
 
+    /**
+     * 获取ObjectMapper
+     *
+     * @return ObjectMapper
+     */
     public static ObjectMapper getObjectMapper() {
         return OBJECT_MAPPER;
     }
@@ -142,7 +149,7 @@ public class JsonUtil {
      * @throws RuntimeException 如果转换过程中发生IO异常，则抛出运行时异常
      */
     public static <T> T parseObject(String text, Class<T> clazz) {
-        if (StringUtils.isEmpty(text)) {
+        if (text.isBlank()) {
             return null;
         }
         try {
@@ -182,7 +189,7 @@ public class JsonUtil {
      * @throws RuntimeException 如果转换过程中发生IO异常，则抛出运行时异常
      */
     public static <T> T parseObject(String text, TypeReference<T> typeReference) {
-        if (StringUtils.isBlank(text)) {
+        if (text.isBlank()) {
             return null;
         }
         try {
@@ -200,7 +207,7 @@ public class JsonUtil {
      * @throws RuntimeException 如果转换过程中发生IO异常，则抛出运行时异常
      */
     public static Dict parseMap(String text) {
-        if (StringUtils.isBlank(text)) {
+        if (text.isBlank()) {
             return null;
         }
         try {
@@ -221,7 +228,7 @@ public class JsonUtil {
      * @throws RuntimeException 如果转换过程中发生IO异常，则抛出运行时异常
      */
     public static List<Dict> parseArrayMap(String text) {
-        if (StringUtils.isBlank(text)) {
+        if (text.isBlank()) {
             return null;
         }
         try {
@@ -241,7 +248,7 @@ public class JsonUtil {
      * @throws RuntimeException 如果转换过程中发生IO异常，则抛出运行时异常
      */
     public static <T> List<T> parseArray(String text, Class<T> clazz) {
-        if (StringUtils.isEmpty(text)) {
+        if (text.isBlank()) {
             return new ArrayList<>();
         }
         try {
