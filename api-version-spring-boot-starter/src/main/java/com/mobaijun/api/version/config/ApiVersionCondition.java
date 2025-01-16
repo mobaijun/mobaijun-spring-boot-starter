@@ -56,7 +56,7 @@ public class ApiVersionCondition implements RequestCondition<ApiVersionCondition
     /**
      * 存储 API 版本号
      */
-    private int apiVersion;
+    private final int apiVersion;
 
     /**
      * 构造方法，传入 API 版本号
