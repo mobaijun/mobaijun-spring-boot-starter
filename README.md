@@ -3,7 +3,7 @@
 组件化开发，抽取公共模块
 
 ```bash
-mvn clean javadoc:jar source:jar repository:bundle-create
+mvn clean deploy -DskipTests -q -B
 ```
 ## 快速开始
 
