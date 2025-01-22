@@ -16,7 +16,9 @@
 package com.mobaijun.i18n.config;
 
 import com.mobaijun.i18n.message.WildcardReloadableResourceBundleMessageSource;
+import java.nio.charset.Charset;
 import java.time.Duration;
+import java.util.Optional;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.condition.ConditionMessage;
@@ -79,20 +81,26 @@ public class CustomMessageSourceAutoConfiguration {
     @Bean
     public MessageSource messageSource(MessageSourceProperties properties) {
         WildcardReloadableResourceBundleMessageSource messageSource = new WildcardReloadableResourceBundleMessageSource();
-        if (StringUtils.hasText(properties.getBasename())) {
-            messageSource.setBasenames(StringUtils
-                    .commaDelimitedListToStringArray(StringUtils.trimAllWhitespace(properties.getBasename())));
-        }
-        if (properties.getEncoding() != null) {
-            messageSource.setDefaultEncoding(properties.getEncoding().name());
-        }
+
+        // 设置 basenames
+        Optional.ofNullable(properties.getBasename())
+                .filter(basenames -> !basenames.isEmpty())
+                .ifPresent(basenames -> messageSource.setBasenames(basenames.toArray(new String[0])));
+
+        // 设置其他属性
+        Optional.ofNullable(properties.getEncoding())
+                .map(Charset::name)
+                .ifPresent(messageSource::setDefaultEncoding);
+
         messageSource.setFallbackToSystemLocale(properties.isFallbackToSystemLocale());
-        Duration cacheDuration = properties.getCacheDuration();
-        if (cacheDuration != null) {
-            messageSource.setCacheMillis(cacheDuration.toMillis());
-        }
+
+        Optional.ofNullable(properties.getCacheDuration())
+                .map(Duration::toMillis)
+                .ifPresent(messageSource::setCacheMillis);
+
         messageSource.setAlwaysUseMessageFormat(properties.isAlwaysUseMessageFormat());
         messageSource.setUseCodeAsDefaultMessage(properties.isUseCodeAsDefaultMessage());
+
         return messageSource;
     }
 
