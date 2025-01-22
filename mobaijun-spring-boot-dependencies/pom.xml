@@ -83,7 +83,6 @@
         <mybatis-plus.version>3.5.8</mybatis-plus.version>
         <knife4j-swagger-ui.version>4.5.0</knife4j-swagger-ui.version>
         <flowable.version>7.1.0</flowable.version>
-        <spring-ai.version>0.8.1</spring-ai.version>
 
         <!-- 依赖版本 -->
         <sa-token-core.version>1.39.0</sa-token-core.version>
@@ -180,16 +179,6 @@
                 <version>${spring-boot.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
-            </dependency>
-
-            <!-- spring ai -->
-            <dependency>
-                <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-bom -->
-                <groupId>org.springframework.ai</groupId>
-                <artifactId>spring-ai-bom</artifactId>
-                <version>${spring-ai.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
 
             <!-- spring cloud -->
