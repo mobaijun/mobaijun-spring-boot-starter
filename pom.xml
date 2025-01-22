@@ -245,10 +245,11 @@
 
     <!-- 配置仓库镜像 -->
     <repositories>
-        <!-- maven 中央仓库 -->
+        <!-- spring 中央仓库 -->
         <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -257,11 +258,10 @@
             </snapshots>
         </repository>
 
-        <!-- spring 中央仓库 -->
+        <!-- maven 中央仓库 -->
         <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
