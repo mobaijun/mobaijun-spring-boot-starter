@@ -10,7 +10,7 @@
         <relativePath>../mobaijun-spring-boot-dependencies/pom.xml</relativePath>
     </parent>
 
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <artifactId>nacos-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
     <version>${revision}</version>

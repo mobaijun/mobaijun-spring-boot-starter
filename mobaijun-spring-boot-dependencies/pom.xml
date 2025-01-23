@@ -76,8 +76,8 @@
         <spring-boot.version>3.4.1</spring-boot.version>
         <spring-cloud.version>2023.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
-        <software.amazon.awssdk.version>2.29.39</software.amazon.awssdk.version>
-        <hutool-bom.version>5.8.34</hutool-bom.version>
+        <software.amazon.awssdk.version>2.30.4</software.amazon.awssdk.version>
+        <hutool-bom.version>5.8.35</hutool-bom.version>
         <dubbo-bom.version>3.3.2</dubbo-bom.version>
         <dynamic.version>4.3.1</dynamic.version>
         <mybatis-plus.version>3.5.8</mybatis-plus.version>
