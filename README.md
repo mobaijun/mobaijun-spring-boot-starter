@@ -1,6 +1,6 @@
 # mobaijun-spring-boot-starter
 
-组件化开发，抽取公共模块
+> 组件化开发，抽取公共模块
 
 ```bash
 mvn clean deploy -DskipTests -q -B
@@ -17,6 +17,12 @@ mvn clean deploy -DskipTests -q -B
     <scope>import</scope>
 </dependency>
 ~~~
+
+## 版本说明
+
+|  版本号   |           异常模块            |  优化版本  |          说明          |
+|:------:|:-------------------------:|:------:|:--------------------:|
+| 3.0.19 | nacos-spring-boot-starter | 3.0.20 | nacos 修改打包文件为 jar 格式 |
 
 ## 代码包说明
 | Module Name | GitHub Link | Description |
