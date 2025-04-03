@@ -19,8 +19,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Primary;
 
 /**
  * Description: [excel 配置属性]
@@ -28,13 +26,10 @@ import org.springframework.context.annotation.Primary;
  * Date: [2024/8/21 9:03]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-
 @Getter
 @Setter
-@Primary
 @ToString
 @ConfigurationProperties(ExcelProperties.PREFIX)
-@EnableConfigurationProperties(ExcelProperties.class)
 public class ExcelProperties {
 
     public static final String PREFIX = "excel";
