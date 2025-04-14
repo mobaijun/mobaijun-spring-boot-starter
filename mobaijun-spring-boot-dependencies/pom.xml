@@ -73,19 +73,19 @@
         <gen-3-v10.version>3.0.10</gen-3-v10.version>
 
         <!-- 大版本依赖管理 -->
-        <spring-boot.version>3.4.1</spring-boot.version>
-        <spring-cloud.version>2023.0.3</spring-cloud.version>
-        <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
-        <software.amazon.awssdk.version>2.30.4</software.amazon.awssdk.version>
-        <hutool-bom.version>5.8.35</hutool-bom.version>
-        <dubbo-bom.version>3.3.2</dubbo-bom.version>
+        <spring-boot.version>3.4.4</spring-boot.version>
+        <spring-cloud.version>2024.0.1</spring-cloud.version>
+        <spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
+        <software.amazon.awssdk.version>2.31.21</software.amazon.awssdk.version>
+        <hutool-bom.version>5.8.37</hutool-bom.version>
+        <dubbo-bom.version>3.3.4</dubbo-bom.version>
         <dynamic.version>4.3.1</dynamic.version>
-        <mybatis-plus.version>3.5.8</mybatis-plus.version>
+        <mybatis-plus.version>3.5.11</mybatis-plus.version>
         <knife4j-swagger-ui.version>4.5.0</knife4j-swagger-ui.version>
         <flowable.version>7.1.0</flowable.version>
 
         <!-- 依赖版本 -->
-        <sa-token-core.version>1.39.0</sa-token-core.version>
+        <sa-token-core.version>1.42.0</sa-token-core.version>
         <common.version>1.2.7</common.version>
         <influxdb.version>2.24</influxdb.version>
         <swagger-base.version>2.2.25</swagger-base.version>
@@ -93,7 +93,7 @@
         <guava.version>[33.+,)</guava.version>
         <hutool-all.version>${hutool-bom.version}</hutool-all.version>
         <jasypt.version>3.0.5</jasypt.version>
-        <minio.version>8.5.13</minio.version>
+        <minio.version>8.5.17</minio.version>
         <jettison.version>1.5.4</jettison.version>
         <slf4j-api.version>[2.+,)</slf4j-api.version>
         <easyexcel.version>4.0.3</easyexcel.version>
@@ -106,30 +106,31 @@
         <april-json-util.version>1.0.0</april-json-util.version>
         <commons-compress.version>[1.+,)</commons-compress.version>
         <mapstruct.version>[1.+,)</mapstruct.version>
-        <redisson.version>3.37.0</redisson.version>
+        <redisson.version>3.45.0</redisson.version>
         <jsoup.version>[1.+,)</jsoup.version>
-        <dysmsapi20170525.version>3.1.0</dysmsapi20170525.version>
-        <tencentcloud-sdk-java.version>3.1.1140</tencentcloud-sdk-java.version>
+        <dysmsapi20170525.version>3.1.2</dysmsapi20170525.version>
+        <tencentcloud-sdk-java.version>3.1.1240</tencentcloud-sdk-java.version>
         <lock4j.version>2.2.7</lock4j.version>
         <ip2region.version>2.7.0</ip2region.version>
-        <mapstruct-plus.version>1.4.5</mapstruct-plus.version>
-        <xxl-job.version>2.4.1</xxl-job.version>
-        <rocketmq.version>2.3.1</rocketmq.version>
+        <mapstruct-plus.version>1.4.8</mapstruct-plus.version>
+        <xxl-job.version>3.0.0</xxl-job.version>
+        <rocketmq.version>2.3.3</rocketmq.version>
         <zxing.core.version>3.5.3</zxing.core.version>
         <jsr305.version>3.0.2</jsr305.version>
-        <mybatis.version>3.5.16</mybatis.version>
+        <mybatis.version>3.5.19</mybatis.version>
         <april-project-authorize.version>LATEST</april-project-authorize.version>
 
         <!-- 第三方 api 组件-->
-        <tess4j.version>5.13.0</tess4j.version>
+        <tess4j.version>5.15.0</tess4j.version>
         <jpush-client.version>3.7.7</jpush-client.version>
         <aliyun-sdk-oss.version>3.18.1</aliyun-sdk-oss.version>
         <bimface-java-sdk.version>3.2.9</bimface-java-sdk.version>
         <cos_api.version>5.6.234</cos_api.version>
         <qiniu-java-sdk.version>7.16.0</qiniu-java-sdk.version>
         <tianai-captcha.version>1.5.1</tianai-captcha.version>
-        <huaweicloud-sdk-ocr.version>3.1.119</huaweicloud-sdk-ocr.version>
+        <huaweicloud-sdk-ocr.version>3.1.143</huaweicloud-sdk-ocr.version>
         <flowable-json.version>6.8.1</flowable-json.version>
+        <geoip2.version>4.2.1</geoip2.version>
 
         <!-- dubbo 相关 -->
         <dubbo-metadata.version>3.3.0-beta.4</dubbo-metadata.version>
@@ -267,6 +268,16 @@
                 <groupId>org.flowable</groupId>
                 <artifactId>flowable-bom</artifactId>
                 <version>${flowable.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!--  sa-token -->
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/cn.dev33/sa-token-bom -->
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-bom</artifactId>
+                <version>${sa-token-core.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -876,6 +887,14 @@
                 <groupId>org.flowable</groupId>
                 <artifactId>flowable-json-converter</artifactId>
                 <version>${flowable-json.version}</version>
+            </dependency>
+
+            <!-- MaxMind GeoIP2 -->
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/com.maxmind.geoip2/geoip2 -->
+                <groupId>com.maxmind.geoip2</groupId>
+                <artifactId>geoip2</artifactId>
+                <version>${geoip2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
