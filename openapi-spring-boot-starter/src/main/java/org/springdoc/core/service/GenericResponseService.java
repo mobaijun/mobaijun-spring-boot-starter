@@ -22,7 +22,7 @@
  *
  */
 
-package service;
+package org.springdoc.core.service;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -67,7 +67,6 @@ import org.springdoc.core.parsers.ReturnTypeParser;
 import org.springdoc.core.properties.SpringDocConfigProperties;
 import org.springdoc.core.providers.JavadocProvider;
 import org.springdoc.core.providers.ObjectMapperProvider;
-import org.springdoc.core.service.OperationService;
 import static org.springdoc.core.utils.Constants.DEFAULT_DESCRIPTION;
 import org.springdoc.core.utils.PropertyResolverUtils;
 import org.springdoc.core.utils.SpringDocAnnotationsUtils;
