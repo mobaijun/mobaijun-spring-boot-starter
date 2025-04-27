@@ -345,11 +345,8 @@ public class GlobalExceptionHandler {
         // 记录日志，包含异常信息和请求路径
         log.error("业务异常发生，异常信息: {}, 请求路径: {}", e.getMessage(), request.getRequestURI());
 
-        // 构建详细的错误信息，包含异常信息、请求路径、请求方法
-        String errorMessage = String.format("系统发生异常，异常信息: {%s}", e.getMessage());
-
         // 调用通用异常处理方法
-        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, null);
+        return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), null);
     }
 
     /**
@@ -937,6 +934,6 @@ public class GlobalExceptionHandler {
                 .errorInfo(errorMessage)
                 .build();
         // 返回封装的 R<ErrorDataInfo> 响应对象
-        return R.failed(httpStatus, errorData);
+        return R.failed(errorData, httpStatus);
     }
 }
