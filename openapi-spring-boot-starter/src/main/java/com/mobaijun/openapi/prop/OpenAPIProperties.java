@@ -35,7 +35,7 @@ public class OpenAPIProperties {
     public static final String PREFIX = "openapi";
 
     /**
-     * 石否开启(默认开启)
+     * 是否开启(默认开启)
      */
     private Boolean enable = true;
 

@@ -15,10 +15,8 @@
  */
 package com.mobaijun.minio.prop;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-
 import java.time.Duration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * software：IntelliJ IDEA 2022.1
@@ -28,13 +26,17 @@ import java.time.Duration;
  * @author MoBaiJun 2022/9/19 17:32
  */
 @ConfigurationProperties(MinioConfigurationProperties.PREFIX)
-@EnableConfigurationProperties(MinioConfigurationProperties.class)
 public class MinioConfigurationProperties {
 
     /**
      * 依赖项前缀
      */
     public static final String PREFIX = "spring.minio";
+
+    /**
+     * 是否启用
+     */
+    private Boolean enabled = true;
 
     /**
      * Minio 实例的 URL。可以包括 HTTP 协议。必须包括端口。如果未提供端口，则使用 HTTP 的默认端口。
@@ -210,5 +212,13 @@ public class MinioConfigurationProperties {
                 ", checkBucket=" + checkBucket +
                 ", createBucket=" + createBucket +
                 '}';
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

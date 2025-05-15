@@ -30,6 +30,8 @@ import okhttp3.OkHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
@@ -43,6 +45,8 @@ import org.springframework.util.StringUtils;
  */
 @Configuration
 @ConditionalOnClass(MinioClient.class)
+@EnableConfigurationProperties(MinioConfigurationProperties.class)
+@ConditionalOnProperty(prefix = "spring.minio", name = "enabled", havingValue = "true", matchIfMissing = false)
 public class MinioAutoConfiguration {
 
     /**

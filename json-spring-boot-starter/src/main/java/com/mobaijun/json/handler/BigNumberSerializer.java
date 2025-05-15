@@ -34,6 +34,7 @@ public class BigNumberSerializer extends NumberSerializer {
      * 提供实例
      */
     public static final BigNumberSerializer INSTANCE = new BigNumberSerializer(Number.class);
+
     /**
      * 根据 JS Number.MAX_SAFE_INTEGER 与 Number.MIN_SAFE_INTEGER 得来
      */
