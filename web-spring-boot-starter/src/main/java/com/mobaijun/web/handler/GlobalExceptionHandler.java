@@ -937,6 +937,6 @@ public class GlobalExceptionHandler {
                 .errorInfo(errorMessage)
                 .build();
         // 返回封装的 R<ErrorDataInfo> 响应对象
-        return R.failed(httpStatus, errorData);
+        return R.failed(errorData, httpStatus);
     }
 }
