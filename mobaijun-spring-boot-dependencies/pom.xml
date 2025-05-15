@@ -63,6 +63,8 @@
         <module>../idempotent-spring-boot-starter</module>
         <module>../ratelimiter-spring-boot-starter</module>
         <module>../api-version-spring-boot-starter</module>
+        <module>../email-spring-boot-starter</module>
+        <module>../run-spring-boot-starter</module>
     </modules>
 
     <properties>
@@ -329,7 +331,7 @@
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/email-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>email-spring-boot-starter</artifactId>
-                <version>${gen-3-v10.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
@@ -497,7 +499,7 @@
                 <!-- https://central.sonatype.com//artifact/com.mobaijun/run-spring-boot-starter -->
                 <groupId>com.mobaijun</groupId>
                 <artifactId>run-spring-boot-starter</artifactId>
-                <version>${gen-3-v10.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
