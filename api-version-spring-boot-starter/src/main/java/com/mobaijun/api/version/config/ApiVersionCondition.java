@@ -45,8 +45,10 @@ import org.springframework.web.servlet.mvc.condition.RequestCondition;
  * Author: [mobaijun]
  * Date: [2024/12/23 11:37]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
+ * @param apiVersion
+存储 API 版本号
  */
-public class ApiVersionCondition implements RequestCondition<ApiVersionCondition> {
+public record ApiVersionCondition(int apiVersion) implements RequestCondition<ApiVersionCondition> {
 
     /**
      * 正则表达式：匹配 URI 中的版本信息，如 /api/v1/、/api/v2/
@@ -54,17 +56,11 @@ public class ApiVersionCondition implements RequestCondition<ApiVersionCondition
     private final static Pattern VERSION_PREFIX_PATTERN = Pattern.compile(".*v(\\d+).*");
 
     /**
-     * 存储 API 版本号
-     */
-    private final int apiVersion;
-
-    /**
      * 构造方法，传入 API 版本号
      *
      * @param apiVersion API 版本号
      */
-    ApiVersionCondition(int apiVersion) {
-        this.apiVersion = apiVersion;
+    public ApiVersionCondition {
     }
 
     /**
@@ -72,7 +68,8 @@ public class ApiVersionCondition implements RequestCondition<ApiVersionCondition
      *
      * @return 返回 API 版本号
      */
-    private int getApiVersion() {
+    @Override
+    public int apiVersion() {
         return apiVersion;
     }
 
@@ -85,7 +82,7 @@ public class ApiVersionCondition implements RequestCondition<ApiVersionCondition
     @NonNull
     @Override
     public ApiVersionCondition combine(ApiVersionCondition other) {
-        return new ApiVersionCondition(other.getApiVersion());
+        return new ApiVersionCondition(other.apiVersion());
     }
 
     /**
@@ -98,7 +95,7 @@ public class ApiVersionCondition implements RequestCondition<ApiVersionCondition
     @Override
     public int compareTo(ApiVersionCondition other, @NonNull HttpServletRequest request) {
         // 返回值越小，优先级越高
-        return other.getApiVersion() - this.apiVersion;
+        return other.apiVersion() - this.apiVersion;
     }
 
     /**

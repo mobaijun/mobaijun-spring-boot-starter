@@ -133,6 +133,7 @@
         <huaweicloud-sdk-ocr.version>3.1.143</huaweicloud-sdk-ocr.version>
         <flowable-json.version>6.8.1</flowable-json.version>
         <geoip2.version>4.2.1</geoip2.version>
+        <weixin-java-mp.version>4.7.0</weixin-java-mp.version>
 
         <!-- dubbo 相关 -->
         <dubbo-metadata.version>3.3.0-beta.4</dubbo-metadata.version>
@@ -890,6 +891,14 @@
                 <groupId>com.maxmind.geoip2</groupId>
                 <artifactId>geoip2</artifactId>
                 <version>${geoip2.version}</version>
+            </dependency>
+
+            <!-- 微信开发工具包 -->
+            <dependency>
+                <!-- https://central.sonatype.com/artifact/com.github.binarywang/weixin-java-mp -->
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-mp</artifactId>
+                <version>${weixin-java-mp.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
