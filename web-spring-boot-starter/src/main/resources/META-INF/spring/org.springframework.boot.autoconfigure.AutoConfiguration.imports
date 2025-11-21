@@ -1,1 +1,2 @@
 com.mobaijun.web.config.ResourcesConfig
+com.mobaijun.web.config.TraceAutoConfiguration
