@@ -44,7 +44,7 @@ public class ApplicationProperties {
     /**
      * 是否打印 bean
      */
-    private boolean printBean = true;
+    private boolean printBean = false;
 
     /**
      * 作者信息
