@@ -15,6 +15,7 @@
  */
 package com.mobaijun.web.filter;
 
+import com.mobaijun.web.trace.TraceIdGenerator;
 import io.micrometer.common.lang.NonNullApi;
 import io.micrometer.common.lang.Nullable;
 import org.slf4j.MDC;
@@ -34,18 +35,46 @@ import org.springframework.core.task.TaskDecorator;
 @NonNullApi
 public record TraceTaskDecorator(String mdcKey) implements TaskDecorator {
 
+    /**
+     * 全局 TraceId 生成器，可通过 setGenerator 注入
+     */
+    private static TraceIdGenerator generator;
+
+    /**
+     * 设置全局 TraceId 生成器
+     *
+     * @param generator TraceId 生成器实例
+     */
+    public static void setGenerator(TraceIdGenerator generator) {
+        TraceTaskDecorator.generator = generator;
+    }
+
+    /**
+     * 线程池任务装饰方法
+     *
+     * @param runnable 提交到线程池的原始任务
+     * @return 包装后的 Runnable，执行时保证 MDC 中有 traceId
+     */
     @Override
     public Runnable decorate(@Nullable Runnable runnable) {
-        String traceId = MDC.get(mdcKey);
-
         return () -> {
             try {
-                if (traceId != null) {
-                    MDC.put(mdcKey, traceId);
+                // 获取提交线程的 traceId
+                String traceId = MDC.get(mdcKey);
+
+                // 如果没有 traceId，则使用全局生成器生成新的 traceId
+                if (traceId == null || traceId.isEmpty()) {
+                    traceId = generator.generate();
                 }
+
+                // 将 traceId 注入当前线程 MDC
+                MDC.put(mdcKey, traceId);
+
+                // 执行原始任务
                 assert runnable != null;
                 runnable.run();
             } finally {
+                // 执行完毕清理 MDC，避免线程池线程复用污染
                 MDC.remove(mdcKey);
             }
         };

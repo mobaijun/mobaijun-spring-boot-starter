@@ -17,14 +17,15 @@ package com.mobaijun.core.config;
 
 import com.mobaijun.common.thread.Threads;
 import jakarta.annotation.PreDestroy;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Description: [线程池配置]
@@ -54,10 +55,10 @@ public class ThreadPoolConfig {
      * 创建一个配置化的 {@link ScheduledExecutorService}，用于执行周期性或定时任务。
      *
      * <p>该线程池基于 {@link ThreadPoolTaskExecutor} 实现，并具有以下特性：
-     * - **核心线程数：** 由 `core` 参数指定。
-     * - **线程命名：** 采用 "schedule-pool-%d" 格式。
-     * - **守护线程：** 设置为守护线程，随 JVM 退出而终止。
-     * - **拒绝策略：** 采用 `CallerRunsPolicy`，任务提交失败时由调用者线程执行。
+     * - 核心线程数： 由 `core` 参数指定。
+     * - 线程命名：采用 "schedule-pool-%d" 格式。
+     * - 守护线程：设置为守护线程，随 JVM 退出而终止。
+     * - 拒绝策略：采用 `CallerRunsPolicy`，任务提交失败时由调用者线程执行。
      *
      * @return 配置好的 {@link ScheduledExecutorService} 实例
      */
