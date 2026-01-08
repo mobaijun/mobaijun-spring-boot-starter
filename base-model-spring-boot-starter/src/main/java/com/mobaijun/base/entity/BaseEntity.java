@@ -17,10 +17,16 @@ package com.mobaijun.base.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -72,4 +78,20 @@ public class BaseEntity implements Serializable {
     @Schema(title = "修改时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
+
+    /**
+     * 搜索值
+     */
+    @JsonIgnore
+    @Schema(title = "搜索值")
+    @TableField(exist = false)
+    private String searchValue;
+
+    /**
+     * 请求参数
+     */
+    @Schema(title = "请求参数")
+    @TableField(exist = false)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Map<String, Object> params = new HashMap<>();
 }
