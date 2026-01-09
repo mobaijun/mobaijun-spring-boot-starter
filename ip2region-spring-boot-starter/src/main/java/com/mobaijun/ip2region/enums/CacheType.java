@@ -30,6 +30,7 @@ public enum CacheType {
      * </p>
      */
     NONE,
+
     /**
      * 缓存 VectorIndex 索引
      * <p>
@@ -38,6 +39,7 @@ public enum CacheType {
      * </p>
      */
     VECTOR_INDEX,
+
     /**
      * 缓存整个 xdb 数据
      * <p>

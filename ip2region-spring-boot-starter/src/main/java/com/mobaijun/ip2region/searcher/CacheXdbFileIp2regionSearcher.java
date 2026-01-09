@@ -16,11 +16,14 @@
 package com.mobaijun.ip2region.searcher;
 
 import com.mobaijun.ip2region.properties.Ip2regionProperties;
-import java.io.InputStream;
+import org.lionsoul.ip2region.xdb.LongByteArray;
 import org.lionsoul.ip2region.xdb.Searcher;
+import org.lionsoul.ip2region.xdb.Version;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.StreamUtils;
+
+import java.io.InputStream;
 
 /**
  * Description:
@@ -46,7 +49,11 @@ public class CacheXdbFileIp2regionSearcher extends Ip2regionSearcherTemplate {
     public void afterPropertiesSet() throws Exception {
         Resource resource = this.resourceLoader.getResource(this.properties.getFileLocation());
         try (InputStream inputStream = resource.getInputStream()) {
-            this.searcher = Searcher.newWithBuffer(StreamUtils.copyToByteArray(inputStream));
+            // 1. 将流转为 byte 数组
+            byte[] allBytes = StreamUtils.copyToByteArray(inputStream);
+            LongByteArray lba = new LongByteArray();
+            lba.append(allBytes);
+            this.searcher = Searcher.newWithBuffer(Version.IPv4, lba);
         }
     }
 }

@@ -25,6 +25,7 @@ import io.micrometer.common.lang.Nullable;
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
 public interface Ip2regionSearcher {
+
     /**
      * ip 位置 搜索
      *
@@ -32,7 +33,7 @@ public interface Ip2regionSearcher {
      * @return 位置
      */
     @Nullable
-    IpInfo search(@Nullable long ip);
+    IpInfo search(long ip) throws Exception;
 
     /**
      * ip 位置 搜索
@@ -50,7 +51,7 @@ public interface Ip2regionSearcher {
      * @return 位置
      */
     @Nullable
-    IpInfo searchQuietly(@Nullable long ip);
+    IpInfo searchQuietly(long ip);
 
     /**
      * 静默ip 位置 搜索

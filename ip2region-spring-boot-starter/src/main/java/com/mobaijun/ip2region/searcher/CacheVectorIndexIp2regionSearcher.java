@@ -17,8 +17,16 @@ package com.mobaijun.ip2region.searcher;
 
 import com.mobaijun.ip2region.properties.Ip2regionProperties;
 import org.lionsoul.ip2region.xdb.Searcher;
+import org.lionsoul.ip2region.xdb.Version;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.util.StreamUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Description:
@@ -44,7 +52,30 @@ public class CacheVectorIndexIp2regionSearcher extends Ip2regionSearcherTemplate
     @Override
     public void afterPropertiesSet() throws Exception {
         Resource resource = this.resourceLoader.getResource(this.properties.getFileLocation());
-        String dbPath = resource.getFile().getPath();
-        this.searcher = Searcher.newWithVectorIndex(dbPath, Searcher.loadVectorIndexFromFile(dbPath));
+
+        // 1. 获取文件路径
+        // 注意：如果在 JAR 包中运行，resource.getFile() 会抛出异常
+        // 建议在这种模式下，确保 xdb 文件存放在磁盘绝对路径，或者在启动时拷贝到临时目录
+        File xdbFile;
+        try {
+            xdbFile = resource.getFile();
+        } catch (IOException e) {
+            // 兼容 JAR 包运行：拷贝到临时文件（VectorIndex 模式必须有物理文件指针）
+            xdbFile = File.createTempFile("ip2region_", ".xdb");
+            try (InputStream is = resource.getInputStream();
+                 OutputStream os = new FileOutputStream(xdbFile)) {
+                StreamUtils.copy(is, os);
+            }
+            xdbFile.deleteOnExit();
+        }
+
+        String dbPath = xdbFile.getPath();
+
+        // 2. 加载 VectorIndex (新版本可能也需要 Version 参数，请根据源码核对)
+        // 假设 loadVectorIndexFromFile 只需要路径
+        byte[] vIndex = Searcher.loadVectorIndexFromFile(dbPath);
+
+        // 3. 修复方法调用：传入 Version.V4 (或根据你的 Version 枚举定义)
+        this.searcher = Searcher.newWithVectorIndex(Version.IPv4, xdbFile, vIndex);
     }
 }

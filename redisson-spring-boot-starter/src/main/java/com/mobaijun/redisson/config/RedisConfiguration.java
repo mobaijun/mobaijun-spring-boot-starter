@@ -103,9 +103,11 @@ public class RedisConfiguration {
             RedissonProperties.SingleServerConfig singleServerConfig = redissonProperties.getSingleServerConfig();
             if (Objects.nonNull(singleServerConfig)) {
                 // 使用单机模式
-                config.useSingleServer()
-                        //设置redis key前缀
-                        .setNameMapper(new KeyPrefixHandler(redissonProperties.getKeyPrefix()))
+                var singleServer = config.useSingleServer();
+                //设置redis key前缀 (注意: setNameMapper 在 Redisson 4.x 中已标记为 deprecated，但仍可使用)
+                @SuppressWarnings("deprecation")
+                var serverWithMapper = singleServer.setNameMapper(new KeyPrefixHandler(redissonProperties.getKeyPrefix()));
+                serverWithMapper
                         .setTimeout(singleServerConfig.getTimeout())
                         .setClientName(singleServerConfig.getClientName())
                         .setIdleConnectionTimeout(singleServerConfig.getIdleConnectionTimeout())
@@ -116,9 +118,12 @@ public class RedisConfiguration {
             // 集群配置方式 参考下方注释
             RedissonProperties.ClusterServersConfig clusterServersConfig = redissonProperties.getClusterServersConfig();
             if (Objects.nonNull(clusterServersConfig)) {
-                config.useClusterServers()
-                        //设置redis key前缀
-                        .setNameMapper(new KeyPrefixHandler(redissonProperties.getKeyPrefix()))
+                // 使用集群模式
+                var clusterServers = config.useClusterServers();
+                //设置redis key前缀 (注意: setNameMapper 在 Redisson 4.x 中已标记为 deprecated，但仍可使用)
+                @SuppressWarnings("deprecation")
+                var clusterWithMapper = clusterServers.setNameMapper(new KeyPrefixHandler(redissonProperties.getKeyPrefix()));
+                clusterWithMapper
                         .setTimeout(clusterServersConfig.getTimeout())
                         .setClientName(clusterServersConfig.getClientName())
                         .setIdleConnectionTimeout(clusterServersConfig.getIdleConnectionTimeout())

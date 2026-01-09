@@ -609,24 +609,18 @@ public class RedisUtil {
      *                例如，匹配所有键可以使用 "*"；匹配具有相同前缀的键可以使用 "prefix*"。
      */
     public static void clear(final String pattern) {
-        RedissonClient client = getClient();
         try {
             KeysScanParams params = new KeysScanParams();
             // 获取 Redis 键集合，支持模式匹配
-            Iterable<String> keysByPattern = client.getKeys().getKeys(params.pattern(pattern));
+            Iterable<String> keysByPattern = CLIENT.getKeys().getKeys(params.pattern(pattern));
             // 异步删除匹配的缓存键
             for (String key : keysByPattern) {
-                RBucket<String> bucket = client.getBucket(key, StringCodec.INSTANCE);
+                RBucket<String> bucket = CLIENT.getBucket(key, StringCodec.INSTANCE);
                 bucket.deleteAsync();
             }
         } catch (Exception e) {
             // 异常信息
-            log.error("清除缓存键失败: {}", e.getMessage());
-        } finally {
-            if (client != null) {
-                // 确保 Redisson 客户端正确关闭，避免资源泄漏
-                client.shutdown();
-            }
+            log.error("清除缓存键失败: {}", e.getMessage(), e);
         }
     }
 }

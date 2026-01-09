@@ -16,9 +16,13 @@
 package com.mobaijun.ip2region.searcher;
 
 import com.mobaijun.ip2region.properties.Ip2regionProperties;
+import org.lionsoul.ip2region.xdb.LongByteArray;
 import org.lionsoul.ip2region.xdb.Searcher;
+import org.lionsoul.ip2region.xdb.Version;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+
+import java.io.InputStream;
 
 /**
  * Description:
@@ -40,6 +44,23 @@ public class NoneCacheIp2regionSearcher extends Ip2regionSearcherTemplate {
     @Override
     public void afterPropertiesSet() throws Exception {
         Resource resource = this.resourceLoader.getResource(this.properties.getFileLocation());
-        this.searcher = Searcher.newWithFileOnly(resource.getFile().getPath());
+
+        try (InputStream is = resource.getInputStream()) {
+            LongByteArray longByteArray = new LongByteArray();
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            while ((bytesRead = is.read(buffer)) != -1) {
+                if (bytesRead < buffer.length) {
+                    byte[] lastChunk = new byte[bytesRead];
+                    System.arraycopy(buffer, 0, lastChunk, 0, bytesRead);
+                    longByteArray.append(lastChunk);
+                } else {
+                    byte[] chunk = new byte[bytesRead];
+                    System.arraycopy(buffer, 0, chunk, 0, bytesRead);
+                    longByteArray.append(chunk);
+                }
+            }
+            this.searcher = Searcher.newWithBuffer(Version.IPv4, longByteArray);
+        }
     }
 }

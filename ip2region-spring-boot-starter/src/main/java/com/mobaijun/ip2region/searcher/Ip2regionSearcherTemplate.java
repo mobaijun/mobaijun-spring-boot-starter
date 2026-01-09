@@ -18,10 +18,10 @@ package com.mobaijun.ip2region.searcher;
 import com.mobaijun.ip2region.core.IpInfo;
 import com.mobaijun.ip2region.properties.Ip2regionProperties;
 import com.mobaijun.ip2region.util.IpInfoUtil;
-import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.lionsoul.ip2region.xdb.Searcher;
+import org.lionsoul.ip2region.xdb.Util;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.ResourceLoader;
@@ -36,22 +36,35 @@ import org.springframework.core.io.ResourceLoader;
 public abstract class Ip2regionSearcherTemplate implements DisposableBean, InitializingBean, Ip2regionSearcher {
 
     protected final ResourceLoader resourceLoader;
-
     protected final Ip2regionProperties properties;
-
     protected Searcher searcher;
 
     @Override
-    @SneakyThrows({IOException.class})
+    @SneakyThrows({Exception.class})
     public IpInfo search(long ip) {
-        return IpInfoUtil.toIpInfo(Searcher.long2ip(ip), this.searcher.search(ip));
-
+        byte[] ipBytes = new byte[]{
+                (byte) ((ip >> 24) & 0xFF),
+                (byte) ((ip >> 16) & 0xFF),
+                (byte) ((ip >> 8) & 0xFF),
+                (byte) (ip & 0xFF)
+        };
+        String region = this.searcher.search(ipBytes);
+        String ipStr = String.format("%d.%d.%d.%d",
+                (ipBytes[0] & 0xFF), (ipBytes[1] & 0xFF),
+                (ipBytes[2] & 0xFF), (ipBytes[3] & 0xFF));
+        return IpInfoUtil.toIpInfo(ipStr, region);
     }
 
     @Override
     @SneakyThrows({Exception.class})
     public IpInfo search(String ip) {
-        return IpInfoUtil.toIpInfo(ip, this.searcher.search(ip));
+        if (ip == null || ip.isEmpty()) return null;
+
+        // 使用 Util 类的解析方法将字符串转为 byte[]
+        byte[] ipBytes = Util.parseIP(ip);
+        String region = this.searcher.search(ipBytes);
+
+        return IpInfoUtil.toIpInfo(ip, region);
     }
 
     @Override
@@ -59,7 +72,6 @@ public abstract class Ip2regionSearcherTemplate implements DisposableBean, Initi
         try {
             return search(ip);
         } catch (Exception e) {
-            // do nothing
             return null;
         }
     }
@@ -69,7 +81,6 @@ public abstract class Ip2regionSearcherTemplate implements DisposableBean, Initi
         try {
             return search(ip);
         } catch (Exception e) {
-            // do nothing
             return null;
         }
     }

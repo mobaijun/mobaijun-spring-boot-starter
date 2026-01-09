@@ -16,20 +16,17 @@
 package com.mobaijun.redisson.handler;
 
 import io.micrometer.common.util.StringUtils;
-import org.redisson.api.NameMapper;
+import org.redisson.config.NameMapper;
 
 /**
  * Description: [redis缓存key前缀处理]
  * Author: [mobaijun]
  * Date: [2024/8/14 18:30]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
+ *
+ * @param keyPrefix 默认前缀
  */
-public class KeyPrefixHandler implements NameMapper {
-
-    /**
-     * 默认前缀
-     */
-    private final String keyPrefix;
+public record KeyPrefixHandler(String keyPrefix) implements NameMapper {
 
     /**
      * 构造函数
