@@ -19,7 +19,6 @@ import com.mobaijun.xxljob.properties.XxlExecutorProperties;
 import com.mobaijun.xxljob.properties.XxlJobProperties;
 import com.mobaijun.xxljob.trace.TraceXxlJobSpringExecutor;
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -29,6 +28,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 
+import java.util.Objects;
+
 /**
  * Description: [自动配置类]
  * Author: [mobaijun]
@@ -37,9 +38,9 @@ import org.springframework.util.StringUtils;
  */
 @Slf4j
 @AutoConfiguration
+@RequiredArgsConstructor
 @EnableConfigurationProperties(XxlJobProperties.class)
 @ConditionalOnProperty(prefix = XxlJobProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
-@RequiredArgsConstructor
 public class XxlJobAutoConfiguration {
 
     private final Environment environment;

@@ -30,7 +30,7 @@ import java.lang.reflect.Method;
 public class TraceXxlJobSpringExecutor extends XxlJobSpringExecutor {
 
     @Override
-    protected void registJobHandler(XxlJob xxlJob, Object bean, Method executeMethod) {
+    protected void registryJobHandler(XxlJob xxlJob, Object bean, Method executeMethod) {
         if (xxlJob == null) {
             return;
         }
@@ -75,6 +75,6 @@ public class TraceXxlJobSpringExecutor extends XxlJobSpringExecutor {
         // registry jobhandler
         MethodJobHandler jobHandler = new MethodJobHandler(bean, executeMethod, initMethod, destroyMethod);
         TraceMethodJobHandler traceMethodJobHandler = new TraceMethodJobHandler(jobHandler);
-        XxlJobExecutor.registJobHandler(name, traceMethodJobHandler);
+        XxlJobExecutor.registryJobHandler(name, traceMethodJobHandler);
     }
 }
