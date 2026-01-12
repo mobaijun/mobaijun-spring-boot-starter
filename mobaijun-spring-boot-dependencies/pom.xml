@@ -49,7 +49,6 @@
         <module>../nacos-spring-boot-starter</module>
         <module>../web-spring-boot-starter</module>
         <module>../sms-spring-boot-starter</module>
-        <module>../seata-spring-boot-starter</module>
         <module>../redisson-spring-boot-starter</module>
         <module>../ip2region-spring-boot-starter</module>
         <module>../operation-log-spring-boot-starter</module>
@@ -73,6 +72,9 @@
 
         <!-- 废弃项目版本管理 -->
         <gen-3-v10.version>3.0.10</gen-3-v10.version>
+
+        <!-- 上一个版本 -->
+        <previous-version.version>3.0.21</previous-version.version>
 
         <!-- 大版本依赖管理 -->
         <spring-boot.version>3.5.9</spring-boot.version>
@@ -126,7 +128,7 @@
         <tess4j.version>5.17.0</tess4j.version>
         <jpush-client.version>3.7.7</jpush-client.version>
         <aliyun-sdk-oss.version>3.18.4</aliyun-sdk-oss.version>
-        <bimface-java-sdk.version>3.2.9</bimface-java-sdk.version>
+        <bimface-java-sdk.version>3.3.11</bimface-java-sdk.version>
         <cos_api.version>5.6.234</cos_api.version>
         <qiniu-java-sdk.version>7.19.0</qiniu-java-sdk.version>
         <tianai-captcha.version>1.5.3</tianai-captcha.version>
@@ -543,6 +545,13 @@
                 <groupId>com.mobaijun</groupId>
                 <artifactId>web-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- https://central.sonatype.com//artifact/com.mobaijun/seata-spring-boot-starter -->
+                <groupId>com.mobaijun</groupId>
+                <artifactId>seata-spring-boot-starter</artifactId>
+                <version>${previous-version.version}</version>
             </dependency>
 
             <dependency>

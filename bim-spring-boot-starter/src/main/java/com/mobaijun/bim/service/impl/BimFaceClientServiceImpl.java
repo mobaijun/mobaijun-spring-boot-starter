@@ -38,13 +38,7 @@ import java.util.Map;
  *
  * @author MoBaiJun 2022/10/10 10:19
  */
-public class BimFaceClientServiceImpl implements BimFaceClientService {
-
-    private final BimProperties bimProperties;
-
-    public BimFaceClientServiceImpl(BimProperties bimProperties) {
-        this.bimProperties = bimProperties;
-    }
+public record BimFaceClientServiceImpl(BimProperties bimProperties) implements BimFaceClientService {
 
     @Override
     public BimfaceClient createBimFaceClient() {

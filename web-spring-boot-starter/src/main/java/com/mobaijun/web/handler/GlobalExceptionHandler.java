@@ -24,19 +24,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-import java.io.IOException;
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import java.nio.file.AccessDeniedException;
-import java.sql.BatchUpdateException;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.sql.SQLNonTransientConnectionException;
-import java.sql.SQLTransactionRollbackException;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.exceptions.PersistenceException;
@@ -65,6 +52,20 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.nio.file.AccessDeniedException;
+import java.sql.BatchUpdateException;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.SQLNonTransientConnectionException;
+import java.sql.SQLTransactionRollbackException;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Description: 全局异常处理器，用于捕获并处理常见异常，并返回标准化的响应结果。
@@ -346,7 +347,7 @@ public class GlobalExceptionHandler {
         log.error("业务异常发生，异常信息: {}, 请求路径: {}", e.getMessage(), request.getRequestURI());
 
         // 构建详细的错误信息，包含异常信息、请求路径、请求方法
-        String errorMessage = String.format("系统发生异常，异常信息: {%s}", e.getMessage());
+        String errorMessage = String.format("%s", e.getMessage());
 
         // 调用通用异常处理方法
         return handleException(e, request, HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, null);

@@ -1,7 +1,9 @@
 package com.mobaijun.run.prop;
 
-import java.util.List;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Description: [run 配置文件]
@@ -20,12 +22,12 @@ public class RunProperties {
     /**
      * 是否启用
      */
-    private boolean enabled;
+    private boolean enabled = false;
 
     /**
      * 地址集合
      */
-    private List<String> url;
+    private List<String> url = new ArrayList<>();
 
     public RunProperties() {
     }

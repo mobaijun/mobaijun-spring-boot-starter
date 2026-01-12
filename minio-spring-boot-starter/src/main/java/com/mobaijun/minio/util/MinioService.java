@@ -39,6 +39,8 @@ import io.minio.messages.Bucket;
 import io.minio.messages.DeleteError;
 import io.minio.messages.DeleteObject;
 import io.minio.messages.Item;
+import org.springframework.util.CollectionUtils;
+
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -50,7 +52,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-import org.springframework.util.CollectionUtils;
 
 /**
  * software：IntelliJ IDEA 2022.1
@@ -60,29 +61,19 @@ import org.springframework.util.CollectionUtils;
  * 所有方法都返回 {@link MinioException}，该异常封装了 Minio SDK 的异常。
  * 存储桶名称由配置属性中定义的名称提供。
  *
+ * @param minioClient                  Minio Client
+ * @param minioConfigurationProperties 配置文件属性
  * @author MoBaiJun 2022/9/19 17:37
  */
-public class MinioService {
-
-    /**
-     * Minio Client
-     */
-    private final MinioClient minioClient;
-
-    /**
-     * 配置文件属性
-     */
-    private final MinioConfigurationProperties minioConfigurationProperties;
+public record MinioService(MinioClient minioClient, MinioConfigurationProperties minioConfigurationProperties) {
 
     /**
      * 初始化
      *
-     * @param minioClient     minio 客户端
-     * @param minioProperties 配置文件属性
+     * @param minioClient                  minio 客户端
+     * @param minioConfigurationProperties 配置文件属性
      */
-    public MinioService(MinioClient minioClient, MinioConfigurationProperties minioProperties) {
-        this.minioClient = minioClient;
-        this.minioConfigurationProperties = minioProperties;
+    public MinioService {
     }
 
     /**
@@ -91,7 +82,8 @@ public class MinioService {
      * @return MinioClient 实例，用于与 MinIO 服务进行交互。
      * 如果尚未初始化，可能会抛出相关异常。
      */
-    public MinioClient getMinioClient() {
+    @Override
+    public MinioClient minioClient() {
         return minioClient;
     }
 
@@ -182,6 +174,7 @@ public class MinioService {
         boolean flag = existsBucket(bucketName);
         if (flag) {
             Iterable<Result<Item>> myObjects = getListObjects(bucketName);
+            assert myObjects != null;
             for (Result<Item> result : myObjects) {
                 Item item = result.get();
                 // 如果存储桶中存在对象文件，则删除失败
@@ -208,6 +201,7 @@ public class MinioService {
         List<String> listObjectNames = new ArrayList<>();
         if (existsBucket(bucketName)) {
             Iterable<Result<Item>> myObjects = getListObjects(bucketName);
+            assert myObjects != null;
             for (Result<Item> result : myObjects) {
                 Item item = result.get();
                 listObjectNames.add(item.objectName());

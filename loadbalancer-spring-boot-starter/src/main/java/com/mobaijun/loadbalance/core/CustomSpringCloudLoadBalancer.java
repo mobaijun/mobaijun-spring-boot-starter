@@ -16,9 +16,6 @@
 package com.mobaijun.loadbalance.core;
 
 import cn.hutool.core.net.NetUtil;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
@@ -31,6 +28,9 @@ import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBal
 import org.springframework.cloud.loadbalancer.core.SelectedInstanceCallback;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Description: [
@@ -47,22 +47,14 @@ import reactor.core.publisher.Mono;
  * Author: [mobaijun]
  * Date: [2024/8/13 17:33]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
+ *
+ * @param serviceId                           要负载均衡的服务ID。
+ * @param serviceInstanceListSupplierProvider 提供服务实例列表的提供者。
+ *                                            如果没有可用的提供者，则使用NoopServiceInstanceListSupplier作为默认实现。
  */
 @Slf4j
-@RequiredArgsConstructor
-public class CustomSpringCloudLoadBalancer implements ReactorServiceInstanceLoadBalancer {
-
-    /**
-     * 要负载均衡的服务ID。
-     */
-    private final String serviceId;
-
-    /**
-     * 提供服务实例列表的提供者。
-     * 如果没有可用的提供者，则使用NoopServiceInstanceListSupplier作为默认实现。
-     */
-    private final ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;
-
+public record CustomSpringCloudLoadBalancer(String serviceId,
+                                            ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider) implements ReactorServiceInstanceLoadBalancer {
 
     @Override
     public Mono<Response<ServiceInstance>> choose(Request request) {

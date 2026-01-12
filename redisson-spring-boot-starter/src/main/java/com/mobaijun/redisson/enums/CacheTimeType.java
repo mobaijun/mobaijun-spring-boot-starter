@@ -84,12 +84,12 @@ public enum CacheTimeType {
     /**
      * 3 分钟
      */
-    THREEE_MINUTES(Duration.ofMinutes(3)),
+    THREE_MINUTES(Duration.ofMinutes(3)),
 
     /**
      * 60 秒
      */
-    SIXTS_SECONDS(Duration.ofSeconds(60));
+    SIXES_SECONDS(Duration.ofSeconds(60));
 
     /**
      * 缓存时间

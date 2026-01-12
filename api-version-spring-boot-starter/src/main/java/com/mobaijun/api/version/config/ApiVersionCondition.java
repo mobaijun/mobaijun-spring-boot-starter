@@ -17,9 +17,10 @@ package com.mobaijun.api.version.config;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.servlet.mvc.condition.RequestCondition;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.springframework.web.servlet.mvc.condition.RequestCondition;
 
 /**
  * Description:
@@ -45,8 +46,8 @@ import org.springframework.web.servlet.mvc.condition.RequestCondition;
  * Author: [mobaijun]
  * Date: [2024/12/23 11:37]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
- * @param apiVersion
-存储 API 版本号
+ *
+ * @param apiVersion 存储 API 版本号
  */
 public record ApiVersionCondition(int apiVersion) implements RequestCondition<ApiVersionCondition> {
 

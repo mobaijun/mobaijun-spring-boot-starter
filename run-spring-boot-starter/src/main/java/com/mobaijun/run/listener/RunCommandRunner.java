@@ -16,16 +16,19 @@
 package com.mobaijun.run.listener;
 
 import com.mobaijun.run.prop.RunProperties;
-import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Description: [运行监听器]
  * Author: [mobaijun]
  * Date: [2023/11/23 11:40]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
+ *
  * @param runProperties 注入配置文件
  */
 public record RunCommandRunner(RunProperties runProperties) implements CommandLineRunner {
@@ -33,74 +36,59 @@ public record RunCommandRunner(RunProperties runProperties) implements CommandLi
     /**
      * 日志记录器
      */
-    private static final Logger logger = LoggerFactory.getLogger(RunCommandRunner.class);
+    private static final Logger log = LoggerFactory.getLogger(RunCommandRunner.class);
 
     @Override
     public void run(String... args) {
-        // 判断是否启用
-        if (runProperties.isEnabled()) {
-            logUrls();
+        if (!runProperties.isEnabled()) {
+            return;
         }
+
+        List<String> urls = runProperties.getUrl();
+        if (urls == null || urls.isEmpty()) {
+            log.warn("Project started, but no URLs are configured to open.");
+            return;
+        }
+
+        log.info("-------------------------------------------------------------------------");
+        urls.forEach(this::openUrl);
+        log.info("-------------------------------------------------------------------------");
     }
 
-    /**
-     * 记录日志
-     */
-    private void logUrls() {
-        logger.info("{-------------------------------------------------------------------------}");
-        runProperties.getUrl().forEach(this::openUrl);
-        logger.info("{-------------------------------------------------------------------------}");
-    }
+    private void openUrl(String url) {
+        // 1. 构造一个唯一的 Key，防止多个地址相互干扰
+        String key = "already.opened." + url.hashCode();
 
-    /**
-     * 打开指定 URL
-     *
-     * @param url 要打开的 URL
-     */
-    public void openUrl(String url) {
+        // 2. 检查系统属性
+        if ("true".equals(System.getProperty(key))) {
+            log.info("URL already opened in this JVM session, skipping: {}", url);
+            return;
+        }
         String os = System.getProperty("os.name").toLowerCase();
-        // 使用操作系统特定的命令打开 URL
-        if (os.contains("win")) {
-            openUrlWindows(url);
-        } else if (os.contains("mac")) {
-            openUrlMac(url);
-        }
-        logger.info("Successfully opened URL: {}", url);
-    }
+        ProcessBuilder processBuilder = new ProcessBuilder();
 
-    /**
-     * Windows
-     *
-     * @param url url
-     */
-    private void openUrlWindows(String url) {
         try {
-            Runtime.getRuntime().exec("cmd /c start " + url);
-        } catch (IOException e) {
-            handleException(e);
-        }
-    }
+            if (os.contains("win")) {
+                // Windows: 使用 cmd /c start
+                processBuilder.command("cmd", "/c", "start", url);
+            } else if (os.contains("mac")) {
+                // macOS: 使用 open
+                processBuilder.command("open", url);
+            } else if (os.contains("nix") || os.contains("nux")) {
+                // Linux: 使用 xdg-open (通用的图形界面打开命令)
+                processBuilder.command("xdg-open", url);
+            } else {
+                log.error("Unsupported Operating System: {}", os);
+                return;
+            }
 
-    /**
-     * macOS
-     *
-     * @param url url
-     */
-    private void openUrlMac(String url) {
-        try {
-            Runtime.getRuntime().exec("open " + url);
+            processBuilder.start();
+            log.info("Successfully opened URL: {}", url);
+            // 标记为已打开
+            System.setProperty(key, "true");
+            log.info("Successfully opened URL: {}", url);
         } catch (IOException e) {
-            handleException(e);
+            log.error("Failed to open URL [{}]. Error: {}", url, e.getMessage());
         }
-    }
-
-    /**
-     * 处理异常情况
-     *
-     * @param ex 异常对象
-     */
-    private void handleException(Exception ex) {
-        // 记录异常
-        logger.error("Error opening the page. Please find the cause and try again: {}", ex.getMessage(), ex);
     }
 }
