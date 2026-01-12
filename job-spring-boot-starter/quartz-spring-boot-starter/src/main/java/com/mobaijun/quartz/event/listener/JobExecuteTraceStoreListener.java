@@ -17,7 +17,6 @@ package com.mobaijun.quartz.event.listener;
 
 import com.mobaijun.quartz.event.JobExecuteTraceEvent;
 import com.mobaijun.quartz.store.JobExecuteTraceStore;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -29,10 +28,7 @@ import org.springframework.scheduling.annotation.Async;
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
 @Slf4j
-@RequiredArgsConstructor
-public class JobExecuteTraceStoreListener {
-
-    private final JobExecuteTraceStore jobExecuteTraceStore;
+public record JobExecuteTraceStoreListener(JobExecuteTraceStore jobExecuteTraceStore) {
 
     /**
      * 处理异步保存任务执行记录事件
@@ -46,9 +42,24 @@ public class JobExecuteTraceStoreListener {
             log.debug("接收到异步存储任务执行记录事件{}，处理中...", event);
         }
         switch (event.getEventType()) {
-            case UPDATE:
             case INITIALIZE:
-                this.jobExecuteTraceStore.storeTrace(event.getJobExecuteTrace());
+                // 存储记录并获取生成的ID
+                Long traceId = this.jobExecuteTraceStore.storeTrace(event.getJobExecuteTrace());
+                if (traceId != null && log.isDebugEnabled()) {
+                    log.debug("任务执行记录已创建，ID: {}", traceId);
+                }
+                break;
+            case UPDATE:
+                // 更新记录（trace对象应包含id字段）
+                if (event.getJobExecuteTrace().getId() != null) {
+                    this.jobExecuteTraceStore.updateTrace(event.getJobExecuteTrace());
+                    if (log.isDebugEnabled()) {
+                        log.debug("任务执行记录已更新，ID: {}", event.getJobExecuteTrace().getId());
+                    }
+                } else {
+                    log.warn("更新任务执行记录时未找到ID，将创建新记录");
+                    this.jobExecuteTraceStore.storeTrace(event.getJobExecuteTrace());
+                }
                 break;
             default:
                 log.error("未知的事件类型:{}", event.getEventType());

@@ -21,11 +21,7 @@ import com.mobaijun.quartz.enums.JobExecuteTraceType;
 import com.mobaijun.quartz.enums.JobStage;
 import com.mobaijun.quartz.event.JobExecuteTraceEvent;
 import com.mobaijun.quartz.store.JobExecuteTrace;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.stream.Collectors;
+import com.mobaijun.quartz.store.JobExecuteTraceStore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +41,12 @@ import org.quartz.impl.matchers.EverythingMatcher;
 import org.quartz.impl.triggers.SimpleTriggerImpl;
 import org.quartz.spi.ClassLoadHelper;
 import org.quartz.spi.SchedulerPlugin;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.stream.Collectors;
 
 /**
  * Description: 保存任务历史记录
@@ -66,6 +68,11 @@ public class StoreJobHistoryPlugin implements SchedulerPlugin, JobListener {
      * 历史执行记录保留天数。只是为了properties接收插件配置，无其他作用。
      */
     private String cleanDays;
+
+    /**
+     * JobDataMap中存储记录ID的key
+     */
+    private static final String TRACE_ID_KEY = "_job_execute_trace_id";
 
     @Override
     public String getName() {
@@ -144,6 +151,8 @@ public class StoreJobHistoryPlugin implements SchedulerPlugin, JobListener {
         Trigger trigger = context.getTrigger();
         JobDetail jobDetail = context.getJobDetail();
         JobKey jobKey = jobDetail.getKey();
+        JobDataMap jobDataMap = jobDetail.getJobDataMap();
+        
         JobExecuteTrace trace = new JobExecuteTrace().setJobGroup(jobKey.getGroup())
                 .setJobName(jobKey.getName())
                 .setJobDescription(jobDetail.getDescription())
@@ -157,18 +166,45 @@ public class StoreJobHistoryPlugin implements SchedulerPlugin, JobListener {
                 .setEndTime(convertDate(trigger.getEndTime()))
                 .setPreviousFireTime(convertDate(trigger.getPreviousFireTime()))
                 .setNextFireTime(convertDate(trigger.getNextFireTime()));
+        
         switch (traceType) {
             case INITIALIZE:
                 trace.setExecuteState(JobStage.EXECUTING.name());
+                // 同步存储记录并获取ID，存储到JobDataMap中供UPDATE时使用
+                try {
+                    JobExecuteTraceStore store = SpringUtil.getBean(JobExecuteTraceStore.class);
+                    Long traceId = store.storeTrace(trace);
+                    if (traceId != null) {
+                        jobDataMap.put(TRACE_ID_KEY, traceId);
+                        if (log.isDebugEnabled()) {
+                            log.debug("[自定义插件:{}][{}]记录ID已存储到JobDataMap: {}",
+                                    getName(), jobKey.getName(), traceId);
+                        }
+                    }
+                } catch (Exception e) {
+                    log.warn("[自定义插件:{}][{}]同步存储失败，将使用异步方式: {}", 
+                            getName(), jobKey.getName(), e.getMessage());
+                    SpringUtil.publishEvent(new JobExecuteTraceEvent(trace, traceType));
+                }
                 break;
             case UPDATE:
+                // 从JobDataMap中获取记录ID
+                Object traceIdObj = jobDataMap.get(TRACE_ID_KEY);
+                if (traceIdObj != null) {
+                    Long traceId = traceIdObj instanceof Long ? (Long) traceIdObj 
+                            : Long.valueOf(traceIdObj.toString());
+                    trace.setId(traceId);
+                } else {
+                    log.warn("[自定义插件:{}][{}]未找到记录ID，将创建新记录而非更新", getName(), jobKey.getName());
+                }
                 trace.setRunTime(context.getJobRunTime())
                         .setRetryTimes(context.getRefireCount())
                         .setExecuteState(jobException == null ? JobStage.FINISHED.name() : JobStage.EXCEPTION.name())
                         .setMessage(jobException != null ? jobException.getMessage() : null);
+                // 发布更新事件
+                SpringUtil.publishEvent(new JobExecuteTraceEvent(trace, traceType));
                 break;
         }
-        SpringUtil.publishEvent(new JobExecuteTraceEvent(trace, traceType));
     }
 
     /**

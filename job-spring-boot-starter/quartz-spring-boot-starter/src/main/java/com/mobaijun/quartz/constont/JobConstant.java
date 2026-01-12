@@ -32,7 +32,7 @@ public final class JobConstant {
     public static final String RESERVED_JOB_GROUP = "ReservedJobGroup";
 
     /**
-     * 保留Job名称
+     * Quartz 属性前缀（spring.quartz.properties.*）
      */
     public static final String QUARTZ_PROPERTIES_PREFIX = "spring.quartz.properties";
 

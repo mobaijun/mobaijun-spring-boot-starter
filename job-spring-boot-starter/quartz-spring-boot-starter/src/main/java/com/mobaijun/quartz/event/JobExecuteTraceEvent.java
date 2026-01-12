@@ -17,10 +17,12 @@ package com.mobaijun.quartz.event;
 
 import com.mobaijun.quartz.enums.JobExecuteTraceType;
 import com.mobaijun.quartz.store.JobExecuteTrace;
-import java.io.Serial;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.context.ApplicationEvent;
+
+import java.io.Serial;
 
 /**
  * Description: 任务执行记录事件
@@ -30,6 +32,7 @@ import org.springframework.context.ApplicationEvent;
  */
 @Getter
 @Setter
+@ToString
 public class JobExecuteTraceEvent extends ApplicationEvent {
 
     @Serial

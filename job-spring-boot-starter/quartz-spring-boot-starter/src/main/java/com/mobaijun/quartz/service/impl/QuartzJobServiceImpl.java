@@ -16,16 +16,6 @@
 package com.mobaijun.quartz.service.impl;
 
 import com.mobaijun.quartz.service.QuartzJobService;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.CalendarIntervalScheduleBuilder;
 import org.quartz.CronScheduleBuilder;
@@ -44,15 +34,26 @@ import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.quartz.impl.matchers.GroupMatcher;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
- * Description: []
+ * Description: Quartz 调度服务实现，封装任务创建/修改/删除等核心能力，
+ * 并提供统一的 JobDetail、Trigger 构建工具方法
  * Author: [mobaijun]
  * Date: [2024/8/20 10:00]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
+ *
+ * @param scheduler 调度器
  */
 @Slf4j
-@RequiredArgsConstructor
-public class QuartzJobServiceImpl implements QuartzJobService {
+public record QuartzJobServiceImpl(Scheduler scheduler) implements QuartzJobService {
 
     /**
      * 优先级在此维护
@@ -67,30 +68,52 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     public static final String CRON_FORMAT = "ss mm HH dd MM ? yyyy";
 
     /**
-     * 调度器
+     * 构建 JobDetail，并在构建前检查是否已存在同名任务（存在则删除）
      */
-    final Scheduler scheduler;
+    private JobDetail buildJobDetail(Class<? extends Job> clazz, String name, String group, String desc) {
+        // 先检查任务是否存在,存在则删除
+        JobKey jobKey = checkExists(name, group);
+        return JobBuilder.newJob(clazz)
+                .withDescription(desc)
+                .withIdentity(jobKey)
+                .build();
+    }
+
+    /**
+     * 构建 JobDataMap，统一处理空参数
+     */
+    private JobDataMap buildJobDataMap(Map<String, Object> params) {
+        if (params == null || params.isEmpty()) {
+            return new JobDataMap();
+        }
+        return new JobDataMap(params);
+    }
+
+    /**
+     * 构建 TriggerBuilder 的公共部分
+     */
+    private TriggerBuilder<Trigger> buildTriggerBuilder(String name,
+                                                        String group,
+                                                        JobDataMap dataMap,
+                                                        String desc,
+                                                        Date startTime) {
+        TriggerKey triggerKey = TriggerKey.triggerKey(name, group);
+        return TriggerBuilder.newTrigger()
+                .withIdentity(triggerKey)
+                .usingJobData(dataMap)
+                .withDescription(desc)
+                .startAt(startTime)
+                .withPriority(PRIORITY_DEFAULT);
+    }
 
     @Override
     public Date addJob(Class<? extends Job> clazz, String name, String group, Map<String, Object> params, Date scheduleTime, String desc) {
         try {
-            // 先检查任务是否存在,存在则删除
-            JobKey jobKey = checkExists(name, group);
-            JobDetail job = JobBuilder.newJob(clazz).withDescription(desc).withIdentity(jobKey).build();
-            if (params == null) {
-                params = new HashMap<>();
-            }
-            JobDataMap dataMap = new JobDataMap(params);
-            TriggerKey triggerKey = TriggerKey.triggerKey(name, group);
+            JobDetail job = buildJobDetail(clazz, name, group, desc);
+            JobDataMap dataMap = buildJobDataMap(params);
             // 创建触发器
-            SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
-                    .withMisfireHandlingInstructionFireNow();
-            TriggerBuilder<Trigger> builder = TriggerBuilder.newTrigger()
-                    .withIdentity(triggerKey)
-                    .usingJobData(dataMap)
-                    .withDescription(desc)
-                    .startAt(scheduleTime)
-                    .withPriority(PRIORITY_DEFAULT);
+            SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withMisfireHandlingInstructionFireNow();
+            TriggerBuilder<Trigger> builder = buildTriggerBuilder(name, group, dataMap, desc, scheduleTime);
             return this.scheduler.scheduleJob(job, builder.withSchedule(simpleScheduleBuilder).build());
         } catch (Exception e) {
             log.error("以指定计划时间的方式新增任务失败!", e);
@@ -121,23 +144,12 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     @Override
     public Date addJob(Class<? extends Job> clazz, String name, String group, Map<String, Object> params, int future, IntervalUnit unit, String desc) {
         try {
-            // 先检查任务是否存在,存在则删除
-            JobKey jobKey = checkExists(name, group);
-            JobDetail job = JobBuilder.newJob(clazz).withDescription(desc).withIdentity(jobKey).build();
-            if (params == null) {
-                params = new HashMap<>();
-            }
-            JobDataMap dataMap = new JobDataMap(params);
-            TriggerKey triggerKey = TriggerKey.triggerKey(name, group);
+            JobDetail job = buildJobDetail(clazz, name, group, desc);
+            JobDataMap dataMap = buildJobDataMap(params);
             // 创建触发器
-            SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
-                    .withMisfireHandlingInstructionFireNow();
-            TriggerBuilder<Trigger> builder = TriggerBuilder.newTrigger()
-                    .withIdentity(triggerKey)
-                    .usingJobData(dataMap)
-                    .withDescription(desc)
-                    .startAt(DateBuilder.futureDate(future, null == unit ? DateBuilder.IntervalUnit.SECOND : unit))
-                    .withPriority(PRIORITY_DEFAULT);
+            SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withMisfireHandlingInstructionFireNow();
+            Date startTime = DateBuilder.futureDate(future, unit == null ? IntervalUnit.SECOND : unit);
+            TriggerBuilder<Trigger> builder = buildTriggerBuilder(name, group, dataMap, desc, startTime);
             return this.scheduler.scheduleJob(job, builder.withSchedule(simpleScheduleBuilder).build());
         } catch (Exception e) {
             log.error("以指定计划时间的方式新增任务失败!", e);
@@ -147,7 +159,7 @@ public class QuartzJobServiceImpl implements QuartzJobService {
 
     @Override
     public Date addJob(Class<? extends Job> clazz, String name, String group, Map<String, Object> params, int future, String desc) {
-        return addJob(clazz, name, group, params, future, DateBuilder.IntervalUnit.SECOND, desc);
+        return addJob(clazz, name, group, params, future, IntervalUnit.SECOND, desc);
     }
 
     @Override
@@ -163,23 +175,11 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     public Date addJob(Class<? extends Job> clazz, String name, String group, Map<String, Object> params,
                        String cronExpression, String desc, Date startTime, Date endTime) {
         try {
-            // 先检查任务是否存在,存在则删除
-            JobKey jobKey = checkExists(name, group);
-            JobDetail job = JobBuilder.newJob(clazz).withDescription(desc).withIdentity(jobKey).build();
-            if (params == null) {
-                params = new HashMap<>();
-            }
-            JobDataMap dataMap = new JobDataMap(params);
-            TriggerKey triggerKey = TriggerKey.triggerKey(name, group);
+            JobDetail job = buildJobDetail(clazz, name, group, desc);
+            JobDataMap dataMap = buildJobDataMap(params);
             // 创建触发器
-            CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression)
-                    .withMisfireHandlingInstructionFireAndProceed();
-            TriggerBuilder<Trigger> builder = TriggerBuilder.newTrigger()
-                    .withIdentity(triggerKey)
-                    .usingJobData(dataMap)
-                    .withDescription(desc)
-                    .startAt(startTime)
-                    .withPriority(PRIORITY_DEFAULT);
+            CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression).withMisfireHandlingInstructionFireAndProceed();
+            TriggerBuilder<Trigger> builder = buildTriggerBuilder(name, group, dataMap, desc, startTime);
             if (endTime != null) {
                 builder = builder.endAt(endTime);
             }
@@ -193,24 +193,13 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     @Override
     public Date addJobWithIntervalInSeconds(Class<? extends Job> clazz, String name, String group, Map<String, Object> params, String desc, Date startTime, Date endTime, int interval) {
         try {
-            // 先检查任务是否存在,存在则删除
-            JobKey jobKey = checkExists(name, group);
-            JobDetail job = JobBuilder.newJob(clazz).withDescription(desc).withIdentity(jobKey).build();
-            if (params == null) {
-                params = new HashMap<>();
-            }
-            JobDataMap dataMap = new JobDataMap(params);
-            TriggerKey triggerKey = TriggerKey.triggerKey(name, group);
+            JobDetail job = buildJobDetail(clazz, name, group, desc);
+            JobDataMap dataMap = buildJobDataMap(params);
             // 创建触发器
             CalendarIntervalScheduleBuilder cisb = CalendarIntervalScheduleBuilder.calendarIntervalSchedule()
                     .withIntervalInSeconds(interval)
                     .withMisfireHandlingInstructionFireAndProceed();
-            TriggerBuilder<Trigger> builder = TriggerBuilder.newTrigger()
-                    .withIdentity(triggerKey)
-                    .usingJobData(dataMap)
-                    .withDescription(desc)
-                    .startAt(startTime)
-                    .withPriority(PRIORITY_DEFAULT);
+            TriggerBuilder<Trigger> builder = buildTriggerBuilder(name, group, dataMap, desc, startTime);
             if (endTime != null) {
                 builder = builder.endAt(endTime);
             }

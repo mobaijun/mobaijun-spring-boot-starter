@@ -17,14 +17,19 @@ package com.mobaijun.quartz.store.impl;
 
 import com.mobaijun.quartz.store.JobExecuteTrace;
 import com.mobaijun.quartz.store.JobExecuteTraceStore;
-import java.sql.Types;
-import java.time.LocalDateTime;
-import javax.sql.DataSource;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.util.Assert;
+
+import javax.sql.DataSource;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.Types;
+import java.time.LocalDateTime;
 
 /**
  * Description:
@@ -44,7 +49,7 @@ public class JdbcJobExecuteTraceStore implements JobExecuteTraceStore {
     /**
      * 默认表名
      */
-    private static final String TABLE_NAME = "qrtz_job_execute_trace";
+    private static final String TABLE_NAME = "quartz_job_execute_trace";
 
     /**
      * 默认插入语句
@@ -57,6 +62,16 @@ public class JdbcJobExecuteTraceStore implements JobExecuteTraceStore {
             + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     /**
+     * 默认更新语句
+     */
+    private static final String DEFAULT_TRACE_UPDATE_STATEMENT = "update " + TABLE_NAME
+            + " set `job_group` = ?, `job_name` = ?, `job_description` = ?, `trigger_type` = ?, "
+            + "`job_strategy` = ?, `job_class` = ?, `job_params` = ?, `execute_time` = ?, `execute_state` = ?, "
+            + "`run_time` = ?, `retry_times` = ?, `previous_fire_time` = ?, `next_fire_time` = ?, "
+            + "`message` = ?, `start_time` = ?, `end_time` = ?, `instance_name` = ? "
+            + "where `id` = ?";
+
+    /**
      * 默认删除语句
      */
     private static final String DEFAULT_HISTORY_TRACE_DELETE_STATEMENT = "delete from " + TABLE_NAME
@@ -66,6 +81,11 @@ public class JdbcJobExecuteTraceStore implements JobExecuteTraceStore {
      * 插入语句
      */
     private String insertTraceSql = DEFAULT_TRACE_INSERT_STATEMENT;
+
+    /**
+     * 更新语句
+     */
+    private String updateTraceSql = DEFAULT_TRACE_UPDATE_STATEMENT;
 
     /**
      * 删除语句
@@ -89,18 +109,50 @@ public class JdbcJobExecuteTraceStore implements JobExecuteTraceStore {
     }
 
     @Override
-    public void storeTrace(JobExecuteTrace t) {
+    public Long storeTrace(JobExecuteTrace t) {
         if (log.isTraceEnabled()) {
             log.trace("storeTrace:{}", t);
         }
-        this.jdbcTemplate.update(this.insertTraceSql,
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        this.jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(this.insertTraceSql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, t.getJobGroup());
+            ps.setString(2, t.getJobName());
+            ps.setString(3, t.getJobDescription());
+            ps.setString(4, t.getTriggerType());
+            ps.setString(5, t.getJobStrategy());
+            ps.setString(6, t.getJobClass());
+            ps.setString(7, t.getJobParams());
+            ps.setObject(8, t.getExecuteTime());
+            ps.setString(9, t.getExecuteState());
+            ps.setObject(10, t.getRunTime());
+            ps.setObject(11, t.getRetryTimes());
+            ps.setObject(12, t.getPreviousFireTime());
+            ps.setObject(13, t.getNextFireTime());
+            ps.setString(14, t.getMessage());
+            ps.setObject(15, t.getStartTime());
+            ps.setObject(16, t.getEndTime());
+            ps.setString(17, t.getInstanceName());
+            return ps;
+        }, keyHolder);
+        Number key = keyHolder.getKey();
+        return key != null ? key.longValue() : null;
+    }
+
+    @Override
+    public void updateTrace(JobExecuteTrace t) {
+        if (log.isTraceEnabled()) {
+            log.trace("updateTrace:{}", t);
+        }
+        Assert.notNull(t.getId(), "JobExecuteTrace id must not be null for update operation");
+        this.jdbcTemplate.update(this.updateTraceSql,
                 new Object[]{t.getJobGroup(), t.getJobName(), t.getJobDescription(), t.getTriggerType(),
                         t.getJobStrategy(), t.getJobClass(), t.getJobParams(), t.getExecuteTime(), t.getExecuteState(),
                         t.getRunTime(), t.getRetryTimes(), t.getPreviousFireTime(), t.getNextFireTime(), t.getMessage(),
-                        t.getStartTime(), t.getEndTime(), t.getInstanceName()},
+                        t.getStartTime(), t.getEndTime(), t.getInstanceName(), t.getId()},
                 new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
                         Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR, Types.INTEGER, Types.INTEGER, Types.TIMESTAMP,
-                        Types.TIMESTAMP, Types.VARCHAR, Types.TIMESTAMP, Types.TIMESTAMP, Types.VARCHAR});
+                        Types.TIMESTAMP, Types.VARCHAR, Types.TIMESTAMP, Types.TIMESTAMP, Types.VARCHAR, Types.BIGINT});
     }
 
     @Override
