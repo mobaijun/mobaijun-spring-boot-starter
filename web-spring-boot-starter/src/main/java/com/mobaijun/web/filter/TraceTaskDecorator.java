@@ -33,20 +33,15 @@ import org.springframework.core.task.TaskDecorator;
  * - 执行后清理 MDC
  */
 @NonNullApi
-public record TraceTaskDecorator(String mdcKey) implements TaskDecorator {
+public record TraceTaskDecorator(String mdcKey, TraceIdGenerator generator) implements TaskDecorator {
 
     /**
-     * 全局 TraceId 生成器，可通过 setGenerator 注入
-     */
-    private static TraceIdGenerator generator;
-
-    /**
-     * 设置全局 TraceId 生成器
+     * 构造函数
      *
-     * @param generator TraceId 生成器实例
+     * @param mdcKey    MDC 中使用的 Key
+     * @param generator TraceId 生成器
      */
-    public static void setGenerator(TraceIdGenerator generator) {
-        TraceTaskDecorator.generator = generator;
+    public TraceTaskDecorator {
     }
 
     /**
@@ -57,22 +52,24 @@ public record TraceTaskDecorator(String mdcKey) implements TaskDecorator {
      */
     @Override
     public Runnable decorate(@Nullable Runnable runnable) {
+        // 在提交线程中获取当前的 traceId（MDC 是 ThreadLocal，会在线程切换时丢失）
+        String traceId = MDC.get(mdcKey);
+
         return () -> {
             try {
-                // 获取提交线程的 traceId
-                String traceId = MDC.get(mdcKey);
-
-                // 如果没有 traceId，则使用全局生成器生成新的 traceId
+                // 如果提交线程没有 traceId，则生成新的
                 if (traceId == null || traceId.isEmpty()) {
-                    traceId = generator.generate();
+                    String newTraceId = generator.generate();
+                    MDC.put(mdcKey, newTraceId);
+                } else {
+                    // 将提交线程的 traceId 注入当前执行线程的 MDC
+                    MDC.put(mdcKey, traceId);
                 }
 
-                // 将 traceId 注入当前线程 MDC
-                MDC.put(mdcKey, traceId);
-
                 // 执行原始任务
-                assert runnable != null;
-                runnable.run();
+                if (runnable != null) {
+                    runnable.run();
+                }
             } finally {
                 // 执行完毕清理 MDC，避免线程池线程复用污染
                 MDC.remove(mdcKey);
