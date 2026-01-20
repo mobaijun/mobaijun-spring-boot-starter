@@ -17,31 +17,25 @@ package com.mobaijun.core.util.file;
 
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Description: [自定义的 MultipartFile 实现，用于处理 Base64 转换后的文件]
  * Author: [mobaijun]
  * Date: [2024/10/11 14:38]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
+ *
+ * @param fileContent 文件内容的字节数组
+ * @param header      文件头部信息，包含 MIME 类型
  */
 @NonNullApi
-public class Base64MultipartFile implements MultipartFile {
-
-    /**
-     * 文件内容的字节数组
-     */
-    private final byte[] fileContent;
-
-    /**
-     * 文件头部信息，包含 MIME 类型
-     */
-    private final String header;
+public record Base64MultipartFile(byte[] fileContent, String header) implements MultipartFile {
 
     /**
      * 构造函数，初始化 Base64MultipartFile。

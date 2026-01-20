@@ -26,13 +26,24 @@ import java.util.Set;
  * Author: [mobaijun]
  * Date: [2024/8/12 10:08]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
+ * <p>
+ * 注意：此工具类依赖 jakarta.validation.Validator，如果项目中未引入相关依赖，
+ * 调用 validate 方法会抛出异常。建议在使用前检查 Validator Bean 是否存在。
  */
 public class ValidatorUtil {
 
     /**
-     * 获取 Validator 实例
+     * 获取 Validator 实例（延迟加载，避免启动时强制要求 Validator Bean）
      */
-    private static final Validator VALID = SpringUtil.getBean(Validator.class);
+    private static Validator getValidator() {
+        try {
+            return SpringUtil.getBean(Validator.class);
+        } catch (Exception e) {
+            throw new IllegalStateException(
+                    "Validator bean not found. Please ensure jakarta.validation-api and " +
+                            "hibernate-validator dependencies are present.", e);
+        }
+    }
 
     /**
      * 对给定对象进行参数校验，并根据指定的校验组进行校验
@@ -40,9 +51,11 @@ public class ValidatorUtil {
      * @param object 要进行校验的对象
      * @param groups 校验组
      * @throws jakarta.validation.ConstraintViolationException 如果校验不通过，则抛出参数校验异常
+     * @throws IllegalStateException 如果 Validator Bean 不存在，则抛出此异常
      */
     public static <T> void validate(T object, Class<?>... groups) {
-        Set<ConstraintViolation<T>> validate = VALID.validate(object, groups);
+        Validator validator = getValidator();
+        Set<ConstraintViolation<T>> validate = validator.validate(object, groups);
         if (!validate.isEmpty()) {
             throw new ConstraintViolationException("参数校验异常", validate);
         }
