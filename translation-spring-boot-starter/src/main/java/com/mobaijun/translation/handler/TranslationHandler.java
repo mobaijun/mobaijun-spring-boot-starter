@@ -20,11 +20,11 @@ import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.mobaijun.translation.annotation.Translation;
 import com.mobaijun.translation.service.TranslationInterface;
 import com.mobaijun.translation.util.ReflectUtil;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,7 +35,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * Date: [2024/9/28 8:31]
  * IntelliJ IDEA Version: [IntelliJ IDEA 2023.1.4]
  */
-@JsonSerialize(using = TranslationHandler.class)
 public class TranslationHandler extends JsonSerializer<Object> implements ContextualSerializer {
 
     /**
@@ -46,16 +45,42 @@ public class TranslationHandler extends JsonSerializer<Object> implements Contex
     /**
      * 翻译注解实例
      */
-    private Translation translation;
+    private final Translation translation;
+
+    /**
+     * 包可见构造函数，用于创建带注解的实例
+     *
+     * @param translation 翻译注解
+     */
+    TranslationHandler(Translation translation) {
+        this.translation = translation;
+    }
+
+    /**
+     * 默认构造函数，用于 Jackson 序列化框架
+     */
+    public TranslationHandler() {
+        this.translation = null;
+    }
 
     @Override
     public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        // 如果注解为空，直接写出原值
+        if (translation == null) {
+            gen.writeObject(value);
+            return;
+        }
+
         TranslationInterface<?> translator = TRANSLATION_MAPPER.get(translation.type());
 
         if (translator != null) {
             // 如果映射字段不为空，则取映射字段的值
-            if (!translation.mapper().isEmpty()) {
-                value = ReflectUtil.invokeGetter(gen.currentValue(), translation.mapper());
+            if (translation.mapper() != null && !translation.mapper().isEmpty()) {
+                // 获取当前正在序列化的对象，用于访问映射字段
+                Object currentValue = gen.currentValue();
+                if (currentValue != null) {
+                    value = ReflectUtil.invokeGetter(currentValue, translation.mapper());
+                }
             }
 
             // 如果值为 null，直接写出 null
@@ -75,11 +100,15 @@ public class TranslationHandler extends JsonSerializer<Object> implements Contex
 
     @Override
     public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) throws JsonMappingException {
+        if (property == null) {
+            return this;
+        }
+
         Translation translationAnnotation = property.getAnnotation(Translation.class);
 
         if (translationAnnotation != null) {
-            this.translation = translationAnnotation;
-            return this;
+            // 创建新实例而不是修改当前实例，确保线程安全
+            return new TranslationHandler(translationAnnotation);
         }
 
         return prov.findValueSerializer(property.getType(), property);

@@ -21,9 +21,9 @@ import com.mobaijun.translation.handler.TranslationBeanSerializerModifier;
 import com.mobaijun.translation.handler.TranslationHandler;
 import com.mobaijun.translation.service.TranslationInterface;
 import jakarta.annotation.PostConstruct;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,20 +64,30 @@ public class TranslationConfig {
 
     @PostConstruct
     public void init() {
-        Map<String, TranslationInterface<?>> translationMap = new HashMap<>(translationList.size());
+        Map<String, TranslationInterface<?>> translationMap = new ConcurrentHashMap<>(translationList.size());
 
         for (TranslationInterface<?> translation : translationList) {
-            if (translation.getClass().isAnnotationPresent(TranslationType.class)) {
-                TranslationType annotation = translation.getClass().getAnnotation(TranslationType.class);
-
-                if (annotation != null) {
-                    translationMap.put(annotation.type(), translation);
+            TranslationType annotation = translation.getClass().getAnnotation(TranslationType.class);
+            if (annotation != null) {
+                String type = annotation.type();
+                if (type != null && !type.isEmpty()) {
+                    TranslationInterface<?> existing = translationMap.putIfAbsent(type, translation);
+                    if (existing != null) {
+                        log.warn("翻译类型 '{}' 存在多个实现类，已使用: {}，忽略: {}", 
+                                type, existing.getClass().getName(), translation.getClass().getName());
+                    } else {
+                        log.debug("注册翻译实现类: {} -> {}", type, translation.getClass().getName());
+                    }
                 } else {
-                    log.warn("翻译实现类 {} 未标注 TranslationType 注解!", translation.getClass().getName());
+                    log.warn("翻译实现类 {} 的 TranslationType 注解 type 为空!", translation.getClass().getName());
                 }
+            } else {
+                log.warn("翻译实现类 {} 未标注 TranslationType 注解!", translation.getClass().getName());
             }
         }
+        
         TranslationHandler.TRANSLATION_MAPPER.putAll(translationMap);
+        log.info("翻译组件初始化完成，共注册 {} 个翻译实现类", translationMap.size());
 
         // 设置 Bean 序列化修改器
         objectMapper.setSerializerFactory(

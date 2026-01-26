@@ -16,6 +16,8 @@
 package com.mobaijun.translation.util;
 
 import java.lang.reflect.Method;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Description: [反射工具类]
@@ -31,6 +33,12 @@ public class ReflectUtil {
     private static final String GETTER_PREFIX = "get";
 
     /**
+     * 方法缓存，避免重复反射查找，提升性能
+     * Key: 类名 + 方法名，Value: Method 对象
+     */
+    private static final ConcurrentMap<String, Method> METHOD_CACHE = new ConcurrentHashMap<>();
+
+    /**
      * 调用对象的 Getter 方法。
      * 支持多级属性访问，例如：对象名.属性名.属性名
      *
@@ -40,11 +48,18 @@ public class ReflectUtil {
      */
     @SuppressWarnings("unchecked")
     public static <E> E invokeGetter(Object obj, String propertyName) {
+        if (obj == null || propertyName == null || propertyName.isEmpty()) {
+            return null;
+        }
+
         Object result = obj;
         // 分割多级属性
         String[] properties = propertyName.split("\\.");
 
         for (String property : properties) {
+            if (property == null || property.isEmpty()) {
+                continue;
+            }
             // 构造 getter 方法名
             String getterMethodName = GETTER_PREFIX + capitalize(property);
 
@@ -59,7 +74,7 @@ public class ReflectUtil {
     }
 
     /**
-     * 使用反射调用方法
+     * 使用反射调用方法，带方法缓存优化
      *
      * @param obj        目标对象
      * @param methodName 方法名
@@ -67,18 +82,33 @@ public class ReflectUtil {
      */
     @SuppressWarnings("all")
     private static Object invoke(Object obj, String methodName) {
-        if (obj == null) {
+        if (obj == null || methodName == null || methodName.isEmpty()) {
             return null;
         }
 
         try {
             // 获取类的字节码对象
             Class<?> clazz = obj.getClass();
-            // 获取方法对象，避免每次都通过反射查找方法
-            Method method = clazz.getMethod(methodName);
+            // 构造缓存键
+            String cacheKey = clazz.getName() + "#" + methodName;
+            
+            // 从缓存中获取方法，如果不存在则查找并缓存
+            Method method = METHOD_CACHE.computeIfAbsent(cacheKey, key -> {
+                try {
+                    return clazz.getMethod(methodName);
+                } catch (NoSuchMethodException e) {
+                    return null;
+                }
+            });
+
+            // 如果方法不存在，返回 null
+            if (method == null) {
+                return null;
+            }
+
             // 调用方法并返回结果
             return method.invoke(obj);
-        } catch (NoSuchMethodException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
+        } catch (IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
             // 如果出现异常，返回 null
             return null;
         }
@@ -95,5 +125,21 @@ public class ReflectUtil {
             return str;
         }
         return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    /**
+     * 清空方法缓存（主要用于测试或内存优化场景）
+     */
+    public static void clearCache() {
+        METHOD_CACHE.clear();
+    }
+
+    /**
+     * 获取当前缓存的方法数量
+     *
+     * @return 缓存的方法数量
+     */
+    public static int getCacheSize() {
+        return METHOD_CACHE.size();
     }
 }

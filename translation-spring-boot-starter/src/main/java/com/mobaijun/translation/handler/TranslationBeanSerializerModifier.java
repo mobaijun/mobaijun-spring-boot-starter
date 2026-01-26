@@ -31,7 +31,14 @@ public class TranslationBeanSerializerModifier extends BeanSerializerModifier {
 
     @Override
     public List<BeanPropertyWriter> changeProperties(SerializationConfig config, BeanDescription beanDesc, List<BeanPropertyWriter> beanProperties) {
+        if (beanProperties == null || beanProperties.isEmpty()) {
+            return beanProperties;
+        }
+
         for (BeanPropertyWriter writer : beanProperties) {
+            if (writer == null) {
+                continue;
+            }
             // 如果当前序列化器是 TranslationHandler，则为 null 值分配相同的处理器
             if (writer.getSerializer() instanceof TranslationHandler serializer) {
                 writer.assignNullSerializer(serializer);
