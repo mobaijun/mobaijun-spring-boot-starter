@@ -15,7 +15,7 @@
  */
 package com.mobaijun.core.service;
 
-import com.mobaijun.base.entity.QueryStatusModel;
+import com.mobaijun.base.search.QueryStatusModel;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 

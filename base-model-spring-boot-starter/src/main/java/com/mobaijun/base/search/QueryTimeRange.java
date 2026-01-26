@@ -13,21 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mobaijun.base.entity;
+package com.mobaijun.base.search;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.mobaijun.base.entity.EntityConstants;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.io.Serial;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Description: [日期扩展实体类]
@@ -46,6 +50,12 @@ public class QueryTimeRange implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @Schema(title = "搜索值", description = "用于全文搜索或通用关键字搜索")
+    private String searchValue;
+
+    @Schema(title = "请求参数", description = "用于存放动态扩展查询条件")
+    private Map<String, Object> params = new HashMap<>();
+
     @Schema(title = "开始时间")
     @JsonFormat(pattern = EntityConstants.DEFAULT_DATE_TIME_FORMAT)
     @DateTimeFormat(pattern = EntityConstants.DEFAULT_DATE_TIME_FORMAT)
@@ -55,6 +65,25 @@ public class QueryTimeRange implements Serializable {
     @JsonFormat(pattern = EntityConstants.DEFAULT_DATE_TIME_FORMAT)
     @DateTimeFormat(pattern = EntityConstants.DEFAULT_DATE_TIME_FORMAT)
     private LocalDateTime endTime;
+
+    /**
+     * 添加附加参数
+     */
+    public void addParam(String key, Object value) {
+        if (this.params == null) {
+            this.params = new HashMap<>();
+        }
+        this.params.put(key, value);
+    }
+
+    /**
+     * 获取附加参数值并转换为指定类型
+     */
+    @SuppressWarnings("unchecked")
+    public <V> V getParam(String key) {
+        return params == null ? null : (V) params.get(key);
+    }
+
 
     /**
      * 验证时间间隔是否有效

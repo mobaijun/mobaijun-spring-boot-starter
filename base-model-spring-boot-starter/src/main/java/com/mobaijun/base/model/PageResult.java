@@ -16,15 +16,17 @@
 package com.mobaijun.base.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Software：IntelliJ IDEA 2021.3.2
@@ -35,6 +37,7 @@ import lombok.ToString;
  */
 @Getter
 @Setter
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -47,12 +50,28 @@ public class PageResult<T> implements Serializable {
     /**
      * 查询数据列表
      */
-    @Schema(title = "查询数据列表", description = "查询数据列表")
-    protected List<T> records = Collections.emptyList();
+    @Builder.Default
+    @Schema(title = "查询数据列表")
+    private List<T> records = Collections.emptyList();
 
     /**
      * 总数
+     * 解决 JS 精度丢失问题：将 Long 序列化为 String 返回
      */
-    @Schema(title = "总数", description = "总数")
-    protected Long total = 0L;
+    @Schema(title = "总数", example = "100")
+    private Long total = 0L;
+
+    /**
+     * 静态转换方法
+     */
+    public static <T> PageResult<T> of(List<T> list, long total) {
+        return new PageResult<>(list, total);
+    }
+
+    /**
+     * 针对空结果的快捷返回
+     */
+    public static <T> PageResult<T> empty() {
+        return new PageResult<>(Collections.emptyList(), 0L);
+    }
 }
